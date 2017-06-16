@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><templates><template autoinsert="true" context="java" deleted="false" description="DOC 자동생성" enabled="true" name="DOC">${:import(com.formalworks.license.annotaion.Doc)}&#13;
+@Doc(value = "${cursor}", order = Integer.MAX_VALUE, author = "${user}", since = "${date} ${time}")</template></templates>

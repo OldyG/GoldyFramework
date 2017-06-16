@@ -1,5 +1,5 @@
 /**
- * FileName : PasswordEncryptor.java
+ * FileName : java
  * Created : 2017. 4. 10.
  * Author : jeong
  * Summary :
@@ -10,6 +10,7 @@
 package com.goldyframework.encryption;
 
 import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.KeySpec;
 import java.util.Base64;
@@ -21,8 +22,13 @@ import javax.crypto.spec.PBEKeySpec;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class PasswordEncryptor {
-	
+/**
+ * 패스워드 암호화 도구
+ *
+ * @author 2017. 6. 18. 오후 12:52:59 jeong
+ */
+public final class PasswordEncryptor {
+
 	/**
 	 * Encode Salt Byte Length
 	 *
@@ -30,11 +36,17 @@ public class PasswordEncryptor {
 	 * @since 2017. 5. 22. 오후 9:49:02
 	 */
 	private static final int SALT_BYTE_LENGH = 16;
-	
-	private static final Base64.Encoder ENC = Base64.getEncoder().withoutPadding();
-	
-	private static final Base64.Decoder DEC = Base64.getDecoder();
-	
+
+	/**
+	 * BASE 64 Encoder
+	 */
+	private static final Base64.Encoder ENCODER = Base64.getEncoder().withoutPadding();
+
+	/**
+	 * Base 64 Decoder
+	 */
+	private static final Base64.Decoder DECODER = Base64.getDecoder();
+
 	/**
 	 * slf4j Logger
 	 *
@@ -42,66 +54,92 @@ public class PasswordEncryptor {
 	 * @since 2017. 5. 22. 오후 9:20:02
 	 */
 	private static final Logger LOGGER = LoggerFactory.getLogger(PasswordEncryptor.class);
-	
+
+	/**
+	 * 패스워드를 암호화 합니다.
+	 *
+	 * @author 2017. 6. 18. 오후 12:54:20 jeong
+	 * @param rawPassword
+	 *            기존 패스워드
+	 * @return 암호화된 문자열
+	 */
 	public static String encode(final CharSequence rawPassword) {
-		
+
 		try {
-			final Random random = new Random();
+			final Random random = new SecureRandom();
 			final byte[] saltbytes = new byte[SALT_BYTE_LENGH];
 			random.nextBytes(saltbytes);
-			final String salt = PasswordEncryptor.ENC.encodeToString(saltbytes);
-			
-			final String hash = PasswordEncryptor.hashWithSalt(rawPassword, saltbytes);
-			
+			final String salt = ENCODER.encodeToString(saltbytes);
+
+			final String hash = hashWithSalt(rawPassword, saltbytes);
+
 			return salt + '$' + hash;
-			
-		} catch (final InvalidKeySpecException e) {
-			LOGGER.error(e.getMessage(), e);
-			return null;
-		} catch (final NoSuchAlgorithmException e) {
+
+		} catch (InvalidKeySpecException | NoSuchAlgorithmException e) {
 			LOGGER.error(e.getMessage(), e);
 			return null;
 		}
 	}
-	
+
+	/**
+	 * Salt 추가한 Hash 코드를 반환한다.
+	 *
+	 * @author 2017. 6. 18. 오후 12:54:48 jeong
+	 * @param password
+	 *            패스워드
+	 * @param saltbytes
+	 *            Salt 바티으
+	 * @return Hash코드
+	 * @throws NoSuchAlgorithmException
+	 *             This exception is thrown when a particular cryptographic algorithm is requested but is not available
+	 *             in the environment.
+	 * @throws InvalidKeySpecException
+	 *             This is the exception for invalid key specifications.
+	 */
 	private static String hashWithSalt(final CharSequence password, final byte[] saltbytes)
-		throws NoSuchAlgorithmException,
-		InvalidKeySpecException {
-		
+		throws NoSuchAlgorithmException, InvalidKeySpecException {
+
 		final KeySpec spec = new PBEKeySpec(password.toString().toCharArray(), saltbytes, 65536, 128);
 		final SecretKeyFactory f = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1"); //$NON-NLS-1$
 		final byte[] hashbytes = f.generateSecret(spec).getEncoded();
-		final String hash = PasswordEncryptor.ENC.encodeToString(hashbytes);
-		return hash;
+
+		return ENCODER.encodeToString(hashbytes);
 	}
-	
+
+	/**
+	 * 순수 비밀번호와 암호화된 비밀번호가 일치한지 비교합니다.
+	 *
+	 * @author 2017. 6. 18. 오후 12:56:07 jeong
+	 * @param rawPassword
+	 *            순수 비밀번호
+	 * @param encodedPassword
+	 *            암호화된 비밀번호
+	 * @return 일치하는 경우 true, 아닌경우 false
+	 */
 	public static boolean matches(final CharSequence rawPassword, final String encodedPassword) {
-		
+
 		final String[] saltAndPass = encodedPassword.split("\\$"); //$NON-NLS-1$
-		final byte[] saltBytes = PasswordEncryptor.DEC.decode(saltAndPass[0]);
+		final byte[] saltBytes = DECODER.decode(saltAndPass[0]);
 		// TODO stored format check
-		
+
 		try {
-			final String hashOfInput = PasswordEncryptor.hashWithSalt(rawPassword, saltBytes);
+			final String hashOfInput = hashWithSalt(rawPassword, saltBytes);
 			return hashOfInput.equals(saltAndPass[1]);
-			
-		} catch (final NoSuchAlgorithmException e) {
-			LOGGER.error(e.getMessage(), e);
-			return false;
-		} catch (final InvalidKeySpecException e) {
+
+		} catch (NoSuchAlgorithmException | InvalidKeySpecException e) {
 			LOGGER.error(e.getMessage(), e);
 			return false;
 		}
 	}
-	
+
 	/**
-	 * PasswordEncryptor 클래스의 새 인스턴스를 초기화 합니다.
+	 * {@link PasswordEncryptor} 클래스의 새 인스턴스를 초기화 합니다.
 	 *
 	 * @author jeong
 	 * @since 2017. 5. 22. 오후 9:42:39
 	 */
-	public PasswordEncryptor() {
-		super();
+	private PasswordEncryptor() {
+		throw new IllegalStateException("Utility class"); //$NON-NLS-1$
 	}
-	
+
 }

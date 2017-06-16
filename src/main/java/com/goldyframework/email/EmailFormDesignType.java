@@ -1,5 +1,5 @@
 /**
- * FileName : EmailFormDesignType.java
+ * FileName : {@link EmailFormDesignType}.java
  * Created : 2017. 4. 10.
  * Author : jeong
  * Summary :
@@ -13,6 +13,11 @@ import java.io.File;
 
 import com.goldyframework.annotaion.Doc;
 
+/**
+ * 이메일 폼 디자인 방법
+ *
+ * @author 2017. 6. 18. 오후 12:51:55 jeong
+ */
 @Doc("이메일 폼 디자인 방법")
 public enum EmailFormDesignType {
 	/**
@@ -29,19 +34,27 @@ public enum EmailFormDesignType {
 	 * @since 2016. 4. 26. 오전 10:14:41
 	 */
 	@Deprecated()
-	WARNNING("warnning.html"); // $NON-NLS-2$ //$NON-NLS-1$
+	WARNNING("warnning.html"); //$NON-NLS-1$
 
+	/**
+	 * 기본 위치
+	 */
 	private static final String BASE_LOCATION = "src/main/resources/email/"; //$NON-NLS-1$
 
+	/**
+	 * 파일 이름
+	 */
 	private final File designFile;
 
 	/**
-	 * EmailFormDesignType 클래스의 새 인스턴스를 초기화 합니다.
+	 * {@link EmailFormDesignType} 클래스의 새 인스턴스를 초기화 합니다.
 	 *
 	 * @author jeonghyun.kum
+	 * @param fileName
+	 *            파일 이름
 	 * @since 2016. 4. 26. 오전 10:14:13
 	 */
-	private EmailFormDesignType(final String fileName) {
+	EmailFormDesignType(final String fileName) {
 		this.designFile = new File(EmailFormDesignType.BASE_LOCATION + fileName);
 	}
 
@@ -54,6 +67,7 @@ public enum EmailFormDesignType {
 	 * @return designFile
 	 */
 	public File getDesignFile() {
+
 		return this.designFile;
 	}
 

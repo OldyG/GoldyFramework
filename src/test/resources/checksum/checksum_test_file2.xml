@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!DOCTYPE xml>
+<repository visibleAnotherVersion="true">
+    <version name="1.0.0.0" creator="33" createTime="2016-06-14 14:58:01">
+        <group name="Windows 7 and later" visibleGroup="true" visibleGroupName="true">
+            <file name="asdlkfjd&quot;sklfjls&quot;dkf&gt;&lt;j.zip">
+                <realName>test.zip</realName>
+                <uploader>33</uploader>
+                <UploadTime>2016-06-14 14:58:01</UploadTime>
+                <description>안녕하세요</description>
+                <downloadName>sdfdsf</downloadName>
+                <buttonName>temp</buttonName>
+                <buttonWidth>300px</buttonWidth>
+            </file>
+        </group>
+    </version>
+</repository>

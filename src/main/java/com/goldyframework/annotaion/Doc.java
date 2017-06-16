@@ -1,5 +1,5 @@
 /**
- * FileName : Doc.java
+ * FileName : {@link Doc}.java
  * Created : 2017. 4. 10.
  * Author : jeong
  * Summary :
@@ -23,7 +23,7 @@ import java.lang.annotation.Target;
 @Target({ ElementType.METHOD, ElementType.TYPE, ElementType.FIELD, ElementType.PARAMETER, ElementType.PACKAGE })
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Doc {
-	
+
 	/**
 	 * 이 코드를 생성한 개발자
 	 *
@@ -31,7 +31,7 @@ public @interface Doc {
 	 * @since 2016. 7. 11. 오후 2:32:41
 	 */
 	String author() default "";
-	
+
 	/**
 	 * 문서화 순서를 정의합니다.<br>
 	 * 작은 숫자가 가장 우선순위가 높습니다.<br>
@@ -41,7 +41,7 @@ public @interface Doc {
 	 * @since 2016. 7. 13. 오후 10:04:03
 	 */
 	int order() default Integer.MAX_VALUE;
-	
+
 	/**
 	 * 이 코드를 생성한 시간
 	 *
@@ -49,7 +49,7 @@ public @interface Doc {
 	 * @since 2016. 7. 11. 오후 2:32:39
 	 */
 	String since() default "";
-	
+
 	/**
 	 * 코드 설명
 	 * 여러 줄로 나눌 경우, 배열로 구분합니다.
@@ -61,5 +61,5 @@ public @interface Doc {
 	 * @since 2016. 7. 11. 오후 2:32:37
 	 */
 	String value();
-	
+
 }

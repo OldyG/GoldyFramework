@@ -1,5 +1,5 @@
 /**
- * FileName : FileNaming.java
+ * FileName : {@link FileNaming}.java
  * Created : 2017. 4. 10.
  * Author : jeong
  * Summary :
@@ -9,8 +9,26 @@
  */
 package com.goldyframework.repository.filenaming;
 
+/**
+ * 파일 이름 생성 인터페이스
+ *
+ * @author 2017. 6. 18. 오후 1:34:22 jeong
+ */
+@FunctionalInterface
 public interface FileNaming {
-
+	
+	/**
+	 * 저장경로를 생성한다
+	 *
+	 * @author 2017. 6. 18. 오후 1:34:29 jeong
+	 * @param directory
+	 *            디렉토리
+	 * @param baseName
+	 *            기본 이름
+	 * @param extension
+	 *            확장자
+	 * @return 생성된 저장 경로
+	 */
 	String generageSavePath(String directory, String baseName, String extension);
-
+	
 }

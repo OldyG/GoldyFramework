@@ -1,5 +1,5 @@
 /**
- * FileName : ShareFunction.java
+ * FileName : {@link ShareFunction}.java
  * Created : 2017. 4. 10.
  * Author : jeong
  * Summary :
@@ -25,8 +25,12 @@ import org.slf4j.LoggerFactory;
 
 import com.goldyframework.Prop;
 
-
-public class ShareFunction {
+/**
+ * 공유 함수 Utils
+ *
+ * @author 2017. 6. 18. 오후 2:41:41 jeong
+ */
+public final class ShareFunction {
 
 	/**
 	 * slf4j Logger
@@ -36,31 +40,81 @@ public class ShareFunction {
 	 */
 	private static final Logger LOGGER = LoggerFactory.getLogger(ShareFunction.class);
 
-	public static int calculateRemaingDay(final Date endDate) {
+	/**
+	 * 주어진 날짜가 오늘날짜로 몇일이 남았는지 계산합니다.
+	 *
+	 * @author 2017. 6. 18. 오후 2:41:50 jeong
+	 * @param date
+	 *            확인 날짜
+	 * @return 남은 날
+	 */
+	public static int calculateRemaingDay(final Date date) {
 
-		final long diff = calculateRemaingTime(endDate);
+		final long diff = calculateRemaingTime(date);
 		final int day = (int) (diff / (1000 * 60 * 60 * 24));
 		return day;
 	}
 
-	public static int calculateRemaingDay(final String endDate, final String format) throws ParseException {
+	/**
+	 * 문자열로 작성된 Date가 오늘날짜 기준으로 몇일이 남았는지 계산합니다.
+	 *
+	 * @author 2017. 6. 18. 오후 2:43:13 jeong
+	 * @param stringDate
+	 *            문자열 날짜
+	 * @param format
+	 *            포맷
+	 * @return 남은 날
+	 * @throws ParseException
+	 *             날짜가 포맷에 맞지 않는 경우 예외 발생
+	 */
+	public static int calculateRemaingDay(final String stringDate, final String format) throws ParseException {
 
 		final SimpleDateFormat sdf = new SimpleDateFormat(format);
-		return ShareFunction.calculateRemaingDay(sdf.parse(endDate));
+		return ShareFunction.calculateRemaingDay(sdf.parse(stringDate));
 	}
 
-	public static long calculateRemaingTime(final Date endDate) {
+	/**
+	 * 주어진 날짜가 오늘날짜로 몇 밀리초가 남았는지 계산합니다.
+	 *
+	 * @author 2017. 6. 18. 오후 2:44:12 jeong
+	 * @param date
+	 *            확인 날짜
+	 * @return 밀리초
+	 */
+	public static long calculateRemaingTime(final Date date) {
 
 		final Date currentDate = new Date();
-		final long diff = endDate.getTime() - currentDate.getTime();
+		final long diff = date.getTime() - currentDate.getTime();
 		return diff;
 	}
 
+	/**
+	 * 주어진 문자열의 개행을 HTML의 개행(<br/>
+	 * )로 변경합니다.
+	 *
+	 * @author 2017. 6. 18. 오후 2:45:02 jeong
+	 * @param data
+	 *            변경 대상 문자열
+	 * @return 변경 된 문자열
+	 */
 	public static String convertNewLineToBrTag(final String data) {
 
 		return data.replaceAll("(\r\n|\n)", "<br />"); //$NON-NLS-1$//$NON-NLS-2$
 	}
 
+	/**
+	 * 주어진 클래스 타입에 값을 초기화합니다.
+	 * (Enum, Date, 외 모든 객체 지원)
+	 *
+	 * @author 2017. 6. 18. 오후 2:45:34 jeong
+	 * @param paramType
+	 *            파라미터 타입
+	 * @param value
+	 *            값
+	 * @return 값이 초기화 된 객체
+	 * @throws ParseException
+	 *             Date 작업을 수행 중 예외 발생
+	 */
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public static Object mappingParamType(final Class<?> paramType, final String value) throws ParseException {
 
@@ -69,13 +123,21 @@ public class ShareFunction {
 		} else if (paramType.equals(Date.class)) {
 			final SimpleDateFormat dateFormat = new SimpleDateFormat(Prop.DATE_FORMAT);
 			return dateFormat.parse(value);
-		} else {
-			final PropertyEditor editor = PropertyEditorManager.findEditor(paramType);
-			editor.setAsText(value);
-			return editor.getValue();
 		}
+
+		final PropertyEditor editor = PropertyEditorManager.findEditor(paramType);
+		editor.setAsText(value);
+		return editor.getValue();
 	}
 
+	/**
+	 * {@link Annotation}에 할당된 값을 문자열로 출력합니다.
+	 *
+	 * @author 2017. 6. 18. 오후 2:48:08 jeong
+	 * @param anno
+	 *            출력대상 {@link Annotation}
+	 * @return 결과 문자열
+	 */
 	public static String toString(final Annotation anno) {
 
 		final StringBuilder builder = new StringBuilder();
@@ -95,7 +157,7 @@ public class ShareFunction {
 				} else {
 					builder.append(value);
 				}
-				if (deli.equals("")) { //$NON-NLS-1$
+				if ("".equals(deli)) { //$NON-NLS-1$
 					deli = ", "; //$NON-NLS-1$
 				}
 			} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
@@ -106,12 +168,12 @@ public class ShareFunction {
 	}
 
 	/**
-	 * ShareFunction 클래스의 새 인스턴스를 초기화 합니다.
+	 * {@link ShareFunction} 클래스의 새 인스턴스를 초기화 합니다.
 	 *
 	 * @author jeong
 	 * @since 2017. 5. 22. 오후 9:43:33
 	 */
-	public ShareFunction() {
-		super();
+	private ShareFunction() {
+		throw new IllegalStateException("Utility class"); //$NON-NLS-1$
 	}
 }

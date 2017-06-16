@@ -1,5 +1,5 @@
 /**
- * FileName : Email.java
+ * FileName : {@link Email}.java
  * Created : 2017. 4. 10.
  * Author : jeong
  * Summary :
@@ -12,18 +12,14 @@ package com.goldyframework.email;
 import java.io.UnsupportedEncodingException;
 import java.util.Collection;
 import java.util.Date;
-import java.util.concurrent.Callable;
 
 import javax.activation.DataHandler;
 import javax.activation.DataSource;
 import javax.activation.FileDataSource;
 import javax.mail.Address;
-import javax.mail.Authenticator;
 import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.Multipart;
-import javax.mail.PasswordAuthentication;
-import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
@@ -36,29 +32,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Component;
 
-import com.goldyframework.validator.ValidateException;
+import com.goldyframework.Prop;
+import com.goldyframework.email.model.AttachmentModel;
+import com.goldyframework.email.model.SendModel;
+import com.goldyframework.email.validator.SendModelValidator;
+import com.google.common.annotations.VisibleForTesting;
 
+/**
+ * 이메일 전송 도구
+ *
+ * @author 2017. 6. 18. 오후 12:41:21 jeong
+ */
 @Component
 public class Email {
-
-	static class EmailAuthenticator extends Authenticator {
-
-		private final String id;
-
-		private final String pw;
-
-		public EmailAuthenticator(final String id, final String pw) {
-			this.id = id;
-			this.pw = pw;
-		}
-
-		@Override
-		protected PasswordAuthentication getPasswordAuthentication() {
-
-			return new PasswordAuthentication(this.id, this.pw);
-		}
-	}
-
+	
 	/**
 	 * slf4j Logger
 	 *
@@ -66,31 +53,49 @@ public class Email {
 	 * @since 2017. 5. 22. 오후 9:20:02
 	 */
 	private static final Logger LOGGER = LoggerFactory.getLogger(Email.class);
-
-	private static Multipart convertMultipart(final String content,
-		final Collection<Attachment> file) throws MessagingException, UnsupportedEncodingException {
-
+	
+	/**
+	 * 이메일 본문에 첨부파일을 통합하여 반환합니다.
+	 *
+	 * @author 2017. 6. 18. 오후 12:41:27 jeong
+	 * @param content
+	 *            메일 본문
+	 * @param file
+	 *            파일
+	 * @return 이메일 본문 및 첨부파일 포함 객체 {@link Multipart}
+	 * @throws MessagingException
+	 *             The base class for all exceptions thrown by the Messaging classes
+	 * @throws UnsupportedEncodingException
+	 *             The Character Encoding is not supported.
+	 */
+	private static Multipart convertMultipart(final String content, final Collection<AttachmentModel> file)
+		throws MessagingException, UnsupportedEncodingException {
+		
 		final Multipart multiPart = new MimeMultipart();
-
-		for (final Attachment attachment : file) {
+		
+		for (final AttachmentModel attachment : file) {
 			final MimeBodyPart filePart = new MimeBodyPart();
 			final DataSource data = new FileDataSource(attachment.getFile());
 			filePart.setDataHandler(new DataHandler(data));
-			filePart.setFileName(new String(attachment.getFileName().getBytes("UTF-8"), "ISO-8859-1")); //$NON-NLS-1$//$NON-NLS-2$
+			
+			filePart.setFileName(new String(attachment.getFileName().getBytes(Prop.DEFAULT_CHARSET), "ISO-8859-1")); //$NON-NLS-1$
 			multiPart.addBodyPart(filePart);
 		}
 		final MimeBodyPart contentPart = new MimeBodyPart();
 		contentPart.setContent(content, "text/html; charset=utf-8"); //$NON-NLS-1$
 		multiPart.addBodyPart(contentPart);
-
+		
 		return multiPart;
 	}
-
+	
+	/**
+	 * 이메일 전송 대리자
+	 */
 	@Autowired
 	private JavaMailSender mailSender;
-
+	
 	/**
-	 * Email 클래스의 새 인스턴스를 초기화 합니다.
+	 * {@link Email} 클래스의 새 인스턴스를 초기화 합니다.
 	 *
 	 * @author jeong
 	 * @since 2017. 4. 10. 오후 9:32:22
@@ -98,30 +103,42 @@ public class Email {
 	public Email() {
 		super();
 	}
-
-	private MimeMessage createMimeMessage(
-		final EmailTransmissionProperty property) throws MessagingException, UnsupportedEncodingException {
-
+	
+	/**
+	 * 이메일 전송 데이터를 생성한다.
+	 *
+	 * @author 2017. 6. 18. 오후 12:44:03 jeong
+	 * @param model
+	 *            이메일 전송 모델
+	 * @return 이메일 전송 데이터 {@link MimeMessage}
+	 * @throws MessagingException
+	 *             The base class for all exceptions thrown by the Messaging classes
+	 * @throws UnsupportedEncodingException
+	 *             UnsupportedEncodingException
+	 */
+	@VisibleForTesting
+	MimeMessage createMimeMessage(final SendModel model) throws MessagingException, UnsupportedEncodingException {
+		
 		final MimeMessage msg = this.mailSender.createMimeMessage();
 		msg.setHeader("Content-Type", "text/html; charset=utf-8"); //$NON-NLS-1$//$NON-NLS-2$
 		msg.setSentDate(new Date());
-		msg.setFrom(property.getFrom());
+		msg.setFrom(model.getFrom());
 		msg.setReplyTo(new Address[] {
-				property.getFrom()
+				model.getFrom()
 		});
-
+		
 		msg.setRecipients(Message.RecipientType.TO,
-			property.getTo().toArray(new InternetAddress[property.getTo().size()]));
-		msg.setSubject(MimeUtility.encodeText(property.getSubject(), "utf-8", "B")); //$NON-NLS-1$//$NON-NLS-2$
-
-		if ((property.getCc() != null) && (property.getCc().isEmpty())) {
+			model.getTo().toArray(new InternetAddress[model.getTo().size()]));
+		msg.setSubject(MimeUtility.encodeText(model.getSubject(), Prop.DEFAULT_CHARSET.name(), "B")); //$NON-NLS-1$
+		
+		if ((model.getCc() != null) && (model.getCc().isEmpty())) {
 			msg.setRecipients(Message.RecipientType.CC,
-				property.getCc().toArray(new InternetAddress[property.getCc().size()]));
+				model.getCc().toArray(new InternetAddress[model.getCc().size()]));
 		}
-		msg.setContent(convertMultipart(property.getText(), property.getFile()), "text/html"); //$NON-NLS-1$
+		msg.setContent(convertMultipart(model.getText(), model.getFile()), "text/html"); //$NON-NLS-1$
 		return msg;
 	}
-
+	
 	/**
 	 * 작성된 propery항목으로 이메일을 전송합니다.
 	 *
@@ -129,55 +146,22 @@ public class Email {
 	 * @since 2016. 4. 26. 오후 12:05:43
 	 * @param property
 	 *            전송 이메일 폼
-	 * @return 전송 결과
 	 * @throws MessagingException
 	 *             이메일 전송 실패 오류
 	 * @throws UnsupportedEncodingException
 	 *             이메일 전송 실패 오류
 	 */
-	public void send(final EmailTransmissionProperty property) throws MessagingException, UnsupportedEncodingException {
-
-		this.sendByGoldyServer(property);
-	}
-
-	private void sendByGoldyServer(
-		final EmailTransmissionProperty property) throws MessagingException, UnsupportedEncodingException {
-
+	public void send(final SendModel property)
+		throws MessagingException, UnsupportedEncodingException {
+		
 		LOGGER.debug("[이메일 서버] 이메일 전송 설정 중"); //$NON-NLS-1$
-		try {
-			new EmailSendPropertyValidator().check(property);
-		} catch (final ValidateException e) {
-			LOGGER.error(e.getMessage(), e);
-			return;
-		}
-
+		new SendModelValidator().check(property);
+		
 		final MimeMessage msg = this.createMimeMessage(property);
-
+		
 		LOGGER.debug("[이메일 서버] 이메일 전송 보내는 중"); //$NON-NLS-1$
 		this.mailSender.send(msg);
 		LOGGER.debug("[이메일 서버] 이메일 전송 완료"); //$NON-NLS-1$
 	}
-}
-
-class EmailTaskSender implements Callable<String> {
-
-	private final Message msg;
-
-	/**
-	 * EmailTaskSender 클래스의 새 인스턴스를 초기화 합니다.
-	 *
-	 * @author jeonghyun.kum
-	 * @since 2016. 5. 12. 오후 6:13:14
-	 */
-	public EmailTaskSender(final Message msg) {
-		this.msg = msg;
-	}
-
-	@Override
-	public String call() throws MessagingException {
-
-		Transport.send(this.msg);
-		return "OK"; //$NON-NLS-1$
-	}
-
+	
 }

@@ -1,5 +1,5 @@
 /**
- * FileName : FixedSweeper.java
+ * FileName : {@link FixedSweeper}.java
  * Created : 2017. 4. 10.
  * Author : jeong
  * Summary :
@@ -15,8 +15,15 @@ import java.util.LinkedList;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class FixedSweeper implements ISweeper {
+import com.goldyframework.sweeper.exception.SweeperException;
 
+/**
+ * 고정 청소
+ *
+ * @author 2017. 6. 18. 오후 2:29:17 jeong
+ */
+public class FixedSweeper implements ISweeper {
+	
 	/**
 	 * slf4j Logger
 	 *
@@ -24,10 +31,14 @@ public class FixedSweeper implements ISweeper {
 	 * @since 2017. 5. 22. 오후 9:20:02
 	 */
 	private static final Logger LOGGER = LoggerFactory.getLogger(FixedSweeper.class);
-	private static final Collection<IGarbage> FIXED_GARBAGE_LIST = new LinkedList<>();
-
+	
 	/**
-	 * FixedSweeper 클래스의 새 인스턴스를 초기화 합니다.
+	 * 고정 청소 목록
+	 */
+	private static final Collection<IGarbage> FIXED_GARBAGE_LIST = new LinkedList<>();
+	
+	/**
+	 * {@link FixedSweeper} 클래스의 새 인스턴스를 초기화 합니다.
 	 *
 	 * @author jeong
 	 * @since 2017. 4. 10. 오후 9:34:40
@@ -35,13 +46,19 @@ public class FixedSweeper implements ISweeper {
 	public FixedSweeper() {
 		super();
 	}
-
+	
+	/**
+	 * {@inheritDoc}
+	 *
+	 * @author 2017. 6. 18. 오후 2:29:32 jeong
+	 */
 	@Override
 	public void run() {
+		
 		for (final IGarbage garbage : FIXED_GARBAGE_LIST) {
 			try {
 				garbage.clean();
-			} catch (final Exception e) {
+			} catch (final SweeperException e) {
 				LOGGER.error(garbage.getClass().getName() + "을 청소하는 중 알수없는 문제가 발생하였습니다. 해당 클래스를 점검하시길바랍니다.", e); //$NON-NLS-1$
 				continue;
 			}

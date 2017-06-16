@@ -1,5 +1,5 @@
 /**
- * FileName : DateAdapter.java
+ * FileName : {@link DateAdapter}.java
  * Created : 2017. 4. 10.
  * Author : jeong
  * Summary :
@@ -9,17 +9,26 @@
  */
 package com.goldyframework.version;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import javax.xml.bind.annotation.adapters.XmlAdapter;
 
+/**
+ * XML 파싱 중 {@link Date} 필드 연결도구
+ *
+ * @author 2017. 6. 18. 오후 3:02:52 jeong
+ */
 public class DateAdapter extends XmlAdapter<String, Date> {
 
+	/**
+	 * 날자 포맷
+	 */
 	private final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); //$NON-NLS-1$
 
 	/**
-	 * DateAdapter 클래스의 새 인스턴스를 초기화 합니다.
+	 * {@link DateAdapter} 클래스의 새 인스턴스를 초기화 합니다.
 	 *
 	 * @author jeong
 	 * @since 2017. 4. 10. 오후 9:37:34
@@ -28,15 +37,27 @@ public class DateAdapter extends XmlAdapter<String, Date> {
 		super();
 	}
 
+	/**
+	 * {@inheritDoc}
+	 *
+	 * @author 2017. 6. 18. 오후 2:00:07 jeong
+	 */
 	@Override
 	public String marshal(final Date date) {
+
 		synchronized (this.dateFormat) {
 			return this.dateFormat.format(date);
 		}
 	}
 
+	/**
+	 * {@inheritDoc}
+	 *
+	 * @author 2017. 6. 18. 오후 2:00:06 jeong
+	 */
 	@Override
-	public Date unmarshal(final String date) throws Exception {
+	public Date unmarshal(final String date) throws ParseException {
+
 		synchronized (this.dateFormat) {
 			return this.dateFormat.parse(date);
 		}

@@ -1,5 +1,5 @@
 /**
- * FileName : IGarbage.java
+ * FileName : {@link IGarbage}.java
  * Created : 2017. 4. 10.
  * Author : jeong
  * Summary :
@@ -9,6 +9,14 @@
  */
 package com.goldyframework.sweeper;
 
+import com.goldyframework.sweeper.exception.SweeperException;
+
+/**
+ * 쓰레기 모델 인터페이스
+ *
+ * @author 2017. 6. 18. 오후 2:29:37 jeong
+ */
+@FunctionalInterface
 public interface IGarbage {
 
 	/**
@@ -18,6 +26,7 @@ public interface IGarbage {
 	 * @author jeong
 	 * @since 2016. 7. 9. 오후 12:20:39
 	 * @throws Exception
+	 *             청소 예외사항
 	 */
-	void clean() throws Exception;
+	void clean() throws SweeperException;
 }

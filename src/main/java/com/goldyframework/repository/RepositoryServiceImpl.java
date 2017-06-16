@@ -1,5 +1,5 @@
 /**
- * FileName : RepositoryServiceImpl.java
+ * FileName : {@link RepositoryServiceImpl}.java
  * Created : 2017. 4. 10.
  * Author : jeong
  * Summary :
@@ -23,59 +23,102 @@ import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.goldyframework.Prop;
+import com.goldyframework.does.Because;
+import com.goldyframework.does.Does;
+import com.goldyframework.repository.exception.NotRegisteredFileException;
 import com.goldyframework.response.Response;
 
+/**
+ * {@link RepositoryService} 구현 내용
+ *
+ * @author 2017. 6. 18. 오후 1:53:14 jeong
+ */
 public class RepositoryServiceImpl implements RepositoryService {
-
+	
 	/**
 	 * slf4j Logger
 	 *
 	 * @author jeong
 	 * @since 2017. 5. 22. 오후 9:20:02
 	 */
-	@SuppressWarnings("unused")
 	private static final Logger LOGGER = LoggerFactory.getLogger(RepositoryServiceImpl.class);
-
+	
+	/**
+	 * 저장소 바디
+	 */
 	private final RepositoryBody repository;
-
+	
+	/**
+	 * {@link RepositoryServiceImpl} 클래스의 새 인스턴스를 초기화 합니다.
+	 *
+	 * @author 2017. 6. 18. 오후 1:53:45 jeong
+	 * @param repository
+	 *            저장소 바디
+	 */
 	@Autowired
 	public RepositoryServiceImpl(final RepositoryBody repository) {
 		this.repository = repository;
 	}
-
+	
+	/**
+	 * {@inheritDoc}
+	 *
+	 * @author 2017. 6. 18. 오후 1:55:26 jeong
+	 */
+	@Override
 	public File change(final MultipartFile multipartFile) throws SQLException, RepositoryException, IOException {
-
+		
 		this.delete();
 		return this.save(multipartFile);
 	}
-
+	
+	/**
+	 * {@inheritDoc}
+	 *
+	 * @author 2017. 6. 18. 오후 1:55:27 jeong
+	 */
 	@Override
 	public void delete() throws SQLException, RepositoryException {
-
+		
 		try {
 			final File file = this.getFile();
-			file.delete();
+			final boolean success = file.delete();
+			Does.notUse(success, Because.UNNECESSARY_PROCESSING);
 		} catch (final NotRegisteredFileException e) {
+			LOGGER.trace("제거할 파일이 없어 진행하지 않음", e); //$NON-NLS-1$
 			return;
 		}
 	}
-
+	
+	/**
+	 * {@inheritDoc}
+	 *
+	 * @author 2017. 6. 18. 오후 1:55:29 jeong
+	 */
 	@Override
-	public ResponseEntity<byte[]> displayImage() throws SQLException, RepositoryException, NotRegisteredFileException, IOException {
-
+	public ResponseEntity<byte[]> displayImage()
+		throws SQLException, RepositoryException, NotRegisteredFileException, IOException {
+		
 		return Response.image(this.getFile());
 	}
-
+	
+	/**
+	 * {@inheritDoc}
+	 *
+	 * @author 2017. 6. 18. 오후 1:55:30 jeong
+	 */
 	@SuppressWarnings("resource")
 	@Override
-	public ResponseEntity<InputStreamResource> download() throws SQLException, RepositoryException, NotRegisteredFileException, IOException {
-
+	public ResponseEntity<InputStreamResource> download()
+		throws SQLException, RepositoryException, NotRegisteredFileException, IOException {
+		
 		final File file = this.getFile();
-		final String fileName = this.getDownloadName();
-		final String docName = new String(fileName.getBytes("UTF-8"), "ISO-8859-1"); //$NON-NLS-1$//$NON-NLS-2$
+		final String fileName = this.repository.getDownloadName();
+		final String docName = new String(fileName.getBytes(Prop.DEFAULT_CHARSET), "ISO-8859-1"); //$NON-NLS-1$
 		final String contentDispositionHeader = "attachment; filename=\"" + docName + "\""; //$NON-NLS-1$//$NON-NLS-2$
 		final InputStreamResource body = new InputStreamResource(new FileInputStream(file));
-
+		
 		return ResponseEntity
 			.ok()
 			.header("Content-Disposition", contentDispositionHeader) //$NON-NLS-1$
@@ -84,57 +127,80 @@ public class RepositoryServiceImpl implements RepositoryService {
 			.header("Content-Transfer-Encoding", "binary;") //$NON-NLS-1$//$NON-NLS-2$
 			.body(body);
 	}
-
-	private String getDownloadName() throws SQLException, RepositoryException, NotRegisteredFileException {
-
-		return this.repository.getDownloadName();
-	}
-
+	
+	/**
+	 * {@inheritDoc}
+	 *
+	 * @author 2017. 6. 18. 오후 1:55:59 jeong
+	 */
 	@Override
 	public File getFile() throws SQLException, RepositoryException, NotRegisteredFileException {
-
+		
 		return this.repository.getRegisteredFile();
 	}
-
+	
+	/**
+	 * {@inheritDoc}
+	 *
+	 * @author 2017. 6. 18. 오후 1:56:05 jeong
+	 */
 	@Override
 	public byte[] readToByteArray() throws SQLException, RepositoryException, NotRegisteredFileException, IOException {
-
+		
 		final File file = this.getFile();
 		return FileUtils.readFileToByteArray(file);
 	}
-
+	
+	/**
+	 * {@inheritDoc}
+	 *
+	 * @author 2017. 6. 18. 오후 1:56:07 jeong
+	 */
 	@Override
 	public String readToString() throws SQLException, RepositoryException, NotRegisteredFileException, IOException {
-
+		
 		final File file = this.getFile();
-		return FileUtils.readFileToString(file);
+		return FileUtils.readFileToString(file, Prop.DEFAULT_CHARSET.name());
 	}
-
+	
+	/**
+	 * {@inheritDoc}
+	 *
+	 * @author 2017. 6. 18. 오후 1:56:08 jeong
+	 */
 	@Override
 	public File save(final MultipartFile multipartFile) throws IOException {
-
+		
 		final String extension = FilenameUtils.getExtension(multipartFile.getOriginalFilename());
 		final String savePath = this.repository.generateSavePath(extension);
-
+		
 		final File file = new File(savePath);
-		file.createNewFile();
+		final boolean success = file.createNewFile();
+		Does.notUse(success, Because.UNNECESSARY_PROCESSING);
 		multipartFile.transferTo(file);
 		return file;
 	}
-
+	
+	/**
+	 * {@inheritDoc}
+	 *
+	 * @author 2017. 6. 18. 오후 1:56:09 jeong
+	 */
 	@Override
 	public File write(final String content) throws SQLException, RepositoryException, IOException {
-
+		
 		File file = null;
 		try {
 			file = this.getFile();
-		} catch (final NotRegisteredFileException e1) {
+		} catch (final NotRegisteredFileException e) {
+			LOGGER.trace("파일이 없어 신규 파일을 생성합니다.", e); //$NON-NLS-1$
 			final String savePath = this.repository.generateSavePath();
 			file = new File(savePath);
 		}
-		file.createNewFile();
-		FileUtils.writeStringToFile(file, content, "UTF-8"); //$NON-NLS-1$
+		final boolean success = file.createNewFile();
+		Does.notUse(success, Because.UNNECESSARY_PROCESSING);
+		FileUtils.writeStringToFile(file, content, Prop.DEFAULT_CHARSET.name());
 		return file;
 	}
-
+	
 }

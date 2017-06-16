@@ -1,5 +1,5 @@
 /**
- * FileName : ISweeper.java
+ * FileName : {@link ISweeper}.java
  * Created : 2017. 4. 10.
  * Author : jeong
  * Summary :
@@ -9,6 +9,22 @@
  */
 package com.goldyframework.sweeper;
 
+import com.goldyframework.sweeper.exception.SweeperException;
+
+/**
+ * 청소 인터페이스
+ *
+ * @author 2017. 6. 18. 오후 2:30:00 jeong
+ */
+@FunctionalInterface
 public interface ISweeper {
+	
+	/**
+	 * 청소 유형에 따른 실행 방법 구현
+	 *
+	 * @author 2017. 6. 18. 오후 2:30:07 jeong
+	 * @throws SweeperException
+	 *             청소 중 발생한 예외사항
+	 */
 	void run() throws SweeperException;
 }

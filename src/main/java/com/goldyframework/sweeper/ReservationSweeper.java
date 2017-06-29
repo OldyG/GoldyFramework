@@ -37,7 +37,7 @@ import com.goldyframework.sweeper.reservation.ReservationGarbageBinder;
  * @author 2017. 6. 18. 오후 2:30:30 jeong
  */
 public class ReservationSweeper implements ISweeper {
-
+	
 	/**
 	 * slf4j Logger
 	 *
@@ -45,7 +45,7 @@ public class ReservationSweeper implements ISweeper {
 	 * @since 2017. 5. 22. 오후 9:20:02
 	 */
 	private static final Logger LOGGER = LoggerFactory.getLogger(ReservationSweeper.class);
-
+	
 	/**
 	 * 예약 쓰레기를 추가한다.
 	 *
@@ -57,14 +57,14 @@ public class ReservationSweeper implements ISweeper {
 	 */
 	public static void addReservationGarbage(final File garbageDirectory, final AbstractReservationGarbage garbage)
 		throws SweeperException {
-
+		
 		try {
 			ReservationGarbageBinder.saveGarbage(garbageDirectory, garbage);
 		} catch (IOException | SQLException | RepositoryException e) {
 			throw new SweeperException(e);
 		}
 	}
-
+	
 	/**
 	 * 청소 대상 쓰레기를 추출한다.
 	 *
@@ -75,7 +75,7 @@ public class ReservationSweeper implements ISweeper {
 	 */
 	private static Map<File, AbstractReservationGarbage> extractCleaningTargetGarbage(
 		final Map<File, AbstractReservationGarbage> allReservationGarbage) {
-
+		
 		final Map<File, AbstractReservationGarbage> returnTarget = new HashMap<>();
 		for (final Entry<File, AbstractReservationGarbage> map : allReservationGarbage.entrySet()) {
 			if (map.getValue().isCleaningTarget()) {
@@ -84,7 +84,7 @@ public class ReservationSweeper implements ISweeper {
 		}
 		return returnTarget;
 	}
-
+	
 	/**
 	 * childDirectoryName에 해당하는 자식 디렉토리를 반환한다.
 	 *
@@ -96,20 +96,20 @@ public class ReservationSweeper implements ISweeper {
 	 * @return childDirectoryName에 해당하는 파일
 	 */
 	private static File getChildDirectory(final File baseDirectory, final String childDirectoryName) {
-
+		
 		final String absolutePath = baseDirectory.getAbsolutePath();
-
+		
 		final String fileName = FilenameUtils.getName(absolutePath);
-
+		
 		final String currentDirectoryPath = FilenameUtils.getFullPath(absolutePath);
 		final File failureDirectory = new File(currentDirectoryPath, childDirectoryName);
 		if (failureDirectory.exists() == false) {
 			failureDirectory.mkdirs();
 		}
-
+		
 		return new File(failureDirectory, fileName);
 	}
-
+	
 	/**
 	 * 청소 작업이 완료된 파일을 Done 폴더로 이동합니다.
 	 *
@@ -118,12 +118,12 @@ public class ReservationSweeper implements ISweeper {
 	 *            청소파일
 	 */
 	private static void moveToDoneDriectory(final File garbageFile) {
-
+		
 		final File movingTarget = getChildDirectory(garbageFile, "Done"); //$NON-NLS-1$
 		final boolean success = garbageFile.renameTo(movingTarget);
 		Does.notUse(success, Because.UNNECESSARY_PROCESSING);
 	}
-
+	
 	/**
 	 * 청소 작업이 실패하여 파일을 Failure 폴더로 이동합니다.
 	 *
@@ -132,14 +132,14 @@ public class ReservationSweeper implements ISweeper {
 	 *            청소 파일
 	 */
 	private static void moveToFailureDirectory(final File garbageFile) {
-
+		
 		final File movingTarget = getChildDirectory(garbageFile, "Failure"); //$NON-NLS-1$
 		final boolean success = garbageFile.renameTo(movingTarget);
 		Does.notUse(success, Because.UNNECESSARY_PROCESSING);
 	}
-
+	
 	private final File garbageDirectory;
-
+	
 	/**
 	 * {@link ReservationSweeper} 클래스의 새 인스턴스를 초기화 합니다.
 	 *
@@ -151,7 +151,7 @@ public class ReservationSweeper implements ISweeper {
 	public ReservationSweeper(final File garbageDirectory) {
 		this.garbageDirectory = garbageDirectory;
 	}
-
+	
 	/**
 	 * 청소 작업을 진행합니다.
 	 *
@@ -162,7 +162,7 @@ public class ReservationSweeper implements ISweeper {
 	 *            청소 대상 쓰레기
 	 */
 	private void doClean(final File garbageFile, final AbstractReservationGarbage garbage) {
-
+		
 		Does.notUse(this, Because.WANT_NOT_STATIC_FUNCTION);
 		try {
 			garbage.clean();
@@ -176,7 +176,7 @@ public class ReservationSweeper implements ISweeper {
 			moveToDoneDriectory(garbageFile);
 		}
 	}
-
+	
 	/**
 	 * 모든 예약 쓰레기를 반환한다.
 	 *
@@ -186,20 +186,20 @@ public class ReservationSweeper implements ISweeper {
 	 *             파일을 읽어오는 중 예외 사항
 	 */
 	private Map<File, AbstractReservationGarbage> getAllReservationGarbage() throws IOException {
-
+		
 		final List<File> garbageFiles = (List<File>) this.getGarbageFiles();
 		final Map<File, AbstractReservationGarbage> returnTarget = new HashMap<>();
-
+		
 		for (final File file : garbageFiles) {
 			if (file.isFile()) {
 				final AbstractReservationGarbage garbage = ReservationGarbageBinder.readGarbage(file);
 				returnTarget.put(file, garbage);
 			}
 		}
-
+		
 		return returnTarget;
 	}
-
+	
 	/**
 	 * 모든 예약 쓰레기 파일을 가져온다.
 	 *
@@ -207,10 +207,10 @@ public class ReservationSweeper implements ISweeper {
 	 * @return 쓰레기 파일 리스트
 	 */
 	private Collection<File> getGarbageFiles() {
-
+		
 		return Arrays.asList(this.garbageDirectory.listFiles());
 	}
-
+	
 	/**
 	 * {@inheritDoc}
 	 *
@@ -218,27 +218,28 @@ public class ReservationSweeper implements ISweeper {
 	 */
 	@Override
 	public void run() throws SweeperException {
-
+		
 		try {
 			// 전체 삭제항목을 가져옵니다.
 			final Map<File, AbstractReservationGarbage> allReservationGarbage = this.getAllReservationGarbage();
-
+			
 			// 삭제 대상에 포함된 항목을 추출합니다.
 			final Map<File, AbstractReservationGarbage> cleaningTarget = extractCleaningTargetGarbage(
 				allReservationGarbage);
-
-			LOGGER.debug(MessageFormat.format("전체 예약 항목 : {0}, 삭제 대상 항목 : {1}", allReservationGarbage.size(), //$NON-NLS-1$
-				cleaningTarget.size()));
-
+			
+			final String message = MessageFormat.format("전체 예약 항목 : {0}, 삭제 대상 항목 : {1}", //$NON-NLS-1$
+				allReservationGarbage.size(), cleaningTarget.size());
+			LOGGER.debug(message);
+			
 			for (final Entry<File, AbstractReservationGarbage> map : cleaningTarget.entrySet()) {
 				final File garbageFile = map.getKey();
 				final AbstractReservationGarbage garbage = map.getValue();
-
+				
 				this.doClean(garbageFile, garbage);
 			}
 		} catch (final IOException e) {
 			throw new SweeperException(e);
 		}
 	}
-
+	
 }

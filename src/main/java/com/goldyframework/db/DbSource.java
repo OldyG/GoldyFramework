@@ -494,7 +494,10 @@ public class DbSource {
 		try {
 			final int result = this.queryUpdateSQL(sql);
 			if ((result > 0) == false) {
-				final Collection<String> notList = Arrays.asList("commit;", "begin work;", "rollback work;"); //$NON-NLS-1$//$NON-NLS-2$//$NON-NLS-3$
+				final Collection<String> notList = Arrays.asList(
+					"commit;", //$NON-NLS-1$
+					"begin work;", //$NON-NLS-1$
+					"rollback work;"); //$NON-NLS-1$
 				if (notList.contains(sql) == false) {
 					throw new SQLException("Fail for " + sql); //$NON-NLS-1$
 				}

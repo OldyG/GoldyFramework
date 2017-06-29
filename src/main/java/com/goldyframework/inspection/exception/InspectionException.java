@@ -1,5 +1,5 @@
 /**
- * FileName : {@link ValidateException}.java
+ * FileName : {@link InspectionException}.java
  * Created : 2017. 4. 10.
  * Author : jeong
  * Summary :
@@ -36,7 +36,7 @@ public class InspectionException extends RuntimeException {
 	private static final long serialVersionUID = 2075811842785280153L;
 	
 	/**
-	 * {@link ValidateException} 클래스의 새 인스턴스를 초기화 합니다.
+	 * {@link InspectionException} 클래스의 새 인스턴스를 초기화 합니다.
 	 *
 	 * @author jeong
 	 * @since 2017. 5. 22. 오후 9:35:54
@@ -49,7 +49,7 @@ public class InspectionException extends RuntimeException {
 	}
 	
 	/**
-	 * {@link ValidateException} 클래스의 새 인스턴스를 초기화 합니다.
+	 * {@link InspectionException} 클래스의 새 인스턴스를 초기화 합니다.
 	 *
 	 * @author jeong
 	 * @since 2017. 5. 22. 오후 9:35:54

@@ -1,9 +1,9 @@
 /**
- * FileName : {@link StringAssert}.java
+ * FileName : {@link StringInspection}.java
  * Created : 2017. 6. 18. 오전 1:55:29
  * Author : jeong
  * Summary :
- * Copyright (C) 2017 Goldy Project Inc. All rights reserved.
+ * Copyright (C) 2017 Goldy Project. All rights reserved.
  * 이 문서의 모든 저작권 및 지적 재산권은 (주)Goldy Project에게 있습니다.
  * 이 문서의 어떠한 부분도 허가 없이 복제 또는 수정 하거나, 전송할 수 없습니다.
  */
@@ -323,7 +323,8 @@ public final class StringInspection {
 
 		final int behindIndex = target.substring(frontIndex + baseStr.length()).indexOf(illegalBehind);
 		if (behindIndex != -1) {
-			throw new InspectionException(MessageFormat.format("\"{0}\"뒤엔 \"{1}\"가 포함될 수 없습니다.", baseStr, illegalBehind)); //$NON-NLS-1$
+			throw new InspectionException(
+				MessageFormat.format("\"{0}\"뒤엔 \"{1}\"가 포함될 수 없습니다.", baseStr, illegalBehind)); //$NON-NLS-1$
 		}
 	}
 
@@ -478,7 +479,9 @@ public final class StringInspection {
 
 		final int behindIndex = target.substring(frontIndex + baseStr.length()).indexOf(needBehind);
 		if (behindIndex == -1) {
-			throw new InspectionException(MessageFormat.format("\"{0}\"뒤엔 반드시 \"{1}\"가 존재해야합니다.", baseStr, needBehind)); //$NON-NLS-1$
+			throw new InspectionException(MessageFormat
+				.format("\"{0}\"뒤엔 반드시 \"{1}\"가 존재해야합니다.",  //$NON-NLS-1$
+					baseStr, needBehind));
 		}
 	}
 
@@ -518,7 +521,7 @@ public final class StringInspection {
 	}
 
 	/**
-	 * {@link StringAssert} 클래스의 새 인스턴스를 초기화 합니다.
+	 * {@link StringInspection} 클래스의 새 인스턴스를 초기화 합니다.
 	 *
 	 * @author jeong
 	 * @since 2017. 5. 22. 오후 9:45:12

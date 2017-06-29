@@ -38,8 +38,9 @@ public class ReservationGarbageRepositoryBody extends AbstractRepositoryBody {
 	}
 
 	/**
-	 * @author 2017. 6. 18. 오후 2:28:23 jeong
-	 * @return 기본 이름
+	 * {@inheritDoc}
+	 *
+	 * @author 2017. 6. 29. 오후 10:33:42 jeong
 	 */
 	@Override
 	protected String getBaseName() {
@@ -48,8 +49,9 @@ public class ReservationGarbageRepositoryBody extends AbstractRepositoryBody {
 	}
 
 	/**
-	 * @author 2017. 6. 18. 오후 2:28:28 jeong
-	 * @return 다운로드 이름
+	 * {@inheritDoc}
+	 *
+	 * @author 2017. 6. 29. 오후 10:33:34 jeong
 	 */
 	@Override
 	public String getDownloadName() {
@@ -58,8 +60,9 @@ public class ReservationGarbageRepositoryBody extends AbstractRepositoryBody {
 	}
 
 	/**
-	 * @author 2017. 6. 18. 오후 2:28:34 jeong
-	 * @return 등록된 파일 이름
+	 * {@inheritDoc}
+	 *
+	 * @author 2017. 6. 29. 오후 10:33:46 jeong
 	 */
 	@Override
 	protected String getRegisteredFileName() {
@@ -91,6 +94,7 @@ public class ReservationGarbageRepositoryBody extends AbstractRepositoryBody {
 	 */
 	@Override
 	protected String initialDirectory() {
+
 		return this.garbageDirectory.getAbsolutePath();
 	}
 

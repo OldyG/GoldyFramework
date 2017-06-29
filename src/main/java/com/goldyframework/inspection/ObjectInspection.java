@@ -1,5 +1,5 @@
 /**
- * FileName : {@link ObjectAssert}.java
+ * FileName : {@link ObjectInspection}.java
  * Created : 2017. 4. 10.
  * Author : jeong
  * Summary :
@@ -86,7 +86,7 @@ public final class ObjectInspection {
 	}
 	
 	/**
-	 * {@link ObjectAssert} 클래스의 새 인스턴스를 초기화 합니다.
+	 * {@link ObjectInspection} 클래스의 새 인스턴스를 초기화 합니다.
 	 *
 	 * @author jeong
 	 * @since 2017. 5. 22. 오후 9:44:14

@@ -99,7 +99,7 @@ public final class PasswordEncryptor {
 	private static String hashWithSalt(final CharSequence password, final byte[] saltbytes)
 		throws NoSuchAlgorithmException, InvalidKeySpecException {
 
-		final KeySpec spec = new PBEKeySpec(password.toString().toCharArray(), saltbytes, 65536, 128);
+		final KeySpec spec = new PBEKeySpec(password.toString().toCharArray(), saltbytes, 65_536, 128);
 		final SecretKeyFactory f = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1"); //$NON-NLS-1$
 		final byte[] hashbytes = f.generateSecret(spec).getEncoded();
 
@@ -120,7 +120,6 @@ public final class PasswordEncryptor {
 
 		final String[] saltAndPass = encodedPassword.split("\\$"); //$NON-NLS-1$
 		final byte[] saltBytes = DECODER.decode(saltAndPass[0]);
-		// TODO stored format check
 
 		try {
 			final String hashOfInput = hashWithSalt(rawPassword, saltBytes);

@@ -33,6 +33,7 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Component;
 
 import com.goldyframework.Prop;
+import com.goldyframework.email.exception.EmailException;
 import com.goldyframework.email.model.AttachmentModel;
 import com.goldyframework.email.model.SendModel;
 import com.goldyframework.email.validator.SendModelValidator;
@@ -78,7 +79,11 @@ public class Email {
 			final DataSource data = new FileDataSource(attachment.getFile());
 			filePart.setDataHandler(new DataHandler(data));
 			
-			filePart.setFileName(new String(attachment.getFileName().getBytes(Prop.DEFAULT_CHARSET), "ISO-8859-1")); //$NON-NLS-1$
+			filePart.setFileName(
+				new String(attachment
+					.getFileName()
+					.getBytes(Prop.DEFAULT_CHARSET),
+					"ISO-8859-1")); //$NON-NLS-1$
 			multiPart.addBodyPart(filePart);
 		}
 		final MimeBodyPart contentPart = new MimeBodyPart();
@@ -111,32 +116,35 @@ public class Email {
 	 * @param model
 	 *            이메일 전송 모델
 	 * @return 이메일 전송 데이터 {@link MimeMessage}
-	 * @throws MessagingException
-	 *             The base class for all exceptions thrown by the Messaging classes
-	 * @throws UnsupportedEncodingException
-	 *             UnsupportedEncodingException
+	 * @throws EmailException
+	 *             MimeMessage 생성 중 오류 발생
 	 */
 	@VisibleForTesting
-	MimeMessage createMimeMessage(final SendModel model) throws MessagingException, UnsupportedEncodingException {
+	MimeMessage createMimeMessage(final SendModel model) throws EmailException {
 		
 		final MimeMessage msg = this.mailSender.createMimeMessage();
-		msg.setHeader("Content-Type", "text/html; charset=utf-8"); //$NON-NLS-1$//$NON-NLS-2$
-		msg.setSentDate(new Date());
-		msg.setFrom(model.getFrom());
-		msg.setReplyTo(new Address[] {
-				model.getFrom()
-		});
-		
-		msg.setRecipients(Message.RecipientType.TO,
-			model.getTo().toArray(new InternetAddress[model.getTo().size()]));
-		msg.setSubject(MimeUtility.encodeText(model.getSubject(), Prop.DEFAULT_CHARSET.name(), "B")); //$NON-NLS-1$
-		
-		if ((model.getCc() != null) && (model.getCc().isEmpty())) {
-			msg.setRecipients(Message.RecipientType.CC,
-				model.getCc().toArray(new InternetAddress[model.getCc().size()]));
+		try {
+			msg.setHeader("Content-Type", "text/html; charset=utf-8"); //$NON-NLS-1$//$NON-NLS-2$
+			msg.setSentDate(new Date());
+			msg.setFrom(model.getFrom());
+			msg.setReplyTo(new Address[] {
+					model.getFrom()
+			});
+			
+			msg.setRecipients(Message.RecipientType.TO,
+				model.getTo().toArray(new InternetAddress[model.getTo().size()]));
+			msg.setSubject(MimeUtility.encodeText(model.getSubject(), Prop.DEFAULT_CHARSET.name(), "B")); //$NON-NLS-1$
+			
+			if ((model.getCc() != null) && (model.getCc().isEmpty())) {
+				msg.setRecipients(Message.RecipientType.CC,
+					model.getCc().toArray(new InternetAddress[model.getCc().size()]));
+			}
+			msg.setContent(convertMultipart(model.getText(), model.getFile()), "text/html"); //$NON-NLS-1$
+			return msg;
+		} catch (final MessagingException | UnsupportedEncodingException e) {
+			LOGGER.error("MimeMessage를 생성 중 오류 발생", e); //$NON-NLS-1$
+			throw new EmailException(e);
 		}
-		msg.setContent(convertMultipart(model.getText(), model.getFile()), "text/html"); //$NON-NLS-1$
-		return msg;
 	}
 	
 	/**
@@ -146,13 +154,10 @@ public class Email {
 	 * @since 2016. 4. 26. 오후 12:05:43
 	 * @param property
 	 *            전송 이메일 폼
-	 * @throws MessagingException
-	 *             이메일 전송 실패 오류
-	 * @throws UnsupportedEncodingException
+	 * @throws EmailException
 	 *             이메일 전송 실패 오류
 	 */
-	public void send(final SendModel property)
-		throws MessagingException, UnsupportedEncodingException {
+	public void send(final SendModel property) throws EmailException {
 		
 		LOGGER.debug("[이메일 서버] 이메일 전송 설정 중"); //$NON-NLS-1$
 		new SendModelValidator().check(property);

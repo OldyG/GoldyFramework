@@ -1,2 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?><templates><template autoinsert="true" context="java" deleted="false" description="Logger 자동 생성" enabled="true" name="log">${:import(org.slf4j.Logger,org.slf4j.LoggerFactory)}&#13;
+/**&#13;
+ * slf4j Logger&#13;
+ */&#13;
 private static final Logger LOGGER = LoggerFactory.getLogger(${enclosing_type}.class);</template></templates>

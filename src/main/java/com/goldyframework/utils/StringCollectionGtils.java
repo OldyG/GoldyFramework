@@ -1,5 +1,5 @@
 /**
- * FileName : {@link StringCollectionUtil}.java
+ * FileName : {@link StringCollectionGtils}.java
  * Created : 2017. 7. 2. 오전 11:47:19
  * Author : jeong
  * Summary :
@@ -7,7 +7,7 @@
  * 이 문서의 모든 저작권 및 지적 재산권은 (주)Goldy Project에게 있습니다.
  * 이 문서의 어떠한 부분도 허가 없이 복제 또는 수정 하거나, 전송할 수 없습니다.
  */
-package com.goldyframework.util;
+package com.goldyframework.utils;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
  *
  * @author 2017. 7. 2. 오전 11:47:19 jeong
  */
-public class StringCollectionUtil {
+public class StringCollectionGtils {
 
 	/**
 	 * 문자열 리스트중 patternList에 일치하는 리스트만 반환합니다.
@@ -89,13 +89,13 @@ public class StringCollectionUtil {
 	 * 예를들어 매개변수가 {"example1","example2"}리스트와 "table."가 있다면 {"table.example1","table.example2"}와 같이 변형합니다.
 	 *
 	 * @author 2017. 7. 2. 오후 1:02:44 jeong
-	 * @param stringList
-	 *            문자열 리스트
 	 * @param prepend
 	 *            앞에 덧붙는 값
+	 * @param stringList
+	 *            문자열 리스트
 	 * @return 결과
 	 */
-	public static List<String> eachPrepend(final Collection<String> stringList, final String prepend) {
+	public static List<String> eachPrepend(final String prepend, final Collection<String> stringList) {
 
 		return stringList.stream()
 			.map(str -> prepend + str)
@@ -157,7 +157,7 @@ public class StringCollectionUtil {
 			.collect(Collectors.toList());
 	}
 
-	private StringCollectionUtil() {
+	private StringCollectionGtils() {
 		throw new IllegalStateException("Utility class"); //$NON-NLS-1$
 	}
 

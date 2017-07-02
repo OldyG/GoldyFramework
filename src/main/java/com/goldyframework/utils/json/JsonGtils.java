@@ -1,5 +1,5 @@
 /**
- * FileName : {@link JsonUtil}.java
+ * FileName : {@link JsonGtils}.java
  * Created : 2017. 4. 10.
  * Author : jeong
  * Summary :
@@ -7,7 +7,7 @@
  * 이 문서의 모든 저작권 및 지적 재산권은 Goldy Project에게 있습니다.
  * 이 문서의 어떠한 부분도 허가 없이 복제 또는 수정 하거나, 전송할 수 없습니다.
  */
-package com.goldyframework.util.json;
+package com.goldyframework.utils.json;
 
 import java.io.IOException;
 
@@ -24,7 +24,7 @@ import com.google.gson.GsonBuilder;
  *
  * @author 2017. 6. 18. 오후 1:15:23 jeong
  */
-public final class JsonUtil {
+public final class JsonGtils {
 
 	/**
 	 * Jackson 객체
@@ -49,7 +49,7 @@ public final class JsonUtil {
 	/**
 	 * slf4j Logger
 	 */
-	private static final Logger LOGGER = LoggerFactory.getLogger(JsonUtil.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(JsonGtils.class);
 
 	static {
 
@@ -131,7 +131,7 @@ public final class JsonUtil {
 			return DEFAULT_GSON.toJson(object);
 		} catch (final RuntimeException e) {
 			LOGGER.error("toGson을 수행중 오류 발생", e); //$NON-NLS-1$
-			return "[ERROR] JsonUtil.toGoson"; //$NON-NLS-1$
+			return "[ERROR] JsonGtils.toGoson"; //$NON-NLS-1$
 		}
 	}
 
@@ -147,7 +147,7 @@ public final class JsonUtil {
 			return NON_ESCAPE_GSON.toJson(object);
 		} catch (final RuntimeException e) {
 			LOGGER.error("toGsonPretty을 수행중 오류 발생", e); //$NON-NLS-1$
-			return "[ERROR] JsonUtil.toGsonNonHtmlEscaping"; //$NON-NLS-1$
+			return "[ERROR] JsonGtils.toGsonNonHtmlEscaping"; //$NON-NLS-1$
 		}
 	}
 
@@ -163,7 +163,7 @@ public final class JsonUtil {
 			return PRETTY_GSON.toJson(object);
 		} catch (final RuntimeException e) {
 			LOGGER.error("toGsonPretty을 수행중 오류 발생", e); //$NON-NLS-1$
-			return "[ERROR] JsonUtil.toGsonPretty"; //$NON-NLS-1$
+			return "[ERROR] JsonGtils.toGsonPretty"; //$NON-NLS-1$
 		}
 	}
 
@@ -181,17 +181,17 @@ public final class JsonUtil {
 			return OBJECT_MAPPER.writeValueAsString(object);
 		} catch (final JsonProcessingException e) {
 			LOGGER.error("toJackson을 수행중 오류 발생", e); //$NON-NLS-1$
-			return "[ERROR] JsonUtil.toJackson"; //$NON-NLS-1$
+			return "[ERROR] JsonGtils.toJackson"; //$NON-NLS-1$
 		}
 	}
 
 	/**
-	 * {@link JsonUtil} 클래스의 새 인스턴스를 초기화 합니다.
+	 * {@link JsonGtils} 클래스의 새 인스턴스를 초기화 합니다.
 	 *
 	 * @author jeong
 	 * @since 2017. 5. 22. 오후 9:42:17
 	 */
-	private JsonUtil() {
+	private JsonGtils() {
 		throw new IllegalStateException("Utility class"); //$NON-NLS-1$
 	}
 }

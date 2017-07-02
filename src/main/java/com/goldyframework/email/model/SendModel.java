@@ -9,11 +9,12 @@
  */
 package com.goldyframework.email.model;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.LinkedList;
 
 import javax.mail.internet.InternetAddress;
+
+import com.goldyframework.utils.NullGtils;
 
 /**
  * 전송 모델
@@ -21,37 +22,37 @@ import javax.mail.internet.InternetAddress;
  * @author 2017. 6. 18. 오전 11:37:28 jeong
  */
 public class SendModel {
-
+	
 	/**
 	 * 보내는 사람
 	 */
 	private final InternetAddress from;
-
+	
 	/**
 	 * 받는 사람
 	 */
-	private Collection<InternetAddress> to = new LinkedList<>();
-
+	private final Collection<InternetAddress> to = new LinkedList<>();
+	
 	/**
 	 * 참조인
 	 */
-	private Collection<InternetAddress> cc = new LinkedList<>();
-
+	private final Collection<InternetAddress> cc = new LinkedList<>();
+	
 	/**
 	 * 첨부 파일
 	 */
-	private Collection<AttachmentModel> file = new LinkedList<>();
-
+	private final Collection<AttachmentModel> attachmentList = new LinkedList<>();
+	
 	/**
 	 * 제목
 	 */
 	private final String subject;
-
+	
 	/**
 	 * 이메일 내용
 	 */
 	private String text;
-
+	
 	/**
 	 * {@link SendModel} 클래스의 새 인스턴스를 초기화 합니다.
 	 *
@@ -65,7 +66,20 @@ public class SendModel {
 		this.from = sender;
 		this.subject = subject;
 	}
-
+	
+	/**
+	 * file를 반환합니다.
+	 *
+	 * @see {@link #attachmentList}
+	 * @author jeonghyun.kum
+	 * @since 2016. 4. 23. 오후 6:27:53
+	 * @return attachmentList
+	 */
+	public Collection<AttachmentModel> getAttachmentList() {
+		
+		return this.attachmentList;
+	}
+	
 	/**
 	 * cc를 반환합니다.
 	 *
@@ -75,23 +89,10 @@ public class SendModel {
 	 * @return cc
 	 */
 	public Collection<InternetAddress> getCc() {
-
+		
 		return this.cc;
 	}
-
-	/**
-	 * file를 반환합니다.
-	 *
-	 * @see {@link #file}
-	 * @author jeonghyun.kum
-	 * @since 2016. 4. 23. 오후 6:27:53
-	 * @return file
-	 */
-	public Collection<AttachmentModel> getFile() {
-
-		return this.file;
-	}
-
+	
 	/**
 	 * from를 반환합니다.
 	 *
@@ -101,10 +102,10 @@ public class SendModel {
 	 * @return from
 	 */
 	public InternetAddress getFrom() {
-
+		
 		return this.from;
 	}
-
+	
 	/**
 	 * subject를 반환합니다.
 	 *
@@ -114,10 +115,10 @@ public class SendModel {
 	 * @return subject
 	 */
 	public String getSubject() {
-
+		
 		return this.subject;
 	}
-
+	
 	/**
 	 * text를 반환합니다.
 	 *
@@ -127,10 +128,10 @@ public class SendModel {
 	 * @return text
 	 */
 	public String getText() {
-
+		
 		return this.text;
 	}
-
+	
 	/**
 	 * to를 반환합니다.
 	 *
@@ -140,10 +141,25 @@ public class SendModel {
 	 * @return to
 	 */
 	public Collection<InternetAddress> getTo() {
-
+		
 		return this.to;
 	}
-
+	
+	/**
+	 * file를 초기화합니다.
+	 *
+	 * @see {@link #attachmentList}
+	 * @author jeonghyun.kum
+	 * @param fileList
+	 *            attachmentList
+	 * @since 2016. 4. 23. 오후 6:27:53
+	 */
+	public void setAttachmentList(final Collection<AttachmentModel> fileList) {
+		
+		this.attachmentList.clear();
+		this.attachmentList.addAll(NullGtils.emptyIfNull(fileList));
+	}
+	
 	/**
 	 * cc를 초기화합니다.
 	 *
@@ -154,10 +170,11 @@ public class SendModel {
 	 * @since 2016. 4. 23. 오후 6:27:53
 	 */
 	public void setCc(final Collection<InternetAddress> cc) {
-
-		this.cc = new ArrayList<>(cc);
+		
+		this.cc.clear();
+		this.cc.addAll(NullGtils.emptyIfNull(cc));
 	}
-
+	
 	/**
 	 * cc를 초기화합니다.
 	 *
@@ -168,38 +185,26 @@ public class SendModel {
 	 * @since 2016. 4. 23. 오후 6:27:53
 	 */
 	public void setCc(final InternetAddress cc) {
-
+		
+		this.cc.clear();
 		this.cc.add(cc);
 	}
-
+	
 	/**
 	 * file를 초기화합니다.
 	 *
-	 * @see {@link #file}
+	 * @see {@link #attachmentList}
 	 * @author jeonghyun.kum
-	 * @param file
-	 *            file
+	 * @param attachmentList
+	 *            attachmentList
 	 * @since 2016. 4. 23. 오후 6:27:53
 	 */
 	public void setFile(final AttachmentModel file) {
-
-		this.file.add(file);
+		
+		this.attachmentList.clear();
+		this.attachmentList.add(file);
 	}
-
-	/**
-	 * file를 초기화합니다.
-	 *
-	 * @see {@link #file}
-	 * @author jeonghyun.kum
-	 * @param fileList
-	 *            file
-	 * @since 2016. 4. 23. 오후 6:27:53
-	 */
-	public void setFile(final Collection<AttachmentModel> fileList) {
-
-		this.file = new ArrayList<>(fileList);
-	}
-
+	
 	/**
 	 * text를 초기화합니다.
 	 *
@@ -210,10 +215,10 @@ public class SendModel {
 	 * @since 2016. 4. 23. 오후 6:27:53
 	 */
 	public void setText(final String text) {
-
-		this.text = text;
+		
+		this.text = NullGtils.emptyIfNull(text);
 	}
-
+	
 	/**
 	 * to를 초기화합니다.
 	 *
@@ -224,10 +229,11 @@ public class SendModel {
 	 * @since 2016. 4. 23. 오후 6:27:53
 	 */
 	public void setTo(final Collection<InternetAddress> to) {
-
-		this.to = new ArrayList<>(to);
+		
+		this.to.clear();
+		this.to.addAll(NullGtils.emptyIfNull(to));
 	}
-
+	
 	/**
 	 * to를 초기화합니다.
 	 *
@@ -238,7 +244,7 @@ public class SendModel {
 	 * @since 2016. 4. 23. 오후 6:27:53
 	 */
 	public void setTo(final InternetAddress to) {
-
+		
 		this.to.add(to);
 	}
 }

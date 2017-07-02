@@ -28,45 +28,45 @@ import com.goldyframework.email.sender.GmailSender;
 @Category(MavenIgnoreTest.class)
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = EmailTest.ContextConfiguration.class)
-public class EmailTest {
-
+public class EmailTest extends Mockito {
+	
 	@SpringBootApplication
 	static class ContextConfiguration {
-
+		
 		@Bean
 		public Email email() {
-
+			
 			return new Email();
 		}
-
+		
 		@Bean
 		public GmailSender JavaMailSenderImpl() throws EmailException {
-
+			
 			return new GmailSender();
 		}
 	}
-
+	
 	@Spy
 	@Autowired
 	private Email email;
-
+	
 	@Test
 	public void testSend() throws EmailException, UnsupportedEncodingException, AddressException {
-
+		
 		final EmailForm emailContentForm = new EmailForm(EmailFormDesignType.INFOMATION);
 		emailContentForm.setTitleName("JUNIT TEST"); //$NON-NLS-1$
 		emailContentForm.inputBody("<div>내용입니다.</div>"); //$NON-NLS-1$
-
+		
 		final String result = emailContentForm.parse();
 		final SendModel prop = new SendModel(new InternetAddress("hokkk01@naver.com"), "JUNIT TEST"); //$NON-NLS-1$//$NON-NLS-2$
-
+		
 		prop.setTo(Arrays.asList(
 			new InternetAddress("hokkk01@naver.com", "금정금정현"), //$NON-NLS-1$//$NON-NLS-2$
 			new InternetAddress("jhkume90@gmail.com", "금정금정현")));  //$NON-NLS-1$//$NON-NLS-2$
 		prop.setText(result);
-
+		
 		this.email.send(prop);
-		Mockito.verify(this.email, Mockito.times(1)).createMimeMessage(prop);
+		verify(this.email, times(1)).createMimeMessage(prop);
 	}
-
+	
 }

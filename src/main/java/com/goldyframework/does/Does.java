@@ -12,7 +12,7 @@ package com.goldyframework.does;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.goldyframework.util.ITestSet;
+import com.goldyframework.utils.ITestSet;
 import com.google.common.annotations.VisibleForTesting;
 
 /**

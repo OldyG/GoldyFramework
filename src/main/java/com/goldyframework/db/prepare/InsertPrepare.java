@@ -12,34 +12,43 @@ package com.goldyframework.db.prepare;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 
-/**
- * @author 2017. 7. 2. 오전 11:10:01 jeong
- */
-public class InsertPrepare implements Prepare {
+import com.goldyframework.utils.NullGtils;
 
-	private List<String> columns;
+public class InsertPrepare extends AbstractPrepare {
 
-	private String table;
+	private final List<String> columns = new ArrayList<>();
 
-	private List<Object> values;
+	private final List<Object> values = new ArrayList<>();
 
 	private final PrepareHelper helper = new PrepareHelper();
+
+	/**
+	 * {@link InsertPrepare} 클래스의 새 인스턴스를 초기화 합니다.
+	 *
+	 * @author 2017. 7. 2. 오후 5:33:23 jeong
+	 * @param tableName
+	 */
+	public InsertPrepare(final String tableName) {
+		super(tableName);
+	}
 
 	/**
 	 * @author 2017. 7. 2. 오후 12:32:00 jeong
 	 * @return
 	 */
 	@Override
-	public Object[] getArgs() {
-		
-		return this.values.toArray(new Object[this.values.size()]);
+	public Collection<Object> getArgs() {
+
+		return new ArrayList<>(this.values);
 	}
 
 	public void setColumns(final List<String> columns) {
 
-		this.columns = columns;
+		this.columns.clear();
+		this.columns.addAll(NullGtils.emptyIfNull(columns));
 	}
 
 	public void setColumns(final String... columns) {
@@ -47,14 +56,10 @@ public class InsertPrepare implements Prepare {
 		this.setColumns(new ArrayList<>(Arrays.asList(columns)));
 	}
 
-	public void setTable(final String table) {
-
-		this.table = table;
-	}
-
 	public void setValues(final List<Object> values) {
 
-		this.values = values;
+		this.values.clear();
+		this.values.addAll(NullGtils.emptyIfNull(values));
 	}
 
 	/**
@@ -64,6 +69,8 @@ public class InsertPrepare implements Prepare {
 	 * @param password
 	 */
 	public void setValues(final Object... values) {
+		
+		NullGtils.emptyIfNull(values);
 
 		this.setValues(new ArrayList<>(Arrays.asList(values)));
 	}
@@ -76,10 +83,10 @@ public class InsertPrepare implements Prepare {
 	@Override
 	public String toPrepareSql() {
 
-		final List<String> detailColumn = this.helper.toDetiailColumn(this.table, this.columns);
+		final List<String> detailColumn = this.helper.toDetiailColumn(super.getTableName(), this.columns);
 
 		return MessageFormat.format("INSERT INTO {0} ({1}) VALUES ({2})",  //$NON-NLS-1$
-			this.table,
+			super.getTableName(),
 			this.helper.join(detailColumn),
 			this.helper.joinMark(this.columns.size()));
 	}

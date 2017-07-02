@@ -1,5 +1,5 @@
 /**
- * FileName : {@link RandomStringUtils}.java
+ * FileName : {@link RandomStringGtils}.java
  * Created : 2017. 4. 10.
  * Author : jeong
  * Summary :
@@ -24,7 +24,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author 2017. 6. 18. 오후 1:31:56 jeong
  */
-public final class RandomStringUtils {
+public final class RandomStringGtils {
 
 	/**
 	 * slf4j Logger
@@ -32,7 +32,7 @@ public final class RandomStringUtils {
 	 * @author jeong
 	 * @since 2017. 5. 22. 오후 9:20:02
 	 */
-	private static final Logger LOGGER = LoggerFactory.getLogger(RandomStringUtils.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(RandomStringGtils.class);
 
 	/**
 	 * 문자열 심볼 목록
@@ -72,8 +72,8 @@ public final class RandomStringUtils {
 		final StringBuilder builder = new StringBuilder();
 
 		IntStream.range(0, passwordLength).forEach(index -> {
-			final int symbolSize = random.nextInt(RandomStringUtils.SYMBOLS.size());
-			final char c = ((LinkedList<Character>) RandomStringUtils.SYMBOLS).get(symbolSize);
+			final int symbolSize = random.nextInt(RandomStringGtils.SYMBOLS.size());
+			final char c = ((LinkedList<Character>) RandomStringGtils.SYMBOLS).get(symbolSize);
 			builder.append(c);
 		});
 		return builder.toString();
@@ -85,7 +85,7 @@ public final class RandomStringUtils {
 	 * @author jeong
 	 * @since 2017. 4. 10. 오후 9:36:09
 	 */
-	private RandomStringUtils() {
+	private RandomStringGtils() {
 		throw new IllegalStateException("Utility class"); //$NON-NLS-1$
 	}
 

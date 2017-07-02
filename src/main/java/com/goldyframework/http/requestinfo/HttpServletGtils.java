@@ -1,5 +1,5 @@
 /**
- * FileName : {@link HttpServletUtils}.java
+ * FileName : {@link HttpServletGtils}.java
  * Created : 2017. 4. 10.
  * Author : jeong
  * Summary :
@@ -20,7 +20,7 @@ import javax.servlet.http.HttpServletRequest;
  *
  * @author 2017. 6. 18. 오후 1:04:35 jeong
  */
-public final class HttpServletUtils {
+public final class HttpServletGtils {
 
 	/**
 	 * BaseURL을 추출한다.
@@ -75,12 +75,12 @@ public final class HttpServletUtils {
 	}
 
 	/**
-	 * {@link HttpServletUtils} 클래스의 새 인스턴스를 초기화 합니다.
+	 * {@link HttpServletGtils} 클래스의 새 인스턴스를 초기화 합니다.
 	 *
 	 * @author jeong
 	 * @since 2017. 4. 10. 오후 9:36:27
 	 */
-	private HttpServletUtils() {
+	private HttpServletGtils() {
 		throw new IllegalStateException("Utility class"); //$NON-NLS-1$
 	}
 }

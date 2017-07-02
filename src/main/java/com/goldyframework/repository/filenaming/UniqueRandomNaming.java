@@ -12,7 +12,7 @@ package com.goldyframework.repository.filenaming;
 import java.io.File;
 import java.text.MessageFormat;
 
-import com.goldyframework.random.RandomStringUtils;
+import com.goldyframework.random.RandomStringGtils;
 
 /**
  * 파일 이름을 무작위로 생성합니다.<br>
@@ -49,7 +49,7 @@ class UniqueRandomNaming implements FileNaming {
 	public String generageSavePath(final String directory, final String baseName, final String extension) {
 
 		while (true) {
-			final String randomName = RandomStringUtils.createRandomString(MIN_LENGTH, MAX_LENGTH - MIN_LENGTH);
+			final String randomName = RandomStringGtils.createRandomString(MIN_LENGTH, MAX_LENGTH - MIN_LENGTH);
 
 			final String fileName = MessageFormat.format("{0}.{1}", randomName, extension); //$NON-NLS-1$
 			final File tempFile = new File(directory, fileName);

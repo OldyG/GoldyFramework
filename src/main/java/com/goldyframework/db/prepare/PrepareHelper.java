@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import com.goldyframework.util.StringCollectionUtil;
+import com.goldyframework.utils.StringCollectionGtils;
 
 /**
  * @author 2017. 7. 2. 오전 11:34:52 jeong
@@ -22,7 +22,7 @@ public class PrepareHelper {
 	
 	public String join(final List<String> columns) {
 		
-		return StringCollectionUtil.join(columns, ", "); //$NON-NLS-1$
+		return StringCollectionGtils.join(columns, ", "); //$NON-NLS-1$
 	}
 	
 	public String joinMark(final int size) {
@@ -32,7 +32,7 @@ public class PrepareHelper {
 			marks.add("?"); //$NON-NLS-1$
 		}
 		
-		return StringCollectionUtil.join(marks, ", "); //$NON-NLS-1$
+		return StringCollectionGtils.join(marks, ", "); //$NON-NLS-1$
 	}
 	
 	/**
@@ -43,7 +43,7 @@ public class PrepareHelper {
 	 */
 	public List<String> toDetiailColumn(final String table, final List<String> columns) {
 
-		return StringCollectionUtil.eachPrepend(columns, table + '.');
+		return StringCollectionGtils.eachPrepend(table + '.', columns);
 	}
 	
 }

@@ -13,7 +13,7 @@ import java.text.ParseException;
 import java.util.Date;
 
 import com.goldyframework.sweeper.IGarbage;
-import com.goldyframework.util.ShareFunction;
+import com.goldyframework.utils.ShareFunction;
 import com.goldyframework.version.DateAdapter;
 
 /**

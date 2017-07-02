@@ -31,7 +31,7 @@ public class DoesTest {
 	}
 
 	/**
-	 * Test method for {@link com.goldyframework.util.NeedNotUse#inputObject(java.lang.Object)}.
+	 * Test method for {@link com.goldyframework.utils.NeedNotUse#inputObject(java.lang.Object)}.
 	 */
 	@Test
 	public void testInputObject() {

@@ -20,8 +20,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.goldyframework.inspection.exception.InspectionException;
-import com.goldyframework.util.ClassLoaderUtil;
-import com.goldyframework.util.ITestSet;
+import com.goldyframework.utils.ClassLoaderGtils;
+import com.goldyframework.utils.ITestSet;
 import com.google.common.annotations.VisibleForTesting;
 
 /**
@@ -34,7 +34,7 @@ public class ChecksumAnalyser {
 	@VisibleForTesting
 	static class TestSet implements ITestSet<ChecksumAnalyser> {
 
-		private final File testFile = ClassLoaderUtil.getFile("checksum/Test File.xml"); //$NON-NLS-1$
+		private final File testFile = ClassLoaderGtils.getFile("checksum/Test File.xml"); //$NON-NLS-1$
 
 		/**
 		 * {@inheritDoc}

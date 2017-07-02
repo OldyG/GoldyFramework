@@ -10,7 +10,7 @@ import org.slf4j.LoggerFactory;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.goldyframework.util.json.JsonUtil;
+import com.goldyframework.utils.json.JsonGtils;
 
 /**
  * 요청자의 정보 모델
@@ -242,7 +242,7 @@ public class RequestDetail {
 		
 		final StringBuilder builder = new StringBuilder();
 		for (final Cookie cookie : cookies) {
-			builder.append(JsonUtil.toGson(cookie)).append('\n');
+			builder.append(JsonGtils.toGson(cookie)).append('\n');
 		}
 		this.cookies = builder.toString();
 	}
@@ -329,7 +329,7 @@ public class RequestDetail {
 			return new ObjectMapper().writerWithDefaultPrettyPrinter().writeValueAsString(this);
 		} catch (final JsonProcessingException e) {
 			LOGGER.trace("Jackson을 통한 출력에 실패하여 Gson을 통하여 캐스팅합니다.", e); //$NON-NLS-1$
-			return JsonUtil.toGson(this);
+			return JsonGtils.toGson(this);
 		}
 		
 	}

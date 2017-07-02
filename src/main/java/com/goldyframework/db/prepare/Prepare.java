@@ -9,13 +9,15 @@
  */
 package com.goldyframework.db.prepare;
 
+import java.util.Collection;
+
 /**
  * @author 2017. 7. 2. 오전 11:24:51 jeong
  */
 public interface Prepare {
-
-	Object[] getArgs();
-
-	String toPrepareSql();
 	
+	Collection<Object> getArgs();
+	
+	String toPrepareSql();
+
 }

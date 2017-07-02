@@ -17,7 +17,7 @@ import javax.activation.DataHandler;
 import javax.activation.DataSource;
 import javax.activation.FileDataSource;
 import javax.mail.Address;
-import javax.mail.Message;
+import javax.mail.Message.RecipientType;
 import javax.mail.MessagingException;
 import javax.mail.Multipart;
 import javax.mail.internet.InternetAddress;
@@ -33,6 +33,7 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Component;
 
 import com.goldyframework.Prop;
+import com.goldyframework.annotaion.Ref;
 import com.goldyframework.email.exception.EmailException;
 import com.goldyframework.email.model.AttachmentModel;
 import com.goldyframework.email.model.SendModel;
@@ -46,7 +47,7 @@ import com.google.common.annotations.VisibleForTesting;
  */
 @Component
 public class Email {
-	
+
 	/**
 	 * slf4j Logger
 	 *
@@ -54,7 +55,48 @@ public class Email {
 	 * @since 2017. 5. 22. 오후 9:20:02
 	 */
 	private static final Logger LOGGER = LoggerFactory.getLogger(Email.class);
-	
+
+	/**
+	 * 이메일 전송 대리자
+	 */
+	@Autowired
+	private JavaMailSender mailSender;
+
+	/**
+	 * {@link Email} 클래스의 새 인스턴스를 초기화 합니다.
+	 *
+	 * @author jeong
+	 * @since 2017. 4. 10. 오후 9:32:22
+	 */
+	public Email() {
+		super();
+	}
+
+	private void addBodyPart(@Ref final Multipart multiPart, final Collection<AttachmentModel> file)
+		throws MessagingException, UnsupportedEncodingException {
+
+		for (final AttachmentModel attachment : file) {
+			final MimeBodyPart filePart = this.createAttachmentMimeBodyPart(attachment);
+			multiPart.addBodyPart(filePart);
+		}
+	}
+
+	private String convertEncodedString(final String string) throws UnsupportedEncodingException {
+
+		final byte[] fileNameBytes = string.getBytes(Prop.DEFAULT_CHARSET);
+		return new String(fileNameBytes, "ISO-8859-1"); //$NON-NLS-1$
+	}
+
+	private MimeBodyPart createAttachmentMimeBodyPart(final AttachmentModel attachment)
+		throws MessagingException, UnsupportedEncodingException {
+
+		final MimeBodyPart filePart = new MimeBodyPart();
+		final DataSource data = new FileDataSource(attachment.getFile());
+		filePart.setDataHandler(new DataHandler(data));
+		filePart.setFileName(this.convertEncodedString(attachment.getFileName()));
+		return filePart;
+	}
+
 	/**
 	 * 이메일 본문에 첨부파일을 통합하여 반환합니다.
 	 *
@@ -69,46 +111,20 @@ public class Email {
 	 * @throws UnsupportedEncodingException
 	 *             The Character Encoding is not supported.
 	 */
-	private static Multipart convertMultipart(final String content, final Collection<AttachmentModel> file)
+	private Multipart createContentMultipart(final String content, final Collection<AttachmentModel> file)
 		throws MessagingException, UnsupportedEncodingException {
-		
+
 		final Multipart multiPart = new MimeMultipart();
-		
-		for (final AttachmentModel attachment : file) {
-			final MimeBodyPart filePart = new MimeBodyPart();
-			final DataSource data = new FileDataSource(attachment.getFile());
-			filePart.setDataHandler(new DataHandler(data));
-			
-			filePart.setFileName(
-				new String(attachment
-					.getFileName()
-					.getBytes(Prop.DEFAULT_CHARSET),
-					"ISO-8859-1")); //$NON-NLS-1$
-			multiPart.addBodyPart(filePart);
-		}
+
+		this.addBodyPart(multiPart, file);
+
 		final MimeBodyPart contentPart = new MimeBodyPart();
 		contentPart.setContent(content, "text/html; charset=utf-8"); //$NON-NLS-1$
 		multiPart.addBodyPart(contentPart);
-		
+
 		return multiPart;
 	}
-	
-	/**
-	 * 이메일 전송 대리자
-	 */
-	@Autowired
-	private JavaMailSender mailSender;
-	
-	/**
-	 * {@link Email} 클래스의 새 인스턴스를 초기화 합니다.
-	 *
-	 * @author jeong
-	 * @since 2017. 4. 10. 오후 9:32:22
-	 */
-	public Email() {
-		super();
-	}
-	
+
 	/**
 	 * 이메일 전송 데이터를 생성한다.
 	 *
@@ -121,7 +137,7 @@ public class Email {
 	 */
 	@VisibleForTesting
 	MimeMessage createMimeMessage(final SendModel model) throws EmailException {
-		
+
 		final MimeMessage msg = this.mailSender.createMimeMessage();
 		try {
 			msg.setHeader("Content-Type", "text/html; charset=utf-8"); //$NON-NLS-1$//$NON-NLS-2$
@@ -130,23 +146,23 @@ public class Email {
 			msg.setReplyTo(new Address[] {
 					model.getFrom()
 			});
-			
-			msg.setRecipients(Message.RecipientType.TO,
+
+			msg.setRecipients(RecipientType.TO,
 				model.getTo().toArray(new InternetAddress[model.getTo().size()]));
 			msg.setSubject(MimeUtility.encodeText(model.getSubject(), Prop.DEFAULT_CHARSET.name(), "B")); //$NON-NLS-1$
-			
+
 			if ((model.getCc() != null) && (model.getCc().isEmpty())) {
-				msg.setRecipients(Message.RecipientType.CC,
+				msg.setRecipients(RecipientType.CC,
 					model.getCc().toArray(new InternetAddress[model.getCc().size()]));
 			}
-			msg.setContent(convertMultipart(model.getText(), model.getFile()), "text/html"); //$NON-NLS-1$
+			msg.setContent(this.createContentMultipart(model.getText(), model.getAttachmentList()), "text/html"); //$NON-NLS-1$
 			return msg;
 		} catch (final MessagingException | UnsupportedEncodingException e) {
 			LOGGER.error("MimeMessage를 생성 중 오류 발생", e); //$NON-NLS-1$
 			throw new EmailException(e);
 		}
 	}
-	
+
 	/**
 	 * 작성된 propery항목으로 이메일을 전송합니다.
 	 *
@@ -158,15 +174,15 @@ public class Email {
 	 *             이메일 전송 실패 오류
 	 */
 	public void send(final SendModel property) throws EmailException {
-		
+
 		LOGGER.debug("[이메일 서버] 이메일 전송 설정 중"); //$NON-NLS-1$
 		new SendModelValidator().check(property);
-		
+
 		final MimeMessage msg = this.createMimeMessage(property);
-		
+
 		LOGGER.debug("[이메일 서버] 이메일 전송 보내는 중"); //$NON-NLS-1$
 		this.mailSender.send(msg);
 		LOGGER.debug("[이메일 서버] 이메일 전송 완료"); //$NON-NLS-1$
 	}
-	
+
 }

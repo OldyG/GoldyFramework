@@ -15,7 +15,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Set;
 
-import com.goldyframework.util.StringCollectionUtil;
+import com.goldyframework.utils.StringCollectionGtils;
 
 /**
  * @author 2017. 6. 30. 오후 8:57:06 jeong
@@ -73,8 +73,8 @@ public class ColumnMapping extends LinkedHashMap<String, ResultSetBinder<Object>
 	public String joinFullColumn() {
 		
 		final Set<String> keys = super.keySet();
-		final List<String> eachPrepend = StringCollectionUtil.eachPrepend(keys, this.tableName + '.');
-		return StringCollectionUtil.join(eachPrepend, ", "); //$NON-NLS-1$
+		final List<String> eachPrepend = StringCollectionGtils.eachPrepend(this.tableName + '.', keys);
+		return StringCollectionGtils.join(eachPrepend, ", "); //$NON-NLS-1$
 		
 	}
 	

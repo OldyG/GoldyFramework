@@ -1,5 +1,5 @@
 /**
- * FileName : {@link ClassLoaderUtils}.java
+ * FileName : {@link ClassLoaderUtil}.java
  * Created : 2017. 6. 18. 오후 5:16:50
  * Author : jeong
  * Summary :
@@ -21,29 +21,29 @@ import com.google.common.annotations.VisibleForTesting;
 /**
  * @author 2017. 6. 18. 오후 5:16:50 jeong
  */
-public final class ClassLoaderUtils {
-
+public final class ClassLoaderUtil {
+	
 	@VisibleForTesting
-	static class TestSet implements ITestSet<ClassLoaderUtils> {
-
+	class TestSet implements ITestSet<ClassLoaderUtil> {
+		
 		/**
 		 * {@inheritDoc}
 		 *
 		 * @author 2017. 6. 19. 오후 11:01:42 jeong
 		 */
 		@Override
-		public ClassLoaderUtils createNewInstance() {
-
-			return new ClassLoaderUtils();
+		public ClassLoaderUtil createNewInstance() {
+			
+			return new ClassLoaderUtil(this);
 		}
-
+		
 	}
-
+	
 	/**
 	 * slf4j Logger
 	 */
-	private static final Logger LOGGER = LoggerFactory.getLogger(ClassLoaderUtils.class);
-
+	private static final Logger LOGGER = LoggerFactory.getLogger(ClassLoaderUtil.class);
+	
 	/**
 	 * @author 2017. 6. 19. 오후 11:12:31 jeong
 	 * @param url
@@ -52,7 +52,7 @@ public final class ClassLoaderUtils {
 	 */
 	@VisibleForTesting
 	static File createNewFile(final URL url) throws URISyntaxException {
-
+		
 		return new File(url.toURI());
 	}
 	
@@ -62,7 +62,7 @@ public final class ClassLoaderUtils {
 	 * @return
 	 */
 	public static File getFile(final String path) {
-
+		
 		final URL url = ClassLoader.getSystemResource(path);
 		try {
 			return createNewFile(url);
@@ -71,14 +71,24 @@ public final class ClassLoaderUtils {
 			return null;
 		}
 	}
-
+	
 	/**
-	 * {@link ClassLoaderUtils} 클래스의 새 인스턴스를 초기화 합니다.
+	 * {@link ClassLoaderUtil} 클래스의 새 인스턴스를 초기화 합니다.
 	 *
 	 * @author 2017. 6. 18. 오후 5:16:50 jeong
 	 */
-	private ClassLoaderUtils() {
+	private ClassLoaderUtil() {
 		throw new IllegalStateException("Utility class"); //$NON-NLS-1$
 	}
-
+	
+	/**
+	 * {@link ClassLoaderUtil} 클래스의 새 인스턴스를 초기화 합니다.
+	 *
+	 * @author 2017. 6. 30. 오후 8:22:35 jeong
+	 * @param testSet
+	 */
+	ClassLoaderUtil(final TestSet testSet) {
+		super();
+	}
+	
 }

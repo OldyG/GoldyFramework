@@ -30,7 +30,10 @@ import com.goldyframework.db.exception.NoSingleDataException;
 
 /**
  * DB 접속에 공통으로 사용되는 클래스
+ *
+ * @deprecated 보안 취약으로 제거 될 클래스
  */
+@Deprecated
 @Component
 public class DbSource {
 

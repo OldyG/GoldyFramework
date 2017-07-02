@@ -39,7 +39,12 @@ public enum Because {
 	 *{@link Does#notUse}(success, {@link Because#UNNECESSARY_PROCESSING});
 	 * </pre>
 	 */
-	UNNECESSARY_PROCESSING("다음 처리를 의도적으로 하지 않음"); //$NON-NLS-1$
+	UNNECESSARY_PROCESSING("다음 처리를 의도적으로 하지 않음"), //$NON-NLS-1$
+
+	/**
+	 *
+	 */
+	DO_NOTHING("아무행위도 하지 않음"); //$NON-NLS-1$
 
 	private final String message;
 

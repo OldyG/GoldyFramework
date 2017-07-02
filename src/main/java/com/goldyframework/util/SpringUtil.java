@@ -20,7 +20,7 @@ import com.goldyframework.technology.ApplicationContextProvider;
  *
  * @author 2017. 6. 18. 오후 2:48:49 jeong
  */
-public class SpringUtils {
+public class SpringUtil {
 
 	/**
 	 * {@link SpringUtil} 클래스의 새 인스턴스를 초기화 합니다.
@@ -28,7 +28,7 @@ public class SpringUtils {
 	 * @author jeong
 	 * @since 2017. 4. 10. 오후 9:36:42
 	 */
-	public SpringUtils() {
+	public SpringUtil() {
 		super();
 	}
 

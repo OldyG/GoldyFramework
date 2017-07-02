@@ -1,5 +1,5 @@
 /**
- * FileName : {@link JsonUtils}.java
+ * FileName : {@link JsonUtil}.java
  * Created : 2017. 4. 10.
  * Author : jeong
  * Summary :
@@ -7,7 +7,7 @@
  * 이 문서의 모든 저작권 및 지적 재산권은 Goldy Project에게 있습니다.
  * 이 문서의 어떠한 부분도 허가 없이 복제 또는 수정 하거나, 전송할 수 없습니다.
  */
-package com.goldyframework.json;
+package com.goldyframework.util.json;
 
 import java.io.IOException;
 
@@ -24,7 +24,7 @@ import com.google.gson.GsonBuilder;
  *
  * @author 2017. 6. 18. 오후 1:15:23 jeong
  */
-public final class JsonUtils {
+public final class JsonUtil {
 
 	/**
 	 * Jackson 객체
@@ -32,13 +32,38 @@ public final class JsonUtils {
 	private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
 
 	/**
-	 * Google Gson 객체
+	 * Google 일반 Gson 객체
 	 */
-	private static final Gson GSON = new Gson();
+	private static final Gson DEFAULT_GSON;
 
-	private static final Gson GSON_PRETTY = new GsonBuilder().setPrettyPrinting().create();
+	/**
+	 * Google HTML Escpae를 하지않는 Gson 객체
+	 */
+	private static final Gson NON_ESCAPE_GSON;
 
-	private static final Logger LOGGER = LoggerFactory.getLogger(JsonUtils.class);
+	/**
+	 * Google toString()용 Gson 객체
+	 */
+	private static final Gson PRETTY_GSON;
+
+	/**
+	 * slf4j Logger
+	 */
+	private static final Logger LOGGER = LoggerFactory.getLogger(JsonUtil.class);
+
+	static {
+
+		DEFAULT_GSON = new Gson();
+
+		NON_ESCAPE_GSON = new GsonBuilder()
+			.disableHtmlEscaping()
+			.create();
+
+		PRETTY_GSON = new GsonBuilder()
+			.disableHtmlEscaping()
+			.setPrettyPrinting()
+			.create();
+	}
 
 	/**
 	 * Gson을 사용하여 {@link String} 문자열을 주어진 클래스 타입으로 변환합니다.
@@ -56,7 +81,7 @@ public final class JsonUtils {
 	public static <T> T fromGson(final String json, final Class<T> clazzOfT) {
 
 		try {
-			return GSON.fromJson(json, clazzOfT);
+			return DEFAULT_GSON.fromJson(json, clazzOfT);
 		} catch (final RuntimeException e) {
 			LOGGER.error("fromGson을 수행중 오류 발생", e); //$NON-NLS-1$
 			return null;
@@ -65,10 +90,12 @@ public final class JsonUtils {
 
 	/**
 	 * Jackson을 사용하여 {@link String} 문자열을 주어진 클래스 타입으로 변환합니다.<br>
-	 * setter 함수를 통해 필드 값을 초기화합니다.<br>
+	 * 각 필드의 setter 함수를 통해 필드 값을 초기화합니다.<br>
 	 * <br>
 	 * 만약 {'name' : 'namevalue'}를 객체화하기 위해서는 public void setName(String arg1){} 함수가 반드시 정의되어있어야 합니다.
 	 * set_name, setNAme 등으로 정의되어있다면 초기화가 불가능합니다.
+	 * <br>
+	 * Jackson은 Gson에 비해 속도가 빠르며 대용량 처리에 탁월합니다.
 	 *
 	 * @author 2017. 6. 18. 오후 1:16:13 jeong
 	 * @param <T>
@@ -101,20 +128,42 @@ public final class JsonUtils {
 	public static String toGson(final Object object) {
 
 		try {
-			return GSON.toJson(object);
+			return DEFAULT_GSON.toJson(object);
 		} catch (final RuntimeException e) {
 			LOGGER.error("toGson을 수행중 오류 발생", e); //$NON-NLS-1$
-			return "[ERROR] JsonUtils.toGoson"; //$NON-NLS-1$
+			return "[ERROR] JsonUtil.toGoson"; //$NON-NLS-1$
 		}
 	}
 
+	/**
+	 * @author 2017. 6. 30. 오후 6:58:40 jeong
+	 * @param object
+	 *            변경대상 객체
+	 * @return 변형된 객체
+	 */
+	public static String toGsonNonHtmlEscaping(final Object object) {
+
+		try {
+			return NON_ESCAPE_GSON.toJson(object);
+		} catch (final RuntimeException e) {
+			LOGGER.error("toGsonPretty을 수행중 오류 발생", e); //$NON-NLS-1$
+			return "[ERROR] JsonUtil.toGsonNonHtmlEscaping"; //$NON-NLS-1$
+		}
+	}
+
+	/**
+	 * @author 2017. 6. 30. 오후 6:58:41 jeong
+	 * @param object
+	 *            변경대상 객체
+	 * @return 변형된 객체
+	 */
 	public static String toGsonPretty(final Object object) {
 
 		try {
-			return GSON_PRETTY.toJson(object);
+			return PRETTY_GSON.toJson(object);
 		} catch (final RuntimeException e) {
 			LOGGER.error("toGsonPretty을 수행중 오류 발생", e); //$NON-NLS-1$
-			return "[ERROR] JsonUtils.toGoson"; //$NON-NLS-1$
+			return "[ERROR] JsonUtil.toGsonPretty"; //$NON-NLS-1$
 		}
 	}
 
@@ -132,17 +181,17 @@ public final class JsonUtils {
 			return OBJECT_MAPPER.writeValueAsString(object);
 		} catch (final JsonProcessingException e) {
 			LOGGER.error("toJackson을 수행중 오류 발생", e); //$NON-NLS-1$
-			return "[ERROR] JsonUtils.toJackson"; //$NON-NLS-1$
+			return "[ERROR] JsonUtil.toJackson"; //$NON-NLS-1$
 		}
 	}
 
 	/**
-	 * {@link JsonUtils} 클래스의 새 인스턴스를 초기화 합니다.
+	 * {@link JsonUtil} 클래스의 새 인스턴스를 초기화 합니다.
 	 *
 	 * @author jeong
 	 * @since 2017. 5. 22. 오후 9:42:17
 	 */
-	private JsonUtils() {
+	private JsonUtil() {
 		throw new IllegalStateException("Utility class"); //$NON-NLS-1$
 	}
 }

@@ -23,7 +23,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 
-import com.goldyframework.json.JsonUtils;
+import com.goldyframework.util.json.JsonUtil;
 
 /**
  * 반환 Response 방법이 문자열일 경우에 사용하는 객체입니다.
@@ -234,7 +234,7 @@ public final class Response {
 		
 		final HttpHeaders headers = Response.getHeaders(mediaType);
 		if (MediaType.APPLICATION_JSON.equals(mediaType)) {
-			final String bodyjson = JsonUtils.toGson(body);
+			final String bodyjson = JsonUtil.toGson(body);
 			LOGGER.info(bodyjson);
 		} else {
 			final String string;

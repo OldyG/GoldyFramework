@@ -23,7 +23,7 @@ import org.mockito.Spy;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import com.goldyframework.inspection.exception.InspectionException;
-import com.goldyframework.util.ClassLoaderUtils;
+import com.goldyframework.util.ClassLoaderUtil;
 
 /**
  * @author 2017. 6. 18. 오후 5:08:55 jeong
@@ -32,7 +32,7 @@ import com.goldyframework.util.ClassLoaderUtils;
 @RunWith(MockitoJUnitRunner.class)
 public class ChecksumAnalyserTest {
 	
-	private static final File TEST_FILE = ClassLoaderUtils.getFile("checksum/Test File.xml");
+	private static final File TEST_FILE = ClassLoaderUtil.getFile("checksum/Test File.xml");
 	
 	private static final File NONEEXISTENT_TEST_FILE = new File("src/test/resources/none");
 	

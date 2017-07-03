@@ -16,6 +16,7 @@ import java.text.MessageFormat;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.goldyframework.inspection.ObjectInspection;
 import com.goldyframework.repository.exception.NotRegisteredFileException;
 import com.goldyframework.repository.filenaming.FileNamingType;
 import com.google.common.base.Strings;
@@ -76,6 +77,7 @@ public abstract class AbstractRepositoryBody implements RepositoryBody {
 	@Override
 	public String generateSavePath(final String extension) {
 
+		ObjectInspection.checkNull(extension);
 		return this.namingType.getFileNaming().generageSavePath(this.directory, this.getBaseName(), extension);
 	}
 
@@ -151,7 +153,7 @@ public abstract class AbstractRepositoryBody implements RepositoryBody {
 		this.directory = this.initialDirectory();
 		final File defaultDirectory = new File(this.directory);
 		if (defaultDirectory.exists() == false) {
-			
+
 			final String absolutePath = defaultDirectory.getAbsolutePath();
 			if (defaultDirectory.mkdirs()) {
 				final String message = MessageFormat.format("디렉토리 생성 성공{0}", absolutePath); //$NON-NLS-1$

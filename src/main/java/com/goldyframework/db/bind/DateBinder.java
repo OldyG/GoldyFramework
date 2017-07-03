@@ -13,15 +13,16 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import com.goldyframework.inspection.ObjectInspection;
 import com.google.common.base.Throwables;
 
 /**
  * @author 2017. 7. 1. 오후 2:40:58 jeong
  */
 public class DateBinder implements IBinder<Date> {
-	
-	private static final String format = "yyyy-MM-dd hh:mm:ss"; //$NON-NLS-1$
-	
+
+	private static final String FORMAT = "yyyy-MM-dd hh:mm:ss"; //$NON-NLS-1$
+
 	/**
 	 * {@inheritDoc}
 	 *
@@ -29,12 +30,13 @@ public class DateBinder implements IBinder<Date> {
 	 */
 	@Override
 	public Date bind(final String value) {
-		
+
+		ObjectInspection.checkNull(value);
 		try {
-			return new SimpleDateFormat(format).parse(value);
+			return new SimpleDateFormat(FORMAT).parse(value);
 		} catch (final ParseException e) {
 			throw Throwables.propagate(e);
 		}
 	}
-	
+
 }

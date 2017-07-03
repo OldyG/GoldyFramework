@@ -16,6 +16,8 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
+import com.goldyframework.inspection.ObjectInspection;
+import com.goldyframework.utils.NullGtils;
 import com.goldyframework.utils.StringCollectionGtils;
 import com.google.common.annotations.VisibleForTesting;
 
@@ -23,14 +25,14 @@ import com.google.common.annotations.VisibleForTesting;
  * @author 2017. 7. 2. 오후 5:29:03 jeong
  */
 public class WhereBuilder {
-
+	
 	@VisibleForTesting
 	class ComparisonValue {
-
+		
 		private final Comparison comparison;
-
+		
 		private final Object value;
-
+		
 		/**
 		 * {@link ComparisonValue} 클래스의 새 인스턴스를 초기화 합니다.
 		 *
@@ -40,10 +42,10 @@ public class WhereBuilder {
 		 */
 		@VisibleForTesting
 		ComparisonValue(final Comparison comparison, final Object value) {
-			this.comparison = comparison;
-			this.value = value;
+			this.comparison = NullGtils.throwIfNull(comparison);
+			this.value = NullGtils.throwIfNull(value);
 		}
-
+		
 		/**
 		 * comparison를 반환합니다.
 		 *
@@ -53,10 +55,10 @@ public class WhereBuilder {
 		 */
 		@VisibleForTesting
 		Comparison getComparison() {
-
+			
 			return this.comparison;
 		}
-
+		
 		/**
 		 * value를 반환합니다.
 		 *
@@ -66,15 +68,15 @@ public class WhereBuilder {
 		 */
 		@VisibleForTesting
 		Object getValue() {
-
+			
 			return this.value;
 		}
 	}
-
+	
 	private final Map<String, ComparisonValue> whereMap = new ConcurrentHashMap<>();
-
+	
 	private final String tableName;
-
+	
 	/**
 	 * {@link WhereBuilder} 클래스의 새 인스턴스를 초기화 합니다.
 	 *
@@ -84,26 +86,30 @@ public class WhereBuilder {
 	 */
 	public WhereBuilder(final String tableName) {
 		super();
-		this.tableName = tableName;
+		this.tableName = NullGtils.throwIfNull(tableName);
 	}
-
+	
 	public void append(final String columnName, final Comparison comparison, final Object value) {
-
+		
+		ObjectInspection.checkNull(columnName);
+		ObjectInspection.checkNull(comparison);
+		ObjectInspection.checkNull(value);
+		
 		this.whereMap.put(columnName, new ComparisonValue(comparison, value));
 	}
-
+	
 	public String build() {
-
+		
 		final List<String> appended = this.eachAppendComparisonValue();
-
+		
 		final List<String> depended = StringCollectionGtils.eachPrepend(this.tableName + '.', appended);
-
+		
 		return StringCollectionGtils.join(depended, ", "); //$NON-NLS-1$
 	}
-
+	
 	@VisibleForTesting
 	List<String> eachAppendComparisonValue() {
-
+		
 		final Map<String, ComparisonValue> copiedWhereMap = this.getCopiedWhereMap();
 		
 		return copiedWhereMap.keySet()
@@ -111,20 +117,20 @@ public class WhereBuilder {
 			.map(key -> {
 				final ComparisonValue comparisonValue = copiedWhereMap.get(key);
 				final String comparison = comparisonValue.getComparison().getComparison();
-
+				
 				return MessageFormat.format("{0} {1} {2}", key, comparison, '?'); //$NON-NLS-1$
 			})
 			.collect(Collectors.toList());
 	}
-
+	
 	public Collection<Object> getArgs() {
-
+		
 		return this.whereMap.values()
 			.stream()
-			.map(a -> a.getValue())
+			.map(ComparisonValue::getValue)
 			.collect(Collectors.toList());
 	}
-
+	
 	/**
 	 * whereMap를 반환합니다.
 	 *
@@ -134,8 +140,8 @@ public class WhereBuilder {
 	 */
 	@VisibleForTesting
 	Map<String, ComparisonValue> getCopiedWhereMap() {
-
+		
 		return new ConcurrentHashMap<>(this.whereMap);
 	}
-
+	
 }

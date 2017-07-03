@@ -9,6 +9,8 @@
  */
 package com.goldyframework.email.exception;
 
+import com.goldyframework.utils.NullGtils;
+
 /**
  * Email 관련 예외사항
  *
@@ -39,7 +41,7 @@ public class EmailException extends Exception {
 	 *            오류 메세지
 	 */
 	public EmailException(final String message) {
-		super(message);
+		super(NullGtils.throwIfNull(message));
 	}
 
 	/**
@@ -52,7 +54,7 @@ public class EmailException extends Exception {
 	 *            the cause
 	 */
 	public EmailException(final String message, final Throwable cause) {
-		super(message, cause);
+		super(NullGtils.throwIfNull(message), NullGtils.throwIfNull(cause));
 	}
 
 	/**
@@ -63,7 +65,7 @@ public class EmailException extends Exception {
 	 *            the cause
 	 */
 	public EmailException(final Throwable cause) {
-		super(cause);
+		super(NullGtils.throwIfNull(cause));
 	}
 
 }

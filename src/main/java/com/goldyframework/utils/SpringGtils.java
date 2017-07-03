@@ -13,6 +13,7 @@ import org.springframework.context.ApplicationContext;
 
 import com.goldyframework.does.Because;
 import com.goldyframework.does.Does;
+import com.goldyframework.inspection.ObjectInspection;
 import com.goldyframework.technology.ApplicationContextProvider;
 
 /**
@@ -45,6 +46,7 @@ public class SpringGtils {
 	 */
 	public <T> T getBean(final Class<T> beanClass) {
 
+		ObjectInspection.checkNull(beanClass);
 		Does.notUse(this, Because.WANT_NOT_STATIC_FUNCTION);
 		final ApplicationContext context = ApplicationContextProvider.getApplicationContext();
 		return context.getBean(beanClass);

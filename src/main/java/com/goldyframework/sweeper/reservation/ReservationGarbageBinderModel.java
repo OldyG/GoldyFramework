@@ -14,26 +14,26 @@ import java.text.MessageFormat;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.goldyframework.inspection.ObjectInspection;
+import com.goldyframework.utils.NullGtils;
+
 /**
  * 바인더 모델
  *
  * @author 2017. 6. 18. 오후 2:05:34 jeong
  */
 class ReservationGarbageBinderModel {
-	
+
 	/**
 	 * slf4j Logger
 	 */
-	
+
 	private static final Logger LOGGER = LoggerFactory.getLogger(ReservationGarbageBinderModel.class);
-	
-	/**
-	 * @author 2017. 6. 18. 오후 4:32:11 jeong
-	 * @param target
-	 */
+
 	@SuppressWarnings({ "unchecked", "squid:S2658", "squid:S1309" })
 	private static Class<AbstractReservationGarbage> castingClass(final String target) {
-		
+
+		ObjectInspection.checkNull(target);
 		try {
 			final Class<?> reservation = Class.forName(target);
 			return (Class<AbstractReservationGarbage>) reservation;
@@ -42,17 +42,17 @@ class ReservationGarbageBinderModel {
 			return null;
 		}
 	}
-	
+
 	/**
 	 * 바인더 클래스 {@link AbstractReservationGarbage}
 	 */
 	private Class<AbstractReservationGarbage> target;
-	
+
 	/**
 	 * 초기화 값
 	 */
 	private Object set;
-	
+
 	/**
 	 * {@link ReservationGarbageBinderModel} 클래스의 새 인스턴스를 초기화 합니다.
 	 *
@@ -62,7 +62,7 @@ class ReservationGarbageBinderModel {
 	public ReservationGarbageBinderModel() {
 		super();
 	}
-	
+
 	/**
 	 * set를 반환합니다.
 	 *
@@ -72,10 +72,10 @@ class ReservationGarbageBinderModel {
 	 * @return set
 	 */
 	public Object getSet() {
-		
+
 		return this.set;
 	}
-	
+
 	/**
 	 * target를 반환합니다.
 	 *
@@ -85,10 +85,10 @@ class ReservationGarbageBinderModel {
 	 * @return target
 	 */
 	public Class<AbstractReservationGarbage> getTarget() {
-		
+
 		return this.target;
 	}
-	
+
 	/**
 	 * set 초기화 합니다.
 	 *
@@ -99,10 +99,10 @@ class ReservationGarbageBinderModel {
 	 *            초기화 값
 	 */
 	public void setSet(final Object set) {
-		
-		this.set = set;
+
+		this.set = NullGtils.throwIfNull(set);
 	}
-	
+
 	/**
 	 * target 초기화 합니다.
 	 *
@@ -113,7 +113,8 @@ class ReservationGarbageBinderModel {
 	 *            초기화 값
 	 */
 	public void setTarget(final String target) {
-		
+
+		ObjectInspection.checkNull(target);
 		this.target = ReservationGarbageBinderModel.castingClass(target);
 	}
 }

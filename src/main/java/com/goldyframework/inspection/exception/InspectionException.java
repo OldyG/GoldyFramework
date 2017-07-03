@@ -12,6 +12,8 @@ package com.goldyframework.inspection.exception;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.goldyframework.utils.NullGtils;
+
 /**
  * 검증 실패 예외사항
  *
@@ -44,7 +46,7 @@ public class InspectionException extends RuntimeException {
 	 *            오류 메세지
 	 */
 	public InspectionException(final String message) {
-		super(message);
+		super(NullGtils.throwIfNull(message));
 		LOGGER.debug(message);
 	}
 	
@@ -59,7 +61,7 @@ public class InspectionException extends RuntimeException {
 	 *            cause
 	 */
 	public InspectionException(final String message, final Throwable cause) {
-		super(message, cause);
+		super(NullGtils.throwIfNull(message), NullGtils.throwIfNull(cause));
 		LOGGER.debug(message, cause);
 	}
 }

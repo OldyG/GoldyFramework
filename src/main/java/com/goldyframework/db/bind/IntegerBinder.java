@@ -9,6 +9,8 @@
  */
 package com.goldyframework.db.bind;
 
+import com.goldyframework.utils.NullGtils;
+
 /**
  * @author 2017. 7. 1. 오후 3:13:51 jeong
  */
@@ -22,7 +24,7 @@ public class IntegerBinder implements IBinder<Integer> {
 	@Override
 	public Integer bind(final String value) {
 
-		return Integer.parseInt(value);
+		return Integer.parseInt(NullGtils.throwIfNull(value));
 	}
 
 }

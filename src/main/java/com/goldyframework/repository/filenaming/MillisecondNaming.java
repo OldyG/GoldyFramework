@@ -13,6 +13,8 @@ import java.io.File;
 import java.text.MessageFormat;
 import java.util.Date;
 
+import com.goldyframework.inspection.ObjectInspection;
+
 /**
  * 파일 이름을 밀리초 단위로 저장합니다.<br>
  * 중복 파일이 존재할 경우 중복된 시간이 생기지 않을 때 까지 반복합니다.
@@ -37,6 +39,9 @@ class MillisecondNaming implements FileNaming {
 	@Override
 	public String generageSavePath(final String directory, final String baseName, final String extension) {
 
+		ObjectInspection.checkNull(directory);
+		ObjectInspection.checkNull(baseName);
+		ObjectInspection.checkNull(extension);
 		while (true) {
 			final String millisecond = Long.toString(new Date().getTime());
 

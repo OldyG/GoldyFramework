@@ -12,6 +12,7 @@ package com.goldyframework.email;
 import java.io.File;
 
 import com.goldyframework.annotaion.Doc;
+import com.goldyframework.utils.NullGtils;
 
 /**
  * 이메일 폼 디자인 방법
@@ -35,17 +36,17 @@ public enum EmailFormDesignType {
 	 */
 	@Deprecated()
 	WARNNING("warnning.html"); //$NON-NLS-1$
-
+	
 	/**
 	 * 기본 위치
 	 */
 	private static final String BASE_LOCATION = "src/main/resources/email/"; //$NON-NLS-1$
-
+	
 	/**
 	 * 파일 이름
 	 */
 	private final File designFile;
-
+	
 	/**
 	 * {@link EmailFormDesignType} 클래스의 새 인스턴스를 초기화 합니다.
 	 *
@@ -55,9 +56,9 @@ public enum EmailFormDesignType {
 	 * @since 2016. 4. 26. 오전 10:14:13
 	 */
 	EmailFormDesignType(final String fileName) {
-		this.designFile = new File(EmailFormDesignType.BASE_LOCATION + fileName);
+		this.designFile = new File(EmailFormDesignType.BASE_LOCATION + NullGtils.throwIfNull(fileName));
 	}
-
+	
 	/**
 	 * designFile를 반환합니다.
 	 *
@@ -67,8 +68,8 @@ public enum EmailFormDesignType {
 	 * @return designFile
 	 */
 	public File getDesignFile() {
-
+		
 		return this.designFile;
 	}
-
+	
 }

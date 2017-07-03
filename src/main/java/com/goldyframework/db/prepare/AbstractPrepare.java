@@ -9,10 +9,12 @@
  */
 package com.goldyframework.db.prepare;
 
+import com.goldyframework.utils.NullGtils;
+
 public abstract class AbstractPrepare implements Prepare {
-
+	
 	private final String tableName;
-
+	
 	/**
 	 * {@link AbstractPrepare} 클래스의 새 인스턴스를 초기화 합니다.
 	 *
@@ -20,18 +22,19 @@ public abstract class AbstractPrepare implements Prepare {
 	 */
 	public AbstractPrepare(final String tableName) {
 		super();
-		this.tableName = tableName;
+		this.tableName = NullGtils.throwIfNull(tableName);
 	}
-
+	
 	/**
 	 * tableName를 반환합니다.
+	 * 
 	 * @return tableName
 	 * @author 2017. 7. 2. 오후 5:43:55 jeong
 	 * @see {@link #tableName}
 	 */
 	public String getTableName() {
-		
+
 		return this.tableName;
 	}
-
+	
 }

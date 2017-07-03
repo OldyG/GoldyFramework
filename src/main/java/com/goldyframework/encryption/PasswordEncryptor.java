@@ -22,6 +22,8 @@ import javax.crypto.spec.PBEKeySpec;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.goldyframework.inspection.ObjectInspection;
+
 /**
  * 패스워드 암호화 도구
  *
@@ -65,6 +67,7 @@ public final class PasswordEncryptor {
 	 */
 	public static String encode(final CharSequence rawPassword) {
 
+		ObjectInspection.checkNull(rawPassword);
 		try {
 			final Random random = new SecureRandom();
 			final byte[] saltbytes = new byte[SALT_BYTE_LENGH];
@@ -117,6 +120,9 @@ public final class PasswordEncryptor {
 	 * @return 일치하는 경우 true, 아닌경우 false
 	 */
 	public static boolean matches(final CharSequence rawPassword, final String encodedPassword) {
+
+		ObjectInspection.checkNull(rawPassword);
+		ObjectInspection.checkNull(encodedPassword);
 
 		final String[] saltAndPass = encodedPassword.split("\\$"); //$NON-NLS-1$
 		final byte[] saltBytes = DECODER.decode(saltAndPass[0]);

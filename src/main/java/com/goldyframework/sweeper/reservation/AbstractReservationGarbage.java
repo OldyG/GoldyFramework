@@ -12,6 +12,7 @@ package com.goldyframework.sweeper.reservation;
 import java.text.ParseException;
 import java.util.Date;
 
+import com.goldyframework.inspection.ObjectInspection;
 import com.goldyframework.sweeper.IGarbage;
 import com.goldyframework.utils.ShareFunction;
 import com.goldyframework.version.DateAdapter;
@@ -36,6 +37,7 @@ public abstract class AbstractReservationGarbage implements IGarbage {
 	 *            예약시간
 	 */
 	protected AbstractReservationGarbage(final Date reservationTime) {
+		ObjectInspection.checkNull(reservationTime);
 		this.reservationTime = new Date(reservationTime.getTime());
 	}
 
@@ -84,6 +86,7 @@ public abstract class AbstractReservationGarbage implements IGarbage {
 	 */
 	public void setReservationTime(final String stringDate) throws ParseException {
 
+		ObjectInspection.checkNull(stringDate);
 		this.reservationTime = new DateAdapter().unmarshal(stringDate);
 	}
 }

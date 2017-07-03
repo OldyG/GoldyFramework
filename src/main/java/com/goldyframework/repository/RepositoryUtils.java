@@ -14,6 +14,7 @@ import java.sql.SQLException;
 
 import org.springframework.http.ResponseEntity;
 
+import com.goldyframework.inspection.ObjectInspection;
 import com.goldyframework.repository.exception.NotRegisteredFileException;
 
 /**
@@ -53,6 +54,7 @@ public class RepositoryUtils {
 	public ResponseEntity<byte[]> getImage(final RepositoryBody repository)
 		throws IOException, SQLException, RepositoryException, NotRegisteredFileException {
 
+		ObjectInspection.checkNull(repository);
 		final RepositoryService service = new RepositoryServiceImpl(repository);
 
 		return service.displayImage();

@@ -13,6 +13,8 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.stereotype.Component;
 
+import com.goldyframework.utils.NullGtils;
+
 /**
  * Interface to be implemented by any object that wishes to be notified
  * of the {@link ApplicationContext} that it runs in.
@@ -55,6 +57,6 @@ public class ApplicationContextProvider implements ApplicationContextAware {
 	@Override
 	public synchronized void setApplicationContext(final ApplicationContext ac) {
 
-		context = ac;
+		context = NullGtils.throwIfNull(ac);
 	}
 }

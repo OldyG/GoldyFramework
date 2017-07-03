@@ -18,6 +18,7 @@ import org.apache.commons.io.FileUtils;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.goldyframework.Prop;
+import com.goldyframework.inspection.ObjectInspection;
 import com.goldyframework.repository.RepositoryBody;
 import com.goldyframework.repository.RepositoryException;
 import com.goldyframework.repository.RepositoryService;
@@ -52,6 +53,7 @@ public final class ReservationGarbageBinder {
 	 */
 	public static AbstractReservationGarbage readGarbage(final File garbageFile) throws IOException {
 
+		ObjectInspection.checkNull(garbageFile);
 		// 파일을 읽어 옴 내용은 Json형태
 		final String json = FileUtils.readFileToString(garbageFile, Prop.DEFAULT_CHARSET.name());
 
@@ -85,7 +87,10 @@ public final class ReservationGarbageBinder {
 	 *             저장소 관련 예외사항
 	 */
 	public static void saveGarbage(final File garbageDirectory, final AbstractReservationGarbage garbage)
-			throws IOException, SQLException, RepositoryException {
+		throws IOException, SQLException, RepositoryException {
+
+		ObjectInspection.checkNull(garbageDirectory);
+		ObjectInspection.checkNull(garbage);
 
 		final ReservationGarbageBinderModel model = new ReservationGarbageBinderModel();
 		model.setTarget(garbage.getClass().getName());

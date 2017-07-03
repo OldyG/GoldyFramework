@@ -23,6 +23,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 
+import com.goldyframework.inspection.ObjectInspection;
 import com.goldyframework.utils.json.JsonGtils;
 
 /**
@@ -33,7 +34,7 @@ import com.goldyframework.utils.json.JsonGtils;
  * @since 2016. 4. 23. 오후 8:42:54
  */
 public final class Response {
-	
+
 	/**
 	 * slf4j Logger
 	 *
@@ -41,12 +42,12 @@ public final class Response {
 	 * @since 2017. 5. 22. 오후 9:20:02
 	 */
 	private static final Logger LOGGER = LoggerFactory.getLogger(Response.class);
-	
+
 	/**
 	 * content type, charset 기본값
 	 */
 	private static final String CONTENT_TYPE = "{0};charset=UTF-8"; //$NON-NLS-1$
-	
+
 	/**
 	 * 요청자에게 400 Bad Request으로 응답합니다.<br>
 	 * <h1>[Note]</h1>
@@ -61,10 +62,10 @@ public final class Response {
 	 * @return {@link ResponseEntity}
 	 */
 	public static <T> ResponseEntity<T> badRequest(final T body) {
-		
+
 		return Response.badRequest(body, MediaType.TEXT_PLAIN);
 	}
-	
+
 	/**
 	 * 요청자에게 400 Bad Request으로 응답합니다.<br>
 	 * <h1>[Note]</h1>
@@ -81,10 +82,10 @@ public final class Response {
 	 * @return {@link ResponseEntity}
 	 */
 	public static <T> ResponseEntity<T> badRequest(final T body, final MediaType mediaType) {
-		
+
 		return Response.send(body, HttpStatus.BAD_REQUEST, mediaType);
 	}
-	
+
 	/**
 	 * {@link HttpHeaders} 를 반환한다.
 	 *
@@ -94,10 +95,10 @@ public final class Response {
 	 * @return {@link HttpHeaders}
 	 */
 	private static HttpHeaders getHeaders(final MediaType mediaType) {
-		
+
 		return getHeaders(mediaType.toString());
 	}
-	
+
 	/**
 	 * {@link HttpHeaders} 를 반환한다
 	 *
@@ -107,12 +108,12 @@ public final class Response {
 	 * @return {@link HttpHeaders}
 	 */
 	private static HttpHeaders getHeaders(final String mediaType) {
-		
+
 		final HttpHeaders headers = new HttpHeaders();
 		headers.add("Content-Type", MessageFormat.format(Response.CONTENT_TYPE, mediaType)); //$NON-NLS-1$
 		return headers;
 	}
-	
+
 	/**
 	 * 파일의 이미지를 보낸다.
 	 *
@@ -124,20 +125,20 @@ public final class Response {
 	 *             {@link FileUtils#readFileToByteArray(File)} 기능 수행중 예외 사항
 	 */
 	public static ResponseEntity<byte[]> image(final File file) throws IOException {
-		
+
 		final byte[] content = FileUtils.readFileToByteArray(file);
-		
+
 		String extension = FilenameUtils.getExtension(file.getAbsolutePath()).toLowerCase(Locale.getDefault());
 		if ("jpg".equals(extension)) { //$NON-NLS-1$
 			extension = "jpeg"; //$NON-NLS-1$
 		}
-		
+
 		final String mediaType = "image/" + extension;  //$NON-NLS-1$
-		
+
 		return ok(content, mediaType);
-		
+
 	}
-	
+
 	/**
 	 * 아무런 반환데이터 없이 완료되었음을 알린다.
 	 * ("success" 문자열 반환)
@@ -146,10 +147,10 @@ public final class Response {
 	 * @return ("success" 문자열 반환)
 	 */
 	public static ResponseEntity<String> ok() {
-		
+
 		return Response.ok("success"); //$NON-NLS-1$
 	}
-	
+
 	/**
 	 * 요청자에게 200 OK으로 응답합니다.
 	 *
@@ -162,10 +163,10 @@ public final class Response {
 	 * @return 응답 데이터
 	 */
 	public static <T> ResponseEntity<T> ok(final T body) {
-		
+
 		return Response.ok(body, MediaType.TEXT_PLAIN);
 	}
-	
+
 	/**
 	 * 요청자에게 200 OK으로 응답과 데이터를 보냅니다.
 	 *
@@ -180,10 +181,10 @@ public final class Response {
 	 * @return {@link ResponseEntity}
 	 */
 	public static <T> ResponseEntity<T> ok(final T body, final MediaType mediaType) {
-		
+
 		return Response.send(body, HttpStatus.OK, mediaType);
 	}
-	
+
 	/**
 	 * 요청자에게 200 OK으로 응답과 데이터를 보냅니다.
 	 *
@@ -197,10 +198,10 @@ public final class Response {
 	 * @return 응답 데이터
 	 */
 	public static <T> ResponseEntity<T> ok(final T body, final String mediaType) {
-		
+
 		return Response.send(body, HttpStatus.OK, mediaType);
 	}
-	
+
 	/**
 	 * 주어진 URL로 Redirect 합니다.
 	 *
@@ -210,12 +211,12 @@ public final class Response {
 	 * @return Redirect 경로
 	 */
 	public static ResponseEntity<String> redirect(final String url) {
-		
+
 		final HttpHeaders headers = new HttpHeaders();
 		headers.add("Location", url); //$NON-NLS-1$
 		return new ResponseEntity<>(headers, HttpStatus.FOUND);
 	}
-	
+
 	/**
 	 * 요청자에게 200 OK으로 응답과 데이터를 보냅니다.
 	 *
@@ -231,7 +232,11 @@ public final class Response {
 	 * @return 응답 데이터
 	 */
 	private static <T> ResponseEntity<T> send(final T body, final HttpStatus status, final MediaType mediaType) {
-		
+
+		ObjectInspection.checkNull(body);
+		ObjectInspection.checkNull(status);
+		ObjectInspection.checkNull(mediaType);
+
 		final HttpHeaders headers = Response.getHeaders(mediaType);
 		if (MediaType.APPLICATION_JSON.equals(mediaType)) {
 			final String bodyjson = JsonGtils.toGson(body);
@@ -245,10 +250,10 @@ public final class Response {
 			}
 			LOGGER.info(string);
 		}
-		
+
 		return ResponseEntity.status(status).headers(headers).body(body);
 	}
-	
+
 	/**
 	 * 요청자에게 200 OK으로 응답과 데이터를 보냅니다.
 	 *
@@ -264,11 +269,14 @@ public final class Response {
 	 * @return 응답 데이터
 	 */
 	private static <T> ResponseEntity<T> send(final T body, final HttpStatus status, final String mediaType) {
-		
+
+		ObjectInspection.checkNull(body);
+		ObjectInspection.checkNull(status);
+		ObjectInspection.checkNull(mediaType);
 		final HttpHeaders headers = Response.getHeaders(mediaType);
 		return ResponseEntity.status(status).headers(headers).body(body);
 	}
-	
+
 	/**
 	 * 요청자에게 500 Internal Server Error으로 응답합니다.
 	 *
@@ -281,10 +289,10 @@ public final class Response {
 	 * @return 응답 데이터
 	 */
 	public static <T> ResponseEntity<T> serverError(final T body) {
-		
+
 		return Response.serverError(body, MediaType.TEXT_PLAIN);
 	}
-	
+
 	/**
 	 * 요청자에게 500 Internal Server Error으로 응답합니다.
 	 *
@@ -299,10 +307,10 @@ public final class Response {
 	 * @return {@link ResponseEntity}
 	 */
 	public static <T> ResponseEntity<T> serverError(final T body, final MediaType mediaType) {
-		
+
 		return Response.send(body, HttpStatus.INTERNAL_SERVER_ERROR, mediaType);
 	}
-	
+
 	/**
 	 * {@link Response} 클래스의 새 인스턴스를 초기화 합니다.
 	 *

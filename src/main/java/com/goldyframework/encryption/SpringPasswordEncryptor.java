@@ -11,6 +11,8 @@ package com.goldyframework.encryption;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import com.goldyframework.inspection.ObjectInspection;
+
 /**
  * Spring 패스워드 암호화 도구
  *
@@ -37,6 +39,7 @@ public class SpringPasswordEncryptor implements PasswordEncoder {
 	@Override
 	public String encode(final CharSequence rawPassword) {
 
+		ObjectInspection.checkNull(rawPassword);
 		return PasswordEncryptor.encode(rawPassword);
 	}
 
@@ -49,6 +52,8 @@ public class SpringPasswordEncryptor implements PasswordEncoder {
 	@Override
 	public boolean matches(final CharSequence rawPassword, final String encodedPassword) {
 
+		ObjectInspection.checkNull(rawPassword);
+		ObjectInspection.checkNull(encodedPassword);
 		return PasswordEncryptor.matches(rawPassword, encodedPassword);
 	}
 

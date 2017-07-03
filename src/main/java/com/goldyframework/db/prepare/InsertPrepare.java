@@ -15,6 +15,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
+import com.goldyframework.inspection.ObjectInspection;
 import com.goldyframework.utils.NullGtils;
 
 public class InsertPrepare extends AbstractPrepare {
@@ -32,7 +33,7 @@ public class InsertPrepare extends AbstractPrepare {
 	 * @param tableName
 	 */
 	public InsertPrepare(final String tableName) {
-		super(tableName);
+		super(NullGtils.throwIfNull(tableName));
 	}
 
 	/**
@@ -47,19 +48,22 @@ public class InsertPrepare extends AbstractPrepare {
 
 	public void setColumns(final List<String> columns) {
 
+		ObjectInspection.checkNull(columns);
 		this.columns.clear();
-		this.columns.addAll(NullGtils.emptyIfNull(columns));
+		this.columns.addAll(columns);
 	}
 
 	public void setColumns(final String... columns) {
 
+		ObjectInspection.checkNull(columns);
 		this.setColumns(new ArrayList<>(Arrays.asList(columns)));
 	}
 
 	public void setValues(final List<Object> values) {
 
+		ObjectInspection.checkNull(values);
 		this.values.clear();
-		this.values.addAll(NullGtils.emptyIfNull(values));
+		this.values.addAll(values);
 	}
 
 	/**
@@ -69,9 +73,8 @@ public class InsertPrepare extends AbstractPrepare {
 	 * @param password
 	 */
 	public void setValues(final Object... values) {
-		
-		NullGtils.emptyIfNull(values);
 
+		ObjectInspection.checkNull(values);
 		this.setValues(new ArrayList<>(Arrays.asList(values)));
 	}
 

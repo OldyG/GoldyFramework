@@ -12,10 +12,12 @@ package com.goldyframework.db.prepare;
 import java.text.MessageFormat;
 import java.util.Collection;
 
+import com.goldyframework.utils.NullGtils;
+
 public class DeletePrepare extends AbstractPrepare {
-
+	
 	private final WhereBuilder where;
-
+	
 	/**
 	 * {@link DeletePrepare} 클래스의 새 인스턴스를 초기화 합니다.
 	 *
@@ -23,10 +25,10 @@ public class DeletePrepare extends AbstractPrepare {
 	 * @param tableName
 	 */
 	public DeletePrepare(final String tableName, final WhereBuilder whereBuilder) {
-		super(tableName);
+		super(NullGtils.throwIfNull(tableName));
 		this.where = whereBuilder;
 	}
-
+	
 	/**
 	 * {@inheritDoc}
 	 *
@@ -34,10 +36,10 @@ public class DeletePrepare extends AbstractPrepare {
 	 */
 	@Override
 	public Collection<Object> getArgs() {
-
+		
 		return this.where.getArgs();
 	}
-
+	
 	/**
 	 * {@inheritDoc}
 	 *
@@ -45,9 +47,9 @@ public class DeletePrepare extends AbstractPrepare {
 	 */
 	@Override
 	public String toPrepareSql() {
-
+		
 		return MessageFormat.format("DELETE FROM {0} WHERE {1}",  //$NON-NLS-1$
 			super.getTableName(), this.where.build());
 	}
-
+	
 }

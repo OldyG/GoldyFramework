@@ -9,6 +9,8 @@
  */
 package com.goldyframework.db.prepare;
 
+import com.goldyframework.utils.NullGtils;
+
 @SuppressWarnings("nls")
 public enum Comparison {
 	EQUAL("="),
@@ -18,13 +20,13 @@ public enum Comparison {
 	GREATER_EQUAL(">="),
 	LESS_EQUAL("<="),
 	IS_NULL("IS NULL");
-	
+
 	private final String comparison;
-	
+
 	Comparison(final String comparison) {
-		this.comparison = comparison;
+		this.comparison = NullGtils.throwIfNull(comparison);
 	}
-	
+
 	/**
 	 * value를 반환합니다.
 	 *
@@ -33,8 +35,8 @@ public enum Comparison {
 	 * @see {@link #comparison}
 	 */
 	public String getComparison() {
-		
+
 		return this.comparison;
 	}
-	
+
 }

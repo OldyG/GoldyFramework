@@ -14,6 +14,9 @@ import java.net.URL;
 import java.text.MessageFormat;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import com.goldyframework.inspection.ObjectInspection;
 
 /**
  * {@link HttpServletRequest}, {@link HttpServletResponse} 의 공통 작업 목록
@@ -35,6 +38,7 @@ public final class HttpServletGtils {
 	 */
 	public static String extractBaseUrl(final HttpServletRequest request) throws MalformedURLException {
 
+		ObjectInspection.checkNull(request);
 		final URL requestUrl = new URL(request.getRequestURL().toString());
 		final String portString;
 		if (requestUrl.getPort() == -1) {

@@ -12,6 +12,7 @@ package com.goldyframework.repository.filenaming;
 import java.io.File;
 import java.text.MessageFormat;
 
+import com.goldyframework.inspection.ObjectInspection;
 import com.goldyframework.random.RandomStringGtils;
 
 /**
@@ -48,6 +49,9 @@ class UniqueRandomNaming implements FileNaming {
 	@Override
 	public String generageSavePath(final String directory, final String baseName, final String extension) {
 
+		ObjectInspection.checkNull(directory);
+		ObjectInspection.checkNull(baseName);
+		ObjectInspection.checkNull(extension);
 		while (true) {
 			final String randomName = RandomStringGtils.createRandomString(MIN_LENGTH, MAX_LENGTH - MIN_LENGTH);
 

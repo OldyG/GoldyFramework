@@ -26,10 +26,12 @@ import org.slf4j.LoggerFactory;
 
 import com.goldyframework.does.Because;
 import com.goldyframework.does.Does;
+import com.goldyframework.inspection.ObjectInspection;
 import com.goldyframework.repository.RepositoryException;
 import com.goldyframework.sweeper.exception.SweeperException;
 import com.goldyframework.sweeper.reservation.AbstractReservationGarbage;
 import com.goldyframework.sweeper.reservation.ReservationGarbageBinder;
+import com.goldyframework.utils.NullGtils;
 
 /**
  * 예약 쓰레기 청소
@@ -58,6 +60,8 @@ public class ReservationSweeper implements ISweeper {
 	public static void addReservationGarbage(final File garbageDirectory, final AbstractReservationGarbage garbage)
 		throws SweeperException {
 		
+		ObjectInspection.checkNull(garbageDirectory);
+		ObjectInspection.checkNull(garbage);
 		try {
 			ReservationGarbageBinder.saveGarbage(garbageDirectory, garbage);
 		} catch (IOException | SQLException | RepositoryException e) {
@@ -75,6 +79,8 @@ public class ReservationSweeper implements ISweeper {
 	 */
 	private static Map<File, AbstractReservationGarbage> extractCleaningTargetGarbage(
 		final Map<File, AbstractReservationGarbage> allReservationGarbage) {
+		
+		ObjectInspection.checkNull(allReservationGarbage);
 		
 		final Map<File, AbstractReservationGarbage> returnTarget = new HashMap<>();
 		for (final Entry<File, AbstractReservationGarbage> map : allReservationGarbage.entrySet()) {
@@ -97,6 +103,8 @@ public class ReservationSweeper implements ISweeper {
 	 */
 	private static File getChildDirectory(final File baseDirectory, final String childDirectoryName) {
 		
+		ObjectInspection.checkNull(baseDirectory);
+		ObjectInspection.checkNull(childDirectoryName);
 		final String absolutePath = baseDirectory.getAbsolutePath();
 		
 		final String fileName = FilenameUtils.getName(absolutePath);
@@ -149,7 +157,7 @@ public class ReservationSweeper implements ISweeper {
 	 * @since 2017. 4. 10. 오후 9:35:18
 	 */
 	public ReservationSweeper(final File garbageDirectory) {
-		this.garbageDirectory = garbageDirectory;
+		this.garbageDirectory = NullGtils.throwIfNull(garbageDirectory);
 	}
 	
 	/**

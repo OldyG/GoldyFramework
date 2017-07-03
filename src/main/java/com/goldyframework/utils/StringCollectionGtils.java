@@ -15,6 +15,8 @@ import java.util.List;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
+import com.goldyframework.inspection.ObjectInspection;
+
 /**
  * 문자열 리스트 공통 알고리즘 유틸
  *
@@ -34,6 +36,8 @@ public class StringCollectionGtils {
 	 */
 	public static List<String> collectMatching(final Collection<String> stringList, final List<String> patternList) {
 
+		ObjectInspection.checkNull(stringList);
+		ObjectInspection.checkNull(patternList);
 		final List<String> result = new ArrayList<>(stringList);
 
 		final List<String> matchList = new ArrayList<>();
@@ -59,6 +63,8 @@ public class StringCollectionGtils {
 	 */
 	public static List<String> collectMatching(final Collection<String> stringList, final String patternString) {
 
+		ObjectInspection.checkNull(stringList);
+		ObjectInspection.checkNull(patternString);
 		final Pattern pattern = Pattern.compile(patternString);
 
 		return stringList.stream()
@@ -79,6 +85,8 @@ public class StringCollectionGtils {
 	 */
 	public static List<String> eachAppend(final Collection<String> stringList, final String append) {
 
+		ObjectInspection.checkNull(stringList);
+		ObjectInspection.checkNull(append);
 		return stringList.stream()
 			.map(str -> str + append)
 			.collect(Collectors.toList());
@@ -97,6 +105,8 @@ public class StringCollectionGtils {
 	 */
 	public static List<String> eachPrepend(final String prepend, final Collection<String> stringList) {
 
+		ObjectInspection.checkNull(prepend);
+		ObjectInspection.checkNull(stringList);
 		return stringList.stream()
 			.map(str -> prepend + str)
 			.collect(Collectors.toList());
@@ -115,6 +125,8 @@ public class StringCollectionGtils {
 	 */
 	public static String join(final Collection<String> stringList, final String delimiter) {
 
+		ObjectInspection.checkNull(stringList);
+		ObjectInspection.checkNull(delimiter);
 		return stringList.stream()
 			.collect(Collectors.joining(delimiter));
 	}
@@ -130,6 +142,9 @@ public class StringCollectionGtils {
 	 * @return 결과
 	 */
 	public static List<String> removeMatching(final Collection<String> stringList, final List<String> patternList) {
+
+		ObjectInspection.checkNull(stringList);
+		ObjectInspection.checkNull(patternList);
 
 		List<String> temp = new ArrayList<>(stringList);
 		for (final String pattern : patternList) {
@@ -150,6 +165,8 @@ public class StringCollectionGtils {
 	 */
 	public static List<String> removeMatching(final Collection<String> stringList, final String patternString) {
 
+		ObjectInspection.checkNull(stringList);
+		ObjectInspection.checkNull(patternString);
 		final Pattern pattern = Pattern.compile(patternString);
 
 		return stringList.stream()

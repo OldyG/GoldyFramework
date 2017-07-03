@@ -16,6 +16,7 @@ import org.slf4j.LoggerFactory;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.goldyframework.inspection.ObjectInspection;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -80,6 +81,9 @@ public final class JsonGtils {
 	 */
 	public static <T> T fromGson(final String json, final Class<T> clazzOfT) {
 
+		ObjectInspection.checkNull(json);
+		ObjectInspection.checkNull(clazzOfT);
+
 		try {
 			return DEFAULT_GSON.fromJson(json, clazzOfT);
 		} catch (final RuntimeException e) {
@@ -108,6 +112,8 @@ public final class JsonGtils {
 	 */
 	public static <T> T fromJackson(final String json, final Class<T> clazzOfT) {
 
+		ObjectInspection.checkNull(json);
+		ObjectInspection.checkNull(clazzOfT);
 		try {
 			return OBJECT_MAPPER.readValue(json, clazzOfT);
 		} catch (final IOException e) {
@@ -127,6 +133,7 @@ public final class JsonGtils {
 	 */
 	public static String toGson(final Object object) {
 
+		ObjectInspection.checkNull(object);
 		try {
 			return DEFAULT_GSON.toJson(object);
 		} catch (final RuntimeException e) {
@@ -143,6 +150,8 @@ public final class JsonGtils {
 	 */
 	public static String toGsonNonHtmlEscaping(final Object object) {
 
+		ObjectInspection.checkNull(object);
+
 		try {
 			return NON_ESCAPE_GSON.toJson(object);
 		} catch (final RuntimeException e) {
@@ -158,6 +167,8 @@ public final class JsonGtils {
 	 * @return 변형된 객체
 	 */
 	public static String toGsonPretty(final Object object) {
+
+		ObjectInspection.checkNull(object);
 
 		try {
 			return PRETTY_GSON.toJson(object);
@@ -176,6 +187,8 @@ public final class JsonGtils {
 	 * @return 변형된 객체
 	 */
 	public static String toJackson(final Object object) {
+
+		ObjectInspection.checkNull(object);
 
 		try {
 			return OBJECT_MAPPER.writeValueAsString(object);

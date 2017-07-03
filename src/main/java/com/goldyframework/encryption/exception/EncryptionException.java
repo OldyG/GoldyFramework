@@ -9,15 +9,18 @@
  */
 package com.goldyframework.encryption.exception;
 
+import com.goldyframework.encryption.Encryption;
+import com.goldyframework.utils.NullGtils;
+
 /**
  * 암호화 복호화 중 예외 발생
  *
  * @author 2017. 6. 19. 오후 9:40:41 jeong
  */
 public class EncryptionException extends Exception {
-
+	
 	private static final long serialVersionUID = -6224567991282560573L;
-
+	
 	/**
 	 * {@link Encryption} 클래스의 새 인스턴스를 초기화 합니다.
 	 *
@@ -25,7 +28,7 @@ public class EncryptionException extends Exception {
 	 * @param cause
 	 */
 	public EncryptionException(final Throwable cause) {
-		super(cause);
+		super(NullGtils.throwIfNull(cause));
 	}
-
+	
 }

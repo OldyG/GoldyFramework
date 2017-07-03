@@ -13,6 +13,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import com.goldyframework.inspection.IntegerInspection;
+import com.goldyframework.utils.NullGtils;
 import com.goldyframework.utils.StringCollectionGtils;
 
 /**
@@ -22,11 +24,12 @@ public class PrepareHelper {
 	
 	public String join(final List<String> columns) {
 		
-		return StringCollectionGtils.join(columns, ", "); //$NON-NLS-1$
+		return StringCollectionGtils.join(NullGtils.throwIfNull(columns), ", "); //$NON-NLS-1$
 	}
 	
 	public String joinMark(final int size) {
 		
+		IntegerInspection.checkBelowZero(size);
 		final Collection<String> marks = new ArrayList<>();
 		for (int i = 0; i < size; i++) {
 			marks.add("?"); //$NON-NLS-1$
@@ -42,8 +45,10 @@ public class PrepareHelper {
 	 * @return
 	 */
 	public List<String> toDetiailColumn(final String table, final List<String> columns) {
-
-		return StringCollectionGtils.eachPrepend(table + '.', columns);
+		
+		final String prepend = NullGtils.throwIfNull(table) + '.';
+		final List<String> stringList = NullGtils.throwIfNull(columns);
+		return StringCollectionGtils.eachPrepend(prepend, stringList);
 	}
 	
 }

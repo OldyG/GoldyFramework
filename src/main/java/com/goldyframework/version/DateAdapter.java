@@ -15,20 +15,22 @@ import java.util.Date;
 
 import javax.xml.bind.annotation.adapters.XmlAdapter;
 
+import com.goldyframework.inspection.ObjectInspection;
+
 /**
  * XML 파싱 중 {@link Date} 필드 연결도구
  *
  * @author 2017. 6. 18. 오후 3:02:52 jeong
  */
 public class DateAdapter extends XmlAdapter<String, Date> {
-	
+
 	private static final Object LOCK_OBJECT = new Object();
-	
+
 	/**
 	 * 날자 포맷
 	 */
 	private final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); //$NON-NLS-1$
-	
+
 	/**
 	 * {@link DateAdapter} 클래스의 새 인스턴스를 초기화 합니다.
 	 *
@@ -38,7 +40,7 @@ public class DateAdapter extends XmlAdapter<String, Date> {
 	public DateAdapter() {
 		super();
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 *
@@ -46,12 +48,13 @@ public class DateAdapter extends XmlAdapter<String, Date> {
 	 */
 	@Override
 	public String marshal(final Date date) {
-		
+
+		ObjectInspection.checkNull(date);
 		synchronized (LOCK_OBJECT) {
 			return this.dateFormat.format(date);
 		}
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 *
@@ -59,10 +62,11 @@ public class DateAdapter extends XmlAdapter<String, Date> {
 	 */
 	@Override
 	public Date unmarshal(final String date) throws ParseException {
-		
+
+		ObjectInspection.checkNull(date);
 		synchronized (LOCK_OBJECT) {
 			return this.dateFormat.parse(date);
 		}
 	}
-	
+
 }

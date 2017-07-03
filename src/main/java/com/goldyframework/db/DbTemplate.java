@@ -21,6 +21,7 @@ import org.springframework.stereotype.Component;
 
 import com.goldyframework.db.prepare.DeletePrepare;
 import com.goldyframework.db.prepare.InsertPrepare;
+import com.goldyframework.db.prepare.UpdatePrepare;
 
 /**
  * @author 2017. 7. 1. 오후 3:42:15 jeong
@@ -71,6 +72,16 @@ public class DbTemplate extends JdbcTemplate {
 	private Object[] toArray(final Collection<Object> target) {
 
 		return target.toArray(new Object[target.size()]);
+	}
+
+	/**
+	 * @author 2017. 7. 3. 오후 11:05:27 jeong
+	 * @param update
+	 * @return
+	 */
+	public void update(final UpdatePrepare update) {
+
+		this.update(update.toPrepareSql(), this.toArray(update.getArgs()));
 	}
 
 }

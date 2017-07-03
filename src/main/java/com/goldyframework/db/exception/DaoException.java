@@ -9,16 +9,18 @@
  */
 package com.goldyframework.db.exception;
 
+import com.goldyframework.utils.NullGtils;
+
 /**
  * @author 2017. 7. 1. 오전 12:00:58 jeong
  */
 public class DaoException extends Exception {
-
+	
 	/**
 	 * Serializable UID
 	 */
 	private static final long serialVersionUID = 2135496068594915680L;
-
+	
 	/**
 	 * Constructs a new exception with {@code null} as its detail message.
 	 * The cause is not initialized, and may subsequently be initialized by a
@@ -27,7 +29,7 @@ public class DaoException extends Exception {
 	public DaoException() {
 		super();
 	}
-
+	
 	/**
 	 * Constructs a new exception with the specified detail message. The
 	 * cause is not initialized, and may subsequently be initialized by
@@ -38,9 +40,9 @@ public class DaoException extends Exception {
 	 *            later retrieval by the {@link #getMessage()} method.
 	 */
 	public DaoException(final String message) {
-		super(message);
+		super(NullGtils.throwIfNull(message));
 	}
-
+	
 	/**
 	 * Constructs a new exception with the specified detail message and
 	 * cause.
@@ -60,9 +62,9 @@ public class DaoException extends Exception {
 	 * @since 1.4
 	 */
 	public DaoException(final String message, final Throwable cause) {
-		super(message, cause);
+		super(NullGtils.throwIfNull(message), NullGtils.throwIfNull(cause));
 	}
-
+	
 	/**
 	 * Constructs a new exception with the specified cause and a detail
 	 * message of <tt>(cause==null ? null : cause.toString())</tt> (which
@@ -79,6 +81,6 @@ public class DaoException extends Exception {
 	 * @since 1.4
 	 */
 	public DaoException(final Throwable cause) {
-		super(cause);
+		super(NullGtils.throwIfNull(cause));
 	}
 }

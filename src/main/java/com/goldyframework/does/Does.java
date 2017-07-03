@@ -12,6 +12,7 @@ package com.goldyframework.does;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.goldyframework.inspection.ObjectInspection;
 import com.goldyframework.utils.ITestSet;
 import com.google.common.annotations.VisibleForTesting;
 
@@ -53,12 +54,10 @@ public final class Does {
 	 */
 	public static void notUse(final Object obj, final Because because) {
 
-		if (obj == null) {
-			LOGGER.trace(because.getMessage());
-		} else {
-			final String message = "unuse by " + obj.toString(); //$NON-NLS-1$
-			LOGGER.trace(message);
-		}
+		ObjectInspection.checkNull(obj);
+		ObjectInspection.checkNull(because);
+		final String message = "unuse by " + obj.toString(); //$NON-NLS-1$
+		LOGGER.trace(message);
 	}
 
 	/**

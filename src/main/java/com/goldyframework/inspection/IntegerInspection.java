@@ -31,19 +31,43 @@ public final class IntegerInspection {
 	private static final Logger LOGGER = LoggerFactory.getLogger(IntegerInspection.class);
 
 	/**
-	 * 해당 정수가 0 또는 0이하인지 검사합니다.
+	 * @author 2017. 7. 3. 오후 11:31:15 jeong
+	 * @param target
+	 * @param minimumValue
+	 */
+	private static void checkAbove(final int target, final int maximumValue) {
+
+		if (target >= maximumValue) {
+			throw new InspectionException(maximumValue + "이상으로 초기화될수 없습니다. : " + target); //$NON-NLS-1$
+		}
+
+	}
+
+	/**
+	 * @author 2017. 7. 3. 오후 11:31:15 jeong
+	 * @param target
+	 * @param minimumValue
+	 */
+	private static void checkBelow(final int target, final int minimumValue) {
+
+		if (target <= minimumValue) {
+			throw new InspectionException(minimumValue + "이하로 초기화될수 없습니다. : " + target); //$NON-NLS-1$
+		}
+
+	}
+
+	/**
+	 * 해당 정수가 0을 포함한 음수 값인지 검사합니다.
 	 *
 	 * @author 2017. 6. 14. 오후 9:45:26 jeong
-	 * @param integer
+	 * @param target
 	 *            검사대상 정수
 	 * @throws ValidateException
 	 *             0 이하일 경우 발생합니다.
 	 */
-	public static void checkBelowZero(final int integer) {
+	public static void checkBelowZero(final int target) {
 
-		if (integer <= 0) {
-			throw new InspectionException("0이하로 초기화될수 없습니다."); //$NON-NLS-1$
-		}
+		checkBelow(target, 0);
 	}
 
 	/**
@@ -112,7 +136,7 @@ public final class IntegerInspection {
 			return Integer.parseInt(stringNumber);
 		}
 
-		throw new InspectionException("Integer 형식이 아닙니다."); //$NON-NLS-1$
+		throw new InspectionException("Integer 형식이 아닙니다. : " + stringNumber); //$NON-NLS-1$
 	}
 
 	/**

@@ -24,6 +24,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.goldyframework.Prop;
+import com.goldyframework.inspection.ObjectInspection;
 
 /**
  * 공유 함수 Utils
@@ -31,7 +32,7 @@ import com.goldyframework.Prop;
  * @author 2017. 6. 18. 오후 2:41:41 jeong
  */
 public final class ShareFunction {
-	
+
 	/**
 	 * slf4j Logger
 	 *
@@ -39,7 +40,7 @@ public final class ShareFunction {
 	 * @since 2017. 5. 22. 오후 9:20:02
 	 */
 	private static final Logger LOGGER = LoggerFactory.getLogger(ShareFunction.class);
-	
+
 	/**
 	 * 주어진 날짜가 오늘날짜로 몇일이 남았는지 계산합니다.
 	 *
@@ -49,12 +50,13 @@ public final class ShareFunction {
 	 * @return 남은 날
 	 */
 	public static int calculateRemaingDay(final Date date) {
-		
+
+		ObjectInspection.checkNull(date);
 		final long diff = calculateRemaingTime(date);
 		final int day = (int) (diff / (1000 * 60 * 60 * 24));
 		return day;
 	}
-	
+
 	/**
 	 * 문자열로 작성된 Date가 오늘날짜 기준으로 몇일이 남았는지 계산합니다.
 	 *
@@ -68,11 +70,14 @@ public final class ShareFunction {
 	 *             날짜가 포맷에 맞지 않는 경우 예외 발생
 	 */
 	public static int calculateRemaingDay(final String stringDate, final String format) throws ParseException {
-		
+
+		ObjectInspection.checkNull(stringDate);
+		ObjectInspection.checkNull(format);
+
 		final SimpleDateFormat sdf = new SimpleDateFormat(format);
 		return ShareFunction.calculateRemaingDay(sdf.parse(stringDate));
 	}
-	
+
 	/**
 	 * 주어진 날짜가 오늘날짜로 몇 밀리초가 남았는지 계산합니다.
 	 *
@@ -82,12 +87,13 @@ public final class ShareFunction {
 	 * @return 밀리초
 	 */
 	public static long calculateRemaingTime(final Date date) {
-		
+
+		ObjectInspection.checkNull(date);
 		final Date currentDate = new Date();
 		final long diff = date.getTime() - currentDate.getTime();
 		return diff;
 	}
-	
+
 	/**
 	 * 주어진 문자열의 개행을 HTML의 개행(<br/>
 	 * )로 변경합니다.
@@ -98,10 +104,11 @@ public final class ShareFunction {
 	 * @return 변경 된 문자열
 	 */
 	public static String convertNewLineToBrTag(final String data) {
-		
+
+		ObjectInspection.checkNull(data);
 		return data.replaceAll("(\r\n|\n)", "<br />"); //$NON-NLS-1$//$NON-NLS-2$
 	}
-	
+
 	/**
 	 * 주어진 클래스 타입에 값을 초기화합니다.
 	 * (Enum, Date, 외 모든 객체 지원)
@@ -117,19 +124,21 @@ public final class ShareFunction {
 	 */
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public static Object mappingParamType(final Class<?> paramType, final String value) throws ParseException {
-		
+
+		ObjectInspection.checkNull(paramType);
+		ObjectInspection.checkNull(value);
 		if (paramType.isEnum()) {
 			return Enum.valueOf((Class<Enum>) paramType, value);
 		} else if (paramType.equals(Date.class)) {
 			final SimpleDateFormat dateFormat = new SimpleDateFormat(Prop.DATE_FORMAT);
 			return dateFormat.parse(value);
 		}
-		
+
 		final PropertyEditor editor = PropertyEditorManager.findEditor(paramType);
 		editor.setAsText(value);
 		return editor.getValue();
 	}
-	
+
 	/**
 	 * {@link Annotation}에 할당된 값을 문자열로 출력합니다.
 	 *
@@ -139,17 +148,18 @@ public final class ShareFunction {
 	 * @return 결과 문자열
 	 */
 	public static String toString(final Annotation anno) {
-		
+
+		ObjectInspection.checkNull(anno);
 		final StringBuilder builder = new StringBuilder();
-		
+
 		String deli = ""; //$NON-NLS-1$
-		
+
 		for (final Method method : anno.annotationType().getDeclaredMethods()) {
 			builder.append(deli);
 			try {
 				final String methodName = method.getName();
 				builder.append(methodName).append('=');
-				
+
 				final Object value = method.invoke(anno);
 				if (value.getClass().isArray()) {
 					final Collection<Object> list = Arrays.asList((Object[]) value);
@@ -166,7 +176,7 @@ public final class ShareFunction {
 		}
 		return builder.toString();
 	}
-	
+
 	/**
 	 * {@link ShareFunction} 클래스의 새 인스턴스를 초기화 합니다.
 	 *

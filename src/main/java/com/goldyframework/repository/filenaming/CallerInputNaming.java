@@ -11,6 +11,8 @@ package com.goldyframework.repository.filenaming;
 
 import java.text.MessageFormat;
 
+import com.goldyframework.inspection.ObjectInspection;
+
 /**
  * 호출자가 이름을 직접 정의합니다.<br>
  * 중복 파일이 존재 할 경우 덮어씌웁니다.
@@ -35,6 +37,9 @@ class CallerInputNaming implements FileNaming {
 	@Override
 	public String generageSavePath(final String directory, final String baseName, final String extension) {
 
+		ObjectInspection.checkNull(directory);
+		ObjectInspection.checkNull(baseName);
+		ObjectInspection.checkNull(extension);
 		return MessageFormat.format("{0}{1}.{2}", directory, baseName, extension); //$NON-NLS-1$
 	}
 

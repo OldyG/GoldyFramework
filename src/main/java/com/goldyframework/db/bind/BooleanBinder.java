@@ -10,12 +10,13 @@
 package com.goldyframework.db.bind;
 
 import com.goldyframework.inspection.BooleanInspection;
+import com.goldyframework.utils.NullGtils;
 
 /**
  * @author 2017. 6. 30. 오후 10:29:59 jeong
  */
 public class BooleanBinder implements IBinder<Boolean> {
-
+	
 	/**
 	 * {@inheritDoc}
 	 *
@@ -24,7 +25,7 @@ public class BooleanBinder implements IBinder<Boolean> {
 	@Override
 	public Boolean bind(final String value) {
 
-		return BooleanInspection.trySoftCast(value);
+		return BooleanInspection.trySoftCast(NullGtils.throwIfNull(value));
 	}
-
+	
 }

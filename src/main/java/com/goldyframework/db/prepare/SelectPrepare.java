@@ -11,8 +11,10 @@ package com.goldyframework.db.prepare;
 
 import java.util.Collection;
 
-public class SelectPrepare extends AbstractPrepare {
+import com.goldyframework.utils.NullGtils;
 
+public class SelectPrepare extends AbstractPrepare {
+	
 	/**
 	 * {@link SelectPrepare} 클래스의 새 인스턴스를 초기화 합니다.
 	 *
@@ -20,9 +22,9 @@ public class SelectPrepare extends AbstractPrepare {
 	 * @param tableName
 	 */
 	public SelectPrepare(final String tableName) {
-		super(tableName);
+		super(NullGtils.throwIfNull(tableName));
 	}
-
+	
 	/**
 	 * {@inheritDoc}
 	 *
@@ -30,11 +32,11 @@ public class SelectPrepare extends AbstractPrepare {
 	 */
 	@Override
 	public Collection<Object> getArgs() {
-
+		
 		// TODO Auto-generated method stub
 		return null;
 	}
-
+	
 	/**
 	 * {@inheritDoc}
 	 *
@@ -42,9 +44,9 @@ public class SelectPrepare extends AbstractPrepare {
 	 */
 	@Override
 	public String toPrepareSql() {
-
+		
 		// TODO Auto-generated method stub
 		return null;
 	}
-
+	
 }

@@ -7,13 +7,16 @@
  * 이 문서의 모든 저작권 및 지적 재산권은 (주)Goldy Project에게 있습니다.
  * 이 문서의 어떠한 부분도 허가 없이 복제 또는 수정 하거나, 전송할 수 없습니다.
  */
-package com.goldyframework.db.prepare;
+package com.goldyframework.db.prepare.statement.delete;
 
 import org.junit.Assert;
 import org.junit.Test;
 import org.mockito.Mockito;
 
 import com.goldyframework.annotaion.UnitTest;
+import com.goldyframework.db.prepare.statement.Comparison;
+import com.goldyframework.db.prepare.statement.WhereBuilder;
+import com.goldyframework.db.prepare.statement.delete.DeletePrepare;
 
 @SuppressWarnings("nls")
 public class DeletePrepareTest extends Mockito {
@@ -35,7 +38,7 @@ public class DeletePrepareTest extends Mockito {
 	}
 
 	/**
-	 * Test method for {@link com.goldyframework.db.prepare.DeletePrepare#toPrepareSql()}.
+	 * Test method for {@link com.goldyframework.db.prepare.statement.delete.DeletePrepare#toPrepareSql()}.
 	 */
 	@Test
 	@UnitTest

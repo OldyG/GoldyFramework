@@ -1,7 +1,7 @@
 /**
  * @author 2017. 6. 16. 오후 10:14:08 jeong
  */
-package com.goldyframework.http.requestinfo;
+package com.goldyframework.http.request;
 
 import javax.servlet.http.Cookie;
 

@@ -29,6 +29,7 @@ import javax.mail.internet.MimeUtility;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.MailException;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Component;
 
@@ -168,21 +169,29 @@ public class Email {
 	 *
 	 * @author jeonghyun.kum
 	 * @since 2016. 4. 26. 오후 12:05:43
-	 * @param property
+	 * @param msg
 	 *            전송 이메일 폼
-	 * @throws EmailException
-	 *             이메일 전송 실패 오류
+	 * @return
 	 */
+	@VisibleForTesting
+	Thread createSendTread(final MimeMessage msg) {
+
+		return new Thread(() -> {
+			try {
+				this.mailSender.send(msg);
+			} catch (final MailException e) {
+				LOGGER.debug("이메일 전송 실패", e); //$NON-NLS-1$
+			}
+		});
+	}
+
 	public void send(final SendModel property) throws EmailException {
 
-		LOGGER.debug("[이메일 서버] 이메일 전송 설정 중"); //$NON-NLS-1$
+		LOGGER.debug("이메일 전송 데이터 설정 중"); //$NON-NLS-1$
 		new SendModelValidator().check(property);
-
 		final MimeMessage msg = this.createMimeMessage(property);
-
-		LOGGER.debug("[이메일 서버] 이메일 전송 보내는 중"); //$NON-NLS-1$
-		this.mailSender.send(msg);
-		LOGGER.debug("[이메일 서버] 이메일 전송 완료"); //$NON-NLS-1$
+		final Thread sendAwait = this.createSendTread(msg);
+		sendAwait.start();
 	}
 
 }

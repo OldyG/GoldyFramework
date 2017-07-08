@@ -7,12 +7,19 @@
  * 이 문서의 모든 저작권 및 지적 재산권은 (주)Goldy Project에게 있습니다.
  * 이 문서의 어떠한 부분도 허가 없이 복제 또는 수정 하거나, 전송할 수 없습니다.
  */
-package com.goldyframework.db.prepare;
+package com.goldyframework.db.prepare.statement.update;
 
 import java.text.MessageFormat;
 import java.util.Collection;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
+import com.goldyframework.db.prepare.statement.AbstractPrepare;
+import com.goldyframework.db.prepare.statement.AssignBuilder;
+import com.goldyframework.db.prepare.statement.WhereBuilder;
+import com.goldyframework.inspection.StringInspection;
 import com.goldyframework.utils.NullGtils;
+import com.google.common.annotations.VisibleForTesting;
 
 /**
  * @author 2017. 7. 2. 오후 9:41:50 jeong
@@ -31,7 +38,8 @@ public class UpdatePrepare extends AbstractPrepare {
 	 *            테이블 이름
 	 * @param assign
 	 */
-	public UpdatePrepare(final String tableName, final AssignBuilder assign, final WhereBuilder where) {
+	@VisibleForTesting
+	UpdatePrepare(final String tableName, final AssignBuilder assign, final WhereBuilder where) {
 		super(NullGtils.throwIfNull(tableName));
 		this.assign = NullGtils.throwIfNull(assign);
 		this.where = NullGtils.throwIfNull(where);
@@ -45,7 +53,11 @@ public class UpdatePrepare extends AbstractPrepare {
 	@Override
 	public Collection<Object> getArgs() {
 
-		return this.where.getArgs();
+		return Stream.concat(
+			this.assign.getArgs().stream(),
+			this.where.getArgs().stream())
+			.collect(Collectors.toList());
+
 	}
 
 	/**
@@ -56,7 +68,14 @@ public class UpdatePrepare extends AbstractPrepare {
 	@Override
 	public String toPrepareSql() {
 
-		return MessageFormat.format("", super.getTableName()); //$NON-NLS-1$
+		final String tableName = super.getTableName();
+		final String buildedUpdate = this.assign.build();
+		final String buildedWhere = this.where.build();
+		StringInspection.checkNullOrEmpty(tableName);
+		StringInspection.checkNullOrEmpty(buildedUpdate);
+		StringInspection.checkNullOrEmpty(buildedWhere);
+
+		return MessageFormat.format("UPDATE {0} SET {1} WHERE {2}", tableName, buildedUpdate, buildedWhere); //$NON-NLS-1$
 	}
 
 }

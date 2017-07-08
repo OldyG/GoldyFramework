@@ -17,22 +17,22 @@ import com.goldyframework.encryption.exception.EncryptionException;
  * @author 2017. 6. 18. 오전 1:03:38 jeong
  */
 public class GmailSender extends AbstractMailSender {
-
+	
 	/**
 	 * 호스트
 	 */
 	private static final String GMAIL_HOST = "smtp.gmail.com"; //$NON-NLS-1$
-
+	
 	/**
 	 * 포트
 	 */
 	private static final int GMAIL_PORT = 587;
-
+	
 	/**
 	 * slf4j Logger
 	 */
 	private static final Logger LOGGER = LoggerFactory.getLogger(GmailSender.class);
-
+	
 	/**
 	 * {@link GmailSender} 클래스의 새 인스턴스를 초기화 합니다.
 	 *
@@ -44,14 +44,14 @@ public class GmailSender extends AbstractMailSender {
 		super();
 		this.initialize();
 	}
-
+	
 	/**
 	 * @author 2017. 6. 18. 오전 1:08:12 jeong
 	 * @throws EmailException
 	 *             패스워드를 암호화 중
 	 */
 	private void initialize() throws EmailException {
-
+		
 		final String decryptdPassword;
 		try {
 			decryptdPassword = new Encryption().decrypt("Zsnv6SJj5ltiepBLrXHZkw=="); //$NON-NLS-1$
@@ -64,13 +64,13 @@ public class GmailSender extends AbstractMailSender {
 		super.setHost(GMAIL_HOST);
 		super.setPort(GMAIL_PORT);
 		this.setDefaultEncoding(Prop.DATE_FORMAT);
-
+		
 		final Properties prop = new Properties();
 		prop.setProperty("mail.smtp.ssl.trust", GMAIL_HOST); //$NON-NLS-1$
 		prop.setProperty("mail.smtp.starttls.enable", "true"); //$NON-NLS-1$//$NON-NLS-2$
 		prop.setProperty("mail.smtp.auth", "true"); //$NON-NLS-1$//$NON-NLS-2$
-
+		
 		super.setJavaMailProperties(prop);
 	}
-
+	
 }

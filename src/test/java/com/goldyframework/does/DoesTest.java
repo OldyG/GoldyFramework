@@ -36,7 +36,6 @@ public class DoesTest {
 	@Test
 	public void testInputObject() {
 
-		Does.notUse(null, Because.UNNECESSARY_PROCESSING);
 		Does.notUse(this, Because.WANT_NOT_STATIC_FUNCTION);
 		Assert.assertTrue("", Boolean.TRUE); //$NON-NLS-1$
 	}

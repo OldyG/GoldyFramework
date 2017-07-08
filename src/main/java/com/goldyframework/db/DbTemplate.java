@@ -17,11 +17,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Component;
 
-import com.goldyframework.db.prepare.DeletePrepare;
-import com.goldyframework.db.prepare.InsertPrepare;
-import com.goldyframework.db.prepare.UpdatePrepare;
+import com.goldyframework.db.prepare.statement.delete.DeletePrepare;
+import com.goldyframework.db.prepare.statement.insert.InsertPrepare;
+import com.goldyframework.db.prepare.statement.select.SelectPrepare;
+import com.goldyframework.db.prepare.statement.update.UpdatePrepare;
 
 /**
  * @author 2017. 7. 1. 오후 3:42:15 jeong
@@ -67,6 +69,28 @@ public class DbTemplate extends JdbcTemplate {
 		LOGGER.trace(prepareSql);
 		LOGGER.trace(args.toString());
 		this.update(prepareSql, this.toArray(args));
+	}
+
+	/**
+	 * @author 2017. 7. 8. 오후 11:49:05 jeong
+	 * @param select
+	 * @param mapper
+	 * @return
+	 */
+	public <T> T select(final SelectPrepare select, final RowMapper<T> mapper) {
+
+		return super.queryForObject(select.toPrepareSql(), this.toArray(select.getArgs()), mapper);
+	}
+
+	/**
+	 * @author 2017. 7. 8. 오후 11:38:59 jeong
+	 * @param select
+	 * @param mapper
+	 * @return
+	 */
+	public <T> Collection<T> selectAll(final SelectPrepare select, final RowMapper<T> mapper) {
+
+		return super.query(select.toPrepareSql(), mapper);
 	}
 
 	private Object[] toArray(final Collection<Object> target) {

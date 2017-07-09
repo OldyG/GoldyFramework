@@ -1,5 +1,5 @@
 /**
- * FileName : {@link IPrepareBuilder}.java
+ * FileName : {@link PreparePlan}.java
  * Created : 2017. 7. 8. 오후 1:57:28
  * Author : jeong
  * Summary :
@@ -12,7 +12,7 @@ package com.goldyframework.db.prepare.statement;
 /**
  * @author 2017. 7. 8. 오후 1:57:28 jeong
  */
-public interface IPrepareBuilder<T extends Prepare> {
+public interface PreparePlan<T extends Prepare> {
 
 	T build();
 

@@ -1,5 +1,5 @@
 /**
- * FileName : {@link UpdatePrepareBuilder}.java
+ * FileName : {@link UpdatePreparePlan}.java
  * Created : 2017. 7. 8. 오후 1:41:16
  * Author : jeong
  * Summary :
@@ -11,44 +11,44 @@ package com.goldyframework.db.prepare.statement.update;
 
 import com.goldyframework.db.prepare.statement.AssignBuilder;
 import com.goldyframework.db.prepare.statement.Comparison;
-import com.goldyframework.db.prepare.statement.IPrepareBuilder;
+import com.goldyframework.db.prepare.statement.PreparePlan;
 import com.goldyframework.db.prepare.statement.WhereBuilder;
 
 /**
  * @author 2017. 7. 8. 오후 1:41:16 jeong
  */
-public class UpdatePrepareBuilder implements IPrepareBuilder<UpdatePrepare> {
-
+public class UpdatePreparePlan implements PreparePlan<UpdatePrepare> {
+	
 	private final String tableName;
-
+	
 	private final AssignBuilder assign;
-
+	
 	private final WhereBuilder where;
-
+	
 	/**
-	 * {@link UpdatePrepareBuilder} 클래스의 새 인스턴스를 초기화 합니다.
+	 * {@link UpdatePreparePlan} 클래스의 새 인스턴스를 초기화 합니다.
 	 *
 	 * @author 2017. 7. 8. 오후 1:41:31 jeong
 	 * @param tableName
 	 */
-	public UpdatePrepareBuilder(final String tableName) {
+	public UpdatePreparePlan(final String tableName) {
 		this.tableName = tableName;
 		this.assign = new AssignBuilder(tableName);
 		this.where = new WhereBuilder(tableName);
 	}
-
+	
 	/**
 	 * @author 2017. 7. 8. 오후 1:51:14 jeong
 	 * @param column
 	 * @param value
 	 * @return
 	 */
-	public UpdatePrepareBuilder assign(final String column, final Object value) {
-
+	public UpdatePreparePlan assign(final String column, final Object value) {
+		
 		this.assign.appendIfNotNull(column, value);
 		return this;
 	}
-
+	
 	/**
 	 * {@inheritDoc}
 	 *
@@ -56,14 +56,14 @@ public class UpdatePrepareBuilder implements IPrepareBuilder<UpdatePrepare> {
 	 */
 	@Override
 	public UpdatePrepare build() {
-
+		
 		return new UpdatePrepare(this.tableName, this.assign, this.where);
 	}
-
-	public UpdatePrepareBuilder where(final String columnName, final Comparison comparison, final Object value) {
-
+	
+	public UpdatePreparePlan where(final String columnName, final Comparison comparison, final Object value) {
+		
 		this.where.append(columnName, comparison, value);
 		return this;
 	}
-
+	
 }

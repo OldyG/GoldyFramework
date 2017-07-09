@@ -9,34 +9,34 @@
  */
 package com.goldyframework.db.prepare;
 
-import com.goldyframework.db.prepare.statement.delete.DeletePrepareBuilder;
-import com.goldyframework.db.prepare.statement.insert.InsertPrepareBuilder;
-import com.goldyframework.db.prepare.statement.select.SelectPrepareBuilder;
-import com.goldyframework.db.prepare.statement.update.UpdatePrepareBuilder;
+import com.goldyframework.db.prepare.statement.delete.DeletePreparePlan;
+import com.goldyframework.db.prepare.statement.insert.InsertPreparePlan;
+import com.goldyframework.db.prepare.statement.select.SelectPreparePlan;
+import com.goldyframework.db.prepare.statement.update.UpdatePreparePlan;
 
 /**
  * @author 2017. 7. 8. 오후 1:38:11 jeong
  */
 public class PrepareBuilder {
 	
-	public static DeletePrepareBuilder delete(final String tableName) {
+	public static DeletePreparePlan delete(final String tableName) {
 		
-		return new DeletePrepareBuilder(tableName);
+		return new DeletePreparePlan(tableName);
 	}
 	
-	public static InsertPrepareBuilder insert(final String tableName) {
+	public static InsertPreparePlan insert(final String tableName) {
 		
-		return new InsertPrepareBuilder(tableName);
+		return new InsertPreparePlan(tableName);
 	}
 	
-	public static SelectPrepareBuilder select(final String tableName) {
+	public static SelectPreparePlan select(final String tableName) {
 		
-		return new SelectPrepareBuilder(tableName);
+		return new SelectPreparePlan(tableName);
 	}
 	
-	public static UpdatePrepareBuilder update(final String tableName) {
+	public static UpdatePreparePlan update(final String tableName) {
 		
-		return new UpdatePrepareBuilder(tableName);
+		return new UpdatePreparePlan(tableName);
 	}
 	
 	/**

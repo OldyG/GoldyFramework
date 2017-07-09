@@ -43,7 +43,7 @@ public class ChecksumAnalyserTest extends Mockito {
 	 * Test method for {@link com.goldyframework.checksum.ChecksumAnalyser#analyze()}.
 	 */
 	@Test
-	public void testAnalyze() {
+	public void testAnalye() {
 
 		final ChecksumAnalyser analyser = new ChecksumAnalyser(TEST_FILE);
 		final Checksum actual = analyser.analyze();

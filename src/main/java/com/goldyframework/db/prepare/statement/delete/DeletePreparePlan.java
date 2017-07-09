@@ -1,5 +1,5 @@
 /**
- * FileName : {@link DeletePrepareBuilder}.java
+ * FileName : {@link DeletePreparePlan}.java
  * Created : 2017. 7. 8. 오후 2:00:40
  * Author : jeong
  * Summary :
@@ -10,25 +10,25 @@
 package com.goldyframework.db.prepare.statement.delete;
 
 import com.goldyframework.db.prepare.statement.Comparison;
-import com.goldyframework.db.prepare.statement.IPrepareBuilder;
+import com.goldyframework.db.prepare.statement.PreparePlan;
 import com.goldyframework.db.prepare.statement.WhereBuilder;
 
 /**
  * @author 2017. 7. 8. 오후 2:00:40 jeong
  */
-public class DeletePrepareBuilder implements IPrepareBuilder<DeletePrepare> {
+public class DeletePreparePlan implements PreparePlan<DeletePrepare> {
 
 	private final String tableName;
 
 	private final WhereBuilder where;
 
 	/**
-	 * {@link DeletePrepareBuilder} 클래스의 새 인스턴스를 초기화 합니다.
+	 * {@link DeletePreparePlan} 클래스의 새 인스턴스를 초기화 합니다.
 	 *
 	 * @author 2017. 7. 8. 오후 2:01:26 jeong
 	 * @param tableName
 	 */
-	public DeletePrepareBuilder(final String tableName) {
+	public DeletePreparePlan(final String tableName) {
 		super();
 		this.tableName = tableName;
 		this.where = new WhereBuilder(tableName);
@@ -45,7 +45,7 @@ public class DeletePrepareBuilder implements IPrepareBuilder<DeletePrepare> {
 		return new DeletePrepare(this.tableName, this.where);
 	}
 
-	public DeletePrepareBuilder where(final String columnName, final Comparison comparison, final Object value) {
+	public DeletePreparePlan where(final String columnName, final Comparison comparison, final Object value) {
 
 		this.where.append(columnName, comparison, value);
 		return this;

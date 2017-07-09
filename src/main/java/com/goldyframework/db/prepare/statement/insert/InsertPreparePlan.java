@@ -1,5 +1,5 @@
 /**
- * FileName : {@link InsertPrepareBuilder}.java
+ * FileName : {@link InsertPreparePlan}.java
  * Created : 2017. 7. 8. 오후 2:11:21
  * Author : jeong
  * Summary :
@@ -10,24 +10,24 @@
 package com.goldyframework.db.prepare.statement.insert;
 
 import com.goldyframework.db.prepare.statement.AssignBuilder;
-import com.goldyframework.db.prepare.statement.IPrepareBuilder;
+import com.goldyframework.db.prepare.statement.PreparePlan;
 
 /**
  * @author 2017. 7. 8. 오후 2:11:21 jeong
  */
-public class InsertPrepareBuilder implements IPrepareBuilder<InsertPrepare> {
+public class InsertPreparePlan implements PreparePlan<InsertPrepare> {
 
 	private final String tableName;
 
 	private final AssignBuilder assign;
 
 	/**
-	 * {@link InsertPrepareBuilder} 클래스의 새 인스턴스를 초기화 합니다.
+	 * {@link InsertPreparePlan} 클래스의 새 인스턴스를 초기화 합니다.
 	 *
 	 * @author 2017. 7. 8. 오후 2:11:29 jeong
 	 * @param tableName
 	 */
-	public InsertPrepareBuilder(final String tableName) {
+	public InsertPreparePlan(final String tableName) {
 		super();
 		this.tableName = tableName;
 		this.assign = new AssignBuilder(tableName);
@@ -39,7 +39,7 @@ public class InsertPrepareBuilder implements IPrepareBuilder<InsertPrepare> {
 	 * @param value
 	 * @return
 	 */
-	public InsertPrepareBuilder assign(final String column, final Object value) {
+	public InsertPreparePlan assign(final String column, final Object value) {
 
 		this.assign.appendIfNotNull(column, value);
 		return this;

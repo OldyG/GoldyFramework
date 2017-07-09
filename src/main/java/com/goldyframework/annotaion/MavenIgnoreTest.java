@@ -15,5 +15,5 @@ package com.goldyframework.annotaion;
  * @author 2017. 6. 22. 오후 9:06:46 jeong
  */
 public @interface MavenIgnoreTest {
-
+	// do nothing
 }

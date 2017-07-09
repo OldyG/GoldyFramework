@@ -1,5 +1,5 @@
 /**
- * FileName : {@link SelectPrepareBuilder}.java
+ * FileName : {@link SelectPreparePlan}.java
  * Created : 2017. 7. 8. 오후 11:37:46
  * Author : jeong
  * Summary :
@@ -13,12 +13,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.goldyframework.db.prepare.statement.Comparison;
+import com.goldyframework.db.prepare.statement.PreparePlan;
 import com.goldyframework.db.prepare.statement.WhereBuilder;
 
 /**
  * @author 2017. 7. 8. 오후 11:37:46 jeong
  */
-public class SelectPrepareBuilder {
+public class SelectPreparePlan implements PreparePlan<SelectPrepare> {
 
 	private final String tableName;
 
@@ -29,12 +30,12 @@ public class SelectPrepareBuilder {
 	private final List<String> columns = new ArrayList<>();
 
 	/**
-	 * {@link SelectPrepareBuilder} 클래스의 새 인스턴스를 초기화 합니다.
+	 * {@link SelectPreparePlan} 클래스의 새 인스턴스를 초기화 합니다.
 	 *
 	 * @author 2017. 7. 8. 오후 11:37:50 jeong
 	 * @param tableName
 	 */
-	public SelectPrepareBuilder(final String tableName) {
+	public SelectPreparePlan(final String tableName) {
 		super();
 		this.tableName = tableName;
 		this.where = new WhereBuilder(tableName);
@@ -44,18 +45,19 @@ public class SelectPrepareBuilder {
 	 * @author 2017. 7. 8. 오후 11:38:38 jeong
 	 * @return
 	 */
+	@Override
 	public SelectPrepare build() {
 
 		return new SelectPrepare(this.tableName, this.columns, this.where);
 	}
 
-	public SelectPrepareBuilder column(final String columnName) {
+	public SelectPreparePlan column(final String columnName) {
 
 		this.columns.add(columnName);
 		return this;
 	}
 
-	public SelectPrepareBuilder where(final String columnName, final Comparison comparison, final Object value) {
+	public SelectPreparePlan where(final String columnName, final Comparison comparison, final Object value) {
 
 		this.where.append(columnName, comparison, value);
 		return this;

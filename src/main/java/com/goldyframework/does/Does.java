@@ -56,8 +56,6 @@ public final class Does {
 
 		ObjectInspection.checkNull(obj);
 		ObjectInspection.checkNull(because);
-		final String message = "unuse by " + obj.toString(); //$NON-NLS-1$
-		LOGGER.trace(message);
 	}
 
 	/**

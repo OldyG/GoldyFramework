@@ -15,11 +15,13 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
+ * 테스트 케이스 시험 중 유닛 테스트인경우 붙입니다.
+ *
  * @author 2017. 7. 2. 오후 9:18:38 jeong
  */
 @Target({ ElementType.METHOD, ElementType.TYPE })
 @Retention(RetentionPolicy.SOURCE)
 public @interface UnitTest {
-	
+
 	String[] note() default "";
 }

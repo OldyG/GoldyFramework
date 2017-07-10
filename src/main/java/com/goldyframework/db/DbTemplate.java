@@ -93,6 +93,17 @@ public class DbTemplate extends JdbcTemplate {
 		return super.query(select.toPrepareSql(), mapper);
 	}
 
+	/**
+	 * @author 2017. 7. 10. 오후 10:50:58 jeong
+	 * @param select
+	 * @param createVoMapper
+	 * @return
+	 */
+	public <T> Collection<T> selectPart(final SelectPrepare select, final RowMapper<T> createVoMapper) {
+
+		return super.query(select.toPrepareSql(), this.toArray(select.getArgs()), createVoMapper);
+	}
+
 	private Object[] toArray(final Collection<Object> target) {
 
 		return target.toArray(new Object[target.size()]);

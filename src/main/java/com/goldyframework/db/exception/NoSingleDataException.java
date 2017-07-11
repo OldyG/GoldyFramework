@@ -9,6 +9,8 @@
  */
 package com.goldyframework.db.exception;
 
+import org.springframework.dao.EmptyResultDataAccessException;
+
 /**
  * 1개의 데이터를 추출하는 SELECT SQL문에서 0개 또는 2개 이상의 데이터를 가져왔을 때 발생하는 예외 사항
  *
@@ -32,6 +34,19 @@ public class NoSingleDataException extends Exception {
 	 */
 	public NoSingleDataException() {
 		super();
+	}
+
+	/**
+	 * {@link NoSingleDataException} 클래스의 새 인스턴스를 초기화 합니다.
+	 *
+	 * @author 2017. 7. 11. 오후 11:17:06 jeong
+	 * @param message
+	 *            오류 메세지
+	 * @param cause
+	 *            the cause
+	 */
+	public NoSingleDataException(final String message, final EmptyResultDataAccessException cause) {
+		super(message, cause);
 	}
 
 }

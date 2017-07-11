@@ -45,6 +45,15 @@ public final class Does {
 	private static final Logger LOGGER = LoggerFactory.getLogger(Does.class);
 
 	/**
+	 * @author 2017. 7. 11. 오후 11:18:58 jeong
+	 * @param message
+	 *            오류 메세지
+	 */
+	public static void nothing(final String message) {
+		// do nothing
+	}
+
+	/**
 	 * 이 함수에 this를 설정하세요
 	 * ex) {@link NonStaticFunction#inputThis(this)}
 	 *

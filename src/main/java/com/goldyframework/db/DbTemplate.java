@@ -9,6 +9,7 @@
  */
 package com.goldyframework.db;
 
+import java.text.MessageFormat;
 import java.util.Collection;
 
 import javax.sql.DataSource;
@@ -16,10 +17,12 @@ import javax.sql.DataSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Component;
 
+import com.goldyframework.db.exception.NoSingleDataException;
 import com.goldyframework.db.prepare.statement.delete.DeletePrepare;
 import com.goldyframework.db.prepare.statement.insert.InsertPrepare;
 import com.goldyframework.db.prepare.statement.select.SelectPrepare;
@@ -76,10 +79,17 @@ public class DbTemplate extends JdbcTemplate {
 	 * @param select
 	 * @param mapper
 	 * @return
+	 * @throws NoSingleDataException
 	 */
-	public <T> T select(final SelectPrepare select, final RowMapper<T> mapper) {
+	public <T> T select(final SelectPrepare select, final RowMapper<T> mapper) throws NoSingleDataException {
 
-		return super.queryForObject(select.toPrepareSql(), this.toArray(select.getArgs()), mapper);
+		LOGGER.trace(select.toPrepareSql());
+		try {
+			return super.queryForObject(select.toPrepareSql(), this.toArray(select.getArgs()), mapper);
+		} catch (final EmptyResultDataAccessException e) {
+			final String message = MessageFormat.format("쿼리 [{0}]에 해당하는 값이 1개가 아닙니다.", select.toPrepareSql()); //$NON-NLS-1$
+			throw new NoSingleDataException(message, e);
+		}
 	}
 
 	/**

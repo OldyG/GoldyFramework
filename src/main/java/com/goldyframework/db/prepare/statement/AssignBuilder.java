@@ -19,9 +19,9 @@ import com.goldyframework.utils.StringCollectionGtils;
  * @author 2017. 7. 3. 오후 11:11:22 jeong
  */
 public class AssignBuilder {
-
+	
 	private final WhereBuilder where;
-
+	
 	/**
 	 * {@link AssignBuilder} 클래스의 새 인스턴스를 초기화 합니다.
 	 *
@@ -31,46 +31,42 @@ public class AssignBuilder {
 	public AssignBuilder(final String tableName) {
 		this.where = new WhereBuilder(tableName);
 	}
-
+	
 	public void appendIfNotNull(final String column, final Object value) {
-
+		
 		ObjectInspection.checkNull(column);
 		if (value != null) {
-			if (value.getClass().isEnum()) {
-				this.where.append(column, Comparison.EQUAL, value.toString());
-			} else {
-				this.where.append(column, Comparison.EQUAL, value);
-			}
+			this.where.append(column, Comparison.EQUAL, value);
 		}
 	}
-
+	
 	/**
 	 * @author 2017. 7. 7. 오후 6:52:34 jeong
 	 * @return
 	 */
 	public String build() {
-
+		
 		final List<String> tableColumnList = this.where.createTableColumnList();
-
-		return StringCollectionGtils.join(tableColumnList, " , "); //$NON-NLS-1$
+		
+		return StringCollectionGtils.join(tableColumnList, ", "); //$NON-NLS-1$
 	}
-
+	
 	/**
 	 * @author 2017. 7. 7. 오후 7:15:05 jeong
 	 * @return
 	 */
 	public Collection<Object> getArgs() {
-
+		
 		return this.where.getArgs();
 	}
-
+	
 	/**
 	 * @author 2017. 7. 8. 오후 2:20:46 jeong
 	 * @return
 	 */
 	public Collection<String> getColumns() {
-
+		
 		return this.where.getColumns();
 	}
-
+	
 }

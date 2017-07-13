@@ -16,43 +16,42 @@ import org.mockito.Mockito;
 import com.goldyframework.annotaion.UnitTest;
 import com.goldyframework.db.prepare.statement.Comparison;
 import com.goldyframework.db.prepare.statement.WhereBuilder;
-import com.goldyframework.db.prepare.statement.delete.DeletePrepare;
 
 @SuppressWarnings("nls")
 public class DeletePrepareTest extends Mockito {
-
+	
 	@Test
 	public void testToPrepareSql() {
-
+		
 		final WhereBuilder whereBuilder = new WhereBuilder("TEST");
 		whereBuilder.append("user_key", Comparison.EQUAL, "1");
 		whereBuilder.append("enable_login", Comparison.EQUAL, true);
-
+		
 		final DeletePrepare target = new DeletePrepare("TEST", whereBuilder);
-
+		
 		final String actual = target.toPrepareSql();
-
+		
 		final String expected = "DELETE FROM TEST "
-			+ "WHERE TEST.enable_login = ?, TEST.user_key = ?";
+			+ "WHERE TEST.enable_login = ? AND TEST.user_key = ?";
 		Assert.assertEquals("", expected, actual);
 	}
-
+	
 	/**
 	 * Test method for {@link com.goldyframework.db.prepare.statement.delete.DeletePrepare#toPrepareSql()}.
 	 */
 	@Test
 	@UnitTest
 	public void testUnitToPrepareSql() {
-
+		
 		final WhereBuilder whereBuilder = mock(WhereBuilder.class, RETURNS_DEFAULTS);
 		final DeletePrepare target = new DeletePrepare("TEST", whereBuilder);
-
+		
 		// 액션
 		doReturn("abc").when(whereBuilder).build();
-
+		
 		final String actual = target.toPrepareSql();
-
+		
 		Assert.assertEquals("", "DELETE FROM TEST WHERE abc", actual);
 	}
-
+	
 }

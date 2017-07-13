@@ -20,7 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import com.goldyframework.db.exception.NoSingleDataException;
 import com.goldyframework.db.prepare.statement.delete.DeletePrepare;
@@ -31,7 +31,7 @@ import com.goldyframework.db.prepare.statement.update.UpdatePrepare;
 /**
  * @author 2017. 7. 1. 오후 3:42:15 jeong
  */
-@Component
+@Service
 public class DbTemplate extends JdbcTemplate {
 
 	/**
@@ -49,6 +49,15 @@ public class DbTemplate extends JdbcTemplate {
 	@Autowired
 	public DbTemplate(final DataSource dataSource) {
 		super(dataSource);
+	}
+
+	/**
+	 * @author 2017. 7. 13. 오후 7:17:29 jeong
+	 */
+	public void commit() {
+		
+		// TODO Auto-generated method stub
+		
 	}
 
 	/**
@@ -72,6 +81,15 @@ public class DbTemplate extends JdbcTemplate {
 		LOGGER.trace(prepareSql);
 		LOGGER.trace(args.toString());
 		this.update(prepareSql, this.toArray(args));
+	}
+
+	/**
+	 * @author 2017. 7. 13. 오후 7:17:23 jeong
+	 */
+	public void rollback() {
+		
+		// TODO Auto-generated method stub
+		
 	}
 
 	/**

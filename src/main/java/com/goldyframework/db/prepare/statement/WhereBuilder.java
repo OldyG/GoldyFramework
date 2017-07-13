@@ -99,12 +99,23 @@ public class WhereBuilder {
 	}
 	
 	public String build() {
-		
+	
+		final List<String> tableColumnList = this.createTableColumnList();
+	
+		return StringCollectionGtils.join(tableColumnList, " AND "); //$NON-NLS-1$
+	}
+	
+	/**
+	 * @author jeonghyun.kum
+	 * @since 2017. 7. 13. 오전 10:29:29
+	 * @return
+	 */
+	@VisibleForTesting
+	List<String> createTableColumnList() {
+	
 		final List<String> appended = this.eachAppendComparisonValue();
-		
-		final List<String> depended = StringCollectionGtils.eachPrepend(this.tableName + '.', appended);
-		
-		return StringCollectionGtils.join(depended, " AND "); //$NON-NLS-1$
+	
+		return StringCollectionGtils.eachPrepend(this.tableName + '.', appended);
 	}
 	
 	@VisibleForTesting

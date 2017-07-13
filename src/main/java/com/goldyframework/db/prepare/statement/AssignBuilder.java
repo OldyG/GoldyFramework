@@ -10,8 +10,10 @@
 package com.goldyframework.db.prepare.statement;
 
 import java.util.Collection;
+import java.util.List;
 
 import com.goldyframework.inspection.ObjectInspection;
+import com.goldyframework.utils.StringCollectionGtils;
 
 /**
  * @author 2017. 7. 3. 오후 11:11:22 jeong
@@ -48,7 +50,9 @@ public class AssignBuilder {
 	 */
 	public String build() {
 
-		return this.where.build();
+		final List<String> tableColumnList = this.where.createTableColumnList();
+
+		return StringCollectionGtils.join(tableColumnList, " , "); //$NON-NLS-1$
 	}
 
 	/**

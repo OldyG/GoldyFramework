@@ -12,7 +12,9 @@ package com.goldyframework.response;
 import java.io.File;
 import java.io.IOException;
 import java.text.MessageFormat;
+import java.util.List;
 import java.util.Locale;
+import java.util.stream.Collectors;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.FilenameUtils;
@@ -22,8 +24,11 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 
 import com.goldyframework.inspection.ObjectInspection;
+import com.goldyframework.utils.StringCollectionGtils;
 import com.goldyframework.utils.json.JsonGtils;
 
 /**
@@ -47,6 +52,16 @@ public final class Response {
 	 * content type, charset 기본값
 	 */
 	private static final String CONTENT_TYPE = "{0};charset=UTF-8"; //$NON-NLS-1$
+
+	public static ResponseEntity<String> badRequest(final BindingResult bindingResult) {
+
+		final List<String> messages = bindingResult.getAllErrors()
+			.stream()
+			.map(ObjectError::getDefaultMessage)
+			.collect(Collectors.toList());
+		final String message = StringCollectionGtils.join(messages, "<br>"); //$NON-NLS-1$
+		return Response.badRequest(message);
+	}
 
 	/**
 	 * 요청자에게 400 Bad Request으로 응답합니다.<br>

@@ -105,7 +105,8 @@ public class DbTemplate extends JdbcTemplate {
 		try {
 			return super.queryForObject(select.toPrepareSql(), this.toArray(select.getArgs()), mapper);
 		} catch (final EmptyResultDataAccessException e) {
-			final String message = MessageFormat.format("쿼리 [{0}]에 해당하는 값이 1개가 아닙니다.", select.toPrepareSql()); //$NON-NLS-1$
+			final String message = MessageFormat.format("쿼리 [{0}]에 해당하는 값이 1개가 아닙니다. : {1}", //$NON-NLS-1$
+				select.toPrepareSql(), e.getMessage()); // $NON-NLS-1$
 			throw new NoSingleDataException(message, e);
 		}
 	}

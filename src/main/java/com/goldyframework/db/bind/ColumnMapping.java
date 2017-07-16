@@ -50,6 +50,7 @@ public abstract class ColumnMapping<V> extends LinkedHashMap<String, ResultSetBi
 		this.initialize();
 	}
 	
+	@SuppressWarnings("unchecked")
 	public <T> T bind(final ResultSet rs, final String column) throws SQLException {
 		
 		ObjectInspection.checkNull(rs);

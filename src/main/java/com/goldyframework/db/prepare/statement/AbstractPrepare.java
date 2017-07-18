@@ -9,6 +9,7 @@
  */
 package com.goldyframework.db.prepare.statement;
 
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -53,4 +54,14 @@ public abstract class AbstractPrepare implements Prepare {
 		return StringCollectionGtils.join(marks, ", "); //$NON-NLS-1$
 	}
 
+	/**
+	 * {@inheritDoc}
+	 *
+	 * @author 2017. 7. 18. 오후 9:08:27 jeong
+	 */
+	@Override
+	public String toString() {
+
+		return MessageFormat.format("SQL [{0}], OBJ[{1}]", this.toPrepareSql(), this.getArgs()); //$NON-NLS-1$
+	}
 }

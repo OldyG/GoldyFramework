@@ -23,7 +23,7 @@ import com.goldyframework.inspection.ObjectInspection;
  * @author 2017. 7. 2. 오전 11:47:19 jeong
  */
 public class StringCollectionGtils {
-
+	
 	/**
 	 * 문자열 리스트중 patternList에 일치하는 리스트만 반환합니다.
 	 *
@@ -35,22 +35,22 @@ public class StringCollectionGtils {
 	 * @return 결과
 	 */
 	public static List<String> collectMatching(final Collection<String> stringList, final List<String> patternList) {
-
+		
 		ObjectInspection.checkNull(stringList);
 		ObjectInspection.checkNull(patternList);
 		final List<String> result = new ArrayList<>(stringList);
-
+		
 		final List<String> matchList = new ArrayList<>();
-
+		
 		patternList.stream().forEach(pattern -> {
 			final Collection<String> match = collectMatching(stringList, pattern);
 			matchList.addAll(match);
 		});
-
+		
 		result.retainAll(matchList);
 		return result;
 	}
-
+	
 	/**
 	 * 문자열 리스트중 patternList에 일치하는 리스트만 반환합니다.
 	 *
@@ -62,16 +62,16 @@ public class StringCollectionGtils {
 	 * @return 결과
 	 */
 	public static List<String> collectMatching(final Collection<String> stringList, final String patternString) {
-
+		
 		ObjectInspection.checkNull(stringList);
 		ObjectInspection.checkNull(patternString);
 		final Pattern pattern = Pattern.compile(patternString);
-
+		
 		return stringList.stream()
 			.filter(string -> pattern.matcher(string).matches())
 			.collect(Collectors.toList());
 	}
-
+	
 	/**
 	 * 각 문자열의 뒤에 공통으로 문자를 덧붙입니다.
 	 * 예를들어 매개변수가 {"example1","example2"}리스트와 ".txt"가 있다면 {"example1.txt","example2.txt"}와 같이 변형합니다.
@@ -84,14 +84,14 @@ public class StringCollectionGtils {
 	 * @return 결과
 	 */
 	public static List<String> eachAppend(final Collection<String> stringList, final String append) {
-
+		
 		ObjectInspection.checkNull(stringList);
 		ObjectInspection.checkNull(append);
 		return stringList.stream()
 			.map(str -> str + append)
 			.collect(Collectors.toList());
 	}
-
+	
 	/**
 	 * 각 문자열의 앞에 공통으로 문자를 덧붙입니다.
 	 * 예를들어 매개변수가 {"example1","example2"}리스트와 "table."가 있다면 {"table.example1","table.example2"}와 같이 변형합니다.
@@ -104,14 +104,14 @@ public class StringCollectionGtils {
 	 * @return 결과
 	 */
 	public static List<String> eachPrepend(final String prepend, final Collection<String> stringList) {
-
+		
 		ObjectInspection.checkNull(prepend);
 		ObjectInspection.checkNull(stringList);
 		return stringList.stream()
 			.map(str -> prepend + str)
 			.collect(Collectors.toList());
 	}
-
+	
 	/**
 	 * 문자열 리스트를 delimiter로 구분하여 하나의 문자열로 반환합니다.
 	 * 예를들어 매개변수가 {"example1","example2"}리스트와 ", "가 있다면 "example1, example2"와 같이 변형합니다.
@@ -124,13 +124,13 @@ public class StringCollectionGtils {
 	 * @return 결과
 	 */
 	public static String join(final Collection<String> stringList, final String delimiter) {
-
+		
 		ObjectInspection.checkNull(stringList);
 		ObjectInspection.checkNull(delimiter);
 		return stringList.stream()
 			.collect(Collectors.joining(delimiter));
 	}
-
+	
 	/**
 	 * 문자열 리스트중 patternList에 일치하는 목록은 제거합니다.
 	 *
@@ -142,17 +142,17 @@ public class StringCollectionGtils {
 	 * @return 결과
 	 */
 	public static List<String> removeMatching(final Collection<String> stringList, final List<String> patternList) {
-
+		
 		ObjectInspection.checkNull(stringList);
 		ObjectInspection.checkNull(patternList);
-
+		
 		List<String> temp = new ArrayList<>(stringList);
 		for (final String pattern : patternList) {
 			temp = removeMatching(temp, pattern);
 		}
 		return temp;
 	}
-
+	
 	/**
 	 * 문자열 리스트중 patternString에 일치하는 목록은 제거합니다.
 	 *
@@ -164,18 +164,19 @@ public class StringCollectionGtils {
 	 * @return 결과
 	 */
 	public static List<String> removeMatching(final Collection<String> stringList, final String patternString) {
-
+		
 		ObjectInspection.checkNull(stringList);
 		ObjectInspection.checkNull(patternString);
 		final Pattern pattern = Pattern.compile(patternString);
-
+		
 		return stringList.stream()
 			.filter(string -> pattern.matcher(string).matches() == false)
 			.collect(Collectors.toList());
 	}
-
+	
 	private StringCollectionGtils() {
+		
 		throw new IllegalStateException("Utility class"); //$NON-NLS-1$
 	}
-
+	
 }

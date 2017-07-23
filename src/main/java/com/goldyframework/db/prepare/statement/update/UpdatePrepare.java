@@ -25,11 +25,11 @@ import com.google.common.annotations.VisibleForTesting;
  * @author 2017. 7. 2. 오후 9:41:50 jeong
  */
 public class UpdatePrepare extends AbstractPrepare {
-
+	
 	private final AssignBuilder assign;
-
+	
 	private final WhereBuilder where;
-
+	
 	/**
 	 * {@link UpdatePrepare} 클래스의 새 인스턴스를 초기화 합니다.
 	 *
@@ -37,14 +37,16 @@ public class UpdatePrepare extends AbstractPrepare {
 	 * @param tableName
 	 *            테이블 이름
 	 * @param assign
+	 * @param where
 	 */
 	@VisibleForTesting
 	UpdatePrepare(final String tableName, final AssignBuilder assign, final WhereBuilder where) {
+		
 		super(NullGtils.throwIfNull(tableName));
 		this.assign = NullGtils.throwIfNull(assign);
 		this.where = NullGtils.throwIfNull(where);
 	}
-
+	
 	/**
 	 * {@inheritDoc}
 	 *
@@ -52,14 +54,14 @@ public class UpdatePrepare extends AbstractPrepare {
 	 */
 	@Override
 	public Collection<Object> getArgs() {
-
+		
 		return Stream.concat(
 			this.assign.getArgs().stream(),
 			this.where.getArgs().stream())
 			.collect(Collectors.toList());
-
+		
 	}
-
+	
 	/**
 	 * {@inheritDoc}
 	 *
@@ -67,15 +69,15 @@ public class UpdatePrepare extends AbstractPrepare {
 	 */
 	@Override
 	public String toPrepareSql() {
-
+		
 		final String tableName = super.getTableName();
 		final String buildedUpdate = this.assign.build();
 		final String buildedWhere = this.where.build();
 		StringInspection.checkNullOrEmpty(tableName);
 		StringInspection.checkNullOrEmpty(buildedUpdate);
 		StringInspection.checkNullOrEmpty(buildedWhere);
-
+		
 		return MessageFormat.format("UPDATE {0} SET {1} WHERE {2}", tableName, buildedUpdate, buildedWhere); //$NON-NLS-1$
 	}
-
+	
 }

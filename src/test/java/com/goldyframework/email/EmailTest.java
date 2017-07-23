@@ -34,29 +34,29 @@ import com.goldyframework.email.sender.GmailSender;
 @RunWith(SpringRunner.class)
 @ContextConfiguration(classes = { Email.class, GmailSender.class })
 public class EmailTest extends Mockito {
-
+	
 	/**
 	 * slf4j Logger
 	 */
 	private static final Logger LOGGER = LoggerFactory.getLogger(EmailTest.class);
-
+	
 	@Spy
 	@Autowired
 	private Email email;
-
+	
 	private final CountDownLatch lock = new CountDownLatch(1);
-
+	
 	@SpyBean
 	private GmailSender mailSender;
-
+	
 	@Test
 	public void testCreateSendTread() throws InterruptedException {
-
+		
 		final MimeMessage msg1 = mock(MimeMessage.class);
 		final MimeMessage msg2 = mock(MimeMessage.class);
 		final MimeMessage msg3 = mock(MimeMessage.class);
 		final MimeMessage msg4 = mock(MimeMessage.class);
-
+		
 		doAnswer(invocation -> {
 			final Random secureRandom = new SecureRandom();
 			final int result = secureRandom.nextInt(200) + 100;
@@ -65,48 +65,48 @@ public class EmailTest extends Mockito {
 			LOGGER.trace("[이메일 테스트] 전송완료" + result); //$NON-NLS-1$
 			return null;
 		}).when(this.mailSender).send(any(MimeMessage.class));
-
+		
 		final Thread send1 = this.email.createSendTread(msg1);
 		final Thread send2 = this.email.createSendTread(msg2);
 		final Thread send3 = this.email.createSendTread(msg3);
 		final Thread send4 = this.email.createSendTread(msg4);
-
+		
 		send1.start();
 		send2.start();
 		send3.start();
 		send4.start();
-
+		
 		send1.join();
 		send2.join();
 		send3.join();
 		send4.join();
-
+		
 		verify(this.mailSender, times(1)).send(msg1);
 		verify(this.mailSender, times(1)).send(msg2);
 		verify(this.mailSender, times(1)).send(msg3);
 		verify(this.mailSender, times(1)).send(msg4);
 	}
-
+	
 	@Test
 	public void testSend() throws EmailException, AddressException, UnsupportedEncodingException, InterruptedException {
-
+		
 		final EmailForm emailContentForm = new EmailForm(EmailFormDesignType.INFOMATION);
 		emailContentForm.setTitleName("JUNIT TEST"); //$NON-NLS-1$
 		emailContentForm.inputBody("<div>내용입니다.</div>"); //$NON-NLS-1$
-
+		
 		final String result = emailContentForm.parse();
 		final SendModel prop = new SendModel(new InternetAddress("hokkk01@naver.com"), "JUNIT TEST"); //$NON-NLS-1$//$NON-NLS-2$
-
+		
 		prop.setTo(Arrays.asList(
 			new InternetAddress("hokkk01@naver.com", "금정금정현"), //$NON-NLS-1$//$NON-NLS-2$
 			new InternetAddress("jhkume90@gmail.com", "금정금정현")));  //$NON-NLS-1$//$NON-NLS-2$
 		prop.setText(result);
-
+		
 		final MimeMessage msg = this.email.createMimeMessage(prop);
 		final Thread thread = this.email.createSendTread(msg);
 		thread.start();
 		thread.join();
 		verify(this.email, times(1)).createMimeMessage(prop);
 	}
-
+	
 }

@@ -59,6 +59,7 @@ public final class ClassLoaderGtils {
 
 	/**
 	 * @author 2017. 6. 18. 오후 5:18:02 jeong
+	 * @param path
 	 * @param string
 	 * @return
 	 */
@@ -77,20 +78,12 @@ public final class ClassLoaderGtils {
 	/**
 	 * {@link ClassLoaderGtils} 클래스의 새 인스턴스를 초기화 합니다.
 	 *
-	 * @author 2017. 6. 18. 오후 5:16:50 jeong
-	 */
-	private ClassLoaderGtils() {
-		throw new IllegalStateException("Utility class"); //$NON-NLS-1$
-	}
-
-	/**
-	 * {@link ClassLoaderGtils} 클래스의 새 인스턴스를 초기화 합니다.
-	 *
 	 * @author 2017. 6. 30. 오후 8:22:35 jeong
 	 * @param testSet
 	 */
 	@VisibleForTesting
 	ClassLoaderGtils(final TestSet testSet) {
+
 		super();
 	}
 

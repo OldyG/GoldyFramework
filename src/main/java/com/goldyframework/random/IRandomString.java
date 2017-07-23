@@ -16,7 +16,7 @@ package com.goldyframework.random;
  */
 @FunctionalInterface
 public interface IRandomString {
-
+	
 	/**
 	 * 무작위 문자열 생성한다.
 	 *

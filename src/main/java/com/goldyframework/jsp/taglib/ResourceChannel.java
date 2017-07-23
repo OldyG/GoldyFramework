@@ -21,26 +21,26 @@ import javax.servlet.ServletContext;
 import org.apache.commons.io.FilenameUtils;
 
 public class ResourceChannel {
-
+	
 	private static ServletContext SEVLET_CONTEXT;
-
+	
 	private static String RESOURCE_BASE_PATH;
-
+	
 	private static String VIEWS_BASE_PATH;
-
+	
 	private static String PROJECT_BASE_PATH;
-
+	
 	private static String extractProjectBasePath() {
-
+		
 		final String allPath = SEVLET_CONTEXT.getRealPath(""); //$NON-NLS-1$
 		final String projectPath = new File("").getAbsolutePath(); //$NON-NLS-1$
 		final String relativePath = allPath.replace(projectPath, ""); //$NON-NLS-1$
 		final String javaPath = relativePath.replaceAll(Matcher.quoteReplacement("\\"), "/"); //$NON-NLS-1$//$NON-NLS-2$
 		return javaPath.substring(1, javaPath.length() - 1);
 	}
-
+	
 	private static void initialize() {
-
+		
 		try {
 			PROJECT_BASE_PATH = extractProjectBasePath();
 			RESOURCE_BASE_PATH = "/resources/custom/views/"; //$NON-NLS-1$
@@ -49,15 +49,15 @@ public class ResourceChannel {
 			// do nothing
 		}
 	}
-
+	
 	public static void load(final ServletContext servletContext) {
-
+		
 		SEVLET_CONTEXT = servletContext;
 		initialize();
 	}
-
+	
 	private final String viewPath;
-
+	
 	/**
 	 * {@link ResourceChannel} 클래스의 새 인스턴스를 초기화 합니다.
 	 *
@@ -66,27 +66,28 @@ public class ResourceChannel {
 	 * @param viewPath
 	 */
 	public ResourceChannel(final String viewPath) {
+		
 		this.viewPath = viewPath;
 	}
-
+	
 	public List<File> getMachedResources() {
-
+		
 		final List<File> result = new LinkedList<>();
 		if (this.viewPath == null) {
 			return result;
 		}
-
+		
 		final String viewDirectory = FilenameUtils.getFullPath(this.viewPath);
 		final String resourceDirectory = viewDirectory.replace(VIEWS_BASE_PATH, RESOURCE_BASE_PATH);
-
+		
 		final File resourceDirectoryFile = new File(PROJECT_BASE_PATH + resourceDirectory);
-
+		
 		if (resourceDirectoryFile.exists() == false) {
 			return result;
 		}
-
+		
 		final File[] listFiles = resourceDirectoryFile.listFiles();
-
+		
 		if (listFiles == null) {
 			return Collections.emptyList();
 		}
@@ -97,22 +98,22 @@ public class ResourceChannel {
 		}
 		return result;
 	}
-
+	
 	public String getTagString(final File file) {
-
+		
 		final String extension = FilenameUtils.getExtension(file.getPath());
 		final String path = file.getPath().replaceAll(Matcher.quoteReplacement("\\"), "/") //$NON-NLS-1$//$NON-NLS-2$
 			.replaceAll("src/main/webapp/", "/");  //$NON-NLS-1$//$NON-NLS-2$
-
+		
 		switch (extension) {
 			case "css": //$NON-NLS-1$
 				return MessageFormat.format("<link rel=\"stylesheet\" type=\"text/css\" href=\"{0}\" />", path); //$NON-NLS-1$
 			case "js": //$NON-NLS-1$
 				return MessageFormat.format("<script type=\"text/javascript\" src=\"{0}\"></script>", path); //$NON-NLS-1$
-
+				
 			default:
 				return null;
 		}
 	}
-
+	
 }

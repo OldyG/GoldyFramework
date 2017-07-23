@@ -25,13 +25,13 @@ import org.springframework.security.taglibs.authz.AbstractAuthorizeTag;
 import org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestWrapper;
 
 public abstract class GoldyTag implements Tag {
-
+	
 	private Tag parent;
-
+	
 	protected String access;
-
+	
 	protected PageContext pageContext;
-
+	
 	/**
 	 * {@link GoldyTag} 클래스의 새 인스턴스를 초기화 합니다.
 	 *
@@ -39,9 +39,10 @@ public abstract class GoldyTag implements Tag {
 	 * @since 2017. 4. 10. 오후 9:10:56
 	 */
 	public GoldyTag() {
+		
 		super();
 	}
-
+	
 	/**
 	 * Default processing of the end tag returning EVAL_PAGE.
 	 *
@@ -50,10 +51,10 @@ public abstract class GoldyTag implements Tag {
 	 */
 	@Override
 	public int doEndTag() {
-
+		
 		return EVAL_PAGE;
 	}
-
+	
 	/**
 	 * Invokes the base class {@link AbstractAuthorizeTag#authorize()} method to decide if
 	 * the body of the tag should be skipped or not.
@@ -62,9 +63,9 @@ public abstract class GoldyTag implements Tag {
 	 */
 	@Override
 	public int doStartTag() throws JspException {
-
+		
 		try {
-
+			
 			AccessExpression accessExpression;
 			if ((this.access == null) || (this.access.length() == 0)) {
 				accessExpression = new AccessExpression("permitAll", this.pageContext); //$NON-NLS-1$
@@ -72,36 +73,36 @@ public abstract class GoldyTag implements Tag {
 				accessExpression = new AccessExpression(this.access, this.pageContext);
 			}
 			final boolean authorize = accessExpression.authorize();
-
+			
 			if (authorize) {
 				this.doTag();
 			}
-
+			
 			return TagLibConfig.evalOrSkip(authorize);
-
+			
 		} catch (final IOException e) {
 			throw new JspException(e);
 		}
 	}
-
+	
 	protected abstract void doTag() throws IOException;
-
+	
 	protected String getCurrentPath() {
-
+		
 		final PageContextImpl attribute = (PageContextImpl) this.pageContext
 			.getAttribute("javax.servlet.jsp.jspPageContext"); //$NON-NLS-1$
 		final ServletRequest request = attribute.getRequest();
-
+		
 		if (request instanceof SecurityContextHolderAwareRequestWrapper) {
 			return ((SecurityContextHolderAwareRequestWrapper) request).getServletPath();
-
+			
 		}
 		if (request instanceof HttpServletRequestFilterable) {
 			return ((HttpServletRequestFilterable) request).getServletPath();
 		}
 		return null;
 	}
-
+	
 	/**
 	 * {@inheritDoc}
 	 *
@@ -109,25 +110,25 @@ public abstract class GoldyTag implements Tag {
 	 */
 	@Override
 	public Tag getParent() {
-
+		
 		return this.parent;
 	}
-
+	
 	protected ServletRequest getRequest() {
-
+		
 		return this.pageContext.getRequest();
 	}
-
+	
 	protected ServletResponse getResponse() {
-
+		
 		return this.pageContext.getResponse();
 	}
-
+	
 	protected ServletContext getServletContext() {
-
+		
 		return this.pageContext.getServletContext();
 	}
-
+	
 	/**
 	 * {@inheritDoc}
 	 *
@@ -135,15 +136,15 @@ public abstract class GoldyTag implements Tag {
 	 */
 	@Override
 	public void release() {
-
+		
 		this.parent = null;
 	}
-
+	
 	public void setAccess(final String access) {
-
+		
 		this.access = access;
 	}
-
+	
 	/**
 	 * {@inheritDoc}
 	 *
@@ -151,10 +152,10 @@ public abstract class GoldyTag implements Tag {
 	 */
 	@Override
 	public void setPageContext(final PageContext pageContext) {
-
+		
 		this.pageContext = pageContext;
 	}
-
+	
 	/**
 	 * {@inheritDoc}
 	 *
@@ -162,8 +163,8 @@ public abstract class GoldyTag implements Tag {
 	 */
 	@Override
 	public void setParent(final Tag parent) {
-
+		
 		this.parent = parent;
 	}
-
+	
 }

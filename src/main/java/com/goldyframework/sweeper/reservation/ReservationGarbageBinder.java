@@ -30,16 +30,16 @@ import com.goldyframework.repository.RepositoryServiceImpl;
  * @author 2017. 6. 18. 오후 2:00:56 jeong
  */
 public final class ReservationGarbageBinder {
-
+	
 	/**
 	 * Jackson 객체
 	 */
 	private static final ObjectMapper MAPPER = new ObjectMapper();
-
+	
 	static {
 		MAPPER.enable(SerializationFeature.INDENT_OUTPUT);
 	}
-
+	
 	/**
 	 * 예약 쓰레기 Json 파일을을 읽습니다.
 	 *
@@ -52,24 +52,24 @@ public final class ReservationGarbageBinder {
 	 *             exceptions produced by failed or interrupted I/O operations.
 	 */
 	public static AbstractReservationGarbage readGarbage(final File garbageFile) throws IOException {
-
+		
 		ObjectInspection.checkNull(garbageFile);
 		// 파일을 읽어 옴 내용은 Json형태
 		final String json = FileUtils.readFileToString(garbageFile, Prop.DEFAULT_CHARSET.name());
-
+		
 		// Json을 객체로 형변환
 		final ReservationGarbageBinderModel garbageModel = MAPPER.readValue(json, ReservationGarbageBinderModel.class);
-
+		
 		// 변환될 클래스를 읽어옴
 		final Class<AbstractReservationGarbage> garbageImpl = garbageModel.getTarget();
-
+		
 		// 변환될 클래스에 할당 될 필드값들을 읽어 Json으로 변환함
 		final String fieldValuesJson = MAPPER.writeValueAsString(garbageModel.getSet());
-
+		
 		// Json을 변환될 클래스로 변형함
 		return MAPPER.readValue(fieldValuesJson, garbageImpl);
 	}
-
+	
 	/**
 	 * 예약쓰레기를 json 파일로 저장합니다.
 	 *
@@ -88,20 +88,20 @@ public final class ReservationGarbageBinder {
 	 */
 	public static void saveGarbage(final File garbageDirectory, final AbstractReservationGarbage garbage)
 		throws IOException, SQLException, RepositoryException {
-
+		
 		ObjectInspection.checkNull(garbageDirectory);
 		ObjectInspection.checkNull(garbage);
-
+		
 		final ReservationGarbageBinderModel model = new ReservationGarbageBinderModel();
 		model.setTarget(garbage.getClass().getName());
 		model.setSet(garbage);
-
+		
 		final RepositoryBody repository = new ReservationGarbageRepositoryBody(garbageDirectory);
 		final RepositoryService service = new RepositoryServiceImpl(repository);
-
+		
 		service.write(MAPPER.writeValueAsString(model));
 	}
-
+	
 	/**
 	 * {@link ReservationGarbageBinder} 클래스의 새 인스턴스를 초기화 합니다.
 	 *
@@ -109,7 +109,8 @@ public final class ReservationGarbageBinder {
 	 * @since 2017. 4. 10. 오후 9:34:53
 	 */
 	private ReservationGarbageBinder() {
+		
 		throw new IllegalStateException("Utility class"); //$NON-NLS-1$
 	}
-
+	
 }

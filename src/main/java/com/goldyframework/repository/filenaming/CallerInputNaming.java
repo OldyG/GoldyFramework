@@ -18,7 +18,7 @@ import com.goldyframework.inspection.ObjectInspection;
  * 중복 파일이 존재 할 경우 덮어씌웁니다.
  */
 class CallerInputNaming implements FileNaming {
-
+	
 	/**
 	 * {@link CallerInputNaming} 클래스의 새 인스턴스를 초기화 합니다.
 	 *
@@ -26,9 +26,10 @@ class CallerInputNaming implements FileNaming {
 	 * @since 2017. 4. 10. 오후 9:33:12
 	 */
 	public CallerInputNaming() {
+		
 		super();
 	}
-
+	
 	/**
 	 * {@inheritDoc}
 	 *
@@ -36,11 +37,11 @@ class CallerInputNaming implements FileNaming {
 	 */
 	@Override
 	public String generageSavePath(final String directory, final String baseName, final String extension) {
-
+		
 		ObjectInspection.checkNull(directory);
 		ObjectInspection.checkNull(baseName);
 		ObjectInspection.checkNull(extension);
 		return MessageFormat.format("{0}{1}.{2}", directory, baseName, extension); //$NON-NLS-1$
 	}
-
+	
 }

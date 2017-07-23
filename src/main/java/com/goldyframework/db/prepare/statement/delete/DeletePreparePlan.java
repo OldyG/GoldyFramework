@@ -17,11 +17,11 @@ import com.goldyframework.db.prepare.statement.WhereBuilder;
  * @author 2017. 7. 8. 오후 2:00:40 jeong
  */
 public class DeletePreparePlan implements PreparePlan<DeletePrepare> {
-
+	
 	private final String tableName;
-
+	
 	private final WhereBuilder where;
-
+	
 	/**
 	 * {@link DeletePreparePlan} 클래스의 새 인스턴스를 초기화 합니다.
 	 *
@@ -29,11 +29,12 @@ public class DeletePreparePlan implements PreparePlan<DeletePrepare> {
 	 * @param tableName
 	 */
 	public DeletePreparePlan(final String tableName) {
+		
 		super();
 		this.tableName = tableName;
 		this.where = new WhereBuilder(tableName);
 	}
-
+	
 	/**
 	 * {@inheritDoc}
 	 *
@@ -41,14 +42,14 @@ public class DeletePreparePlan implements PreparePlan<DeletePrepare> {
 	 */
 	@Override
 	public DeletePrepare build() {
-
+		
 		return new DeletePrepare(this.tableName, this.where);
 	}
-
+	
 	public DeletePreparePlan where(final String columnName, final Comparison comparison, final Object value) {
-
+		
 		this.where.append(columnName, comparison, value);
 		return this;
 	}
-
+	
 }

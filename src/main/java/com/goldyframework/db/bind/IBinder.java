@@ -10,7 +10,7 @@
 package com.goldyframework.db.bind;
 
 public interface IBinder<T> {
-
+	
 	T bind(String value);
-
+	
 }

@@ -28,6 +28,8 @@ public class EncryptionTest {
 	/**
 	 * Test method for
 	 * {@link com.goldy.common.util.encrytion.Encryption#decrypt(java.lang.String)}.
+	 *
+	 * @throws EncryptionException
 	 */
 	@Test
 	public void testDecrypt() throws EncryptionException {
@@ -47,6 +49,8 @@ public class EncryptionTest {
 	/**
 	 * Test method for
 	 * {@link com.goldy.common.util.encrytion.Encryption#encrypt(java.lang.String)}.
+	 *
+	 * @throws EncryptionException
 	 */
 	@Test
 	public void testEncrypt() throws EncryptionException {

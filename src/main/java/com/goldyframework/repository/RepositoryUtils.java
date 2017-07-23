@@ -23,7 +23,7 @@ import com.goldyframework.repository.exception.NotRegisteredFileException;
  * @author 2017. 6. 18. 오후 1:56:26 jeong
  */
 public class RepositoryUtils {
-
+	
 	/**
 	 * {@link RepositoryUtil} 클래스의 새 인스턴스를 초기화 합니다.
 	 *
@@ -31,9 +31,10 @@ public class RepositoryUtils {
 	 * @since 2017. 4. 10. 오후 9:33:46
 	 */
 	public RepositoryUtils() {
+		
 		super();
 	}
-
+	
 	/**
 	 * 이미지를 반환한다.
 	 *
@@ -53,11 +54,11 @@ public class RepositoryUtils {
 	 */
 	public ResponseEntity<byte[]> getImage(final RepositoryBody repository)
 		throws IOException, SQLException, RepositoryException, NotRegisteredFileException {
-
+		
 		ObjectInspection.checkNull(repository);
 		final RepositoryService service = new RepositoryServiceImpl(repository);
-
+		
 		return service.displayImage();
-
+		
 	}
 }

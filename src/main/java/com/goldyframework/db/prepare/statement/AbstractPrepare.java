@@ -25,8 +25,10 @@ public abstract class AbstractPrepare implements Prepare {
 	 * {@link AbstractPrepare} 클래스의 새 인스턴스를 초기화 합니다.
 	 *
 	 * @author 2017. 7. 2. 오후 5:30:23 jeong
+	 * @param tableName
 	 */
 	public AbstractPrepare(final String tableName) {
+
 		super();
 		this.tableName = NullGtils.throwIfNull(tableName);
 	}

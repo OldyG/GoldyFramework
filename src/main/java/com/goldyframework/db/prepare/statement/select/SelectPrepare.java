@@ -31,9 +31,12 @@ public class SelectPrepare extends AbstractPrepare {
 	 *
 	 * @author 2017. 7. 2. 오후 5:33:38 jeong
 	 * @param tableName
+	 * @param columns
+	 * @param where
 	 */
 	@VisibleForTesting
 	SelectPrepare(final String tableName, final List<String> columns, final WhereBuilder where) {
+
 		super(NullGtils.throwIfNull(tableName));
 		this.columns = new ArrayList<>(columns);
 		this.where = where;

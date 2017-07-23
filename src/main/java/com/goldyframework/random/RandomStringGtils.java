@@ -25,7 +25,7 @@ import org.slf4j.LoggerFactory;
  * @author 2017. 6. 18. 오후 1:31:56 jeong
  */
 public final class RandomStringGtils {
-
+	
 	/**
 	 * slf4j Logger
 	 *
@@ -33,12 +33,12 @@ public final class RandomStringGtils {
 	 * @since 2017. 5. 22. 오후 9:20:02
 	 */
 	private static final Logger LOGGER = LoggerFactory.getLogger(RandomStringGtils.class);
-
+	
 	/**
 	 * 문자열 심볼 목록
 	 */
 	private static final Collection<Character> SYMBOLS;
-
+	
 	static {
 		final Collection<Character> tempSymbols = new LinkedList<>();
 		final IntConsumer consumer = index -> tempSymbols.add((char) index);
@@ -47,7 +47,7 @@ public final class RandomStringGtils {
 		IntStream.rangeClosed('A', 'Z').forEach(consumer);
 		SYMBOLS = tempSymbols;
 	}
-
+	
 	/**
 	 * 해당 길이에 대한 무작위 문자열을 생성한다.
 	 *
@@ -59,7 +59,7 @@ public final class RandomStringGtils {
 	 * @return 결과 무작위 문자열
 	 */
 	public static String createRandomString(final int minLength, final int range) {
-
+		
 		final Random random = new SecureRandom();
 		int passwordLength;
 		if (range <= 0) {
@@ -68,9 +68,9 @@ public final class RandomStringGtils {
 		} else {
 			passwordLength = random.nextInt(range) + minLength;
 		}
-
+		
 		final StringBuilder builder = new StringBuilder();
-
+		
 		IntStream.range(0, passwordLength).forEach(index -> {
 			final int symbolSize = random.nextInt(RandomStringGtils.SYMBOLS.size());
 			final char c = ((LinkedList<Character>) RandomStringGtils.SYMBOLS).get(symbolSize);
@@ -78,7 +78,7 @@ public final class RandomStringGtils {
 		});
 		return builder.toString();
 	}
-
+	
 	/**
 	 * {@link AbstractRandomString} 클래스의 새 인스턴스를 초기화 합니다.
 	 *
@@ -86,7 +86,8 @@ public final class RandomStringGtils {
 	 * @since 2017. 4. 10. 오후 9:36:09
 	 */
 	private RandomStringGtils() {
+		
 		throw new IllegalStateException("Utility class"); //$NON-NLS-1$
 	}
-
+	
 }

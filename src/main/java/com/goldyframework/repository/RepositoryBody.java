@@ -20,7 +20,7 @@ import com.goldyframework.repository.exception.NotRegisteredFileException;
  * @author 2017. 6. 18. 오후 1:46:02 jeong
  */
 public interface RepositoryBody {
-
+	
 	/**
 	 * 저장 경로를 생성합니다.
 	 *
@@ -28,7 +28,7 @@ public interface RepositoryBody {
 	 * @return 저장 경로
 	 */
 	String generateSavePath();
-
+	
 	/**
 	 * 주어진 확장자를 사용한 저장 경로를 생성합니다.
 	 *
@@ -38,7 +38,7 @@ public interface RepositoryBody {
 	 * @return 저장 경로
 	 */
 	String generateSavePath(String extension);
-
+	
 	/**
 	 * 다운로드 이름을 반환합니다.
 	 *
@@ -52,7 +52,7 @@ public interface RepositoryBody {
 	 *             이 외 발생하는 예외 사항
 	 */
 	String getDownloadName() throws NotRegisteredFileException, SQLException, RepositoryException;
-
+	
 	/**
 	 * 등록된 파일을 반환합니다.
 	 *
@@ -66,5 +66,5 @@ public interface RepositoryBody {
 	 *             이 외 발생하는 예외 사항
 	 */
 	File getRegisteredFile() throws NotRegisteredFileException, SQLException, RepositoryException;
-
+	
 }

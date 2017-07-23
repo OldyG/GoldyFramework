@@ -18,7 +18,7 @@ import org.junit.Test;
  * @author 2017. 6. 19. 오후 10:59:54 jeong
  */
 public class DoesTest {
-
+	
 	/**
 	 * Test for Constructor
 	 *
@@ -26,18 +26,18 @@ public class DoesTest {
 	 */
 	@Test(expected = IllegalStateException.class)
 	public void testConstructor() {
-
+		
 		new Does.TestSet().createNewInstance();
 	}
-
+	
 	/**
 	 * Test method for {@link com.goldyframework.utils.NeedNotUse#inputObject(java.lang.Object)}.
 	 */
 	@Test
 	public void testInputObject() {
-
+		
 		Does.notUse(this, Because.WANT_NOT_STATIC_FUNCTION);
 		Assert.assertTrue("", Boolean.TRUE); //$NON-NLS-1$
 	}
-
+	
 }

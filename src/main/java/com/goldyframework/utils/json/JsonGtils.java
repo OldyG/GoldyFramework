@@ -26,46 +26,46 @@ import com.google.gson.GsonBuilder;
  * @author 2017. 6. 18. 오후 1:15:23 jeong
  */
 public final class JsonGtils {
-
+	
 	/**
 	 * Jackson 객체
 	 */
 	private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
-
+	
 	/**
 	 * Google 일반 Gson 객체
 	 */
 	private static final Gson DEFAULT_GSON;
-
+	
 	/**
 	 * Google HTML Escpae를 하지않는 Gson 객체
 	 */
 	private static final Gson NON_ESCAPE_GSON;
-
+	
 	/**
 	 * Google toString()용 Gson 객체
 	 */
 	private static final Gson PRETTY_GSON;
-
+	
 	/**
 	 * slf4j Logger
 	 */
 	private static final Logger LOGGER = LoggerFactory.getLogger(JsonGtils.class);
-
+	
 	static {
-
+		
 		DEFAULT_GSON = new Gson();
-
+		
 		NON_ESCAPE_GSON = new GsonBuilder()
 			.disableHtmlEscaping()
 			.create();
-
+		
 		PRETTY_GSON = new GsonBuilder()
 			.disableHtmlEscaping()
 			.setPrettyPrinting()
 			.create();
 	}
-
+	
 	/**
 	 * Gson을 사용하여 {@link String} 문자열을 주어진 클래스 타입으로 변환합니다.
 	 * setter 함수와 무관하게 필드에 직접 접근하여 값을 초기화합니다.
@@ -80,10 +80,10 @@ public final class JsonGtils {
 	 * @return 적용된 클래스
 	 */
 	public static <T> T fromGson(final String json, final Class<T> clazzOfT) {
-
+		
 		ObjectInspection.checkNull(json);
 		ObjectInspection.checkNull(clazzOfT);
-
+		
 		try {
 			return DEFAULT_GSON.fromJson(json, clazzOfT);
 		} catch (final RuntimeException e) {
@@ -91,7 +91,7 @@ public final class JsonGtils {
 			return null;
 		}
 	}
-
+	
 	/**
 	 * Jackson을 사용하여 {@link String} 문자열을 주어진 클래스 타입으로 변환합니다.<br>
 	 * 각 필드의 setter 함수를 통해 필드 값을 초기화합니다.<br>
@@ -111,7 +111,7 @@ public final class JsonGtils {
 	 * @return 적용된 클래스
 	 */
 	public static <T> T fromJackson(final String json, final Class<T> clazzOfT) {
-
+		
 		ObjectInspection.checkNull(json);
 		ObjectInspection.checkNull(clazzOfT);
 		try {
@@ -121,7 +121,7 @@ public final class JsonGtils {
 			return null;
 		}
 	}
-
+	
 	/**
 	 * Gson을 사용하여 객체의 값을 필드를 읽습니다.
 	 * getter 함수와 무관하게 직접 필드에서 값을 읽어옵니다.
@@ -132,7 +132,7 @@ public final class JsonGtils {
 	 * @return 변형된 객체
 	 */
 	public static String toGson(final Object object) {
-
+		
 		ObjectInspection.checkNull(object);
 		try {
 			return DEFAULT_GSON.toJson(object);
@@ -141,7 +141,7 @@ public final class JsonGtils {
 			return "[ERROR] JsonGtils.toGoson"; //$NON-NLS-1$
 		}
 	}
-
+	
 	/**
 	 * @author 2017. 6. 30. 오후 6:58:40 jeong
 	 * @param object
@@ -149,9 +149,9 @@ public final class JsonGtils {
 	 * @return 변형된 객체
 	 */
 	public static String toGsonNonHtmlEscaping(final Object object) {
-
+		
 		ObjectInspection.checkNull(object);
-
+		
 		try {
 			return NON_ESCAPE_GSON.toJson(object);
 		} catch (final RuntimeException e) {
@@ -159,7 +159,7 @@ public final class JsonGtils {
 			return "[ERROR] JsonGtils.toGsonNonHtmlEscaping"; //$NON-NLS-1$
 		}
 	}
-
+	
 	/**
 	 * @author 2017. 6. 30. 오후 6:58:41 jeong
 	 * @param object
@@ -167,9 +167,9 @@ public final class JsonGtils {
 	 * @return 변형된 객체
 	 */
 	public static String toGsonPretty(final Object object) {
-
+		
 		ObjectInspection.checkNull(object);
-
+		
 		try {
 			return PRETTY_GSON.toJson(object);
 		} catch (final RuntimeException e) {
@@ -177,7 +177,7 @@ public final class JsonGtils {
 			return "[ERROR] JsonGtils.toGsonPretty"; //$NON-NLS-1$
 		}
 	}
-
+	
 	/**
 	 * 객체를 값을 Getter, Setter를 통하여 읽습니다
 	 *
@@ -187,9 +187,9 @@ public final class JsonGtils {
 	 * @return 변형된 객체
 	 */
 	public static String toJackson(final Object object) {
-
+		
 		ObjectInspection.checkNull(object);
-
+		
 		try {
 			return OBJECT_MAPPER.writeValueAsString(object);
 		} catch (final JsonProcessingException e) {
@@ -197,7 +197,7 @@ public final class JsonGtils {
 			return "[ERROR] JsonGtils.toJackson"; //$NON-NLS-1$
 		}
 	}
-
+	
 	/**
 	 * {@link JsonGtils} 클래스의 새 인스턴스를 초기화 합니다.
 	 *
@@ -205,6 +205,7 @@ public final class JsonGtils {
 	 * @since 2017. 5. 22. 오후 9:42:17
 	 */
 	private JsonGtils() {
+		
 		throw new IllegalStateException("Utility class"); //$NON-NLS-1$
 	}
 }

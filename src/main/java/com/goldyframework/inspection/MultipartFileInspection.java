@@ -23,7 +23,7 @@ import com.goldyframework.inspection.exception.InspectionException;
  * @author 2017. 6. 14. 오후 9:09:52 jeong
  */
 public final class MultipartFileInspection {
-
+	
 	/**
 	 * 빈 파일이 검사합니다.
 	 *
@@ -34,14 +34,14 @@ public final class MultipartFileInspection {
 	 *             빈 파일일 경우 발생합니다.
 	 */
 	public static void checkEmptyFile(final MultipartFile mpFile) {
-
+		
 		ObjectInspection.checkNull(mpFile);
-
+		
 		if (mpFile.isEmpty()) {
 			throw new InspectionException("빈 파일입니다."); //$NON-NLS-1$
 		}
 	}
-
+	
 	/**
 	 * 파일의 확장자가 정의한 매개변수에 포함되어있지 않은지 검사합니다.
 	 *
@@ -54,13 +54,13 @@ public final class MultipartFileInspection {
 	 *             정의한 확장자가 포함하지 않으면 발생합니다.
 	 */
 	public static void checkExtentionIs(final MultipartFile target, final List<String> validExtentions) {
-
+		
 		ObjectInspection.checkNull(target);
 		ObjectInspection.checkNull(validExtentions);
-
+		
 		final String originalFilename = target.getOriginalFilename();
 		final String extention = extractExtention(originalFilename).toLowerCase(Locale.getDefault());
-
+		
 		for (final String String : validExtentions) {
 			if (String.equalsIgnoreCase(extention)) {
 				return;
@@ -68,7 +68,7 @@ public final class MultipartFileInspection {
 		}
 		throw new InspectionException(validExtentions + "가 아닙니다."); //$NON-NLS-1$
 	}
-
+	
 	/**
 	 * 파일이 올바른 파일인지 검사합니다.
 	 * 다음 상황에 예외를 발생합니다.
@@ -83,22 +83,22 @@ public final class MultipartFileInspection {
 	 *             파일 사이즈가 0이거나 이름이 없는 경우 발생합니다.
 	 */
 	public static void checkNullOrEmptyMultipartFile(final MultipartFile multipartFile) {
-
+		
 		ObjectInspection.checkNull(multipartFile);
 		StringInspection.checkNullOrEmpty(multipartFile.getName());
-
+		
 		try {
 			IntegerInspection.checkBelowZero((int) multipartFile.getSize());
 		} catch (final InspectionException e) {
 			throw new InspectionException("파일 사이즈가 0입니다.", e); //$NON-NLS-1$
 		}
-
+		
 		try {
 			StringInspection.checkNullOrEmpty(multipartFile.getOriginalFilename());
 		} catch (final InspectionException e) {
 			throw new InspectionException("파일 이름이 없습니다.", e); //$NON-NLS-1$
 		}
-
+		
 		try {
 			final String originalFilename = multipartFile.getOriginalFilename();
 			StringInspection.checkNullOrEmpty(FilenameUtils.getBaseName(originalFilename));
@@ -106,7 +106,7 @@ public final class MultipartFileInspection {
 			throw new InspectionException("확장자를 제외한 파일이름이 비어있습니다.", e); //$NON-NLS-1$
 		}
 	}
-
+	
 	/**
 	 * 파일이름에서 확장자만 반환합니다.
 	 *
@@ -118,13 +118,13 @@ public final class MultipartFileInspection {
 	 *             null일 경우 발생합니다.
 	 */
 	public static String extractExtention(final String fileName) {
-
+		
 		ObjectInspection.checkNull(fileName);
-
+		
 		final int dotIndex = fileName.lastIndexOf('.');
 		return fileName.substring(dotIndex + 1);
 	}
-
+	
 	/**
 	 * {@link MultipartFileInspection} 클래스의 새 인스턴스를 초기화 합니다.
 	 *
@@ -132,7 +132,8 @@ public final class MultipartFileInspection {
 	 * @since 2017. 5. 22. 오후 9:45:06
 	 */
 	private MultipartFileInspection() {
+		
 		throw new IllegalStateException("Utility class"); //$NON-NLS-1$
 	}
-
+	
 }

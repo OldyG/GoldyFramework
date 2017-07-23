@@ -31,20 +31,20 @@ import com.goldyframework.utils.ClassLoaderGtils;
 @SuppressWarnings("nls")
 @RunWith(MockitoJUnitRunner.class)
 public class ChecksumAnalyserTest extends Mockito {
-
+	
 	private static final File TEST_FILE = ClassLoaderGtils.getFile("checksum/Test File.xml");
-
+	
 	private static final File NONEEXISTENT_TEST_FILE = new File("src/test/resources/none");
-
+	
 	@Spy
 	private final ChecksumAnalyser targetSpy = new ChecksumAnalyser.TestSet().createNewInstance();
-
+	
 	/**
 	 * Test method for {@link com.goldyframework.checksum.ChecksumAnalyser#analyze()}.
 	 */
 	@Test
 	public void testAnalye() {
-
+		
 		final ChecksumAnalyser analyser = new ChecksumAnalyser(TEST_FILE);
 		final Checksum actual = analyser.analyze();
 		Assert.assertEquals("MD2 알고리즘 비교 시험", "0c195fd9a63d4e0d5b7c507450663a4a", actual.getMd2());
@@ -58,35 +58,35 @@ public class ChecksumAnalyserTest extends Mockito {
 		Assert.assertEquals("SHA512 알고리즘 비교 시험",
 			"a14c0881afd6e6a41d35ab4da63efd7bd90362525d0c71fd47238722b9af035e92aa901f1a0108726158cb557932fdda9f17f30b7af2e94c76f1c1a790270eaf",
 			actual.getSha512());
-
+		
 	}
-
+	
 	@Test(expected = InspectionException.class)
 	public void testConstructorEmptyFile() {
-
+		
 		new ChecksumAnalyser(new File(""));
 	}
-
+	
 	/**
 	 * Test method for {@link com.goldyframework.checksum.ChecksumAnalyser#ChecksumAnalyser(java.io.File)}.
 	 */
 	@Test(expected = InspectionException.class)
 	public void testConstructorInputNullArgument() {
-
+		
 		new ChecksumAnalyser(null);
 	}
-
+	
 	@Test
 	public void testCoverageByAnalysisCheckSum() {
-
+		
 		doThrow(NoSuchAlgorithmException.class).when(this.targetSpy)
 			.convertDigestToString(Matchers.<byte[]> any());
-
+		
 		final String actual = this.targetSpy.analysisCheckSum(Algorithm.MD2);
 		Assert.assertEquals("", "FAIL : null", actual);
-
+		
 	}
-
+	
 	/**
 	 * 생성자에 존재하지 않는 파일을 넣었을때
 	 *
@@ -96,10 +96,10 @@ public class ChecksumAnalyserTest extends Mockito {
 	@SuppressWarnings("unused")
 	@Test(expected = InspectionException.class)
 	public void testNonexistentFileInstance() {
-
+		
 		new ChecksumAnalyser(NONEEXISTENT_TEST_FILE);
 	}
-
+	
 	/**
 	 * 생성자에 null을 발생하였을 떄
 	 *
@@ -109,14 +109,14 @@ public class ChecksumAnalyserTest extends Mockito {
 	@SuppressWarnings("unused")
 	@Test(expected = InspectionException.class)
 	public void testNullInstance() {
-
+		
 		new ChecksumAnalyser(null);
 	}
-
+	
 	@Test
 	public void testResult()
 		throws IllegalAccessException, IllegalArgumentException, InvocationTargetException {
-
+		
 		final ChecksumAnalyser analyser = new ChecksumAnalyser(TEST_FILE);
 		final Checksum checksum = analyser.analyze();
 		final Method[] declaredMethods = checksum.getClass().getDeclaredMethods();

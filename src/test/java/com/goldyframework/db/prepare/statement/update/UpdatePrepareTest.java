@@ -24,31 +24,31 @@ import com.goldyframework.db.prepare.statement.WhereBuilder;
  */
 @SuppressWarnings("nls")
 public class UpdatePrepareTest {
-
+	
 	@Test
 	public void test() {
-
+		
 		final AssignBuilder assign = new AssignBuilder("TEST");
 		assign.appendIfNotNull("name", "test");
 		assign.appendIfNotNull("name2", "test2");
-
+		
 		final WhereBuilder where = new WhereBuilder("TEST");
 		where.append("column1", Comparison.GREATER_EQUAL, 1);
 		where.append("column2", Comparison.EQUAL, "true");
-		
-		final UpdatePrepare update = new UpdatePrepare("TEST", assign, where);
 
+		final UpdatePrepare update = new UpdatePrepare("TEST", assign, where);
+		
 		Assert.assertEquals("UPDATE Sql 비교 시험",
 			"UPDATE TEST SET TEST.name = ?, TEST.name2 = ? WHERE TEST.column1 >= ? AND TEST.column2 = ?",
 			update.toPrepareSql());
-
+		
 		final List<Object> args = new ArrayList<>(update.getArgs());
 		Assert.assertEquals("", 4, args.size());
 		Assert.assertEquals("", "test", args.get(0));
 		Assert.assertEquals("", "test2", args.get(1));
 		Assert.assertEquals("", 1, args.get(2));
 		Assert.assertEquals("", "true", args.get(3));
-
+		
 	}
-
+	
 }

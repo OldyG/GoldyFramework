@@ -19,7 +19,7 @@ import com.goldyframework.inspection.ObjectInspection;
  * @author 2017. 6. 18. 오전 11:40:46 jeong
  */
 public class SendModelValidator implements Inspection<SendModel> {
-
+	
 	/**
 	 * {@link SendModelValidator} 클래스의 새 인스턴스를 초기화 합니다.
 	 *
@@ -27,9 +27,10 @@ public class SendModelValidator implements Inspection<SendModel> {
 	 * @since 2017. 4. 10. 오후 9:32:45
 	 */
 	public SendModelValidator() {
+		
 		super();
 	}
-
+	
 	/**
 	 * {@inheritDoc}
 	 *
@@ -37,9 +38,9 @@ public class SendModelValidator implements Inspection<SendModel> {
 	 */
 	@Override
 	public void check(final SendModel obj) {
-
+		
 		ObjectInspection.checkNull(obj);
-
+		
 	}
-
+	
 }

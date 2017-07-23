@@ -29,9 +29,11 @@ public class InsertPrepare extends AbstractPrepare {
 	 *
 	 * @author 2017. 7. 2. 오후 5:33:23 jeong
 	 * @param tableName
+	 * @param assign
 	 */
 	@VisibleForTesting
 	InsertPrepare(final String tableName, final AssignBuilder assign) {
+
 		super(NullGtils.throwIfNull(tableName));
 		ObjectInspection.checkNull(assign);
 		this.assign = assign;

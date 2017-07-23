@@ -23,22 +23,22 @@ import com.goldyframework.utils.NullGtils;
  */
 @Component
 public class ApplicationContextProvider implements ApplicationContextAware {
-
+	
 	/**
 	 * Central interface to provide configuration for an application. This is read-only while the application is
 	 * running, but may be reloaded if the implementation supports this.
 	 */
 	private static ApplicationContext context;
-
+	
 	/**
 	 * @author 2017. 6. 18. 오후 2:40:43 jeong
 	 * @return {@link ApplicationContext}
 	 */
 	public static synchronized ApplicationContext getApplicationContext() {
-
+		
 		return context;
 	}
-
+	
 	/**
 	 * {@link ApplicationContextProvider} 클래스의 새 인스턴스를 초기화 합니다.
 	 *
@@ -46,9 +46,10 @@ public class ApplicationContextProvider implements ApplicationContextAware {
 	 * @since 2017. 4. 10. 오후 9:26:47
 	 */
 	public ApplicationContextProvider() {
+		
 		super();
 	}
-
+	
 	/**
 	 * {@inheritDoc}
 	 *
@@ -56,7 +57,7 @@ public class ApplicationContextProvider implements ApplicationContextAware {
 	 */
 	@Override
 	public synchronized void setApplicationContext(final ApplicationContext ac) {
-
+		
 		context = NullGtils.throwIfNull(ac);
 	}
 }

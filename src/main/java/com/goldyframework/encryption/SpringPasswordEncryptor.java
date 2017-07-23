@@ -19,7 +19,7 @@ import com.goldyframework.inspection.ObjectInspection;
  * @author 2017. 6. 18. 오후 12:56:45 jeong
  */
 public class SpringPasswordEncryptor implements PasswordEncoder {
-
+	
 	/**
 	 * {@link SpringPasswordEncryptor} 클래스의 새 인스턴스를 초기화 합니다.
 	 *
@@ -27,9 +27,10 @@ public class SpringPasswordEncryptor implements PasswordEncoder {
 	 * @since 2017. 4. 10. 오후 9:36:03
 	 */
 	public SpringPasswordEncryptor() {
+		
 		super();
 	}
-
+	
 	/**
 	 * 암호화 작업을 수행한다.
 	 * {@inheritDoc}
@@ -38,11 +39,11 @@ public class SpringPasswordEncryptor implements PasswordEncoder {
 	 */
 	@Override
 	public String encode(final CharSequence rawPassword) {
-
+		
 		ObjectInspection.checkNull(rawPassword);
 		return PasswordEncryptor.encode(rawPassword);
 	}
-
+	
 	/**
 	 * 일치한지 여부를 반환한다.
 	 * {@inheritDoc}
@@ -51,10 +52,10 @@ public class SpringPasswordEncryptor implements PasswordEncoder {
 	 */
 	@Override
 	public boolean matches(final CharSequence rawPassword, final String encodedPassword) {
-
+		
 		ObjectInspection.checkNull(rawPassword);
 		ObjectInspection.checkNull(encodedPassword);
 		return PasswordEncryptor.matches(rawPassword, encodedPassword);
 	}
-
+	
 }

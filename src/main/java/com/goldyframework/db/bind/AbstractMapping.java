@@ -1,5 +1,5 @@
 /**
- * FileName : {@link ColumnMapping}.java
+ * FileName : {@link AbstractMapping}.java
  * Created : 2017. 6. 30. 오후 8:57:06
  * Author : jeong
  * Summary :
@@ -23,8 +23,9 @@ import com.goldyframework.utils.StringCollectionGtils;
 
 /**
  * @author 2017. 6. 30. 오후 8:57:06 jeong
+ * @param <V>
  */
-public abstract class ColumnMapping<V> extends LinkedHashMap<String, ResultSetBinder<Object>> {
+public abstract class AbstractMapping<V> extends LinkedHashMap<String, ResultSetBinder<Object>> {
 	
 	/**
 	 * Serializable UID
@@ -36,13 +37,14 @@ public abstract class ColumnMapping<V> extends LinkedHashMap<String, ResultSetBi
 	private final String tableName;
 	
 	/**
-	 * {@link ColumnMapping} 클래스의 새 인스턴스를 초기화 합니다.
+	 * {@link AbstractMapping} 클래스의 새 인스턴스를 초기화 합니다.
 	 *
 	 * @author 2017. 7. 1. 오후 4:24:50 jeong
 	 * @param schemaName
 	 * @param tableName
 	 */
-	public ColumnMapping(final String schemaName, final String tableName) {
+	public AbstractMapping(final String schemaName, final String tableName) {
+		
 		super();
 		this.schemaName = NullGtils.throwIfNull(schemaName);
 		this.tableName = NullGtils.throwIfNull(tableName);

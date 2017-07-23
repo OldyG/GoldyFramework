@@ -14,6 +14,6 @@ import java.sql.SQLException;
 
 @FunctionalInterface
 public interface ResultSetBinder<T> {
-
+	
 	T bind(ResultSet rs, String column) throws SQLException;
 }

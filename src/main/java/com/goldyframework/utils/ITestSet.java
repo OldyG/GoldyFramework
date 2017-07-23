@@ -11,6 +11,7 @@ package com.goldyframework.utils;
 
 /**
  * @author 2017. 6. 19. 오후 6:44:45 jeong
+ * @param <T>
  */
 @FunctionalInterface
 public interface ITestSet<T> {

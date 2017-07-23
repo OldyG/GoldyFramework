@@ -18,15 +18,15 @@ import org.junit.Test;
  * @author 2017. 6. 18. 오후 4:54:10 jeong
  */
 public class AlgorithmTest {
-
+	
 	/**
 	 * Test method for {@link com.goldyframework.checksum.Algorithm#getName()}.
 	 */
 	@Test
 	public void testGetName() {
-
+		
 		final String actual = Algorithm.MD2.getName();
 		Assert.assertEquals("", "MD2", actual); //$NON-NLS-1$//$NON-NLS-2$
 	}
-
+	
 }

@@ -64,6 +64,7 @@ public class SendModel {
 	 *            제목
 	 */
 	public SendModel(final InternetAddress sender, final String subject) {
+
 		this.from = NullGtils.throwIfNull(sender);
 		this.subject = NullGtils.throwIfNull(subject);
 	}
@@ -199,6 +200,7 @@ public class SendModel {
 	 *
 	 * @see {@link #attachmentList}
 	 * @author jeonghyun.kum
+	 * @param file
 	 * @param attachmentList
 	 *            attachmentList
 	 * @since 2016. 4. 23. 오후 6:27:53

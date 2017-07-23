@@ -29,7 +29,7 @@ public enum Because {
 	 * </pre>
 	 */
 	WANT_NOT_STATIC_FUNCTION("해당 함수를 can be static가 되지 않도록 함"), //$NON-NLS-1$
-
+	
 	/**
 	 * 다음 객체를 처리하지않기 위해서<br>
 	 *
@@ -40,30 +40,33 @@ public enum Because {
 	 * </pre>
 	 */
 	UNNECESSARY_PROCESSING("다음 처리를 의도적으로 하지 않음"), //$NON-NLS-1$
-
+	
 	/**
 	 *
 	 */
 	DO_NOTHING("아무행위도 하지 않음"); //$NON-NLS-1$
-
+	
 	private final String message;
-
+	
 	/**
 	 * {@link Because} 클래스의 새 인스턴스를 초기화 합니다.
 	 *
 	 * @author 2017. 6. 22. 오후 7:31:42 jeong
+	 * @param message
 	 */
 	Because(final String message) {
+		
 		this.message = message;
 	}
-
+	
 	/**
 	 * {@inheritDoc}
 	 *
 	 * @author 2017. 6. 22. 오후 7:31:58 jeong
+	 * @return
 	 */
 	public String getMessage() {
-
+		
 		return this.message;
 	}
 }

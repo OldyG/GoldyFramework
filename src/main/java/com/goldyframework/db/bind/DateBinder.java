@@ -20,9 +20,9 @@ import com.google.common.base.Throwables;
  * @author 2017. 7. 1. 오후 2:40:58 jeong
  */
 public class DateBinder implements IBinder<Date> {
-
+	
 	private static final String FORMAT = "yyyy-MM-dd hh:mm:ss"; //$NON-NLS-1$
-
+	
 	/**
 	 * {@inheritDoc}
 	 *
@@ -30,7 +30,7 @@ public class DateBinder implements IBinder<Date> {
 	 */
 	@Override
 	public Date bind(final String value) {
-
+		
 		ObjectInspection.checkNull(value);
 		try {
 			return new SimpleDateFormat(FORMAT).parse(value);
@@ -38,5 +38,5 @@ public class DateBinder implements IBinder<Date> {
 			throw Throwables.propagate(e);
 		}
 	}
-
+	
 }

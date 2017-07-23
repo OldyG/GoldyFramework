@@ -52,6 +52,7 @@ public class ReservationSweeper implements ISweeper {
 	 * 예약 쓰레기를 추가한다.
 	 *
 	 * @author 2017. 6. 18. 오후 2:33:50 jeong
+	 * @param garbageDirectory
 	 * @param garbage
 	 *            쓰레기
 	 * @throws SweeperException
@@ -157,6 +158,7 @@ public class ReservationSweeper implements ISweeper {
 	 * @since 2017. 4. 10. 오후 9:35:18
 	 */
 	public ReservationSweeper(final File garbageDirectory) {
+
 		this.garbageDirectory = NullGtils.throwIfNull(garbageDirectory);
 	}
 	

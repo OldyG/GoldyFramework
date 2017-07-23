@@ -12,9 +12,9 @@ package com.goldyframework.jsp.taglib;
 public enum MapperMode {
 	AUTO,
 	RELATIVE;
-
+	
 	public static MapperMode lookUp(final String arg) {
-
+		
 		switch (arg.toUpperCase()) {
 			case "AUTO": //$NON-NLS-1$
 				return AUTO;
@@ -23,6 +23,6 @@ public enum MapperMode {
 			default:
 				return null;
 		}
-
+		
 	}
 }

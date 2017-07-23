@@ -21,52 +21,53 @@ import com.goldyframework.inspection.exception.InspectionException;
  * @author 2017. 6. 18. 오전 10:57:09 jeong
  */
 public class SelectSql extends AbstractSql {
-
+	
 	/**
 	 * "SELECT " 문자열 프로퍼티
 	 */
 	private static final String SELECT = "SELECT "; //$NON-NLS-1$
-
+	
 	/**
 	 * "FROM " 문자열 프로퍼티
 	 */
 	private static final String FROM = "FROM "; //$NON-NLS-1$
-
+	
 	/**
 	 * "WHERE " 문자열 프로퍼티
 	 */
 	private static final String WHERE = "WHERE "; //$NON-NLS-1$
-
+	
 	/**
 	 * select 절 (컬럼 이름 목록)
 	 */
 	private String selectSection = "*"; //$NON-NLS-1$
-
+	
 	/**
 	 * from 절 (테이블 목록)
 	 */
 	private String fromSection;
-
+	
 	/**
 	 * where 절 (조건)
 	 */
 	private String whereSection;
-
+	
 	/**
 	 * where 절 사용 여부
 	 */
 	private boolean usingWhereStatement;
-
+	
 	/**
 	 * {@link SelectSql} 클래스의 새 인스턴스를 초기화 합니다.
 	 *
 	 * @author 2017. 6. 18. 오전 10:59:39 jeong
 	 */
 	private SelectSql() {
+		
 		this.selectSection = "*"; //$NON-NLS-1$
 		this.usingWhereStatement = false;
 	}
-
+	
 	/**
 	 * {@link SelectSql} 클래스의 새 인스턴스를 초기화 합니다.
 	 *
@@ -81,9 +82,10 @@ public class SelectSql extends AbstractSql {
 	 */
 	public SelectSql(final Collection<String> selectColumnList, final Collection<String> fromTableList)
 		throws SQLException {
+		
 		this(collectionToCommaString(selectColumnList), collectionToCommaString(fromTableList));
 	}
-
+	
 	/**
 	 * {@link SelectSql} 클래스의 새 인스턴스를 초기화 합니다.
 	 *
@@ -101,9 +103,10 @@ public class SelectSql extends AbstractSql {
 	public SelectSql(final Collection<String> selectColumnList, final Collection<String> fromTableList,
 		final String where)
 		throws SQLException {
+		
 		this(collectionToCommaString(selectColumnList), collectionToCommaString(fromTableList), where);
 	}
-
+	
 	/**
 	 * {@link SelectSql} 클래스의 새 인스턴스를 초기화 합니다.
 	 *
@@ -117,9 +120,10 @@ public class SelectSql extends AbstractSql {
 	 *             문법에 오류가 있는 경우 발생합니다.
 	 */
 	public SelectSql(final Collection<String> selectColumnList, final String fromTable) throws SQLException {
+		
 		this(collectionToCommaString(selectColumnList), fromTable);
 	}
-
+	
 	/**
 	 * {@link SelectSql} 클래스의 새 인스턴스를 초기화 합니다.
 	 *
@@ -136,9 +140,10 @@ public class SelectSql extends AbstractSql {
 	 */
 	public SelectSql(final Collection<String> selectColumnList, final String fromTable, final String where)
 		throws SQLException {
+		
 		this(collectionToCommaString(selectColumnList), fromTable, where);
 	}
-
+	
 	/**
 	 * {@link SelectSql} 클래스의 새 인스턴스를 초기화 합니다.
 	 *
@@ -152,6 +157,7 @@ public class SelectSql extends AbstractSql {
 	 *             문법에 오류가 있는 경우 발생합니다.
 	 */
 	public SelectSql(final String selectColumns, final String fromTables) throws SQLException {
+		
 		this();
 		try {
 			StringInspection.checkNullOrEmpty(selectColumns);
@@ -159,11 +165,11 @@ public class SelectSql extends AbstractSql {
 		} catch (final InspectionException e) {
 			throw new SQLException(e.getMessage(), e);
 		}
-
+		
 		this.selectSection = selectColumns;
 		this.fromSection = fromTables;
 	}
-
+	
 	/**
 	 * {@link SelectSql} 클래스의 새 인스턴스를 초기화 합니다.
 	 *
@@ -179,16 +185,17 @@ public class SelectSql extends AbstractSql {
 	 *             문법에 오류가 있는 경우 발생합니다.
 	 */
 	public SelectSql(final String selectColumns, final String fromTables, final String where) throws SQLException {
+		
 		this(selectColumns, fromTables);
 		try {
 			StringInspection.checkNullOrEmpty(where);
 		} catch (final InspectionException e) {
 			throw new SQLException(e.getMessage(), e);
 		}
-
+		
 		this.setWhereData(where);
 	}
-
+	
 	/**
 	 * where 절 사용 여부를 설정한다.
 	 *
@@ -197,10 +204,10 @@ public class SelectSql extends AbstractSql {
 	 *            설정 값
 	 */
 	public void setUsingWhereStatement(final boolean usingWhereStstement) {
-
+		
 		this.usingWhereStatement = usingWhereStstement;
 	}
-
+	
 	/**
 	 * where 절을 초기화한다.
 	 *
@@ -209,11 +216,11 @@ public class SelectSql extends AbstractSql {
 	 *            where 절에 삽입될 데이터
 	 */
 	private void setWhereData(final String whereData) {
-
+		
 		this.whereSection = whereData;
 		this.setUsingWhereStatement(true);
 	}
-
+	
 	/**
 	 * {@inheritDoc}
 	 *
@@ -221,25 +228,25 @@ public class SelectSql extends AbstractSql {
 	 */
 	@Override
 	public String toSql() {
-
+		
 		final StringBuilder builder = new StringBuilder();
 		builder.append(SelectSql.SELECT);
 		builder.append(this.selectSection);
 		builder.append(' ');
 		builder.append(SelectSql.FROM);
 		builder.append(this.fromSection);
-
+		
 		if (this.usingWhereStatement) {
 			builder.append(' ');
 			builder.append(SelectSql.WHERE);
 			builder.append(this.whereSection);
 		}
-
+		
 		if (this.useEndSemicolon) {
 			builder.append(';');
 		}
-
+		
 		return builder.toString();
 	}
-
+	
 }

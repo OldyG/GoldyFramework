@@ -20,7 +20,7 @@ import com.goldyframework.inspection.ObjectInspection;
  * 중복 파일이 존재할 경우 중복된 시간이 생기지 않을 때 까지 반복합니다.
  */
 class MillisecondNaming implements FileNaming {
-
+	
 	/**
 	 * {@link MillisecondNaming} 클래스의 새 인스턴스를 초기화 합니다.
 	 *
@@ -28,9 +28,10 @@ class MillisecondNaming implements FileNaming {
 	 * @since 2017. 4. 10. 오후 9:33:19
 	 */
 	public MillisecondNaming() {
+		
 		super();
 	}
-
+	
 	/**
 	 * {@inheritDoc}
 	 *
@@ -38,20 +39,20 @@ class MillisecondNaming implements FileNaming {
 	 */
 	@Override
 	public String generageSavePath(final String directory, final String baseName, final String extension) {
-
+		
 		ObjectInspection.checkNull(directory);
 		ObjectInspection.checkNull(baseName);
 		ObjectInspection.checkNull(extension);
 		while (true) {
 			final String millisecond = Long.toString(new Date().getTime());
-
+			
 			final String fileName = MessageFormat.format("{0}-{1}.{2}", baseName, millisecond, extension); //$NON-NLS-1$
 			final File tempFile = new File(directory, fileName);
-
+			
 			if (tempFile.exists() == false) {
 				return tempFile.getAbsolutePath();
 			}
 		}
 	}
-
+	
 }

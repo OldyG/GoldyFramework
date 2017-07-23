@@ -15,5 +15,5 @@ package com.goldyframework.annotaion;
  * @author 2017. 7. 15. 오후 5:33:59 jeong
  */
 public @interface ModelClass {
-
+	
 }

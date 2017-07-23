@@ -23,51 +23,54 @@ import com.goldyframework.inspection.ObjectInspection;
  * @author 2017. 7. 2. 오후 8:27:12 jeong
  */
 public class NullGtils {
-
+	
 	public static final <T> Collection<T> emptyIfNull(final Collection<T> object) {
-
+		
 		return object != null ? object : Collections.emptyList();
 	}
-
+	
 	public static final <T> List<T> emptyIfNull(final List<T> object) {
-
+		
 		return object != null ? object : Collections.emptyList();
 	}
-
+	
 	public static final <K, V> Map<K, V> emptyIfNull(final Map<K, V> object) {
-
+		
 		return object != null ? object : Collections.emptyMap();
 	}
-
+	
 	public static final <T> Set<T> emptyIfNull(final Set<T> object) {
-
+		
 		return object != null ? object : Collections.emptySet();
 	}
-
+	
 	public static final String emptyIfNull(final String string) {
-
+		
 		return string != null ? string : StringUtils.EMPTY;
 	}
-
+	
 	/**
 	 * @author 2017. 7. 2. 오후 9:04:53 jeong
+	 * @param <T>
 	 * @param values
+	 * @return
 	 */
 	@SuppressWarnings("unchecked")
 	public static <T> T[] emptyIfNull(final T[] values) {
-
+		
 		return values != null ? values : (T[]) new Object[0];
 	}
-
+	
 	/**
 	 * @author 2017. 7. 3. 오후 11:13:03 jeong
+	 * @param <T>
 	 * @param value
 	 * @return
 	 */
 	public static <T> T throwIfNull(final T value) {
-
+		
 		ObjectInspection.checkNull(value);
 		return value;
 	}
-
+	
 }

@@ -11,9 +11,10 @@ package com.goldyframework.db.prepare.statement;
 
 /**
  * @author 2017. 7. 8. 오후 1:57:28 jeong
+ * @param <T>
  */
 public interface PreparePlan<T extends Prepare> {
-
+	
 	T build();
-
+	
 }

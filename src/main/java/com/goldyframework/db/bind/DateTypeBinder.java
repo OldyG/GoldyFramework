@@ -9,10 +9,9 @@
  */
 package com.goldyframework.db.bind;
 
-
 /**
  * @author 2017. 6. 30. 오후 9:18:15 jeong
  */
 public class DateTypeBinder {
-	
+
 }

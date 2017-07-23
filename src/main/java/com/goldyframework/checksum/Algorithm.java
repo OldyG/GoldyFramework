@@ -41,12 +41,12 @@ enum Algorithm {
 	 * SHA-512 Algolithm
 	 */
 	SHA512("SHA-512"); //$NON-NLS-1$
-	
+
 	/**
 	 * 알고리즘 이름
 	 */
 	private final String name;
-	
+
 	/**
 	 * {@link Algorithm} 클래스의 새 인스턴스를 초기화 합니다.
 	 *
@@ -55,9 +55,10 @@ enum Algorithm {
 	 *            알고리즘 이름
 	 */
 	Algorithm(final String name) {
+		
 		this.name = NullGtils.throwIfNull(name);
 	}
-	
+
 	/**
 	 * name를 반환합니다.
 	 *
@@ -67,7 +68,7 @@ enum Algorithm {
 	 * @return name
 	 */
 	public String getName() {
-		
+
 		return this.name;
 	}
 }

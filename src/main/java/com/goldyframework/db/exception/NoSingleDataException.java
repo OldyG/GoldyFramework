@@ -9,15 +9,13 @@
  */
 package com.goldyframework.db.exception;
 
-import org.springframework.dao.EmptyResultDataAccessException;
-
 /**
  * 1개의 데이터를 추출하는 SELECT SQL문에서 0개 또는 2개 이상의 데이터를 가져왔을 때 발생하는 예외 사항
  *
  * @author 2017. 6. 18. 오후 12:40:38 jeong
  */
-public class NoSingleDataException extends Exception {
-
+public class NoSingleDataException extends RuntimeException {
+	
 	/**
 	 * Serializable UID
 	 *
@@ -25,7 +23,7 @@ public class NoSingleDataException extends Exception {
 	 * @since 2017. 5. 22. 오후 9:20:10
 	 */
 	private static final long serialVersionUID = -7155344775578898405L;
-
+	
 	/**
 	 * {@link NoSingleDataException} 클래스의 새 인스턴스를 초기화 합니다.
 	 *
@@ -33,9 +31,10 @@ public class NoSingleDataException extends Exception {
 	 * @since 2017. 5. 22. 오후 9:35:48
 	 */
 	public NoSingleDataException() {
+		
 		super();
 	}
-
+	
 	/**
 	 * {@link NoSingleDataException} 클래스의 새 인스턴스를 초기화 합니다.
 	 *
@@ -45,8 +44,9 @@ public class NoSingleDataException extends Exception {
 	 * @param cause
 	 *            the cause
 	 */
-	public NoSingleDataException(final String message, final EmptyResultDataAccessException cause) {
+	public NoSingleDataException(final String message, final Throwable cause) {
+		
 		super(message, cause);
 	}
-
+	
 }

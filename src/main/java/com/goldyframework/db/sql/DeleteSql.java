@@ -20,32 +20,32 @@ import com.goldyframework.inspection.exception.InspectionException;
  * @author 2017. 6. 18. 오전 10:37:15 jeong
  */
 public class DeleteSql extends AbstractSql {
-
+	
 	/**
 	 * "DELETE " 문자열 프로퍼티
 	 */
 	private static final String DELETE = "DELETE "; //$NON-NLS-1$
-
+	
 	/**
 	 * "FROM " 문자열 프로퍼티
 	 */
 	private static final String FROM = "FROM "; //$NON-NLS-1$
-
+	
 	/**
 	 * "WHERE " 문자열 프로퍼티
 	 */
 	private static final String WHERE = "WHERE "; //$NON-NLS-1$
-
+	
 	/**
 	 * from 절 문구
 	 */
 	private final String fromSection;
-
+	
 	/**
 	 * where 절 문구
 	 */
 	private final String whereSection;
-
+	
 	/**
 	 * {@link DeleteSql} 클래스의 새 인스턴스를 초기화 합니다.
 	 *
@@ -59,25 +59,26 @@ public class DeleteSql extends AbstractSql {
 	 *             문법에 오류가 있는 경우 발생합니다.
 	 */
 	public DeleteSql(final String from, final String where) throws SQLException {
+		
 		try {
 			StringInspection.checkNullOrEmpty(from);
 			StringInspection.checkNullOrEmpty(where);
 		} catch (final InspectionException e) {
 			throw new SQLException(e.getMessage(), e);
 		}
-
+		
 		this.fromSection = from;
 		this.whereSection = where;
 	}
-
+	
 	/**
 	 * {@inheritDoc}
-	 * 
+	 *
 	 * @author 2017. 6. 29. 오후 10:32:51 jeong
 	 */
 	@Override
 	public String toSql() {
-
+		
 		final StringBuilder builder = new StringBuilder();
 		builder.append(DeleteSql.DELETE);
 		builder.append(DeleteSql.FROM);
@@ -88,8 +89,8 @@ public class DeleteSql extends AbstractSql {
 		if (this.useEndSemicolon) {
 			builder.append(';');
 		}
-
+		
 		return builder.toString();
 	}
-
+	
 }

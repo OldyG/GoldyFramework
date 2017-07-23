@@ -19,7 +19,7 @@ import com.goldyframework.inspection.exception.InspectionException;
  * @author 2017. 6. 14. 오후 9:08:49 jeong
  */
 public final class DateInspection {
-	
+
 	/**
 	 * 날짜가 과거 날짜인지 검사합니다.
 	 *
@@ -30,14 +30,14 @@ public final class DateInspection {
 	 *             날짜가 과거날짜일 경우 발생합니다.
 	 */
 	public static void checkFuture(final Date date) {
-		
+
 		ObjectInspection.checkNull(date);
-		
+
 		if ((date.getTime() > new Date().getTime()) == false) {
 			throw new InspectionException("과거날짜를 입력 할 수 없습니다."); //$NON-NLS-1$
 		}
 	}
-	
+
 	/**
 	 * 날짜가 미래 날짜인지 검사합니다.
 	 *
@@ -48,14 +48,14 @@ public final class DateInspection {
 	 *             날짜가 미래날짜일 경우 발생합니다.
 	 */
 	public static void checkPast(final Date date) {
-		
+
 		ObjectInspection.checkNull(date);
-		
+
 		if ((date.getTime() < new Date().getTime()) == false) {
 			throw new InspectionException("과거 날짜로 입력셔야합니다."); //$NON-NLS-1$
 		}
 	}
-	
+
 	/**
 	 * {@link DateInspection} 클래스의 새 인스턴스를 초기화 합니다.
 	 *
@@ -63,6 +63,7 @@ public final class DateInspection {
 	 * @since 2017. 5. 22. 오후 9:44:43
 	 */
 	private DateInspection() {
+		
 		throw new IllegalStateException("Utility class"); //$NON-NLS-1$
 	}
 }

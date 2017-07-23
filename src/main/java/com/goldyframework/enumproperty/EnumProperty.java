@@ -24,7 +24,7 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Deprecated
 public @interface EnumProperty {
-
+	
 	/**
 	 * 값
 	 *

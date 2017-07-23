@@ -22,7 +22,7 @@ import com.goldyframework.technology.ApplicationContextProvider;
  * @author 2017. 6. 18. 오후 2:48:49 jeong
  */
 public class SpringGtils {
-
+	
 	/**
 	 * {@link SpringGtils} 클래스의 새 인스턴스를 초기화 합니다.
 	 *
@@ -30,9 +30,10 @@ public class SpringGtils {
 	 * @since 2017. 4. 10. 오후 9:36:42
 	 */
 	public SpringGtils() {
+		
 		super();
 	}
-
+	
 	/**
 	 * 주어진 클래스에 해당하는 Bean을 반환합니다.
 	 * 해당 클래스는 반드시 {@link Component}, {@link Bean} 등으로 정의되어있어야합니다.
@@ -45,7 +46,7 @@ public class SpringGtils {
 	 * @return Bean
 	 */
 	public <T> T getBean(final Class<T> beanClass) {
-
+		
 		ObjectInspection.checkNull(beanClass);
 		Does.notUse(this, Because.WANT_NOT_STATIC_FUNCTION);
 		final ApplicationContext context = ApplicationContextProvider.getApplicationContext();

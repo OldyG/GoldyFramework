@@ -25,7 +25,7 @@ import com.goldyframework.repository.exception.NotRegisteredFileException;
  * @author 2017. 6. 18. 오후 1:48:54 jeong
  */
 public interface RepositoryService {
-
+	
 	/**
 	 * 기존파일을 제거하고 주어진 첨부파일로 변경한다.
 	 *
@@ -42,7 +42,7 @@ public interface RepositoryService {
 	 *             exceptions produced by failed or interrupted I/O operations.
 	 */
 	File change(MultipartFile multipartFile) throws SQLException, RepositoryException, IOException;
-
+	
 	/**
 	 * 파일을 제거합니다.
 	 *
@@ -54,7 +54,7 @@ public interface RepositoryService {
 	 * @since 2016. 5. 20. 오전 10:42:40
 	 */
 	void delete() throws SQLException, RepositoryException;
-
+	
 	/**
 	 * 이미지를 byte[]로 반환한다.
 	 *
@@ -72,7 +72,7 @@ public interface RepositoryService {
 	 */
 	ResponseEntity<byte[]> displayImage()
 		throws SQLException, RepositoryException, NotRegisteredFileException, IOException;
-
+	
 	/**
 	 * 파일을 다운로드 합니다.
 	 *
@@ -90,7 +90,7 @@ public interface RepositoryService {
 	 */
 	ResponseEntity<InputStreamResource> download()
 		throws SQLException, RepositoryException, NotRegisteredFileException, IOException;
-
+	
 	/**
 	 * 파일을 가져옵니다.
 	 *
@@ -104,7 +104,7 @@ public interface RepositoryService {
 	 *             이 외 발생하는 예외 사항
 	 */
 	File getFile() throws SQLException, RepositoryException, NotRegisteredFileException;
-
+	
 	/**
 	 * 파일을 읽어 byte[]로 반환합니다.
 	 *
@@ -122,7 +122,7 @@ public interface RepositoryService {
 	 * @since 2016. 5. 20. 오전 10:44:55
 	 */
 	byte[] readToByteArray() throws IOException, SQLException, RepositoryException, NotRegisteredFileException;
-
+	
 	/**
 	 * 파일을 읽어와 String으로 반환합니다.
 	 *
@@ -140,7 +140,7 @@ public interface RepositoryService {
 	 *             exceptions produced by failed or interrupted I/O operations.
 	 */
 	String readToString() throws SQLException, RepositoryException, NotRegisteredFileException, IOException;
-
+	
 	/**
 	 * MultipartFile 인자를 받아 저장합니다.
 	 *
@@ -154,7 +154,7 @@ public interface RepositoryService {
 	 *             exceptions produced by failed or interrupted I/O operations.
 	 */
 	File save(MultipartFile multipartFile) throws IOException;
-
+	
 	/**
 	 * 파일 내용을 작성합니다.
 	 *
@@ -172,5 +172,5 @@ public interface RepositoryService {
 	 *             exceptions produced by failed or interrupted I/O operations.
 	 */
 	File write(String content) throws SQLException, RepositoryException, IOException;
-
+	
 }

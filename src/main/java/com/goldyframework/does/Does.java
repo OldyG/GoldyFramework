@@ -22,10 +22,10 @@ import com.google.common.annotations.VisibleForTesting;
  * @author 2017. 6. 19. 오후 9:04:49 jeong
  */
 public final class Does {
-
+	
 	@VisibleForTesting
 	static class TestSet implements ITestSet<Does> {
-
+		
 		/**
 		 * {@inheritDoc}
 		 *
@@ -33,17 +33,17 @@ public final class Does {
 		 */
 		@Override
 		public Does createNewInstance() {
-
+			
 			return new Does();
 		}
-
+		
 	}
-
+	
 	/**
 	 * slf4j Logger
 	 */
 	private static final Logger LOGGER = LoggerFactory.getLogger(Does.class);
-
+	
 	/**
 	 * @author 2017. 7. 11. 오후 11:18:58 jeong
 	 * @param message
@@ -52,28 +52,31 @@ public final class Does {
 	public static void nothing(final String message) {
 		// do nothing
 	}
-
+	
 	/**
 	 * 이 함수에 this를 설정하세요
 	 * ex) {@link NonStaticFunction#inputThis(this)}
 	 *
 	 * @author 2017. 6. 19. 오후 9:07:54 jeong
+	 * @param obj
+	 * @param because
 	 * @param inputYourObjectAtHere
 	 *            this를 집어넣으세요
 	 */
 	public static void notUse(final Object obj, final Because because) {
-
+		
 		ObjectInspection.checkNull(obj);
 		ObjectInspection.checkNull(because);
 	}
-
+	
 	/**
 	 * {@link Does} 클래스의 새 인스턴스를 초기화 합니다.
 	 *
 	 * @author 2017. 6. 19. 오후 9:04:49 jeong
 	 */
 	private Does() {
+		
 		throw new IllegalStateException("Utility class"); //$NON-NLS-1$
 	}
-
+	
 }

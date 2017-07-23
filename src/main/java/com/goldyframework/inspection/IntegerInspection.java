@@ -33,6 +33,7 @@ public final class IntegerInspection {
 	/**
 	 * @author 2017. 7. 3. 오후 11:31:15 jeong
 	 * @param target
+	 * @param maximumValue
 	 * @param minimumValue
 	 */
 	private static void checkAbove(final int target, final int maximumValue) {
@@ -146,6 +147,7 @@ public final class IntegerInspection {
 	 * @since 2017. 5. 22. 오후 9:45:02
 	 */
 	private IntegerInspection() {
+
 		throw new IllegalStateException("Utility class"); //$NON-NLS-1$
 	}
 }

@@ -17,7 +17,7 @@ package com.goldyframework.repository.exception;
  * @date 2016. 5. 19.
  */
 public class NotRegisteredFileException extends Exception {
-
+	
 	/**
 	 * Serializable UID
 	 *
@@ -25,7 +25,7 @@ public class NotRegisteredFileException extends Exception {
 	 * @since 2017. 5. 22. 오후 9:20:10
 	 */
 	private static final long serialVersionUID = 8917187139976350937L;
-
+	
 	/**
 	 * {@link NotRegisteredFileException} 클래스의 새 인스턴스를 초기화 합니다.
 	 *
@@ -33,7 +33,8 @@ public class NotRegisteredFileException extends Exception {
 	 * @since 2017. 5. 22. 오후 9:34:46
 	 */
 	public NotRegisteredFileException() {
+		
 		super();
 	}
-
+	
 }

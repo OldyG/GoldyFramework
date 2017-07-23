@@ -17,22 +17,23 @@ import com.goldyframework.utils.NullGtils;
  * @author 2017. 6. 28. 오후 10:36:51 jeong
  */
 public class EmailException extends Exception {
-
+	
 	/**
 	 * Serializable UID
 	 */
 	private static final long serialVersionUID = 2635026459109314583L;
-
+	
 	/**
 	 * {@link EmailException} 클래스의 새 인스턴스를 초기화 합니다.
 	 *
 	 * @author 2017. 6. 28. 오후 10:36:51 jeong
 	 */
 	public EmailException() {
+		
 		super();
-
+		
 	}
-
+	
 	/**
 	 * {@link EmailException} 클래스의 새 인스턴스를 초기화 합니다.
 	 *
@@ -41,9 +42,10 @@ public class EmailException extends Exception {
 	 *            오류 메세지
 	 */
 	public EmailException(final String message) {
+		
 		super(NullGtils.throwIfNull(message));
 	}
-
+	
 	/**
 	 * {@link EmailException} 클래스의 새 인스턴스를 초기화 합니다.
 	 *
@@ -54,9 +56,10 @@ public class EmailException extends Exception {
 	 *            the cause
 	 */
 	public EmailException(final String message, final Throwable cause) {
+		
 		super(NullGtils.throwIfNull(message), NullGtils.throwIfNull(cause));
 	}
-
+	
 	/**
 	 * {@link EmailException} 클래스의 새 인스턴스를 초기화 합니다.
 	 *
@@ -65,7 +68,8 @@ public class EmailException extends Exception {
 	 *            the cause
 	 */
 	public EmailException(final Throwable cause) {
+		
 		super(NullGtils.throwIfNull(cause));
 	}
-
+	
 }

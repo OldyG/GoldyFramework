@@ -19,7 +19,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class ResourceMapper extends GoldyTag {
-
+	
 	/**
 	 * slf4j Logger
 	 *
@@ -27,11 +27,11 @@ public class ResourceMapper extends GoldyTag {
 	 * @since 2017. 5. 22. 오후 9:20:02
 	 */
 	private static final Logger LOGGER = LoggerFactory.getLogger(ResourceMapper.class);
-
+	
 	private MapperMode mode = MapperMode.AUTO;
-
+	
 	private String pattern = "*"; //$NON-NLS-1$
-
+	
 	/**
 	 * {@link ResourceMapper} 클래스의 새 인스턴스를 초기화 합니다.
 	 *
@@ -39,9 +39,10 @@ public class ResourceMapper extends GoldyTag {
 	 * @since 2017. 4. 10. 오후 9:11:10
 	 */
 	public ResourceMapper() {
+		
 		super();
 	}
-
+	
 	/**
 	 * {@inheritDoc}
 	 *
@@ -49,7 +50,7 @@ public class ResourceMapper extends GoldyTag {
 	 */
 	@Override
 	protected void doTag() throws IOException {
-
+		
 		switch (this.mode) {
 			case AUTO:
 				this.writeResourceAutoMap();
@@ -58,10 +59,10 @@ public class ResourceMapper extends GoldyTag {
 				break;
 			default:
 				break;
-
+			
 		}
 	}
-
+	
 	/**
 	 * dir를 반환합니다.
 	 *
@@ -71,10 +72,10 @@ public class ResourceMapper extends GoldyTag {
 	 * @return mode
 	 */
 	public String getMode() {
-
+		
 		return this.mode.name();
 	}
-
+	
 	/**
 	 * pattern를 반환합니다.
 	 *
@@ -84,10 +85,10 @@ public class ResourceMapper extends GoldyTag {
 	 * @return pattern
 	 */
 	public String getPattern() {
-
+		
 		return this.pattern;
 	}
-
+	
 	/**
 	 * mode 초기화 합니다.
 	 *
@@ -97,12 +98,12 @@ public class ResourceMapper extends GoldyTag {
 	 * @param mode
 	 *            초기화 값
 	 */
-
+	
 	public void setMode(final String mode) {
-
+		
 		this.mode = MapperMode.lookUp(mode);
 	}
-
+	
 	/**
 	 * pattern 초기화 합니다.
 	 *
@@ -112,30 +113,30 @@ public class ResourceMapper extends GoldyTag {
 	 * @param pattern
 	 *            초기화 값
 	 */
-
+	
 	public void setPattern(final String pattern) {
-
+		
 		this.pattern = pattern.replace(".", "\\.").replace("*", ".*"); //$NON-NLS-1$//$NON-NLS-2$//$NON-NLS-3$//$NON-NLS-4$
 	}
-
+	
 	private void writeResourceAutoMap() throws IOException {
-
+		
 		final ResourceChannel resourceChannel = new ResourceChannel(this.getCurrentPath());
 		final List<File> matchedResource = resourceChannel.getMachedResources();
-
+		
 		for (final File file : matchedResource) {
 			final String name = FilenameUtils.getName(file.getPath());
-
+			
 			final boolean matched = name.matches("^" + this.pattern + "$"); //$NON-NLS-1$//$NON-NLS-2$
-
+			
 			LOGGER.trace(MessageFormat.format("정의된 패턴 [{0}]을 [{1}]과 비교 : {2}", this.pattern, name, matched)); //$NON-NLS-1$
-
+			
 			if (matched) {
 				final String tagString = resourceChannel.getTagString(file);
 				this.pageContext.getOut().write(tagString);
 			}
 		}
-
+		
 	}
-
+	
 }

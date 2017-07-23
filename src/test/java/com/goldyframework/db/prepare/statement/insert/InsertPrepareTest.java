@@ -15,48 +15,47 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import com.goldyframework.db.prepare.statement.AssignBuilder;
-import com.goldyframework.db.prepare.statement.insert.InsertPrepare;
 
 @SuppressWarnings("nls")
 public class InsertPrepareTest {
-
+	
 	/**
 	 * Test method for {@link com.goldyframework.db.prepare.statement.insert.InsertPrepare#getArgs()}.
 	 */
 	@Test
 	public void testGetArgs() {
-
+		
 		final AssignBuilder assign = new AssignBuilder("TEST");
 		assign.appendIfNotNull("any1", 3);
 		assign.appendIfNotNull("any2", "1");
 		assign.appendIfNotNull("any3", 1.4F);
 		final InsertPrepare target = new InsertPrepare("TEST", assign);
-
+		
 		final Collection<Object> actual2 = target.getArgs();
-
+		
 		Assert.assertEquals("", 3, actual2.size());
 		Assert.assertTrue("", actual2.contains(3));
 		Assert.assertTrue("", actual2.contains("1"));
 		Assert.assertTrue("", actual2.contains(1.4F));
 	}
-
+	
 	/**
 	 * Test method for {@link com.goldyframework.db.prepare.statement.insert.InsertPrepare#toPrepareSql()}.
 	 */
 	@Test
 	public void testToPrepareSql() {
-
+		
 		final AssignBuilder assign = new AssignBuilder("TEST");
 		assign.appendIfNotNull("A", 1);
 		assign.appendIfNotNull("B", "2");
 		assign.appendIfNotNull("C", 3);
-
+		
 		final InsertPrepare target = new InsertPrepare("TEST", assign);
-
+		
 		final String prepareSql = target.toPrepareSql();
-
+		
 		System.out.println(prepareSql);
-
+		
 	}
-
+	
 }

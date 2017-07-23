@@ -11,7 +11,7 @@ import com.goldyframework.utils.NullGtils;
  * @author 2017. 6. 15. 오후 9:56:38 jeong
  */
 public class RepositoryException extends Exception {
-
+	
 	/**
 	 * 오류 타입
 	 *
@@ -23,12 +23,12 @@ public class RepositoryException extends Exception {
 		 */
 		NOT_FOUND_FILE
 	}
-
+	
 	/**
 	 *
 	 */
 	private static final long serialVersionUID = 5008339989164173078L;
-
+	
 	/**
 	 * {@link RepositoryException} 클래스의 새 인스턴스를 초기화 합니다.
 	 *
@@ -37,9 +37,10 @@ public class RepositoryException extends Exception {
 	 *            the cause
 	 */
 	public RepositoryException(final Exception cause) {
+		
 		super(NullGtils.throwIfNull(cause));
 	}
-
+	
 	/**
 	 * {@link RepositoryException} 클래스의 새 인스턴스를 초기화 합니다.
 	 *
@@ -48,7 +49,8 @@ public class RepositoryException extends Exception {
 	 *            오류 메세지
 	 */
 	public RepositoryException(final String message) {
+		
 		super(NullGtils.throwIfNull(message));
 	}
-
+	
 }

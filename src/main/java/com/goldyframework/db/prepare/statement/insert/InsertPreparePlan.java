@@ -16,11 +16,11 @@ import com.goldyframework.db.prepare.statement.PreparePlan;
  * @author 2017. 7. 8. 오후 2:11:21 jeong
  */
 public class InsertPreparePlan implements PreparePlan<InsertPrepare> {
-
+	
 	private final String tableName;
-
+	
 	private final AssignBuilder assign;
-
+	
 	/**
 	 * {@link InsertPreparePlan} 클래스의 새 인스턴스를 초기화 합니다.
 	 *
@@ -28,11 +28,12 @@ public class InsertPreparePlan implements PreparePlan<InsertPrepare> {
 	 * @param tableName
 	 */
 	public InsertPreparePlan(final String tableName) {
+		
 		super();
 		this.tableName = tableName;
 		this.assign = new AssignBuilder(tableName);
 	}
-
+	
 	/**
 	 * @author 2017. 7. 8. 오후 1:51:14 jeong
 	 * @param column
@@ -40,11 +41,11 @@ public class InsertPreparePlan implements PreparePlan<InsertPrepare> {
 	 * @return
 	 */
 	public InsertPreparePlan assign(final String column, final Object value) {
-
+		
 		this.assign.appendIfNotNull(column, value);
 		return this;
 	}
-
+	
 	/**
 	 * {@inheritDoc}
 	 *
@@ -52,8 +53,8 @@ public class InsertPreparePlan implements PreparePlan<InsertPrepare> {
 	 */
 	@Override
 	public InsertPrepare build() {
-
+		
 		return new InsertPrepare(this.tableName, this.assign);
 	}
-
+	
 }

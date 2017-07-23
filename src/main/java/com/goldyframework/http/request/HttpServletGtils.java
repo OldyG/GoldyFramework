@@ -24,7 +24,7 @@ import com.goldyframework.inspection.ObjectInspection;
  * @author 2017. 6. 18. 오후 1:04:35 jeong
  */
 public final class HttpServletGtils {
-
+	
 	/**
 	 * BaseURL을 추출한다.
 	 *
@@ -37,7 +37,7 @@ public final class HttpServletGtils {
 	 *             specification string or the string could not be parsed.
 	 */
 	public static String extractBaseUrl(final HttpServletRequest request) throws MalformedURLException {
-
+		
 		ObjectInspection.checkNull(request);
 		final URL requestUrl = new URL(request.getRequestURL().toString());
 		final String portString;
@@ -46,14 +46,14 @@ public final class HttpServletGtils {
 		} else {
 			portString = ":" + requestUrl.getPort(); //$NON-NLS-1$
 		}
-
+		
 		return MessageFormat.format("{0}://{1}{2}{3}/",  //$NON-NLS-1$
 			requestUrl.getProtocol(),
 			requestUrl.getHost(),
 			portString, request.getContextPath());
-
+		
 	}
-
+	
 	/**
 	 * Request 사용자 정보를 반환한다.
 	 *
@@ -63,7 +63,7 @@ public final class HttpServletGtils {
 	 * @return Request 사용자 정보
 	 */
 	public static RequestDetail extractRequest(final HttpServletRequest request) {
-
+		
 		final RequestDetail info = new RequestDetail();
 		info.setRequestUrl(request.getRequestURI() + '?' + request.getQueryString());
 		info.setAuthType(request.getAuthType());
@@ -74,10 +74,10 @@ public final class HttpServletGtils {
 		info.setLocalName(request.getLocalName());
 		info.setLocalPort(request.getLocalPort());
 		info.setMethod(request.getMethod());
-
+		
 		return info;
 	}
-
+	
 	/**
 	 * {@link HttpServletGtils} 클래스의 새 인스턴스를 초기화 합니다.
 	 *
@@ -85,6 +85,7 @@ public final class HttpServletGtils {
 	 * @since 2017. 4. 10. 오후 9:36:27
 	 */
 	private HttpServletGtils() {
+		
 		throw new IllegalStateException("Utility class"); //$NON-NLS-1$
 	}
 }

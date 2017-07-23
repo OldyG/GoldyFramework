@@ -23,12 +23,12 @@ import com.goldyframework.version.DateAdapter;
  * @author 2017. 6. 18. 오후 1:57:53 jeong
  */
 public abstract class AbstractReservationGarbage implements IGarbage {
-
+	
 	/**
 	 * 예약 시간
 	 */
 	private Date reservationTime;
-
+	
 	/**
 	 * {@link AbstractReservationGarbage} 클래스의 새 인스턴스를 초기화 합니다.
 	 *
@@ -37,10 +37,11 @@ public abstract class AbstractReservationGarbage implements IGarbage {
 	 *            예약시간
 	 */
 	protected AbstractReservationGarbage(final Date reservationTime) {
+		
 		ObjectInspection.checkNull(reservationTime);
 		this.reservationTime = new Date(reservationTime.getTime());
 	}
-
+	
 	/**
 	 * reservationTime를 반환합니다.
 	 *
@@ -50,10 +51,10 @@ public abstract class AbstractReservationGarbage implements IGarbage {
 	 * @return reservationTime
 	 */
 	public String getReservationTime() {
-
+		
 		return new DateAdapter().marshal(this.reservationTime);
 	}
-
+	
 	/**
 	 * 해당 파일이 청소 대상인지 검사합니다.
 	 *
@@ -62,11 +63,11 @@ public abstract class AbstractReservationGarbage implements IGarbage {
 	 * @return 검사 결과
 	 */
 	public boolean isCleaningTarget() {
-
+		
 		final long calculateRemaingTime = ShareFunction.calculateRemaingTime(this.reservationTime);
 		return calculateRemaingTime < 0;
 	}
-
+	
 	/**
 	 * 시험용 쓰레기 여부를 반환한다.
 	 *
@@ -74,7 +75,7 @@ public abstract class AbstractReservationGarbage implements IGarbage {
 	 * @return true일경우 제거대상이라고 하더라도 실제로 파일을 제거하지 않는다.
 	 */
 	public abstract boolean isTestGarbage();
-
+	
 	/**
 	 * 예약 시간을 초기화한다.
 	 *
@@ -85,7 +86,7 @@ public abstract class AbstractReservationGarbage implements IGarbage {
 	 *             unmarshal 예외사항
 	 */
 	public void setReservationTime(final String stringDate) throws ParseException {
-
+		
 		ObjectInspection.checkNull(stringDate);
 		this.reservationTime = new DateAdapter().unmarshal(stringDate);
 	}

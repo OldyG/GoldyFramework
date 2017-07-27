@@ -112,7 +112,7 @@ public class ResourceChannel {
 				return MessageFormat.format("<script type=\"text/javascript\" src=\"{0}\"></script>", path); //$NON-NLS-1$
 				
 			default:
-				return null;
+				return ""; //$NON-NLS-1$
 		}
 	}
 	

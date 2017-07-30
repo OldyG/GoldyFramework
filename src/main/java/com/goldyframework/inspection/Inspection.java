@@ -18,7 +18,7 @@ package com.goldyframework.inspection;
  */
 @FunctionalInterface
 public interface Inspection<T> {
-
+	
 	/**
 	 * <br>
 	 * 검사를 수행합니다.<br>

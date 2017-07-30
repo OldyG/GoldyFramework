@@ -21,7 +21,6 @@ import javax.servlet.jsp.tagext.Tag;
 import org.apache.jasper.runtime.PageContextImpl;
 import org.sitemesh.webapp.contentfilter.HttpServletRequestFilterable;
 import org.springframework.security.taglibs.TagLibConfig;
-import org.springframework.security.taglibs.authz.AbstractAuthorizeTag;
 import org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestWrapper;
 
 public abstract class GoldyTag implements Tag {

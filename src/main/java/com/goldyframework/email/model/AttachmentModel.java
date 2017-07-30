@@ -19,17 +19,17 @@ import com.goldyframework.utils.NullGtils;
  * @author 2017. 6. 18. 오전 11:36:14 jeong
  */
 public class AttachmentModel {
-
+	
 	/**
 	 * 파일 이름
 	 */
 	private final String fileName;
-
+	
 	/**
 	 * 대상 파일
 	 */
 	private final File file;
-
+	
 	/**
 	 * {@link AttachmentModel} 클래스의 새 인스턴스를 초기화 합니다.
 	 *
@@ -44,7 +44,7 @@ public class AttachmentModel {
 		this.fileName = NullGtils.throwIfNull(fileName);
 		this.file = NullGtils.throwIfNull(file);
 	}
-
+	
 	/**
 	 * file를 반환합니다.
 	 *
@@ -53,10 +53,10 @@ public class AttachmentModel {
 	 * @see {@link #file}
 	 */
 	public final File getFile() {
-
+		
 		return this.file;
 	}
-
+	
 	/**
 	 * fileName를 반환합니다.
 	 *
@@ -65,8 +65,8 @@ public class AttachmentModel {
 	 * @see {@link #fileName}
 	 */
 	public final String getFileName() {
-
+		
 		return this.fileName;
 	}
-
+	
 }

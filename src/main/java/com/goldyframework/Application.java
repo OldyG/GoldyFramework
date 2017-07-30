@@ -15,16 +15,16 @@ import org.apache.log4j.Logger;
  * @author 2017. 6. 18. 오후 3:19:00 jeong
  */
 public class Application {
-
+	
 	/**
 	 * @author 2017. 6. 18. 오후 3:19:00 jeong
 	 * @param args
 	 */
 	public static void main(final String[] args) {
 		// do nothing
-
+		
 	}
-
+	
 	/**
 	 * {@link Application} 클래스의 새 인스턴스를 초기화 합니다.
 	 *
@@ -35,5 +35,5 @@ public class Application {
 		super();
 		Logger.getRootLogger();
 	}
-
+	
 }

@@ -31,13 +31,13 @@ import org.springframework.security.web.context.support.SecurityWebApplicationCo
 import org.springframework.util.StringUtils;
 
 public class AccessExpression {
-
+	
 	protected final Authentication authentication;
-
+	
 	private final String access;
-
+	
 	private final PageContext pageContext;
-
+	
 	/**
 	 * {@link AccessExpression} 클래스의 새 인스턴스를 초기화 합니다.
 	 *
@@ -47,55 +47,55 @@ public class AccessExpression {
 	 * @param pageContext
 	 */
 	public AccessExpression(final String access, final PageContext pageContext) {
-
+		
 		this.access = access;
 		this.pageContext = pageContext;
 		this.authentication = SecurityContextHolder.getContext().getAuthentication();
 	}
-
+	
 	public boolean authorize() throws IOException {
-
+		
 		boolean isAuthorized;
-
+		
 		if (StringUtils.hasText(this.access)) {
 			isAuthorized = this.authorizeUsingAccessExpression();
-
+			
 		} else {
 			isAuthorized = false;
-
+			
 		}
-
+		
 		return isAuthorized;
 	}
-
+	
 	private boolean authorizeUsingAccessExpression() throws IOException {
-
+		
 		if (SecurityContextHolder.getContext().getAuthentication() == null) {
 			return false;
 		}
-
+		
 		final SecurityExpressionHandler<FilterInvocation> handler = this.getExpressionHandler();
-
+		
 		Expression accessExpression;
 		try {
 			accessExpression = handler.getExpressionParser().parseExpression(this.access);
-
+			
 		} catch (final ParseException e) {
 			final IOException ioException = new IOException();
 			ioException.initCause(e);
 			throw ioException;
 		}
-
+		
 		return ExpressionUtils.evaluateAsBoolean(accessExpression,
 			this.createExpressionEvaluationContext(handler));
 	}
-
+	
 	protected EvaluationContext createExpressionEvaluationContext(
 		final SecurityExpressionHandler<FilterInvocation> handler) {
-
+		
 		final FilterInvocation f = new FilterInvocation(this.pageContext.getRequest(), this.pageContext.getResponse(),
 			new FilterChain() {
-
+				
 				/**
 				 * {@inheritDoc}
 				 *
@@ -103,33 +103,33 @@ public class AccessExpression {
 				 */
 				@Override
 				public void doFilter(final ServletRequest request, final ServletResponse response) {
-
+					
 					throw new UnsupportedOperationException();
 				}
 			});
-
+		
 		return handler.createEvaluationContext(SecurityContextHolder.getContext()
 			.getAuthentication(), f);
 	}
-
+	
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	private SecurityExpressionHandler<FilterInvocation> getExpressionHandler() throws IOException {
-
+		
 		final ApplicationContext appContext = SecurityWebApplicationContextUtils
 			.findRequiredWebApplicationContext(this.pageContext.getServletContext());
 		final Map<String, SecurityExpressionHandler> handlers = appContext
 			.getBeansOfType(SecurityExpressionHandler.class);
-
+		
 		for (final SecurityExpressionHandler h : handlers.values()) {
 			if (FilterInvocation.class.equals(GenericTypeResolver.resolveTypeArgument(
 				h.getClass(), SecurityExpressionHandler.class))) {
 				return h;
 			}
 		}
-
+		
 		throw new IOException(
 			"No visible WebSecurityExpressionHandler instance could be found in the application " //$NON-NLS-1$
 				+ "context. There must be at least one in order to support expressions in JSP 'authorize' tags."); //$NON-NLS-1$
 	}
-
+	
 }

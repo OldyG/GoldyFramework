@@ -16,7 +16,7 @@ package com.goldyframework.repository.filenaming;
  */
 @FunctionalInterface
 public interface FileNaming {
-
+	
 	/**
 	 * 저장경로를 생성한다
 	 *
@@ -30,5 +30,5 @@ public interface FileNaming {
 	 * @return 생성된 저장 경로
 	 */
 	String generageSavePath(String directory, String baseName, String extension);
-
+	
 }

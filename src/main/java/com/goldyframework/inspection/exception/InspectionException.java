@@ -20,7 +20,7 @@ import com.goldyframework.utils.NullGtils;
  * @author 2017. 6. 14. 오후 9:11:09 jeong
  */
 public class InspectionException extends RuntimeException {
-
+	
 	/**
 	 * slf4j Logger
 	 *
@@ -28,7 +28,7 @@ public class InspectionException extends RuntimeException {
 	 * @since 2017. 5. 22. 오후 9:20:02
 	 */
 	private static final Logger LOGGER = LoggerFactory.getLogger(InspectionException.class);
-
+	
 	/**
 	 * Serializable UID
 	 *
@@ -36,7 +36,7 @@ public class InspectionException extends RuntimeException {
 	 * @since 2017. 5. 22. 오후 9:20:10
 	 */
 	private static final long serialVersionUID = 2075811842785280153L;
-
+	
 	/**
 	 * {@link InspectionException} 클래스의 새 인스턴스를 초기화 합니다.
 	 *
@@ -50,7 +50,7 @@ public class InspectionException extends RuntimeException {
 		super(NullGtils.throwIfNull(message));
 		LOGGER.debug(message);
 	}
-
+	
 	/**
 	 * {@link InspectionException} 클래스의 새 인스턴스를 초기화 합니다.
 	 *

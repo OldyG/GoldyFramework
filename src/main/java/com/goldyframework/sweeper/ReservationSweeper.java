@@ -158,7 +158,7 @@ public class ReservationSweeper implements ISweeper {
 	 * @since 2017. 4. 10. 오후 9:35:18
 	 */
 	public ReservationSweeper(final File garbageDirectory) {
-
+		
 		this.garbageDirectory = NullGtils.throwIfNull(garbageDirectory);
 	}
 	

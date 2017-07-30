@@ -35,7 +35,7 @@ public class UpdatePrepareTest {
 		final WhereBuilder where = new WhereBuilder("TEST");
 		where.append("column1", Comparison.GREATER_EQUAL, 1);
 		where.append("column2", Comparison.EQUAL, "true");
-
+		
 		final UpdatePrepare update = new UpdatePrepare("TEST", assign, where);
 		
 		Assert.assertEquals("UPDATE Sql 비교 시험",

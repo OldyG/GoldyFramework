@@ -20,48 +20,48 @@ import com.goldyframework.utils.StringCollectionGtils;
 
 @SuppressWarnings("nls")
 public class StringCollectionGtilsTest {
-
+	
 	private final Collection<String> appendTarget = Arrays.asList("Test1", "Test2", "Test3");
-
+	
 	/**
 	 * Test method for
 	 * {@link com.goldyframework.utils.StringCollectionGtils#eachAppend(java.util.Collection, java.lang.String)}.
 	 */
 	@Test
 	public void testEachAppend() {
-
+		
 		final List<String> actual = StringCollectionGtils.eachAppend(this.appendTarget, ".abc");
-
+		
 		Assert.assertEquals("", 3, actual.size());
 		Assert.assertEquals("", "Test1.abc", actual.get(0));
 		Assert.assertEquals("", "Test2.abc", actual.get(1));
 		Assert.assertEquals("", "Test3.abc", actual.get(2));
 	}
-
+	
 	/**
 	 * Test method for
 	 * {@link com.goldyframework.utils.StringCollectionGtils#eachPrepend(java.lang.String, java.util.Collection)}.
 	 */
 	@Test
 	public void testEachPrepend() {
-
+		
 		final List<String> actual = StringCollectionGtils.eachPrepend("abc.", this.appendTarget);
-
+		
 		Assert.assertEquals("", 3, actual.size());
 		Assert.assertEquals("", "abc.Test1", actual.get(0));
 		Assert.assertEquals("", "abc.Test2", actual.get(1));
 		Assert.assertEquals("", "abc.Test3", actual.get(2));
 	}
-
+	
 	/**
 	 * Test method for
 	 * {@link com.goldyframework.utils.StringCollectionGtils#join(java.util.Collection, java.lang.String)}.
 	 */
 	@Test
 	public void testJoin() {
-
+		
 		final String actual = StringCollectionGtils.join(this.appendTarget, ", ");
 		Assert.assertEquals("", "Test1, Test2, Test3", actual);
 	}
-
+	
 }

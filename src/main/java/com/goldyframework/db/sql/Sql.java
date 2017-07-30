@@ -15,7 +15,7 @@ package com.goldyframework.db.sql;
  * @author 2017. 6. 18. 오전 11:09:15 jeong
  */
 public interface Sql {
-
+	
 	/**
 	 * 설정된 값을 SQL문으로 반환합니다.
 	 *
@@ -28,5 +28,5 @@ public interface Sql {
 	 * @author 2017. 6. 18. 오후 3:09:29 jeong
 	 */
 	void unuseSemicolon();
-
+	
 }

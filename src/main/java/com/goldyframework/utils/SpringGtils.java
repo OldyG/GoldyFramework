@@ -52,4 +52,12 @@ public class SpringGtils {
 		final ApplicationContext context = ApplicationContextProvider.getApplicationContext();
 		return context.getBean(beanClass);
 	}
+	
+	public <T> T getBean(final String name) {
+		
+		ObjectInspection.checkNull(name);
+		Does.notUse(this, Because.WANT_NOT_STATIC_FUNCTION);
+		final ApplicationContext context = ApplicationContextProvider.getApplicationContext();
+		return (T) context.getBean(name);
+	}
 }

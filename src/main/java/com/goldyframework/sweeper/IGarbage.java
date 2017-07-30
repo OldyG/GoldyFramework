@@ -18,7 +18,7 @@ import com.goldyframework.sweeper.exception.SweeperException;
  */
 @FunctionalInterface
 public interface IGarbage {
-
+	
 	/**
 	 * 청소 로직을 작성합니다.
 	 * 만약 Exception을 throws를 한다면 이 청소를 중단하며 파일을 제거하지 않습니다.

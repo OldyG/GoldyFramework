@@ -23,7 +23,7 @@ import com.goldyframework.sweeper.exception.SweeperException;
  * @author 2017. 6. 18. 오후 2:29:17 jeong
  */
 public class FixedSweeper implements ISweeper {
-
+	
 	/**
 	 * slf4j Logger
 	 *
@@ -31,12 +31,12 @@ public class FixedSweeper implements ISweeper {
 	 * @since 2017. 5. 22. 오후 9:20:02
 	 */
 	private static final Logger LOGGER = LoggerFactory.getLogger(FixedSweeper.class);
-
+	
 	/**
 	 * 고정 청소 목록
 	 */
 	private static final Collection<IGarbage> FIXED_GARBAGE_LIST = new LinkedList<>();
-
+	
 	/**
 	 * {@link FixedSweeper} 클래스의 새 인스턴스를 초기화 합니다.
 	 *
@@ -47,7 +47,7 @@ public class FixedSweeper implements ISweeper {
 		
 		super();
 	}
-
+	
 	/**
 	 * {@inheritDoc}
 	 *
@@ -55,7 +55,7 @@ public class FixedSweeper implements ISweeper {
 	 */
 	@Override
 	public void run() {
-
+		
 		for (final IGarbage garbage : FIXED_GARBAGE_LIST) {
 			try {
 				garbage.clean();

@@ -18,27 +18,27 @@ import com.goldyframework.db.prepare.statement.update.UpdatePreparePlan;
  * @author 2017. 7. 8. 오후 1:38:11 jeong
  */
 public class PrepareBuilder {
-
+	
 	public static DeletePreparePlan delete(final String tableName) {
-
+		
 		return new DeletePreparePlan(tableName);
 	}
-
+	
 	public static InsertPreparePlan insert(final String tableName) {
-
+		
 		return new InsertPreparePlan(tableName);
 	}
-
+	
 	public static SelectPreparePlan select(final String tableName) {
-
+		
 		return new SelectPreparePlan(tableName);
 	}
-
+	
 	public static UpdatePreparePlan update(final String tableName) {
-
+		
 		return new UpdatePreparePlan(tableName);
 	}
-
+	
 	/**
 	 * {@link PrepareBuilder} 클래스의 새 인스턴스를 초기화 합니다.
 	 *
@@ -48,5 +48,5 @@ public class PrepareBuilder {
 		
 		super();
 	}
-
+	
 }

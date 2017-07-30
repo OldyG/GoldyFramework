@@ -18,9 +18,9 @@ import com.goldyframework.utils.NullGtils;
 import com.goldyframework.utils.StringCollectionGtils;
 
 public abstract class AbstractPrepare implements Prepare {
-
+	
 	private final String tableName;
-
+	
 	/**
 	 * {@link AbstractPrepare} 클래스의 새 인스턴스를 초기화 합니다.
 	 *
@@ -28,11 +28,11 @@ public abstract class AbstractPrepare implements Prepare {
 	 * @param tableName
 	 */
 	public AbstractPrepare(final String tableName) {
-
+		
 		super();
 		this.tableName = NullGtils.throwIfNull(tableName);
 	}
-
+	
 	/**
 	 * tableName를 반환합니다.
 	 *
@@ -41,21 +41,21 @@ public abstract class AbstractPrepare implements Prepare {
 	 * @see {@link #tableName}
 	 */
 	public String getTableName() {
-
+		
 		return this.tableName;
 	}
-
+	
 	protected String joinMark(final int size) {
-
+		
 		IntegerInspection.checkBelowZero(size);
 		final Collection<String> marks = new ArrayList<>();
 		for (int i = 0; i < size; i++) {
 			marks.add("?"); //$NON-NLS-1$
 		}
-
+		
 		return StringCollectionGtils.join(marks, ", "); //$NON-NLS-1$
 	}
-
+	
 	/**
 	 * {@inheritDoc}
 	 *
@@ -63,7 +63,7 @@ public abstract class AbstractPrepare implements Prepare {
 	 */
 	@Override
 	public String toString() {
-
+		
 		return MessageFormat.format("SQL [{0}], OBJ[{1}]", this.toPrepareSql(), this.getArgs()); //$NON-NLS-1$
 	}
 }

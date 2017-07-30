@@ -18,7 +18,7 @@ import com.goldyframework.sweeper.exception.SweeperException;
  */
 @FunctionalInterface
 public interface ISweeper {
-
+	
 	/**
 	 * 청소 유형에 따른 실행 방법 구현
 	 *

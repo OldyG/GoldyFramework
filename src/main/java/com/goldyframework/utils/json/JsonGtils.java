@@ -79,6 +79,7 @@ public final class JsonGtils {
 	 *            변환 대상 클래스 타입
 	 * @return 적용된 클래스
 	 */
+	@SuppressWarnings("null")
 	public static <T> T fromGson(final String json, final Class<T> clazzOfT) {
 		
 		ObjectInspection.checkNull(json);
@@ -135,7 +136,13 @@ public final class JsonGtils {
 		
 		ObjectInspection.checkNull(object);
 		try {
-			return DEFAULT_GSON.toJson(object);
+			final String json = DEFAULT_GSON.toJson(object);
+			
+			if ((json == null) || (json.equals("null"))) { //$NON-NLS-1$
+				return "{}"; //$NON-NLS-1$
+			}
+			return json;
+			
 		} catch (final RuntimeException e) {
 			LOGGER.error("toGson을 수행중 오류 발생", e); //$NON-NLS-1$
 			return "[ERROR] JsonGtils.toGoson"; //$NON-NLS-1$

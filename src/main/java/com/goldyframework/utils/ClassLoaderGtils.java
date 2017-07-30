@@ -23,10 +23,10 @@ import com.google.common.annotations.VisibleForTesting;
  * @author 2017. 6. 18. 오후 5:16:50 jeong
  */
 public final class ClassLoaderGtils {
-
+	
 	@VisibleForTesting
 	class TestSet implements ITestSet<ClassLoaderGtils> {
-
+		
 		/**
 		 * {@inheritDoc}
 		 *
@@ -34,17 +34,17 @@ public final class ClassLoaderGtils {
 		 */
 		@Override
 		public ClassLoaderGtils createNewInstance() {
-
+			
 			return new ClassLoaderGtils(this);
 		}
-
+		
 	}
-
+	
 	/**
 	 * slf4j Logger
 	 */
 	private static final Logger LOGGER = LoggerFactory.getLogger(ClassLoaderGtils.class);
-
+	
 	/**
 	 * @author 2017. 6. 19. 오후 11:12:31 jeong
 	 * @param url
@@ -53,10 +53,10 @@ public final class ClassLoaderGtils {
 	 */
 	@VisibleForTesting
 	static File createNewFile(final URL url) throws URISyntaxException {
-
+		
 		return new File(url.toURI());
 	}
-
+	
 	/**
 	 * @author 2017. 6. 18. 오후 5:18:02 jeong
 	 * @param path
@@ -64,7 +64,7 @@ public final class ClassLoaderGtils {
 	 * @return
 	 */
 	public static File getFile(final String path) {
-
+		
 		ObjectInspection.checkNull(path);
 		final URL url = ClassLoader.getSystemResource(path);
 		try {
@@ -74,7 +74,7 @@ public final class ClassLoaderGtils {
 			return null;
 		}
 	}
-
+	
 	/**
 	 * {@link ClassLoaderGtils} 클래스의 새 인스턴스를 초기화 합니다.
 	 *
@@ -83,8 +83,8 @@ public final class ClassLoaderGtils {
 	 */
 	@VisibleForTesting
 	ClassLoaderGtils(final TestSet testSet) {
-
+		
 		super();
 	}
-
+	
 }

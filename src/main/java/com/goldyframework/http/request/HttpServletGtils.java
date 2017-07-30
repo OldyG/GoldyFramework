@@ -14,7 +14,6 @@ import java.net.URL;
 import java.text.MessageFormat;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import com.goldyframework.inspection.ObjectInspection;
 

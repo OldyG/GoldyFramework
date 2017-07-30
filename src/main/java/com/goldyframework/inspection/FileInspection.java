@@ -19,7 +19,7 @@ import com.goldyframework.inspection.exception.InspectionException;
  * @author 2017. 6. 14. 오후 9:08:59 jeong
  */
 public final class FileInspection {
-
+	
 	/**
 	 * 파일이 잘못된 파일인지 검사합니다.
 	 *
@@ -30,20 +30,20 @@ public final class FileInspection {
 	 *             파일이 아닌 디렉토리이거나 존재하지 않은 경우 발생합니다.
 	 */
 	public static void checkIllegalFile(final File file) {
-
+		
 		ObjectInspection.checkNull(file);
 		StringInspection.checkNullOrEmpty(file.getPath());
 		StringInspection.checkNullOrEmpty(file.getAbsolutePath());
-
+		
 		if (file.isDirectory()) {
 			throw new InspectionException("파일 형식의 주소가 아닙니다."); //$NON-NLS-1$
 		}
-
+		
 		if (file.exists() == false) {
 			throw new InspectionException("존재 하지 않은 파일입니다."); //$NON-NLS-1$
 		}
 	}
-
+	
 	/**
 	 * {@link FileInspection} 클래스의 새 인스턴스를 초기화 합니다.
 	 *

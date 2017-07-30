@@ -108,9 +108,9 @@ public class WhereBuilder {
 	}
 	
 	public String build() {
-
+		
 		final List<String> tableColumnList = this.createTableColumnList();
-
+		
 		return StringCollectionGtils.join(tableColumnList, " AND "); //$NON-NLS-1$
 	}
 	
@@ -121,9 +121,9 @@ public class WhereBuilder {
 	 */
 	@VisibleForTesting
 	List<String> createTableColumnList() {
-
+		
 		final List<String> appended = this.eachAppendComparisonValue();
-
+		
 		return StringCollectionGtils.eachPrepend(this.tableName + '.', appended);
 	}
 	

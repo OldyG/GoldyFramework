@@ -15,9 +15,9 @@ import java.util.Collection;
  * @author 2017. 7. 2. 오전 11:24:51 jeong
  */
 public interface Prepare {
-
+	
 	Collection<Object> getArgs();
-
+	
 	String toPrepareSql();
 	
 }

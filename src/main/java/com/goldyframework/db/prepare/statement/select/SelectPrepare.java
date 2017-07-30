@@ -21,11 +21,11 @@ import com.goldyframework.utils.StringCollectionGtils;
 import com.google.common.annotations.VisibleForTesting;
 
 public class SelectPrepare extends AbstractPrepare {
-
+	
 	private final List<String> columns;
-
+	
 	private final WhereBuilder where;
-
+	
 	/**
 	 * {@link SelectPrepare} 클래스의 새 인스턴스를 초기화 합니다.
 	 *
@@ -36,12 +36,12 @@ public class SelectPrepare extends AbstractPrepare {
 	 */
 	@VisibleForTesting
 	SelectPrepare(final String tableName, final List<String> columns, final WhereBuilder where) {
-
+		
 		super(NullGtils.throwIfNull(tableName));
 		this.columns = new ArrayList<>(columns);
 		this.where = where;
 	}
-
+	
 	/**
 	 * {@inheritDoc}
 	 *
@@ -49,24 +49,24 @@ public class SelectPrepare extends AbstractPrepare {
 	 */
 	@Override
 	public Collection<Object> getArgs() {
-
+		
 		return this.where.getArgs();
 	}
-
+	
 	/**
 	 * @author 2017. 7. 9. 오전 12:02:09 jeong
 	 * @return
 	 */
 	private String getColumnArea() {
-
+		
 		if (this.columns.isEmpty()) {
 			return "*"; //$NON-NLS-1$
 		}
 		final List<String> eachPrepend = StringCollectionGtils.eachPrepend(super.getTableName() + '.', this.columns);
-
+		
 		return StringCollectionGtils.join(eachPrepend, ", "); //$NON-NLS-1$
 	}
-
+	
 	/**
 	 * {@inheritDoc}
 	 *
@@ -74,7 +74,7 @@ public class SelectPrepare extends AbstractPrepare {
 	 */
 	@Override
 	public String toPrepareSql() {
-
+		
 		final String columnArea = this.getColumnArea();
 		final String tableName = super.getTableName();
 		if (this.where.isEmpty()) {
@@ -83,5 +83,5 @@ public class SelectPrepare extends AbstractPrepare {
 		return MessageFormat.format("SELECT {0} FROM {1} WHERE {2}", //$NON-NLS-1$
 			columnArea, tableName, this.where.build());
 	}
-
+	
 }

@@ -24,7 +24,7 @@ public class EncryptionTest {
 	
 	@Spy
 	private final Encryption targetSpy = new Encryption();
-
+	
 	/**
 	 * Test method for
 	 * {@link com.goldy.common.util.encrytion.Encryption#decrypt(java.lang.String)}.
@@ -33,19 +33,19 @@ public class EncryptionTest {
 	 */
 	@Test
 	public void testDecrypt() throws EncryptionException {
-
+		
 		final String decrypt = this.targetSpy.decrypt("gLXeSjXtIsbFwIq1Z/Am3g==");
 		Assert.assertEquals("복호화 시험", "금정현", decrypt);
 	}
-
+	
 	@Test
 	public void testDiff() throws EncryptionException {
-
+		
 		final byte[] encrypt = this.targetSpy.encrypt("abc");
 		final String decrypt = this.targetSpy.decrypt(new String(encrypt));
 		Assert.assertEquals("암호화 후 복호화 시험", "abc", decrypt);
 	}
-
+	
 	/**
 	 * Test method for
 	 * {@link com.goldy.common.util.encrytion.Encryption#encrypt(java.lang.String)}.
@@ -54,10 +54,10 @@ public class EncryptionTest {
 	 */
 	@Test
 	public void testEncrypt() throws EncryptionException {
-
+		
 		final byte[] encrypt = this.targetSpy.encrypt("금정현");
-
+		
 		Assert.assertEquals("암호화 시험", "gLXeSjXtIsbFwIq1Z/Am3g==", new String(encrypt));
 	}
-
+	
 }

@@ -18,13 +18,13 @@ import com.goldyframework.db.prepare.statement.WhereBuilder;
  * @author 2017. 7. 8. 오후 1:41:16 jeong
  */
 public class UpdatePreparePlan implements PreparePlan<UpdatePrepare> {
-
+	
 	private final String tableName;
-
+	
 	private final AssignBuilder assign;
-
+	
 	private final WhereBuilder where;
-
+	
 	/**
 	 * {@link UpdatePreparePlan} 클래스의 새 인스턴스를 초기화 합니다.
 	 *
@@ -37,7 +37,7 @@ public class UpdatePreparePlan implements PreparePlan<UpdatePrepare> {
 		this.assign = new AssignBuilder(tableName);
 		this.where = new WhereBuilder(tableName);
 	}
-
+	
 	/**
 	 * @author 2017. 7. 8. 오후 1:51:14 jeong
 	 * @param column
@@ -45,11 +45,11 @@ public class UpdatePreparePlan implements PreparePlan<UpdatePrepare> {
 	 * @return
 	 */
 	public UpdatePreparePlan assign(final String column, final Object value) {
-
+		
 		this.assign.appendIfNotNull(column, value);
 		return this;
 	}
-
+	
 	/**
 	 * {@inheritDoc}
 	 *
@@ -57,14 +57,14 @@ public class UpdatePreparePlan implements PreparePlan<UpdatePrepare> {
 	 */
 	@Override
 	public UpdatePrepare build() {
-
+		
 		return new UpdatePrepare(this.tableName, this.assign, this.where);
 	}
-
+	
 	public UpdatePreparePlan where(final String columnName, final Comparison comparison, final Object value) {
-
+		
 		this.where.append(columnName, comparison, value);
 		return this;
 	}
-
+	
 }

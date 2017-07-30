@@ -24,12 +24,12 @@ import com.goldyframework.inspection.exception.InspectionException;
  * @author 2017. 6. 14. 오후 9:09:09 jeong
  */
 public final class IntegerInspection {
-
+	
 	/**
 	 * slf4j Logger
 	 */
 	private static final Logger LOGGER = LoggerFactory.getLogger(IntegerInspection.class);
-
+	
 	/**
 	 * @author 2017. 7. 3. 오후 11:31:15 jeong
 	 * @param target
@@ -37,26 +37,26 @@ public final class IntegerInspection {
 	 * @param minimumValue
 	 */
 	private static void checkAbove(final int target, final int maximumValue) {
-
+		
 		if (target >= maximumValue) {
 			throw new InspectionException(maximumValue + "이상으로 초기화될수 없습니다. : " + target); //$NON-NLS-1$
 		}
-
+		
 	}
-
+	
 	/**
 	 * @author 2017. 7. 3. 오후 11:31:15 jeong
 	 * @param target
 	 * @param minimumValue
 	 */
 	private static void checkBelow(final int target, final int minimumValue) {
-
+		
 		if (target <= minimumValue) {
 			throw new InspectionException(minimumValue + "이하로 초기화될수 없습니다. : " + target); //$NON-NLS-1$
 		}
-
+		
 	}
-
+	
 	/**
 	 * 해당 정수가 0을 포함한 음수 값인지 검사합니다.
 	 *
@@ -67,10 +67,10 @@ public final class IntegerInspection {
 	 *             0 이하일 경우 발생합니다.
 	 */
 	public static void checkBelowZero(final int target) {
-
+		
 		checkBelow(target, 0);
 	}
-
+	
 	/**
 	 * 다음 문자가 숫자형 문자인지 검사합니다.
 	 *
@@ -82,9 +82,9 @@ public final class IntegerInspection {
 	 *             매개변수가 null일 경우 발생합니다.
 	 */
 	public static boolean isNumberCharacter(final Character character) {
-
+		
 		ObjectInspection.checkNull(character);
-
+		
 		try {
 			final int parseInt = Integer.parseInt(character.toString());
 			Does.notUse(parseInt, Because.UNNECESSARY_PROCESSING);
@@ -95,7 +95,7 @@ public final class IntegerInspection {
 			return false;
 		}
 	}
-
+	
 	/**
 	 * 다음 문자열이 숫자형 문자열인지 검사합니다.
 	 *
@@ -107,9 +107,9 @@ public final class IntegerInspection {
 	 *             매개변수가 null일 경우 발생합니다.
 	 */
 	public static boolean isNumberString(final String string) {
-
+		
 		StringInspection.checkNullOrEmpty(string);
-
+		
 		try {
 			final int parseInt = Integer.parseInt(string);
 			Does.notUse(parseInt, Because.UNNECESSARY_PROCESSING);
@@ -120,7 +120,7 @@ public final class IntegerInspection {
 			return false;
 		}
 	}
-
+	
 	/**
 	 * 문자열을 정수로 변환합니다.
 	 *
@@ -132,14 +132,14 @@ public final class IntegerInspection {
 	 *             문자열이 정수형이 아닌경우 발생합니다.
 	 */
 	public static int tryCast(final String stringNumber) {
-
+		
 		if (isNumberString(stringNumber)) {
 			return Integer.parseInt(stringNumber);
 		}
-
+		
 		throw new InspectionException("Integer 형식이 아닙니다. : " + stringNumber); //$NON-NLS-1$
 	}
-
+	
 	/**
 	 * {@link IntegerInspection} 클래스의 새 인스턴스를 초기화 합니다.
 	 *
@@ -147,7 +147,7 @@ public final class IntegerInspection {
 	 * @since 2017. 5. 22. 오후 9:45:02
 	 */
 	private IntegerInspection() {
-
+		
 		throw new IllegalStateException("Utility class"); //$NON-NLS-1$
 	}
 }

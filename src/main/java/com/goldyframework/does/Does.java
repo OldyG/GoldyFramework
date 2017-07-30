@@ -55,7 +55,7 @@ public final class Does {
 	
 	/**
 	 * 이 함수에 this를 설정하세요
-	 * ex) {@link NonStaticFunction#inputThis(this)}
+	 * ex) {@link Does#notUse}(this, Because)
 	 *
 	 * @author 2017. 6. 19. 오후 9:07:54 jeong
 	 * @param obj

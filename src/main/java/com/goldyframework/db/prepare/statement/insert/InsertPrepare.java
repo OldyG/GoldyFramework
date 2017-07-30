@@ -21,9 +21,9 @@ import com.goldyframework.utils.StringCollectionGtils;
 import com.google.common.annotations.VisibleForTesting;
 
 public class InsertPrepare extends AbstractPrepare {
-
+	
 	private final AssignBuilder assign;
-
+	
 	/**
 	 * {@link InsertPrepare} 클래스의 새 인스턴스를 초기화 합니다.
 	 *
@@ -33,19 +33,19 @@ public class InsertPrepare extends AbstractPrepare {
 	 */
 	@VisibleForTesting
 	InsertPrepare(final String tableName, final AssignBuilder assign) {
-
+		
 		super(NullGtils.throwIfNull(tableName));
 		ObjectInspection.checkNull(assign);
 		this.assign = assign;
 	}
-
+	
 	/**
 	 * @author 2017. 7. 2. 오후 12:32:00 jeong
 	 * @return
 	 */
 	@Override
 	public Collection<Object> getArgs() {
-
+		
 		return this.assign.getArgs();
 	}
 	
@@ -56,14 +56,14 @@ public class InsertPrepare extends AbstractPrepare {
 	 */
 	@Override
 	public String toPrepareSql() {
-
+		
 		final List<String> detailColumn = StringCollectionGtils.eachPrepend(this.getTableName() + '.',
 			this.assign.getColumns());
-
+		
 		return MessageFormat.format("INSERT INTO {0} ({1}) VALUES ({2})",  //$NON-NLS-1$
 			super.getTableName(),
 			StringCollectionGtils.join(detailColumn, ", "), //$NON-NLS-1$
 			super.joinMark(detailColumn.size()));
 	}
-
+	
 }

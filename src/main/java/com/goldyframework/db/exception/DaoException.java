@@ -15,12 +15,12 @@ import com.goldyframework.utils.NullGtils;
  * @author 2017. 7. 1. 오전 12:00:58 jeong
  */
 public class DaoException extends Exception {
-
+	
 	/**
 	 * Serializable UID
 	 */
 	private static final long serialVersionUID = 2135496068594915680L;
-
+	
 	/**
 	 * Constructs a new exception with {@code null} as its detail message.
 	 * The cause is not initialized, and may subsequently be initialized by a
@@ -30,7 +30,7 @@ public class DaoException extends Exception {
 		
 		super();
 	}
-
+	
 	/**
 	 * Constructs a new exception with the specified detail message. The
 	 * cause is not initialized, and may subsequently be initialized by
@@ -44,7 +44,7 @@ public class DaoException extends Exception {
 		
 		super(NullGtils.throwIfNull(message));
 	}
-
+	
 	/**
 	 * Constructs a new exception with the specified detail message and
 	 * cause.
@@ -67,7 +67,7 @@ public class DaoException extends Exception {
 		
 		super(NullGtils.throwIfNull(message), NullGtils.throwIfNull(cause));
 	}
-
+	
 	/**
 	 * Constructs a new exception with the specified cause and a detail
 	 * message of <tt>(cause==null ? null : cause.toString())</tt> (which

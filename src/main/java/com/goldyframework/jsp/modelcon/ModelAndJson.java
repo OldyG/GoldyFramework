@@ -1,5 +1,5 @@
 /**
- * FileName : {@link ModelMapWithJson}.java
+ * FileName : {@link ModelAndJson}.java
  * Created : 2017. 7. 31. 오후 7:32:20
  * Author : jeong
  * Summary :
@@ -19,7 +19,7 @@ import com.goldyframework.utils.json.JsonGtils;
 /**
  * @author 2017. 7. 31. 오후 7:32:20 jeong
  */
-public class ModelMapWithJson {
+public class ModelAndJson {
 	
 	private final String JSON_KEY = "JSON_MODEL"; //$NON-NLS-1$
 	
@@ -28,11 +28,11 @@ public class ModelMapWithJson {
 	private final ModelMap modelMap;
 	
 	/**
-	 * {@link ModelMapWithJson} 클래스의 새 인스턴스를 초기화 합니다.
+	 * {@link ModelAndJson} 클래스의 새 인스턴스를 초기화 합니다.
 	 * 
 	 * @author 2017. 7. 31. 오후 7:32:47 jeong
 	 */
-	public ModelMapWithJson(final ModelMap modelMap) {
+	public ModelAndJson(final ModelMap modelMap) {
 		
 		super();
 		this.modelMap = modelMap;

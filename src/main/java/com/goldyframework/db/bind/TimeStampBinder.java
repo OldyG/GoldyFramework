@@ -19,7 +19,7 @@ import com.google.common.base.Throwables;
 /**
  * @author 2017. 7. 1. 오후 2:40:58 jeong
  */
-public class DateBinder implements IBinder<Date> {
+public class TimeStampBinder implements IBinder<Date> {
 	
 	private static final String FORMAT = "yyyy-MM-dd hh:mm:ss"; //$NON-NLS-1$
 	

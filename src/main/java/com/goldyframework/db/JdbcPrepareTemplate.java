@@ -100,7 +100,6 @@ public class JdbcPrepareTemplate extends JdbcTemplate {
 	public void rollback() {
 		
 		super.update("rollback work;"); //$NON-NLS-1$
-		
 	}
 	
 	/**

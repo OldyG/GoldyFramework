@@ -14,7 +14,10 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import org.apache.commons.collections4.MapUtils;
+
 import com.goldyframework.db.prepare.statement.AbstractPrepare;
+import com.goldyframework.db.prepare.statement.OrderByBuilder;
 import com.goldyframework.db.prepare.statement.WhereBuilder;
 import com.goldyframework.utils.NullGtils;
 import com.goldyframework.utils.StringCollectionGtils;
@@ -26,6 +29,8 @@ public class SelectPrepare extends AbstractPrepare {
 	
 	private final WhereBuilder where;
 	
+	private final OrderByBuilder orderBy;
+	
 	/**
 	 * {@link SelectPrepare} 클래스의 새 인스턴스를 초기화 합니다.
 	 *
@@ -35,11 +40,13 @@ public class SelectPrepare extends AbstractPrepare {
 	 * @param where
 	 */
 	@VisibleForTesting
-	SelectPrepare(final String tableName, final List<String> columns, final WhereBuilder where) {
+	SelectPrepare(final String tableName, final List<String> columns, final WhereBuilder where,
+		final OrderByBuilder orderByBuilder) {
 		
 		super(NullGtils.throwIfNull(tableName));
 		this.columns = new ArrayList<>(columns);
 		this.where = where;
+		this.orderBy = orderByBuilder;
 	}
 	
 	/**
@@ -77,11 +84,22 @@ public class SelectPrepare extends AbstractPrepare {
 		
 		final String columnArea = this.getColumnArea();
 		final String tableName = super.getTableName();
+		
+		final String firstStep;
+		
 		if (this.where.isEmpty()) {
-			return MessageFormat.format("SELECT {0} FROM {1}", columnArea, tableName); //$NON-NLS-1$
+			firstStep = MessageFormat.format("SELECT {0} FROM {1}", columnArea, tableName); //$NON-NLS-1$
+		} else {
+			firstStep = MessageFormat.format("SELECT {0} FROM {1} WHERE {2}", //$NON-NLS-1$
+				columnArea, tableName, this.where.build());
 		}
-		return MessageFormat.format("SELECT {0} FROM {1} WHERE {2}", //$NON-NLS-1$
-			columnArea, tableName, this.where.build());
+		
+		if (MapUtils.isEmpty(this.orderBy)) {
+			return firstStep;
+		}
+		
+		return MessageFormat.format("{0} {1}", firstStep, this.orderBy.toSql()); //$NON-NLS-1$
+		
 	}
 	
 }

@@ -13,6 +13,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.goldyframework.db.prepare.statement.Comparison;
+import com.goldyframework.db.prepare.statement.OrderByBuilder;
+import com.goldyframework.db.prepare.statement.OrderType;
 import com.goldyframework.db.prepare.statement.PreparePlan;
 import com.goldyframework.db.prepare.statement.WhereBuilder;
 
@@ -24,6 +26,8 @@ public class SelectPreparePlan implements PreparePlan<SelectPrepare> {
 	private final String tableName;
 	
 	private final WhereBuilder where;
+	
+	private final OrderByBuilder orderBy;
 	
 	private final List<String> columns = new ArrayList<>();
 	
@@ -38,6 +42,7 @@ public class SelectPreparePlan implements PreparePlan<SelectPrepare> {
 		super();
 		this.tableName = tableName;
 		this.where = new WhereBuilder(tableName);
+		this.orderBy = new OrderByBuilder();
 	}
 	
 	/**
@@ -47,12 +52,23 @@ public class SelectPreparePlan implements PreparePlan<SelectPrepare> {
 	@Override
 	public SelectPrepare build() {
 		
-		return new SelectPrepare(this.tableName, this.columns, this.where);
+		return new SelectPrepare(this.tableName, this.columns, this.where, this.orderBy);
 	}
 	
 	public SelectPreparePlan column(final String columnName) {
 		
 		this.columns.add(columnName);
+		return this;
+	}
+	
+	/**
+	 * @author 2017. 8. 6. 오후 1:53:03 jeong
+	 * @param createdTime
+	 * @return
+	 */
+	public SelectPreparePlan orderby(final String columnName, final OrderType orderType) {
+		
+		this.orderBy.put(columnName, orderType);
 		return this;
 	}
 	

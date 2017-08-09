@@ -10,6 +10,7 @@
 package com.goldyframework.encryption;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
 
 import com.goldyframework.inspection.ObjectInspection;
 
@@ -18,6 +19,7 @@ import com.goldyframework.inspection.ObjectInspection;
  *
  * @author 2017. 6. 18. 오후 12:56:45 jeong
  */
+@Service
 public class SpringPasswordEncryptor implements PasswordEncoder {
 	
 	/**

@@ -17,12 +17,15 @@ import javax.sql.DataSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.dao.IncorrectResultSizeDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Service;
 
+import com.goldyframework.db.exception.DuplicateRecordException;
 import com.goldyframework.db.exception.NoSingleDataException;
+import com.goldyframework.db.prepare.statement.Prepare;
 import com.goldyframework.db.prepare.statement.delete.DeletePrepare;
 import com.goldyframework.db.prepare.statement.insert.InsertPrepare;
 import com.goldyframework.db.prepare.statement.select.SelectPrepare;
@@ -84,14 +87,17 @@ public class JdbcPrepareTemplate extends JdbcTemplate {
 	 * @author 2017. 7. 2. 오후 12:29:00 jeong
 	 * @param insert
 	 */
-	public void insert(final InsertPrepare insert) {
+	public void insert(final InsertPrepare insert) throws DuplicateRecordException {
 		
 		final String prepareSql = insert.toPrepareSql();
 		final Collection<Object> args = insert.getArgs();
 		
-		LOGGER.trace(prepareSql);
-		LOGGER.trace(args.toString());
-		super.update(prepareSql, this.toArray(args));
+		try {
+			super.update(prepareSql, this.toArray(args));
+		} catch (final DuplicateKeyException e) {
+			final String message = MessageFormat.format("{0}테이블에 중복 데이터가 존재합니다.", insert.getTableName()); //$NON-NLS-1$
+			throw new DuplicateRecordException(message, e);
+		}
 	}
 	
 	/**

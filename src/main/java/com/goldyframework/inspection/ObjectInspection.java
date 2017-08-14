@@ -32,7 +32,7 @@ public final class ObjectInspection {
 	public static void checkNull(final Object obj) {
 		
 		if (obj == null) {
-			throw new InspectionException("Null이 들어올수 없습니다."); //$NON-NLS-1$
+			throw new InspectionException("변수에 Null이 할당되었습니다."); //$NON-NLS-1$
 		}
 	}
 	

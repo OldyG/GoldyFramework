@@ -186,11 +186,15 @@ public class Email {
 		});
 	}
 	
-	public void send(final SendModel property) throws EmailException {
+	public void send(final SendModel sendModel) throws EmailException {
+		
+		if (sendModel == null) {
+			return;
+		}
 		
 		LOGGER.debug("이메일 전송 데이터 설정 중"); //$NON-NLS-1$
-		new SendModelValidator().check(property);
-		final MimeMessage msg = this.createMimeMessage(property);
+		new SendModelValidator().check(sendModel);
+		final MimeMessage msg = this.createMimeMessage(sendModel);
 		final Thread sendAwait = this.createSendTread(msg);
 		sendAwait.start();
 	}

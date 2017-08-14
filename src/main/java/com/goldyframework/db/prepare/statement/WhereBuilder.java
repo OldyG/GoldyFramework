@@ -11,9 +11,9 @@ package com.goldyframework.db.prepare.statement;
 
 import java.text.MessageFormat;
 import java.util.Collection;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
 import com.goldyframework.inspection.ObjectInspection;
@@ -74,7 +74,7 @@ public class WhereBuilder {
 		}
 	}
 	
-	private final Map<String, ComparisonValue> whereMap = new ConcurrentHashMap<>();
+	private final Map<String, ComparisonValue> whereMap = new LinkedHashMap<>();
 	
 	private final String tableName;
 	
@@ -168,7 +168,7 @@ public class WhereBuilder {
 	@VisibleForTesting
 	Map<String, ComparisonValue> getCopiedWhereMap() {
 		
-		return new ConcurrentHashMap<>(this.whereMap);
+		return new LinkedHashMap<>(this.whereMap);
 	}
 	
 	/**

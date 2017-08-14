@@ -49,7 +49,7 @@ public final class IntegerInspection {
 	 * @param target
 	 * @param minimumValue
 	 */
-	private static void checkBelow(final int target, final int minimumValue) {
+	public static void checkBelow(final int target, final int minimumValue) {
 		
 		if (target <= minimumValue) {
 			throw new InspectionException(minimumValue + "이하로 초기화될수 없습니다. : " + target); //$NON-NLS-1$

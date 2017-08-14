@@ -9,7 +9,7 @@
  */
 package com.goldyframework.inspection;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.regex.Pattern;
 
@@ -36,7 +36,7 @@ public class EmailInspection implements Inspection<String> {
 	
 	private static final String EMAIL_REGEX_STRING = "[\\w\\~\\-\\.]+@[\\w\\~\\-]+(\\.[\\w\\~\\-]+)+"; //$NON-NLS-1$
 	
-	private static final Collection<String> UNSUPPORTED_EMAIL_LIST = Arrays.asList("naver.com");  //$NON-NLS-1$
+	public static final Collection<String> UNSUPPORTED_EMAIL_LIST = new ArrayList<>();
 	
 	private static void checkEmailRegex(final String target) {
 		

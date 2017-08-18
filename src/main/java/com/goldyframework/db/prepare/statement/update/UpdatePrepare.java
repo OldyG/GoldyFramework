@@ -14,6 +14,8 @@ import java.util.Collection;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import org.apache.commons.lang3.StringUtils;
+
 import com.goldyframework.db.prepare.statement.AbstractPrepare;
 import com.goldyframework.db.prepare.statement.AssignBuilder;
 import com.goldyframework.db.prepare.statement.WhereBuilder;
@@ -60,6 +62,11 @@ public class UpdatePrepare extends AbstractPrepare {
 			this.where.getArgs().stream())
 			.collect(Collectors.toList());
 		
+	}
+	
+	public boolean isValid() {
+		
+		return StringUtils.isNotBlank(this.assign.build());
 	}
 	
 	/**

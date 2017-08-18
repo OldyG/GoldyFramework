@@ -172,6 +172,10 @@ public class JdbcPrepareTemplate extends JdbcTemplate {
 	 */
 	public void update(final UpdatePrepare update) {
 		
+		if (update.isValid() == false) {
+			return;
+		}
+		
 		super.update(update.toPrepareSql(), this.toArray(update.getArgs()));
 	}
 	

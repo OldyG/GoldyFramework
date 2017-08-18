@@ -30,6 +30,11 @@
 
 	<dependencies>
 		<dependency>
+			<groupId>org.openrdf.sesame</groupId>
+			<artifactId>sesame-rio-api</artifactId>
+			<version>2.7.2</version>
+		</dependency>
+		<dependency>
 			<groupId>org.sitemesh</groupId>
 			<artifactId>sitemesh</artifactId>
 			<version>3.0.0</version>
@@ -171,7 +176,7 @@
 
 	<build>
 		<plugins>
-			<plugin>
+			<!-- <plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-source-plugin</artifactId>
 				<executions>
@@ -182,11 +187,11 @@
 						</goals>
 					</execution>
 				</executions>
-			</plugin>
-			<plugin>
+			</plugin> -->
+			<!-- <plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
-			</plugin>
+			</plugin> -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
@@ -213,12 +218,12 @@
 					<excludedGroups>com.goldyframework.annotaion.MavenIgnoreTest</excludedGroups>
 				</configuration>
 			</plugin>
-			<plugin>
+			<!-- <plugin>
 				<groupId>org.codehaus.sonar-plugins</groupId>
 				<artifactId>maven-report</artifactId>
 				<version>0.1</version>
-			</plugin>
-			<plugin>
+			</plugin> -->
+			<!-- <plugin>
 				<groupId>org.sonarsource.scanner.maven</groupId>
 				<artifactId>sonar-maven-plugin</artifactId>
 				<version>3.0.1</version>
@@ -227,7 +232,7 @@
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>sonar-maven-plugin</artifactId>
 				<version>5.1</version>
-			</plugin>
+			</plugin> -->
 		</plugins>
 	</build>
 

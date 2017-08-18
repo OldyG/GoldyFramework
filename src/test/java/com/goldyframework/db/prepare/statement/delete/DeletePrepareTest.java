@@ -31,8 +31,7 @@ public class DeletePrepareTest extends Mockito {
 		
 		final String actual = target.toPrepareSql();
 		
-		final String expected = "DELETE FROM TEST "
-			+ "WHERE TEST.enable_login = ? AND TEST.user_key = ?";
+		final String expected = "DELETE FROM TEST WHERE TEST.user_key = ? AND TEST.enable_login = ?";
 		Assert.assertEquals("", expected, actual);
 	}
 	

@@ -80,9 +80,9 @@ public class UpdatePrepare extends AbstractPrepare {
 		final String tableName = super.getTableName();
 		final String buildedUpdate = this.assign.build();
 		final String buildedWhere = this.where.build();
-		StringInspection.checkNullOrEmpty(tableName);
-		StringInspection.checkNullOrEmpty(buildedUpdate);
-		StringInspection.checkNullOrEmpty(buildedWhere);
+		StringInspection.checkBlank(tableName);
+		StringInspection.checkBlank(buildedUpdate);
+		StringInspection.checkBlank(buildedWhere);
 		
 		return MessageFormat.format("UPDATE {0} SET {1} WHERE {2}", tableName, buildedUpdate, buildedWhere); //$NON-NLS-1$
 	}

@@ -57,8 +57,8 @@ public class DeletePrepare extends AbstractPrepare {
 		
 		final String tableName = super.getTableName();
 		final String buildedWhere = this.where.build();
-		StringInspection.checkNullOrEmpty(tableName);
-		StringInspection.checkNullOrEmpty(buildedWhere);
+		StringInspection.checkBlank(tableName);
+		StringInspection.checkBlank(buildedWhere);
 		
 		return MessageFormat.format("DELETE FROM {0} WHERE {1}", tableName, buildedWhere); //$NON-NLS-1$
 	}

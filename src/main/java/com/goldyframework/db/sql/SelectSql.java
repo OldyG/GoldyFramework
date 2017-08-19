@@ -160,8 +160,8 @@ public class SelectSql extends AbstractSql {
 		
 		this();
 		try {
-			StringInspection.checkNullOrEmpty(selectColumns);
-			StringInspection.checkNullOrEmpty(fromTables);
+			StringInspection.checkBlank(selectColumns);
+			StringInspection.checkBlank(fromTables);
 		} catch (final InspectionException e) {
 			throw new SQLException(e.getMessage(), e);
 		}
@@ -188,7 +188,7 @@ public class SelectSql extends AbstractSql {
 		
 		this(selectColumns, fromTables);
 		try {
-			StringInspection.checkNullOrEmpty(where);
+			StringInspection.checkBlank(where);
 		} catch (final InspectionException e) {
 			throw new SQLException(e.getMessage(), e);
 		}

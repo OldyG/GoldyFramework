@@ -29,6 +29,7 @@
 	</properties>
 
 	<dependencies>
+
 		<dependency>
 			<groupId>org.openrdf.sesame</groupId>
 			<artifactId>sesame-rio-api</artifactId>
@@ -176,22 +177,11 @@
 
 	<build>
 		<plugins>
-			<!-- <plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-source-plugin</artifactId>
-				<executions>
-					<execution>
-						<id>attach-sources</id>
-						<goals>
-							<goal>jar</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin> -->
-			<!-- <plugin>
-				<groupId>org.springframework.boot</groupId>
-				<artifactId>spring-boot-maven-plugin</artifactId>
-			</plugin> -->
+			<!-- <plugin> <groupId>org.apache.maven.plugins</groupId> <artifactId>maven-source-plugin</artifactId> 
+				<executions> <execution> <id>attach-sources</id> <goals> <goal>jar</goal> 
+				</goals> </execution> </executions> </plugin> -->
+			<!-- <plugin> <groupId>org.springframework.boot</groupId> <artifactId>spring-boot-maven-plugin</artifactId> 
+				</plugin> -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
@@ -218,21 +208,11 @@
 					<excludedGroups>com.goldyframework.annotaion.MavenIgnoreTest</excludedGroups>
 				</configuration>
 			</plugin>
-			<!-- <plugin>
-				<groupId>org.codehaus.sonar-plugins</groupId>
-				<artifactId>maven-report</artifactId>
-				<version>0.1</version>
-			</plugin> -->
-			<!-- <plugin>
-				<groupId>org.sonarsource.scanner.maven</groupId>
-				<artifactId>sonar-maven-plugin</artifactId>
-				<version>3.0.1</version>
-			</plugin>
-			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>sonar-maven-plugin</artifactId>
-				<version>5.1</version>
-			</plugin> -->
+			<!-- <plugin> <groupId>org.codehaus.sonar-plugins</groupId> <artifactId>maven-report</artifactId> 
+				<version>0.1</version> </plugin> -->
+			<!-- <plugin> <groupId>org.sonarsource.scanner.maven</groupId> <artifactId>sonar-maven-plugin</artifactId> 
+				<version>3.0.1</version> </plugin> <plugin> <groupId>org.codehaus.mojo</groupId> 
+				<artifactId>sonar-maven-plugin</artifactId> <version>5.1</version> </plugin> -->
 		</plugins>
 	</build>
 

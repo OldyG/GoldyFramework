@@ -14,7 +14,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import com.goldyframework.inspection.ObjectInspection;
+import com.goldyframework.inspection.CollectionInspection;
 import com.goldyframework.inspection.StringInspection;
 import com.goldyframework.inspection.exception.InspectionException;
 
@@ -80,8 +80,8 @@ public class InsertSql extends AbstractSql {
 	public InsertSql(final String table, final Collection<Object> inputList) throws SQLException {
 		
 		try {
-			StringInspection.checkNullOrEmpty(table);
-			ObjectInspection.checkNullOrEmptyCollection(inputList);
+			StringInspection.checkBlank(table);
+			CollectionInspection.checkNullOrEmptyCollection(inputList);
 		} catch (final InspectionException e) {
 			throw new SQLException(e.getMessage(), e);
 		}
@@ -109,8 +109,8 @@ public class InsertSql extends AbstractSql {
 		
 		this(table, inputList);
 		try {
-			ObjectInspection.checkNullOrEmptyCollection(columnList);
-			ObjectInspection.checkNullOrEmptyCollection(inputList);
+			CollectionInspection.checkNullOrEmptyCollection(columnList);
+			CollectionInspection.checkNullOrEmptyCollection(inputList);
 		} catch (final InspectionException e) {
 			throw new SQLException(e.getMessage(), e);
 		}

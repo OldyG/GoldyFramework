@@ -85,7 +85,7 @@ public final class MultipartFileInspection {
 	public static void checkNullOrEmptyMultipartFile(final MultipartFile multipartFile) {
 		
 		ObjectInspection.checkNull(multipartFile);
-		StringInspection.checkNullOrEmpty(multipartFile.getName());
+		StringInspection.checkBlank(multipartFile.getName());
 		
 		try {
 			IntegerInspection.checkBelowZero((int) multipartFile.getSize());
@@ -94,14 +94,14 @@ public final class MultipartFileInspection {
 		}
 		
 		try {
-			StringInspection.checkNullOrEmpty(multipartFile.getOriginalFilename());
+			StringInspection.checkBlank(multipartFile.getOriginalFilename());
 		} catch (final InspectionException e) {
 			throw new InspectionException("파일 이름이 없습니다.", e); //$NON-NLS-1$
 		}
 		
 		try {
 			final String originalFilename = multipartFile.getOriginalFilename();
-			StringInspection.checkNullOrEmpty(FilenameUtils.getBaseName(originalFilename));
+			StringInspection.checkBlank(FilenameUtils.getBaseName(originalFilename));
 		} catch (final InspectionException e) {
 			throw new InspectionException("확장자를 제외한 파일이름이 비어있습니다.", e); //$NON-NLS-1$
 		}

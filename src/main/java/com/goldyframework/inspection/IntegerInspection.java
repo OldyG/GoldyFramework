@@ -44,11 +44,6 @@ public final class IntegerInspection {
 		
 	}
 	
-	/**
-	 * @author 2017. 7. 3. 오후 11:31:15 jeong
-	 * @param target
-	 * @param minimumValue
-	 */
 	public static void checkBelow(final int target, final int minimumValue) {
 		
 		if (target <= minimumValue) {
@@ -87,7 +82,7 @@ public final class IntegerInspection {
 		
 		try {
 			final int parseInt = Integer.parseInt(character.toString());
-			Does.notUse(parseInt, Because.UNNECESSARY_PROCESSING);
+			Does.notUse(parseInt, Because.DO_NOTHING);
 			return true;
 		} catch (final NumberFormatException e) {
 			final String message = MessageFormat.format("Character [{0}]은 Int형으로 변환할 수 없습니다.", character); //$NON-NLS-1$
@@ -108,15 +103,13 @@ public final class IntegerInspection {
 	 */
 	public static boolean isNumberString(final String string) {
 		
-		StringInspection.checkNullOrEmpty(string);
+		StringInspection.checkBlank(string);
 		
 		try {
 			final int parseInt = Integer.parseInt(string);
-			Does.notUse(parseInt, Because.UNNECESSARY_PROCESSING);
+			Does.notUse(parseInt, Because.DO_NOTHING);
 			return true;
 		} catch (final NumberFormatException e) {
-			final String message = MessageFormat.format("String [{0}]은 Int형으로 변환할 수 없습니다.", string); //$NON-NLS-1$
-			LOGGER.trace(message, e);
 			return false;
 		}
 	}

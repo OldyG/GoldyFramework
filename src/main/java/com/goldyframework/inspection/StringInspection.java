@@ -251,8 +251,8 @@ public final class StringInspection {
 	 */
 	public static void checkMoreThanOneCharacter(final String target, final String sub) {
 		
-		checkNullOrEmpty(target);
-		checkNullOrEmpty(sub);
+		checkBlank(target);
+		checkBlank(sub);
 		
 		final int count = StringUtils.countOccurrencesOf(target, sub);
 		if (count > 1) {
@@ -286,11 +286,11 @@ public final class StringInspection {
 	 * @throws ValidateException
 	 *             검사대상 문자열이 null 이거나 빈문자열인 경우 발생합니다.
 	 */
-	public static void checkNullOrEmpty(final String target) {
+	public static void checkBlank(final CharSequence target) {
 		
 		ObjectInspection.checkNull(target);
 		
-		if (target.isEmpty() || target.trim().isEmpty()) {
+		if (isBlank(target)) {
 			throw new InspectionException("빈값이 정의되어있습니다."); //$NON-NLS-1$
 		}
 	}
@@ -310,9 +310,9 @@ public final class StringInspection {
 	 */
 	public static void checkOrder(final String target, final String baseStr, final String illegalBehind) {
 		
-		checkNullOrEmpty(target);
-		checkNullOrEmpty(baseStr);
-		checkNullOrEmpty(illegalBehind);
+		checkBlank(target);
+		checkBlank(baseStr);
+		checkBlank(illegalBehind);
 		
 		final int frontIndex = target.indexOf(baseStr);
 		
@@ -344,6 +344,11 @@ public final class StringInspection {
 			throw new InspectionException("좌우에 공백이 포함될 수 없습니다"); //$NON-NLS-1$
 		}
 		
+	}
+	
+	public static boolean isBlank(final CharSequence target) {
+		
+		return org.apache.commons.lang3.StringUtils.isBlank(target);
 	}
 	
 	/**
@@ -466,9 +471,9 @@ public final class StringInspection {
 	 */
 	public static void needOrder(final String target, final String baseStr, final String needBehind) {
 		
-		checkNullOrEmpty(target);
-		checkNullOrEmpty(baseStr);
-		checkNullOrEmpty(needBehind);
+		checkBlank(target);
+		checkBlank(baseStr);
+		checkBlank(needBehind);
 		
 		final int frontIndex = target.indexOf(baseStr);
 		

@@ -61,8 +61,8 @@ public class DeleteSql extends AbstractSql {
 	public DeleteSql(final String from, final String where) throws SQLException {
 		
 		try {
-			StringInspection.checkNullOrEmpty(from);
-			StringInspection.checkNullOrEmpty(where);
+			StringInspection.checkBlank(from);
+			StringInspection.checkBlank(where);
 		} catch (final InspectionException e) {
 			throw new SQLException(e.getMessage(), e);
 		}

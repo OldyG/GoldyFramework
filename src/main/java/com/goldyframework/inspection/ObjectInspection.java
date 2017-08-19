@@ -9,9 +9,14 @@
  */
 package com.goldyframework.inspection;
 
-import java.util.Collection;
+import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 
 import com.goldyframework.inspection.exception.InspectionException;
+import com.goldyframework.utils.ReflectionGtils;
+import com.goldyframework.utils.json.JsonGtils;
 
 /**
  * {@link Object} 타입 제약
@@ -36,23 +41,45 @@ public final class ObjectInspection {
 		}
 	}
 	
-	/**
-	 * 다음 컬렉션이 null 또는 빈 컬렉션인지 확인합니다.
-	 *
-	 * @author 2017. 6. 14. 오후 10:09:10 jeong
-	 * @param targetList
-	 *            검사대상 리스트
-	 * @throws ValidateException
-	 *             null 또는 사이즈가 0일경우 발생합니다.
-	 */
-	public static void checkNullOrEmptyCollection(final Collection<?> targetList) {
+	public static <T> boolean equalsForFields(final T thisObj, final T targetObj) {
 		
-		checkNull(targetList);
-		
-		if (targetList.isEmpty()) {
-			throw new InspectionException("리스트 사이즈가 0이 될 수 없습니다."); //$NON-NLS-1$
+		if ((thisObj == null) || (targetObj == null)) {
+			return false;
 		}
 		
+		if (thisObj.getClass().equals(targetObj.getClass()) == false) {
+			return false;
+		}
+		final String json1 = JsonGtils.toGson(thisObj);
+		final String json2 = JsonGtils.toGson(targetObj);
+		
+		return json1.equals(json2);
+	}
+	
+	/**
+	 * @author 2017. 8. 19. 오후 4:32:21 jeong
+	 * @param obj
+	 * @return
+	 */
+	public static int hashCodeForFields(final Object obj) {
+		
+		final String gson = JsonGtils.toGson(obj);
+		
+		return Objects.hash(gson);
+	}
+	
+	@Deprecated
+	public static int hashCodeForFields2(final Object obj) {
+		
+		final List<Field> declaredFields = ReflectionGtils.getDeclaredFieldWithInherit(obj);
+		
+		final List<Object> fieldValues = new ArrayList<>();
+		for (final Field field : declaredFields) {
+			final Object fieldValue = ReflectionGtils.getFieldValue(obj, field);
+			fieldValues.add(fieldValue);
+		}
+		
+		return Objects.hash(CollectionInspection.toArray(fieldValues));
 	}
 	
 	/**

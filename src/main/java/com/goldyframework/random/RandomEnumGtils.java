@@ -18,7 +18,7 @@ import com.goldyframework.inspection.ObjectInspection;
  */
 public class RandomEnumGtils {
 	
-	public static <T extends Enum> T createRadomEnum(final Class<T> enumClass) {
+	public static <T extends Enum<?>> T createRadomEnum(final Class<T> enumClass) {
 		
 		ObjectInspection.checkNull(enumClass);
 		

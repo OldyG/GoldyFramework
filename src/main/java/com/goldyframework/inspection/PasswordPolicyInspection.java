@@ -149,7 +149,7 @@ public class PasswordPolicyInspection implements Inspection<String> {
 	public void check(final String target) {
 
 		// 문자열이 null 또는 Empty 인지 검사
-		StringInspection.checkNullOrEmpty(target);
+		StringInspection.checkBlank(target);
 
 		// 글자 길이제한 8 이상 30이하
 		StringInspection.checkLimitLength(target, minLength, maxLength);

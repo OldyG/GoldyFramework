@@ -130,7 +130,7 @@ public class ReservationSweeper implements ISweeper {
 		
 		final File movingTarget = getChildDirectory(garbageFile, "Done"); //$NON-NLS-1$
 		final boolean success = garbageFile.renameTo(movingTarget);
-		Does.notUse(success, Because.UNNECESSARY_PROCESSING);
+		Does.notUse(success, Because.DO_NOTHING);
 	}
 	
 	/**
@@ -144,7 +144,7 @@ public class ReservationSweeper implements ISweeper {
 		
 		final File movingTarget = getChildDirectory(garbageFile, "Failure"); //$NON-NLS-1$
 		final boolean success = garbageFile.renameTo(movingTarget);
-		Does.notUse(success, Because.UNNECESSARY_PROCESSING);
+		Does.notUse(success, Because.DO_NOTHING);
 	}
 	
 	private final File garbageDirectory;

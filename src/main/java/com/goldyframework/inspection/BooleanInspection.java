@@ -35,7 +35,7 @@ public final class BooleanInspection {
 	 */
 	public static boolean tryHardCast(final String stringBoolean) {
 		
-		StringInspection.checkNullOrEmpty(stringBoolean);
+		StringInspection.checkBlank(stringBoolean);
 		
 		if ("true".equalsIgnoreCase(stringBoolean)) { //$NON-NLS-1$
 			return true;
@@ -60,7 +60,7 @@ public final class BooleanInspection {
 	 */
 	public static boolean trySoftCast(final String stringBoolean) {
 		
-		StringInspection.checkNullOrEmpty(stringBoolean);
+		StringInspection.checkBlank(stringBoolean);
 		
 		final Collection<String> trueList = Arrays.asList("true", "1", "t"); //$NON-NLS-1$//$NON-NLS-2$//$NON-NLS-3$
 		final Collection<String> falseList = Arrays.asList("false", "0", "f"); //$NON-NLS-1$//$NON-NLS-2$//$NON-NLS-3$

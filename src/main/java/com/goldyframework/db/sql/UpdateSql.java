@@ -86,9 +86,9 @@ public class UpdateSql extends AbstractSql {
 	public UpdateSql(final String update, final String set, final String where) throws SQLException {
 		
 		try {
-			StringInspection.checkNullOrEmpty(update);
-			StringInspection.checkNullOrEmpty(set);
-			StringInspection.checkNullOrEmpty(where);
+			StringInspection.checkBlank(update);
+			StringInspection.checkBlank(set);
+			StringInspection.checkBlank(where);
 		} catch (final InspectionException e) {
 			throw new SQLException(e.getMessage(), e);
 		}

@@ -88,7 +88,7 @@ public class RepositoryServiceImpl implements RepositoryService {
 		try {
 			final File file = this.getFile();
 			final boolean success = file.delete();
-			Does.notUse(success, Because.UNNECESSARY_PROCESSING);
+			Does.notUse(success, Because.DO_NOTHING);
 		} catch (final NotRegisteredFileException e) {
 			LOGGER.trace("제거할 파일이 없어 진행하지 않음", e); //$NON-NLS-1$
 			return;
@@ -181,7 +181,7 @@ public class RepositoryServiceImpl implements RepositoryService {
 		
 		final File file = new File(savePath);
 		final boolean success = file.createNewFile();
-		Does.notUse(success, Because.UNNECESSARY_PROCESSING);
+		Does.notUse(success, Because.DO_NOTHING);
 		multipartFile.transferTo(file);
 		return file;
 	}
@@ -204,7 +204,7 @@ public class RepositoryServiceImpl implements RepositoryService {
 			file = new File(savePath);
 		}
 		final boolean success = file.createNewFile();
-		Does.notUse(success, Because.UNNECESSARY_PROCESSING);
+		Does.notUse(success, Because.DO_NOTHING);
 		FileUtils.writeStringToFile(file, content, Prop.DEFAULT_CHARSET.name());
 		return file;
 	}

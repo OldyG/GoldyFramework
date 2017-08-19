@@ -12,7 +12,7 @@ package com.goldyframework.db.sql;
 import java.sql.SQLException;
 import java.util.Collection;
 
-import com.goldyframework.inspection.ObjectInspection;
+import com.goldyframework.inspection.CollectionInspection;
 import com.goldyframework.inspection.exception.InspectionException;
 
 /**
@@ -35,7 +35,7 @@ abstract class AbstractSql implements Sql {
 	protected static String collectionToCommaString(final Collection<String> list) throws SQLException {
 		
 		try {
-			ObjectInspection.checkNullOrEmptyCollection(list);
+			CollectionInspection.checkNullOrEmptyCollection(list);
 		} catch (final InspectionException e) {
 			throw new SQLException(e.getMessage(), e);
 		}

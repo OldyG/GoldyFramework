@@ -32,8 +32,8 @@ public final class FileInspection {
 	public static void checkIllegalFile(final File file) {
 		
 		ObjectInspection.checkNull(file);
-		StringInspection.checkNullOrEmpty(file.getPath());
-		StringInspection.checkNullOrEmpty(file.getAbsolutePath());
+		StringInspection.checkBlank(file.getPath());
+		StringInspection.checkBlank(file.getAbsolutePath());
 		
 		if (file.isDirectory()) {
 			throw new InspectionException("파일 형식의 주소가 아닙니다."); //$NON-NLS-1$

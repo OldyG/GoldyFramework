@@ -36,13 +36,8 @@ public enum Because {
 	 * <pre>
 	 *(example)
 	 *boolean success = file.createNewFile();
-	 *{@link Does#notUse}(success, {@link Because#UNNECESSARY_PROCESSING});
+	 *{@link Does#notUse}(success, {@link Because#DO_NOTHING});
 	 * </pre>
-	 */
-	UNNECESSARY_PROCESSING("다음 처리를 의도적으로 하지 않음"), //$NON-NLS-1$
-	
-	/**
-	 *
 	 */
 	DO_NOTHING("아무행위도 하지 않음"); //$NON-NLS-1$
 	
@@ -53,6 +48,7 @@ public enum Because {
 	 *
 	 * @author 2017. 6. 22. 오후 7:31:42 jeong
 	 * @param message
+	 *            행위
 	 */
 	Because(final String message) {
 		

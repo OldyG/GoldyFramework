@@ -18,6 +18,8 @@ import org.apache.commons.io.FilenameUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.goldyframework.utils.SpringGtils;
+
 public class ResourceMapper extends GoldyTag {
 	
 	/**
@@ -121,8 +123,8 @@ public class ResourceMapper extends GoldyTag {
 	
 	private void writeResourceAutoMap() throws IOException {
 		
-		final ResourceChannel resourceChannel = new ResourceChannel(this.getCurrentPath());
-		final List<File> matchedResource = resourceChannel.getMachedResources();
+		final ResourceChannel resourceChannel = new SpringGtils().getBean(ResourceChannel.class);
+		final List<File> matchedResource = resourceChannel.getMachedResources(this.getCurrentPath());
 		
 		for (final File file : matchedResource) {
 			final String name = FilenameUtils.getName(file.getPath());

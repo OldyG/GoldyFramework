@@ -11,99 +11,116 @@ package com.goldyframework.jsp.taglib;
 
 import java.io.File;
 import java.text.MessageFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.regex.Matcher;
+import java.util.stream.Collectors;
 
 import javax.servlet.ServletContext;
 
 import org.apache.commons.io.FilenameUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.stereotype.Service;
 
+@PropertySource("classpath:goldyframework.properties")
+@Service
 public class ResourceChannel {
 	
-	private static ServletContext SEVLET_CONTEXT;
+	/**
+	 * slf4j Logger
+	 */
+	private static final Logger LOGGER = LoggerFactory.getLogger(ResourceChannel.class);
 	
-	private static String RESOURCE_BASE_PATH;
+	private final String projectBasePath;
 	
-	private static String VIEWS_BASE_PATH;
+	@Value("${resource-channel.resource-base-path}")
+	private String resourceBasePath;
 	
-	private static String PROJECT_BASE_PATH;
+	@Value("${resource-channel.views-base-path}")
+	private String viewsBasePath;
 	
-	private static String extractProjectBasePath() {
+	private final ServletContext servletContet;
+	
+	private final String contextPath;
+	
+	/**
+	 * {@link ResourceChannel} 클래스의 새 인스턴스를 초기화 합니다.
+	 *
+	 * @author jeong
+	 * @param resourceBasePath
+	 * @param viewsBasePath
+	 * @since 2017. 3. 2. 오후 8:58:10
+	 * @param viewPath
+	 */
+	@Autowired
+	public ResourceChannel(final ServletContext servletContet) {
+		this.servletContet = servletContet;
+		this.contextPath = this.servletContet.getContextPath();
+		LOGGER.trace("contextPath : " + this.contextPath); //$NON-NLS-1$
+		this.projectBasePath = this.extractProjectBasePath();
+	}
+	
+	private String extractProjectBasePath() {
 		
-		final String allPath = SEVLET_CONTEXT.getRealPath(""); //$NON-NLS-1$
+		final String allPath = this.servletContet.getRealPath(""); //$NON-NLS-1$
+		
 		final String projectPath = new File("").getAbsolutePath(); //$NON-NLS-1$
 		final String relativePath = allPath.replace(projectPath, ""); //$NON-NLS-1$
 		final String javaPath = relativePath.replaceAll(Matcher.quoteReplacement("\\"), "/"); //$NON-NLS-1$//$NON-NLS-2$
 		return javaPath.substring(1, javaPath.length() - 1);
 	}
 	
-	private static void initialize() {
+	public List<File> getMachedResources(final String viewPath) {
 		
-		try {
-			PROJECT_BASE_PATH = extractProjectBasePath();
-			RESOURCE_BASE_PATH = "/resources/custom/views/"; //$NON-NLS-1$
-			VIEWS_BASE_PATH = "/WEB-INF/views/"; //$NON-NLS-1$
-		} catch (final Exception e) {
-			// do nothing
-		}
-	}
-	
-	public static void load(final ServletContext servletContext) {
-		
-		SEVLET_CONTEXT = servletContext;
-		initialize();
-	}
-	
-	private final String viewPath;
-	
-	/**
-	 * {@link ResourceChannel} 클래스의 새 인스턴스를 초기화 합니다.
-	 *
-	 * @author jeong
-	 * @since 2017. 3. 2. 오후 8:58:10
-	 * @param viewPath
-	 */
-	public ResourceChannel(final String viewPath) {
-		
-		this.viewPath = viewPath;
-	}
-	
-	public List<File> getMachedResources() {
+		LOGGER.trace("viewPath : " + viewPath); //$NON-NLS-1$
 		
 		final List<File> result = new LinkedList<>();
-		if (this.viewPath == null) {
+		if (viewPath == null) {
 			return result;
 		}
+		final String viewDirectory = FilenameUtils.getFullPath(viewPath);
+		LOGGER.trace("viewDirectory : " + viewDirectory); //$NON-NLS-1$
+		final String resourceDirectory = viewDirectory.replace(this.viewsBasePath, this.resourceBasePath);
+		LOGGER.trace("resourceDirectory : " + resourceDirectory); //$NON-NLS-1$
 		
-		final String viewDirectory = FilenameUtils.getFullPath(this.viewPath);
-		final String resourceDirectory = viewDirectory.replace(VIEWS_BASE_PATH, RESOURCE_BASE_PATH);
-		
-		final File resourceDirectoryFile = new File(PROJECT_BASE_PATH + resourceDirectory);
+		final File resourceDirectoryFile = new File(this.projectBasePath + resourceDirectory);
+		LOGGER.trace("resourceDirectoryFile : " + resourceDirectoryFile); //$NON-NLS-1$
 		
 		if (resourceDirectoryFile.exists() == false) {
 			return result;
 		}
 		
-		final File[] listFiles = resourceDirectoryFile.listFiles();
+		final File[] innerFiles = resourceDirectoryFile.listFiles();
+		if (LOGGER.isTraceEnabled()) {
+			
+			for (final File innerFile : innerFiles) {
+				LOGGER.trace("innerFiles : " + innerFile); //$NON-NLS-1$
+			}
+			
+		}
 		
-		if (listFiles == null) {
+		if (innerFiles == null) {
 			return Collections.emptyList();
 		}
-		for (final File file : listFiles) {
-			if (file.isFile()) {
-				result.add(file);
-			}
-		}
-		return result;
+		
+		return new ArrayList<>(Arrays.asList(innerFiles))
+			.stream()
+			.filter(File::isFile)
+			.collect(Collectors.toList());
 	}
 	
 	public String getTagString(final File file) {
 		
 		final String extension = FilenameUtils.getExtension(file.getPath());
 		final String path = file.getPath().replaceAll(Matcher.quoteReplacement("\\"), "/") //$NON-NLS-1$//$NON-NLS-2$
-			.replaceAll("src/main/webapp/", "/");  //$NON-NLS-1$//$NON-NLS-2$
+			.replaceAll(this.projectBasePath, this.contextPath);
 		
 		switch (extension) {
 			case "css": //$NON-NLS-1$
@@ -114,6 +131,32 @@ public class ResourceChannel {
 			default:
 				return ""; //$NON-NLS-1$
 		}
+	}
+	
+	/**
+	 * resourceBasePath 초기화 합니다.
+	 * 
+	 * @param resourceBasePath
+	 *            초기화 값
+	 * @author 2017. 8. 21. 오전 10:15:44 jeonghyun.kum
+	 * @see {@link #resourceBasePath}
+	 */
+	public void setResourceBasePath(final String resourceBasePath) {
+		
+		this.resourceBasePath = resourceBasePath;
+	}
+	
+	/**
+	 * viewsBasePath 초기화 합니다.
+	 * 
+	 * @param viewsBasePath
+	 *            초기화 값
+	 * @author 2017. 8. 21. 오전 10:15:45 jeonghyun.kum
+	 * @see {@link #viewsBasePath}
+	 */
+	public void setViewsBasePath(final String viewsBasePath) {
+		
+		this.viewsBasePath = viewsBasePath;
 	}
 	
 }

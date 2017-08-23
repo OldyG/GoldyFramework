@@ -48,6 +48,20 @@ public class SuspicionException extends RuntimeException {
 	
 	/**
 	 * {@link SuspicionException} 클래스의 새 인스턴스를 초기화 합니다.
+	 * 
+	 * @author 2017. 8. 23. 오후 1:52:49 jeonghyun.kum
+	 * @param message
+	 *            오류 메세지
+	 * @param cause
+	 *            cause
+	 */
+	public SuspicionException(final String message, final Throwable cause) {
+		super();
+		
+	}
+	
+	/**
+	 * {@link SuspicionException} 클래스의 새 인스턴스를 초기화 합니다.
 	 *
 	 * @author jeong
 	 * @since 2017. 3. 19. 오후 6:09:44

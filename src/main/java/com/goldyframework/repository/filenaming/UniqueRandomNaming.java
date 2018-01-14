@@ -56,7 +56,7 @@ class UniqueRandomNaming implements FileNaming {
 		while (true) {
 			final String randomName = RandomStringGtils.createRandomString(MIN_LENGTH, MAX_LENGTH - MIN_LENGTH);
 			
-			final String fileName = MessageFormat.format("{0}.{1}", randomName, extension); //$NON-NLS-1$
+			final String fileName = MessageFormat.format("{0}.{1}", randomName, extension); 
 			final File tempFile = new File(directory, fileName);
 			
 			if (tempFile.exists() == false) {

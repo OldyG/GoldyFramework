@@ -90,7 +90,7 @@ public class RepositoryServiceImpl implements RepositoryService {
 			final boolean success = file.delete();
 			Does.notUse(success, Because.DO_NOTHING);
 		} catch (final NotRegisteredFileException e) {
-			LOGGER.trace("제거할 파일이 없어 진행하지 않음", e); //$NON-NLS-1$
+			LOGGER.trace("제거할 파일이 없어 진행하지 않음", e); 
 			return;
 		}
 	}
@@ -119,16 +119,16 @@ public class RepositoryServiceImpl implements RepositoryService {
 		
 		final File file = this.getFile();
 		final String fileName = this.repository.getDownloadName();
-		final String docName = new String(fileName.getBytes(Prop.DEFAULT_CHARSET), "ISO-8859-1"); //$NON-NLS-1$
-		final String contentDispositionHeader = "attachment; filename=\"" + docName + "\""; //$NON-NLS-1$//$NON-NLS-2$
+		final String docName = new String(fileName.getBytes(Prop.DEFAULT_CHARSET), "ISO-8859-1"); 
+		final String contentDispositionHeader = "attachment; filename=\"" + docName + "\""; 
 		final InputStreamResource body = new InputStreamResource(new FileInputStream(file));
 		
 		return ResponseEntity
 			.ok()
-			.header("Content-Disposition", contentDispositionHeader) //$NON-NLS-1$
-			.header("Content-Type", "application/octet-stream") //$NON-NLS-1$//$NON-NLS-2$
-			.header("Pragma", "no-cache;") //$NON-NLS-1$//$NON-NLS-2$
-			.header("Content-Transfer-Encoding", "binary;") //$NON-NLS-1$//$NON-NLS-2$
+			.header("Content-Disposition", contentDispositionHeader) 
+			.header("Content-Type", "application/octet-stream") 
+			.header("Pragma", "no-cache;") 
+			.header("Content-Transfer-Encoding", "binary;") 
 			.body(body);
 	}
 	
@@ -199,7 +199,7 @@ public class RepositoryServiceImpl implements RepositoryService {
 		try {
 			file = this.getFile();
 		} catch (final NotRegisteredFileException e) {
-			LOGGER.trace("파일이 없어 신규 파일을 생성합니다.", e); //$NON-NLS-1$
+			LOGGER.trace("파일이 없어 신규 파일을 생성합니다.", e); 
 			final String savePath = this.repository.generateSavePath();
 			file = new File(savePath);
 		}

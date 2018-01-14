@@ -47,7 +47,7 @@ public class ReservationGarbageRepositoryBody extends AbstractRepositoryBody {
 	@Override
 	protected String getBaseName() {
 		
-		return "Garbage"; //$NON-NLS-1$
+		return "Garbage"; 
 	}
 	
 	/**
@@ -87,7 +87,7 @@ public class ReservationGarbageRepositoryBody extends AbstractRepositoryBody {
 	@Override
 	protected String initialDefaultExtension() {
 		
-		return "json"; //$NON-NLS-1$
+		return "json"; 
 	}
 	
 	/**

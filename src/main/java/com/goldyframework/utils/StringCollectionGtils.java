@@ -176,7 +176,7 @@ public class StringCollectionGtils {
 	
 	private StringCollectionGtils() {
 		
-		throw new IllegalStateException("Utility class"); //$NON-NLS-1$
+		throw new IllegalStateException("Utility class"); 
 	}
 	
 }

@@ -103,7 +103,7 @@ public final class PasswordEncryptor {
 		throws NoSuchAlgorithmException, InvalidKeySpecException {
 		
 		final KeySpec spec = new PBEKeySpec(password.toString().toCharArray(), saltbytes, 65_536, 128);
-		final SecretKeyFactory f = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1"); //$NON-NLS-1$
+		final SecretKeyFactory f = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1"); 
 		final byte[] hashbytes = f.generateSecret(spec).getEncoded();
 		
 		return ENCODER.encodeToString(hashbytes);
@@ -124,7 +124,7 @@ public final class PasswordEncryptor {
 		ObjectInspection.checkNull(rawPassword);
 		ObjectInspection.checkNull(encodedPassword);
 		
-		final String[] saltAndPass = encodedPassword.split("\\$"); //$NON-NLS-1$
+		final String[] saltAndPass = encodedPassword.split("\\$"); 
 		final byte[] saltBytes = DECODER.decode(saltAndPass[0]);
 		
 		try {
@@ -145,7 +145,7 @@ public final class PasswordEncryptor {
 	 */
 	private PasswordEncryptor() {
 		
-		throw new IllegalStateException("Utility class"); //$NON-NLS-1$
+		throw new IllegalStateException("Utility class"); 
 	}
 	
 }

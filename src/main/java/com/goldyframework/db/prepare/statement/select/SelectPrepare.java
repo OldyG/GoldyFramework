@@ -67,11 +67,11 @@ public class SelectPrepare extends AbstractPrepare {
 	private String getColumnArea() {
 		
 		if (this.columns.isEmpty()) {
-			return "*"; //$NON-NLS-1$
+			return "*"; 
 		}
 		final List<String> eachPrepend = StringCollectionGtils.eachPrepend(super.getTableName() + '.', this.columns);
 		
-		return StringCollectionGtils.join(eachPrepend, ", "); //$NON-NLS-1$
+		return StringCollectionGtils.join(eachPrepend, ", "); 
 	}
 	
 	/**
@@ -88,9 +88,9 @@ public class SelectPrepare extends AbstractPrepare {
 		final String firstStep;
 		
 		if (this.where.isEmpty()) {
-			firstStep = MessageFormat.format("SELECT {0} FROM {1}", columnArea, tableName); //$NON-NLS-1$
+			firstStep = MessageFormat.format("SELECT {0} FROM {1}", columnArea, tableName); 
 		} else {
-			firstStep = MessageFormat.format("SELECT {0} FROM {1} WHERE {2}", //$NON-NLS-1$
+			firstStep = MessageFormat.format("SELECT {0} FROM {1} WHERE {2}", 
 				columnArea, tableName, this.where.build());
 		}
 		
@@ -98,7 +98,7 @@ public class SelectPrepare extends AbstractPrepare {
 			return firstStep;
 		}
 		
-		return MessageFormat.format("{0} {1}", firstStep, this.orderBy.toSql()); //$NON-NLS-1$
+		return MessageFormat.format("{0} {1}", firstStep, this.orderBy.toSql()); 
 		
 	}
 	

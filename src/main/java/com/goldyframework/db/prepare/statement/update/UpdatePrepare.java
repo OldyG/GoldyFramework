@@ -84,7 +84,7 @@ public class UpdatePrepare extends AbstractPrepare {
 		StringInspection.checkBlank(buildedUpdate);
 		StringInspection.checkBlank(buildedWhere);
 		
-		return MessageFormat.format("UPDATE {0} SET {1} WHERE {2}", tableName, buildedUpdate, buildedWhere); //$NON-NLS-1$
+		return MessageFormat.format("UPDATE {0} SET {1} WHERE {2}", tableName, buildedUpdate, buildedWhere); 
 	}
 	
 }

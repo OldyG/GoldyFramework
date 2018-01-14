@@ -46,7 +46,7 @@ class MillisecondNaming implements FileNaming {
 		while (true) {
 			final String millisecond = Long.toString(new Date().getTime());
 			
-			final String fileName = MessageFormat.format("{0}-{1}.{2}", baseName, millisecond, extension); //$NON-NLS-1$
+			final String fileName = MessageFormat.format("{0}-{1}.{2}", baseName, millisecond, extension); 
 			final File tempFile = new File(directory, fileName);
 			
 			if (tempFile.exists() == false) {

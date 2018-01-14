@@ -51,7 +51,7 @@ public final class Response {
 	/**
 	 * content type, charset 기본값
 	 */
-	private static final String CONTENT_TYPE = "{0};charset=UTF-8"; //$NON-NLS-1$
+	private static final String CONTENT_TYPE = "{0};charset=UTF-8"; 
 	
 	public static ResponseEntity<String> badRequest(final BindingResult bindingResult) {
 		
@@ -59,7 +59,7 @@ public final class Response {
 			.stream()
 			.map(ObjectError::getDefaultMessage)
 			.collect(Collectors.toList());
-		final String message = StringCollectionGtils.join(messages, "<br>"); //$NON-NLS-1$
+		final String message = StringCollectionGtils.join(messages, "<br>"); 
 		return Response.badRequest(message);
 	}
 	
@@ -125,7 +125,7 @@ public final class Response {
 	private static HttpHeaders getHeaders(final String mediaType) {
 		
 		final HttpHeaders headers = new HttpHeaders();
-		headers.add("Content-Type", MessageFormat.format(Response.CONTENT_TYPE, mediaType)); //$NON-NLS-1$
+		headers.add("Content-Type", MessageFormat.format(Response.CONTENT_TYPE, mediaType)); 
 		return headers;
 	}
 	
@@ -144,11 +144,11 @@ public final class Response {
 		final byte[] content = FileUtils.readFileToByteArray(file);
 		
 		String extension = FilenameUtils.getExtension(file.getAbsolutePath()).toLowerCase(Locale.getDefault());
-		if ("jpg".equals(extension)) { //$NON-NLS-1$
-			extension = "jpeg"; //$NON-NLS-1$
+		if ("jpg".equals(extension)) { 
+			extension = "jpeg"; 
 		}
 		
-		final String mediaType = "image/" + extension;  //$NON-NLS-1$
+		final String mediaType = "image/" + extension;  
 		
 		return ok(content, mediaType);
 		
@@ -163,7 +163,7 @@ public final class Response {
 	 */
 	public static ResponseEntity<String> ok() {
 		
-		return Response.ok("success"); //$NON-NLS-1$
+		return Response.ok("success"); 
 	}
 	
 	/**
@@ -228,7 +228,7 @@ public final class Response {
 	public static ResponseEntity<String> redirect(final String url) {
 		
 		final HttpHeaders headers = new HttpHeaders();
-		headers.add("Location", url); //$NON-NLS-1$
+		headers.add("Location", url); 
 		return new ResponseEntity<>(headers, HttpStatus.FOUND);
 	}
 	
@@ -259,7 +259,7 @@ public final class Response {
 		} else {
 			final String string;
 			if (body == null) {
-				string = "null"; //$NON-NLS-1$
+				string = "null"; 
 			} else {
 				string = body.toString();
 			}
@@ -334,6 +334,6 @@ public final class Response {
 	 */
 	private Response() {
 		
-		throw new IllegalStateException("Utility class"); //$NON-NLS-1$
+		throw new IllegalStateException("Utility class"); 
 	}
 }

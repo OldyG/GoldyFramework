@@ -29,10 +29,10 @@ public class OrderByBuilder extends ConcurrentHashMap<String, OrderType> {
 		
 		final List<String> temp = new ArrayList<>();
 		for (final Entry<String, OrderType> entry : this.entrySet()) {
-			temp.add(MessageFormat.format("{0} {1}", entry.getKey(), entry.getValue().toString())); //$NON-NLS-1$
+			temp.add(MessageFormat.format("{0} {1}", entry.getKey(), entry.getValue().toString())); 
 		}
 		
-		return "ORDER BY " + StringCollectionGtils.join(temp, ", "); //$NON-NLS-1$ //$NON-NLS-2$
+		return "ORDER BY " + StringCollectionGtils.join(temp, ", ");  
 	}
 	
 }

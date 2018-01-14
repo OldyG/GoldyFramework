@@ -20,27 +20,27 @@ enum Algorithm {
 	/**
 	 * MD2 Algolithm
 	 */
-	MD2("MD2"), //$NON-NLS-1$
+	MD2("MD2"), 
 	/**
 	 * MD5 Algolithm
 	 */
-	MD5("MD5"), //$NON-NLS-1$
+	MD5("MD5"), 
 	/**
 	 * SHA-1 Algolithm
 	 */
-	SHA1("SHA-1"), //$NON-NLS-1$
+	SHA1("SHA-1"), 
 	/**
 	 * SHA-256 Algolithm
 	 */
-	SHA256("SHA-256"), //$NON-NLS-1$
+	SHA256("SHA-256"), 
 	/**
 	 * SHA-384 Algolithm
 	 */
-	SHA384("SHA-384"), //$NON-NLS-1$
+	SHA384("SHA-384"), 
 	/**
 	 * SHA-512 Algolithm
 	 */
-	SHA512("SHA-512"); //$NON-NLS-1$
+	SHA512("SHA-512"); 
 	
 	/**
 	 * 알고리즘 이름

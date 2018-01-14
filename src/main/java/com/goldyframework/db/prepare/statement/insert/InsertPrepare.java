@@ -60,9 +60,9 @@ public class InsertPrepare extends AbstractPrepare {
 		final List<String> detailColumn = StringCollectionGtils.eachPrepend(this.getTableName() + '.',
 			this.assign.getColumns());
 		
-		return MessageFormat.format("INSERT INTO {0} ({1}) VALUES ({2})",  //$NON-NLS-1$
+		return MessageFormat.format("INSERT INTO {0} ({1}) VALUES ({2})",  
 			super.getTableName(),
-			StringCollectionGtils.join(detailColumn, ", "), //$NON-NLS-1$
+			StringCollectionGtils.join(detailColumn, ", "), 
 			super.joinMark(detailColumn.size()));
 	}
 	

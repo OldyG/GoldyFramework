@@ -21,7 +21,7 @@ import com.google.common.base.Throwables;
  */
 public class TimeStampBinder implements IBinder<Date> {
 	
-	private static final String FORMAT = "yyyy-MM-dd hh:mm:ss"; //$NON-NLS-1$
+	private static final String FORMAT = "yyyy-MM-dd hh:mm:ss"; 
 	
 	/**
 	 * {@inheritDoc}

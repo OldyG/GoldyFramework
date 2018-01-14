@@ -40,11 +40,11 @@ import com.goldyframework.utils.NullGtils;
 public class Encryption {
 	
 	private enum Transformation {
-		AES_CBC_PKCS5PADDING("AES/CBC/PKCS5PADDING"), //$NON-NLS-1$
+		AES_CBC_PKCS5PADDING("AES/CBC/PKCS5PADDING"), 
 		
-		DESEDE_ECB_PKCS5PADDING("DESede/ECB/PKCS5Padding"), //$NON-NLS-1$
+		DESEDE_ECB_PKCS5PADDING("DESede/ECB/PKCS5Padding"), 
 		
-		AES_GCM_NOPADDING("AES/GCM/NoPadding"); //$NON-NLS-1$
+		AES_GCM_NOPADDING("AES/GCM/NoPadding"); 
 		
 		private final String value;
 		
@@ -63,7 +63,7 @@ public class Encryption {
 	private static final Transformation TRANSFORMATION = Transformation.AES_CBC_PKCS5PADDING;
 	
 	private static final byte[] HASHCODE = new BigInteger(
-		"76410acb8e8fba45348fb639b6f4f0524acc4e83a463d0a11316a18d71064791b8776a193720668a7e6227f2fb229d55", 16) //$NON-NLS-1$
+		"76410acb8e8fba45348fb639b6f4f0524acc4e83a463d0a11316a18d71064791b8776a193720668a7e6227f2fb229d55", 16) 
 			.toByteArray();
 	
 	/**
@@ -126,7 +126,7 @@ public class Encryption {
 		ObjectInspection.checkNull(data);
 		try {
 			final IvParameterSpec iv = new IvParameterSpec(this.createIv());
-			final SecretKeySpec skeySpec = new SecretKeySpec(this.createKey(), "AES"); //$NON-NLS-1$
+			final SecretKeySpec skeySpec = new SecretKeySpec(this.createKey(), "AES"); 
 			
 			final Cipher cipher = Cipher.getInstance(TRANSFORMATION.value);
 			cipher.init(Cipher.DECRYPT_MODE, skeySpec, iv);
@@ -136,7 +136,7 @@ public class Encryption {
 			return new String(original, Prop.DEFAULT_CHARSET);
 		} catch (IllegalBlockSizeException | BadPaddingException | InvalidKeyException
 			| InvalidAlgorithmParameterException | NoSuchAlgorithmException | NoSuchPaddingException e) {
-			LOGGER.error("암호화된 문자열을 복호화하는 중 오류 발생", e); //$NON-NLS-1$
+			LOGGER.error("암호화된 문자열을 복호화하는 중 오류 발생", e); 
 			throw new EncryptionException(e);
 		}
 		
@@ -157,7 +157,7 @@ public class Encryption {
 		
 		try {
 			final IvParameterSpec iv = new IvParameterSpec(this.createIv());
-			final SecretKeySpec skeySpec = new SecretKeySpec(this.createKey(), "AES"); //$NON-NLS-1$
+			final SecretKeySpec skeySpec = new SecretKeySpec(this.createKey(), "AES"); 
 			
 			final Cipher cipher = Cipher.getInstance(TRANSFORMATION.value);
 			cipher.init(Cipher.ENCRYPT_MODE, skeySpec, iv);
@@ -167,7 +167,7 @@ public class Encryption {
 			return Base64.encode(encrypted);
 		} catch (IllegalBlockSizeException | BadPaddingException | InvalidKeyException
 			| InvalidAlgorithmParameterException | NoSuchAlgorithmException | NoSuchPaddingException e) {
-			LOGGER.error("데이터를 암호화하는 중 오류 발생", e); //$NON-NLS-1$
+			LOGGER.error("데이터를 암호화하는 중 오류 발생", e); 
 			throw new EncryptionException(e);
 		}
 		

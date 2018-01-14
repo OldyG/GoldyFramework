@@ -60,7 +60,7 @@ public class DeletePrepare extends AbstractPrepare {
 		StringInspection.checkBlank(tableName);
 		StringInspection.checkBlank(buildedWhere);
 		
-		return MessageFormat.format("DELETE FROM {0} WHERE {1}", tableName, buildedWhere); //$NON-NLS-1$
+		return MessageFormat.format("DELETE FROM {0} WHERE {1}", tableName, buildedWhere); 
 	}
 	
 }

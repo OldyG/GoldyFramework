@@ -62,7 +62,7 @@ public class JdbcPrepareTemplate extends JdbcTemplate {
 	 */
 	public void begin() {
 		
-		super.update("begin work;"); //$NON-NLS-1$
+		super.update("begin work;"); 
 		
 	}
 	
@@ -71,7 +71,7 @@ public class JdbcPrepareTemplate extends JdbcTemplate {
 	 */
 	public void commit() {
 		
-		super.update("commit;"); //$NON-NLS-1$
+		super.update("commit;"); 
 	}
 	
 	/**
@@ -95,7 +95,7 @@ public class JdbcPrepareTemplate extends JdbcTemplate {
 		try {
 			super.update(prepareSql, this.toArray(args));
 		} catch (final DuplicateKeyException e) {
-			final String message = MessageFormat.format("{0}테이블에 중복 데이터가 존재합니다.", insert.getTableName()); //$NON-NLS-1$
+			final String message = MessageFormat.format("{0}테이블에 중복 데이터가 존재합니다.", insert.getTableName()); 
 			throw new DuplicateRecordException(message, e);
 		}
 	}
@@ -105,7 +105,7 @@ public class JdbcPrepareTemplate extends JdbcTemplate {
 	 */
 	public void rollback() {
 		
-		super.update("rollback work;"); //$NON-NLS-1$
+		super.update("rollback work;"); 
 	}
 	
 	/**
@@ -122,7 +122,7 @@ public class JdbcPrepareTemplate extends JdbcTemplate {
 			return super.queryForObject(select.toPrepareSql(), this.toArray(select.getArgs()), mapper);
 		} catch (final IncorrectResultSizeDataAccessException e) {
 			
-			final String message = MessageFormat.format("쿼리 [{0}]에 해당하는 값이 1개가 아닙니다. : {1}", //$NON-NLS-1$
+			final String message = MessageFormat.format("쿼리 [{0}]에 해당하는 값이 1개가 아닙니다. : {1}", 
 				select.toPrepareSql(), e.getMessage()); // $NON-NLS-1$
 			throw new NoSingleDataException(message, e);
 		}

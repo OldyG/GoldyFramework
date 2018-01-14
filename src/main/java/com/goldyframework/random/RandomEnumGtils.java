@@ -23,7 +23,7 @@ public class RandomEnumGtils {
 		ObjectInspection.checkNull(enumClass);
 		
 		if (enumClass.isEnum() == false) {
-			throw new IllegalArgumentException(enumClass.getName() + "클래스는 Enum클래스가 아닙니다."); //$NON-NLS-1$
+			throw new IllegalArgumentException(enumClass.getName() + "클래스는 Enum클래스가 아닙니다."); 
 		}
 		
 		final T[] enumConstants = enumClass.getEnumConstants();

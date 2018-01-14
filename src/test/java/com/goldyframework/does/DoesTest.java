@@ -37,7 +37,7 @@ public class DoesTest {
 	public void testInputObject() {
 		
 		Does.notUse(this, Because.WANT_NOT_STATIC_FUNCTION);
-		Assert.assertTrue("", Boolean.TRUE); //$NON-NLS-1$
+		Assert.assertTrue("", Boolean.TRUE); 
 	}
 	
 }

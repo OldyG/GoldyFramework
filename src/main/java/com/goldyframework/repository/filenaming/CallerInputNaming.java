@@ -41,7 +41,7 @@ class CallerInputNaming implements FileNaming {
 		ObjectInspection.checkNull(directory);
 		ObjectInspection.checkNull(baseName);
 		ObjectInspection.checkNull(extension);
-		return MessageFormat.format("{0}{1}.{2}", directory, baseName, extension); //$NON-NLS-1$
+		return MessageFormat.format("{0}{1}.{2}", directory, baseName, extension); 
 	}
 	
 }

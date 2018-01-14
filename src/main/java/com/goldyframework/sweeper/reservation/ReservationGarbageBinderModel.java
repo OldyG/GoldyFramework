@@ -38,7 +38,7 @@ class ReservationGarbageBinderModel {
 			final Class<?> reservation = Class.forName(target);
 			return (Class<AbstractReservationGarbage>) reservation;
 		} catch (final ClassNotFoundException | LinkageError e) {
-			LOGGER.error(MessageFormat.format("{0}캐스팅에 실패하였습니다.", e)); //$NON-NLS-1$
+			LOGGER.error(MessageFormat.format("{0}캐스팅에 실패하였습니다.", e)); 
 			return null;
 		}
 	}

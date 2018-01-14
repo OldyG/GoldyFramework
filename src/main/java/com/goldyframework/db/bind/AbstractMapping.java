@@ -72,7 +72,7 @@ public abstract class AbstractMapping<V> extends LinkedHashMap<String, ResultSet
 		
 		ObjectInspection.checkNull(key);
 		if (this.containsKey(key) == false) {
-			throw new IllegalArgumentException(key + "가 존재하지 않습니다."); //$NON-NLS-1$
+			throw new IllegalArgumentException(key + "가 존재하지 않습니다."); 
 		}
 		
 		return new StringBuilder()
@@ -91,7 +91,7 @@ public abstract class AbstractMapping<V> extends LinkedHashMap<String, ResultSet
 		
 		final Set<String> keys = super.keySet();
 		final List<String> eachPrepend = StringCollectionGtils.eachPrepend(this.tableName + '.', keys);
-		return StringCollectionGtils.join(eachPrepend, ", "); //$NON-NLS-1$
+		return StringCollectionGtils.join(eachPrepend, ", "); 
 		
 	}
 	

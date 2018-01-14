@@ -39,7 +39,7 @@ public class EmailForm {
 	/**
 	 * 제목 구간 기본 이름
 	 */
-	private static final String DEFAULT_TITLE_NAME = "메일 서비스"; //$NON-NLS-1$
+	private static final String DEFAULT_TITLE_NAME = "메일 서비스"; 
 	
 	/**
 	 * 이메일 본문 구간 {@link Elements}를 반환한다.
@@ -51,7 +51,7 @@ public class EmailForm {
 	 */
 	private static Elements getBodyElements(final Document doc) {
 		
-		final Elements body = doc.select(".email_box>.base>.body>.input_area "); //$NON-NLS-1$
+		final Elements body = doc.select(".email_box>.base>.body>.input_area "); 
 		body.empty();
 		return body;
 	}
@@ -66,7 +66,7 @@ public class EmailForm {
 	 */
 	private static Elements getTitleElements(final Document doc) {
 		
-		final Elements title = doc.select(".email_box>.base>.header>.input_area"); //$NON-NLS-1$
+		final Elements title = doc.select(".email_box>.base>.header>.input_area"); 
 		title.empty();
 		return title;
 	}

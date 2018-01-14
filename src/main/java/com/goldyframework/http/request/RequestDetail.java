@@ -329,7 +329,7 @@ public class RequestDetail {
 		try {
 			return new ObjectMapper().writerWithDefaultPrettyPrinter().writeValueAsString(this);
 		} catch (final JsonProcessingException e) {
-			LOGGER.trace("Jackson을 통한 출력에 실패하여 Gson을 통하여 캐스팅합니다.", e); //$NON-NLS-1$
+			LOGGER.trace("Jackson을 통한 출력에 실패하여 Gson을 통하여 캐스팅합니다.", e); 
 			return JsonGtils.toGson(this);
 		}
 		

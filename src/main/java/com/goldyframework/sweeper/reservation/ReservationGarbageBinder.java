@@ -110,7 +110,7 @@ public final class ReservationGarbageBinder {
 	 */
 	private ReservationGarbageBinder() {
 		
-		throw new IllegalStateException("Utility class"); //$NON-NLS-1$
+		throw new IllegalStateException("Utility class"); 
 	}
 	
 }

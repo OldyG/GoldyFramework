@@ -121,7 +121,7 @@ public class ChecksumAnalyserTest extends Mockito {
 		final Checksum checksum = analyser.analyze();
 		final Method[] declaredMethods = checksum.getClass().getDeclaredMethods();
 		for (final Method method : declaredMethods) {
-			if (method.getName().startsWith("get")) { //$NON-NLS-1$
+			if (method.getName().startsWith("get")) { 
 				Assert.assertNotNull("null 이 아닌지 검사", method.invoke(checksum));
 			}
 		}

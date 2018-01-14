@@ -16,9 +16,9 @@ public enum MapperMode {
 	public static MapperMode lookUp(final String arg) {
 		
 		switch (arg.toUpperCase()) {
-			case "AUTO": //$NON-NLS-1$
+			case "AUTO": 
 				return AUTO;
-			case "RELATIVE": //$NON-NLS-1$
+			case "RELATIVE": 
 				return RELATIVE;
 			default:
 				return null;

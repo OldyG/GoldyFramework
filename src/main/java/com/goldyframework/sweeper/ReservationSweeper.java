@@ -128,7 +128,7 @@ public class ReservationSweeper implements ISweeper {
 	 */
 	private static void moveToDoneDriectory(final File garbageFile) {
 		
-		final File movingTarget = getChildDirectory(garbageFile, "Done"); //$NON-NLS-1$
+		final File movingTarget = getChildDirectory(garbageFile, "Done"); 
 		final boolean success = garbageFile.renameTo(movingTarget);
 		Does.notUse(success, Because.DO_NOTHING);
 	}
@@ -142,7 +142,7 @@ public class ReservationSweeper implements ISweeper {
 	 */
 	private static void moveToFailureDirectory(final File garbageFile) {
 		
-		final File movingTarget = getChildDirectory(garbageFile, "Failure"); //$NON-NLS-1$
+		final File movingTarget = getChildDirectory(garbageFile, "Failure"); 
 		final boolean success = garbageFile.renameTo(movingTarget);
 		Does.notUse(success, Because.DO_NOTHING);
 	}
@@ -178,7 +178,7 @@ public class ReservationSweeper implements ISweeper {
 			garbage.clean();
 		} catch (final SweeperException e) {
 			LOGGER.error(
-				MessageFormat.format("{0}파일에서 예외가 발생하였습니다. :{1}", garbageFile.getName(), e.getMessage()), e); //$NON-NLS-1$
+				MessageFormat.format("{0}파일에서 예외가 발생하였습니다. :{1}", garbageFile.getName(), e.getMessage()), e); 
 			moveToFailureDirectory(garbageFile);
 			return;
 		}
@@ -237,7 +237,7 @@ public class ReservationSweeper implements ISweeper {
 			final Map<File, AbstractReservationGarbage> cleaningTarget = extractCleaningTargetGarbage(
 				allReservationGarbage);
 			
-			final String message = MessageFormat.format("전체 예약 항목 : {0}, 삭제 대상 항목 : {1}", //$NON-NLS-1$
+			final String message = MessageFormat.format("전체 예약 항목 : {0}, 삭제 대상 항목 : {1}", 
 				allReservationGarbage.size(), cleaningTarget.size());
 			LOGGER.debug(message);
 			

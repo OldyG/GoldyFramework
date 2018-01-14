@@ -70,7 +70,7 @@ public final class ClassLoaderGtils {
 		try {
 			return createNewFile(url);
 		} catch (final URISyntaxException e) {
-			LOGGER.error("발생 할 수 없는 오류 발생", e); //$NON-NLS-1$
+			LOGGER.error("발생 할 수 없는 오류 발생", e); 
 			return null;
 		}
 	}

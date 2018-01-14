@@ -86,7 +86,7 @@ public class Email {
 	private String convertEncodedString(final String string) throws UnsupportedEncodingException {
 		
 		final byte[] fileNameBytes = string.getBytes(Prop.DEFAULT_CHARSET);
-		return new String(fileNameBytes, "ISO-8859-1"); //$NON-NLS-1$
+		return new String(fileNameBytes, "ISO-8859-1"); 
 	}
 	
 	private MimeBodyPart createAttachmentMimeBodyPart(final AttachmentModel attachment)
@@ -121,7 +121,7 @@ public class Email {
 		this.addBodyPart(multiPart, file);
 		
 		final MimeBodyPart contentPart = new MimeBodyPart();
-		contentPart.setContent(content, "text/html; charset=utf-8"); //$NON-NLS-1$
+		contentPart.setContent(content, "text/html; charset=utf-8"); 
 		multiPart.addBodyPart(contentPart);
 		
 		return multiPart;
@@ -142,7 +142,7 @@ public class Email {
 		
 		final MimeMessage msg = this.mailSender.createMimeMessage();
 		try {
-			msg.setHeader("Content-Type", "text/html; charset=utf-8"); //$NON-NLS-1$//$NON-NLS-2$
+			msg.setHeader("Content-Type", "text/html; charset=utf-8"); 
 			msg.setSentDate(new Date());
 			msg.setFrom(model.getFrom());
 			msg.setReplyTo(new Address[] {
@@ -151,16 +151,16 @@ public class Email {
 			
 			msg.setRecipients(RecipientType.TO,
 				model.getTo().toArray(new InternetAddress[model.getTo().size()]));
-			msg.setSubject(MimeUtility.encodeText(model.getSubject(), Prop.DEFAULT_CHARSET.name(), "B")); //$NON-NLS-1$
+			msg.setSubject(MimeUtility.encodeText(model.getSubject(), Prop.DEFAULT_CHARSET.name(), "B")); 
 			
 			if ((model.getCc() != null) && (model.getCc().isEmpty())) {
 				msg.setRecipients(RecipientType.CC,
 					model.getCc().toArray(new InternetAddress[model.getCc().size()]));
 			}
-			msg.setContent(this.createContentMultipart(model.getText(), model.getAttachmentList()), "text/html"); //$NON-NLS-1$
+			msg.setContent(this.createContentMultipart(model.getText(), model.getAttachmentList()), "text/html"); 
 			return msg;
 		} catch (final MessagingException | UnsupportedEncodingException e) {
-			LOGGER.error("MimeMessage를 생성 중 오류 발생", e); //$NON-NLS-1$
+			LOGGER.error("MimeMessage를 생성 중 오류 발생", e); 
 			throw new EmailException(e);
 		}
 	}
@@ -181,7 +181,7 @@ public class Email {
 			try {
 				this.mailSender.send(msg);
 			} catch (final MailException e) {
-				LOGGER.debug("이메일 전송 실패", e); //$NON-NLS-1$
+				LOGGER.debug("이메일 전송 실패", e); 
 			}
 		});
 	}
@@ -192,7 +192,7 @@ public class Email {
 			return;
 		}
 		
-		LOGGER.debug("이메일 전송 데이터 설정 중"); //$NON-NLS-1$
+		LOGGER.debug("이메일 전송 데이터 설정 중"); 
 		new SendModelValidator().check(sendModel);
 		final MimeMessage msg = this.createMimeMessage(sendModel);
 		final Thread sendAwait = this.createSendTread(msg);

@@ -67,7 +67,7 @@ public final class Does {
 	 */
 	private Does() {
 		
-		throw new IllegalStateException("Utility class"); //$NON-NLS-1$
+		throw new IllegalStateException("Utility class"); 
 	}
 	
 }

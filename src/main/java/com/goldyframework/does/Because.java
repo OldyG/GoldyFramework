@@ -28,7 +28,7 @@ public enum Because {
 	 * }
 	 * </pre>
 	 */
-	WANT_NOT_STATIC_FUNCTION("해당 함수를 can be static가 되지 않도록 함"), //$NON-NLS-1$
+	WANT_NOT_STATIC_FUNCTION("해당 함수를 can be static가 되지 않도록 함"), 
 	
 	/**
 	 * 다음 객체를 처리하지않기 위해서<br>
@@ -39,7 +39,7 @@ public enum Because {
 	 *{@link Does#notUse}(success, {@link Because#DO_NOTHING});
 	 * </pre>
 	 */
-	DO_NOTHING("아무행위도 하지 않음"); //$NON-NLS-1$
+	DO_NOTHING("아무행위도 하지 않음"); 
 	
 	private final String message;
 	

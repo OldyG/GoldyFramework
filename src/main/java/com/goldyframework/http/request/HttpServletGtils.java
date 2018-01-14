@@ -41,12 +41,12 @@ public final class HttpServletGtils {
 		final URL requestUrl = new URL(request.getRequestURL().toString());
 		final String portString;
 		if (requestUrl.getPort() == -1) {
-			portString = ""; //$NON-NLS-1$
+			portString = ""; 
 		} else {
-			portString = ":" + requestUrl.getPort(); //$NON-NLS-1$
+			portString = ":" + requestUrl.getPort(); 
 		}
 		
-		return MessageFormat.format("{0}://{1}{2}{3}/",  //$NON-NLS-1$
+		return MessageFormat.format("{0}://{1}{2}{3}/",  
 			requestUrl.getProtocol(),
 			requestUrl.getHost(),
 			portString, request.getContextPath());
@@ -85,6 +85,6 @@ public final class HttpServletGtils {
 	 */
 	private HttpServletGtils() {
 		
-		throw new IllegalStateException("Utility class"); //$NON-NLS-1$
+		throw new IllegalStateException("Utility class"); 
 	}
 }

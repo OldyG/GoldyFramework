@@ -43,10 +43,10 @@ public abstract class AbstractMailSender extends JavaMailSenderImpl {
 	public synchronized void send(final MimeMessage mimeMessage) {
 		
 		final String threadName = Thread.currentThread().getName();
-		final String readyMessage = MessageFormat.format("[{0}]이메일 전송 중", threadName); //$NON-NLS-1$
+		final String readyMessage = MessageFormat.format("[{0}]이메일 전송 중", threadName); 
 		LOGGER.trace(readyMessage);
 		super.send(mimeMessage);
-		final String finishMessage = MessageFormat.format("[{0}]이메일 전송 완료", threadName); //$NON-NLS-1$
+		final String finishMessage = MessageFormat.format("[{0}]이메일 전송 완료", threadName); 
 		LOGGER.trace(finishMessage);
 	}
 }

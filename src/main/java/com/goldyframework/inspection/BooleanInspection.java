@@ -37,13 +37,13 @@ public final class BooleanInspection {
 		
 		StringInspection.checkBlank(stringBoolean);
 		
-		if ("true".equalsIgnoreCase(stringBoolean)) { //$NON-NLS-1$
+		if ("true".equalsIgnoreCase(stringBoolean)) { 
 			return true;
-		} else if ("false".equalsIgnoreCase(stringBoolean)) { //$NON-NLS-1$
+		} else if ("false".equalsIgnoreCase(stringBoolean)) { 
 			return false;
 		}
 		
-		throw new InspectionException("Boolean타입은 CAST는 문자열 true 또는 false만 처리합니다."); //$NON-NLS-1$
+		throw new InspectionException("Boolean타입은 CAST는 문자열 true 또는 false만 처리합니다."); 
 	}
 	
 	/**
@@ -62,8 +62,8 @@ public final class BooleanInspection {
 		
 		StringInspection.checkBlank(stringBoolean);
 		
-		final Collection<String> trueList = Arrays.asList("true", "1", "t"); //$NON-NLS-1$//$NON-NLS-2$//$NON-NLS-3$
-		final Collection<String> falseList = Arrays.asList("false", "0", "f"); //$NON-NLS-1$//$NON-NLS-2$//$NON-NLS-3$
+		final Collection<String> trueList = Arrays.asList("true", "1", "t"); 
+		final Collection<String> falseList = Arrays.asList("false", "0", "f"); 
 		
 		final String lowerCase = stringBoolean.toLowerCase(Locale.getDefault());
 		
@@ -73,7 +73,7 @@ public final class BooleanInspection {
 			return false;
 		}
 		
-		throw new InspectionException("Boolean타입은 CAST는 문자열 true 또는 false만 처리합니다."); //$NON-NLS-1$
+		throw new InspectionException("Boolean타입은 CAST는 문자열 true 또는 false만 처리합니다."); 
 	}
 	
 	/**
@@ -84,6 +84,6 @@ public final class BooleanInspection {
 	 */
 	private BooleanInspection() {
 		
-		throw new IllegalStateException("Utility class"); //$NON-NLS-1$
+		throw new IllegalStateException("Utility class"); 
 	}
 }

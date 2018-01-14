@@ -106,7 +106,7 @@ public final class ShareFunction {
 	public static String convertNewLineToBrTag(final String data) {
 		
 		ObjectInspection.checkNull(data);
-		return data.replaceAll("(\r\n|\n)", "<br />"); //$NON-NLS-1$//$NON-NLS-2$
+		return data.replaceAll("(\r\n|\n)", "<br />"); 
 	}
 	
 	/**
@@ -152,7 +152,7 @@ public final class ShareFunction {
 		ObjectInspection.checkNull(anno);
 		final StringBuilder builder = new StringBuilder();
 		
-		String deli = ""; //$NON-NLS-1$
+		String deli = ""; 
 		
 		for (final Method method : anno.annotationType().getDeclaredMethods()) {
 			builder.append(deli);
@@ -167,11 +167,11 @@ public final class ShareFunction {
 				} else {
 					builder.append(value);
 				}
-				if ("".equals(deli)) { //$NON-NLS-1$
-					deli = ", "; //$NON-NLS-1$
+				if ("".equals(deli)) { 
+					deli = ", "; 
 				}
 			} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
-				LOGGER.error("Annotation을 toString()하는 중 오류가 발생하였습니다", e); //$NON-NLS-1$
+				LOGGER.error("Annotation을 toString()하는 중 오류가 발생하였습니다", e); 
 			}
 		}
 		return builder.toString();
@@ -185,6 +185,6 @@ public final class ShareFunction {
 	 */
 	private ShareFunction() {
 		
-		throw new IllegalStateException("Utility class"); //$NON-NLS-1$
+		throw new IllegalStateException("Utility class"); 
 	}
 }

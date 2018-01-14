@@ -63,35 +63,35 @@ public class ResourceChannel {
 	public ResourceChannel(final ServletContext servletContet) {
 		this.servletContet = servletContet;
 		this.contextPath = this.servletContet.getContextPath();
-		LOGGER.trace("contextPath : " + this.contextPath); //$NON-NLS-1$
+		LOGGER.trace("contextPath : " + this.contextPath); 
 		this.projectBasePath = this.extractProjectBasePath();
 	}
 	
 	private String extractProjectBasePath() {
 		
-		final String allPath = this.servletContet.getRealPath(""); //$NON-NLS-1$
+		final String allPath = this.servletContet.getRealPath(""); 
 		
-		final String projectPath = new File("").getAbsolutePath(); //$NON-NLS-1$
-		final String relativePath = allPath.replace(projectPath, ""); //$NON-NLS-1$
-		final String javaPath = relativePath.replaceAll(Matcher.quoteReplacement("\\"), "/"); //$NON-NLS-1$//$NON-NLS-2$
+		final String projectPath = new File("").getAbsolutePath(); 
+		final String relativePath = allPath.replace(projectPath, ""); 
+		final String javaPath = relativePath.replaceAll(Matcher.quoteReplacement("\\"), "/"); 
 		return javaPath.substring(1, javaPath.length() - 1);
 	}
 	
 	public List<File> getMachedResources(final String viewPath) {
 		
-		LOGGER.trace("viewPath : " + viewPath); //$NON-NLS-1$
+		LOGGER.trace("viewPath : " + viewPath); 
 		
 		final List<File> result = new LinkedList<>();
 		if (viewPath == null) {
 			return result;
 		}
 		final String viewDirectory = FilenameUtils.getFullPath(viewPath);
-		LOGGER.trace("viewDirectory : " + viewDirectory); //$NON-NLS-1$
+		LOGGER.trace("viewDirectory : " + viewDirectory); 
 		final String resourceDirectory = viewDirectory.replace(this.viewsBasePath, this.resourceBasePath);
-		LOGGER.trace("resourceDirectory : " + resourceDirectory); //$NON-NLS-1$
+		LOGGER.trace("resourceDirectory : " + resourceDirectory); 
 		
 		final File resourceDirectoryFile = new File(this.projectBasePath + resourceDirectory);
-		LOGGER.trace("resourceDirectoryFile : " + resourceDirectoryFile); //$NON-NLS-1$
+		LOGGER.trace("resourceDirectoryFile : " + resourceDirectoryFile); 
 		
 		if (resourceDirectoryFile.exists() == false) {
 			return result;
@@ -101,7 +101,7 @@ public class ResourceChannel {
 		if (LOGGER.isTraceEnabled()) {
 			
 			for (final File innerFile : innerFiles) {
-				LOGGER.trace("innerFiles : " + innerFile); //$NON-NLS-1$
+				LOGGER.trace("innerFiles : " + innerFile); 
 			}
 			
 		}
@@ -119,17 +119,17 @@ public class ResourceChannel {
 	public String getTagString(final File file) {
 		
 		final String extension = FilenameUtils.getExtension(file.getPath());
-		final String path = file.getPath().replaceAll(Matcher.quoteReplacement("\\"), "/") //$NON-NLS-1$//$NON-NLS-2$
+		final String path = file.getPath().replaceAll(Matcher.quoteReplacement("\\"), "/") 
 			.replaceAll(this.projectBasePath, this.contextPath);
 		
 		switch (extension) {
-			case "css": //$NON-NLS-1$
-				return MessageFormat.format("<link rel=\"stylesheet\" type=\"text/css\" href=\"{0}\" />", path); //$NON-NLS-1$
-			case "js": //$NON-NLS-1$
-				return MessageFormat.format("<script type=\"text/javascript\" src=\"{0}\"></script>", path); //$NON-NLS-1$
+			case "css": 
+				return MessageFormat.format("<link rel=\"stylesheet\" type=\"text/css\" href=\"{0}\" />", path); 
+			case "js": 
+				return MessageFormat.format("<script type=\"text/javascript\" src=\"{0}\"></script>", path); 
 				
 			default:
-				return ""; //$NON-NLS-1$
+				return ""; 
 		}
 	}
 	

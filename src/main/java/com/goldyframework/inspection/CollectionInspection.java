@@ -31,7 +31,7 @@ public class CollectionInspection {
 		ObjectInspection.checkNull(targetList);
 		
 		if (targetList.isEmpty()) {
-			throw new InspectionException("리스트 사이즈가 0이 될 수 없습니다."); //$NON-NLS-1$
+			throw new InspectionException("리스트 사이즈가 0이 될 수 없습니다."); 
 		}
 		
 	}
@@ -39,7 +39,7 @@ public class CollectionInspection {
 	public static void checkSize(final Collection<?> collection, final int validSize) {
 		
 		if (isSize(collection, validSize) == false) {
-			throw new InspectionException(MessageFormat.format("컬렉션 사이즈는 반드시 [{0}]이어야합니다.", validSize)); //$NON-NLS-1$
+			throw new InspectionException(MessageFormat.format("컬렉션 사이즈는 반드시 [{0}]이어야합니다.", validSize)); 
 		}
 	}
 	

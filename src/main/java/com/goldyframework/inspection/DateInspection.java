@@ -34,7 +34,7 @@ public final class DateInspection {
 		ObjectInspection.checkNull(date);
 		
 		if ((date.getTime() > new Date().getTime()) == false) {
-			throw new InspectionException("과거날짜를 입력 할 수 없습니다."); //$NON-NLS-1$
+			throw new InspectionException("과거날짜를 입력 할 수 없습니다."); 
 		}
 	}
 	
@@ -52,7 +52,7 @@ public final class DateInspection {
 		ObjectInspection.checkNull(date);
 		
 		if ((date.getTime() < new Date().getTime()) == false) {
-			throw new InspectionException("과거 날짜로 입력셔야합니다."); //$NON-NLS-1$
+			throw new InspectionException("과거 날짜로 입력셔야합니다."); 
 		}
 	}
 	
@@ -64,6 +64,6 @@ public final class DateInspection {
 	 */
 	private DateInspection() {
 		
-		throw new IllegalStateException("Utility class"); //$NON-NLS-1$
+		throw new IllegalStateException("Utility class"); 
 	}
 }

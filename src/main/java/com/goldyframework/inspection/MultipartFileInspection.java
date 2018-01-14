@@ -38,7 +38,7 @@ public final class MultipartFileInspection {
 		ObjectInspection.checkNull(mpFile);
 		
 		if (mpFile.isEmpty()) {
-			throw new InspectionException("빈 파일입니다."); //$NON-NLS-1$
+			throw new InspectionException("빈 파일입니다."); 
 		}
 	}
 	
@@ -66,7 +66,7 @@ public final class MultipartFileInspection {
 				return;
 			}
 		}
-		throw new InspectionException(validExtentions + "가 아닙니다."); //$NON-NLS-1$
+		throw new InspectionException(validExtentions + "가 아닙니다."); 
 	}
 	
 	/**
@@ -90,20 +90,20 @@ public final class MultipartFileInspection {
 		try {
 			IntegerInspection.checkBelowZero((int) multipartFile.getSize());
 		} catch (final InspectionException e) {
-			throw new InspectionException("파일 사이즈가 0입니다.", e); //$NON-NLS-1$
+			throw new InspectionException("파일 사이즈가 0입니다.", e); 
 		}
 		
 		try {
 			StringInspection.checkBlank(multipartFile.getOriginalFilename());
 		} catch (final InspectionException e) {
-			throw new InspectionException("파일 이름이 없습니다.", e); //$NON-NLS-1$
+			throw new InspectionException("파일 이름이 없습니다.", e); 
 		}
 		
 		try {
 			final String originalFilename = multipartFile.getOriginalFilename();
 			StringInspection.checkBlank(FilenameUtils.getBaseName(originalFilename));
 		} catch (final InspectionException e) {
-			throw new InspectionException("확장자를 제외한 파일이름이 비어있습니다.", e); //$NON-NLS-1$
+			throw new InspectionException("확장자를 제외한 파일이름이 비어있습니다.", e); 
 		}
 	}
 	
@@ -133,7 +133,7 @@ public final class MultipartFileInspection {
 	 */
 	private MultipartFileInspection() {
 		
-		throw new IllegalStateException("Utility class"); //$NON-NLS-1$
+		throw new IllegalStateException("Utility class"); 
 	}
 	
 }

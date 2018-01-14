@@ -39,7 +39,7 @@ public final class IntegerInspection {
 	private static void checkAbove(final int target, final int maximumValue) {
 		
 		if (target >= maximumValue) {
-			throw new InspectionException(maximumValue + "이상으로 초기화될수 없습니다. : " + target); //$NON-NLS-1$
+			throw new InspectionException(maximumValue + "이상으로 초기화될수 없습니다. : " + target); 
 		}
 		
 	}
@@ -47,7 +47,7 @@ public final class IntegerInspection {
 	public static void checkBelow(final int target, final int minimumValue) {
 		
 		if (target <= minimumValue) {
-			throw new InspectionException(minimumValue + "이하로 초기화될수 없습니다. : " + target); //$NON-NLS-1$
+			throw new InspectionException(minimumValue + "이하로 초기화될수 없습니다. : " + target); 
 		}
 		
 	}
@@ -85,7 +85,7 @@ public final class IntegerInspection {
 			Does.notUse(parseInt, Because.DO_NOTHING);
 			return true;
 		} catch (final NumberFormatException e) {
-			final String message = MessageFormat.format("Character [{0}]은 Int형으로 변환할 수 없습니다.", character); //$NON-NLS-1$
+			final String message = MessageFormat.format("Character [{0}]은 Int형으로 변환할 수 없습니다.", character); 
 			LOGGER.trace(message, e);
 			return false;
 		}
@@ -130,7 +130,7 @@ public final class IntegerInspection {
 			return Integer.parseInt(stringNumber);
 		}
 		
-		throw new InspectionException("Integer 형식이 아닙니다. : " + stringNumber); //$NON-NLS-1$
+		throw new InspectionException("Integer 형식이 아닙니다. : " + stringNumber); 
 	}
 	
 	/**
@@ -141,6 +141,6 @@ public final class IntegerInspection {
 	 */
 	private IntegerInspection() {
 		
-		throw new IllegalStateException("Utility class"); //$NON-NLS-1$
+		throw new IllegalStateException("Utility class"); 
 	}
 }

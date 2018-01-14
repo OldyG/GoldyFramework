@@ -49,7 +49,7 @@ public class AssignBuilder {
 		
 		final List<String> tableColumnList = this.where.createTableColumnList();
 		
-		return StringCollectionGtils.join(tableColumnList, ", "); //$NON-NLS-1$
+		return StringCollectionGtils.join(tableColumnList, ", "); 
 	}
 	
 	/**

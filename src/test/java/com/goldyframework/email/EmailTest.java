@@ -60,9 +60,9 @@ public class EmailTest extends Mockito {
 		doAnswer(invocation -> {
 			final Random secureRandom = new SecureRandom();
 			final int result = secureRandom.nextInt(200) + 100;
-			LOGGER.trace("[이메일 테스트] 전송중" + result); //$NON-NLS-1$
+			LOGGER.trace("[이메일 테스트] 전송중" + result); 
 			Thread.sleep(result);
-			LOGGER.trace("[이메일 테스트] 전송완료" + result); //$NON-NLS-1$
+			LOGGER.trace("[이메일 테스트] 전송완료" + result); 
 			return null;
 		}).when(this.mailSender).send(any(MimeMessage.class));
 		
@@ -91,15 +91,15 @@ public class EmailTest extends Mockito {
 	public void testSend() throws EmailException, AddressException, UnsupportedEncodingException, InterruptedException {
 		
 		final EmailForm emailContentForm = new EmailForm(EmailFormDesignType.INFOMATION);
-		emailContentForm.setTitleName("JUNIT TEST"); //$NON-NLS-1$
-		emailContentForm.inputBody("<div>내용입니다.</div>"); //$NON-NLS-1$
+		emailContentForm.setTitleName("JUNIT TEST"); 
+		emailContentForm.inputBody("<div>내용입니다.</div>"); 
 		
 		final String result = emailContentForm.parse();
-		final SendModel prop = new SendModel(new InternetAddress("hokkk01@naver.com"), "JUNIT TEST"); //$NON-NLS-1$//$NON-NLS-2$
+		final SendModel prop = new SendModel(new InternetAddress("hokkk01@naver.com"), "JUNIT TEST"); 
 		
 		prop.setTo(Arrays.asList(
-			new InternetAddress("hokkk01@naver.com", "금정금정현"), //$NON-NLS-1$//$NON-NLS-2$
-			new InternetAddress("jhkume90@gmail.com", "금정금정현")));  //$NON-NLS-1$//$NON-NLS-2$
+			new InternetAddress("hokkk01@naver.com", "금정금정현"), 
+			new InternetAddress("jhkume90@gmail.com", "금정금정현")));  
 		prop.setText(result);
 		
 		final MimeMessage msg = this.email.createMimeMessage(prop);

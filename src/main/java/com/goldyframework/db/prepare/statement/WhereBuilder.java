@@ -111,7 +111,7 @@ public class WhereBuilder {
 		
 		final List<String> tableColumnList = this.createTableColumnList();
 		
-		return StringCollectionGtils.join(tableColumnList, " AND "); //$NON-NLS-1$
+		return StringCollectionGtils.join(tableColumnList, " AND "); 
 	}
 	
 	/**
@@ -138,7 +138,7 @@ public class WhereBuilder {
 				final ComparisonValue comparisonValue = copiedWhereMap.get(key);
 				final String comparison = comparisonValue.getComparison().getComparison();
 				
-				return MessageFormat.format("{0} {1} {2}", key, comparison, '?'); //$NON-NLS-1$
+				return MessageFormat.format("{0} {1} {2}", key, comparison, '?'); 
 			})
 			.collect(Collectors.toList());
 	}

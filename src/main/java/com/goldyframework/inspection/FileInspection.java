@@ -36,11 +36,11 @@ public final class FileInspection {
 		StringInspection.checkBlank(file.getAbsolutePath());
 		
 		if (file.isDirectory()) {
-			throw new InspectionException("파일 형식의 주소가 아닙니다."); //$NON-NLS-1$
+			throw new InspectionException("파일 형식의 주소가 아닙니다."); 
 		}
 		
 		if (file.exists() == false) {
-			throw new InspectionException("존재 하지 않은 파일입니다."); //$NON-NLS-1$
+			throw new InspectionException("존재 하지 않은 파일입니다."); 
 		}
 	}
 	
@@ -52,6 +52,6 @@ public final class FileInspection {
 	 */
 	private FileInspection() {
 		
-		throw new IllegalStateException("Utility class"); //$NON-NLS-1$
+		throw new IllegalStateException("Utility class"); 
 	}
 }

@@ -26,7 +26,7 @@ public class AlgorithmTest {
 	public void testGetName() {
 		
 		final String actual = Algorithm.MD2.getName();
-		Assert.assertEquals("", "MD2", actual); //$NON-NLS-1$//$NON-NLS-2$
+		Assert.assertEquals("", "MD2", actual); 
 	}
 	
 }

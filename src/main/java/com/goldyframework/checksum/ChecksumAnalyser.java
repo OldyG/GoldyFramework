@@ -34,7 +34,7 @@ public class ChecksumAnalyser {
 	@VisibleForTesting
 	static class TestSet implements ITestSet<ChecksumAnalyser> {
 		
-		private final File testFile = ClassLoaderGtils.getFile("checksum/Test File.xml"); //$NON-NLS-1$
+		private final File testFile = ClassLoaderGtils.getFile("checksum/Test File.xml"); 
 		
 		/**
 		 * {@inheritDoc}
@@ -47,7 +47,7 @@ public class ChecksumAnalyser {
 			try {
 				return new ChecksumAnalyser(this.testFile);
 			} catch (final InspectionException e) {
-				LOGGER.error("인스턴스 생성 실패", e); //$NON-NLS-1$
+				LOGGER.error("인스턴스 생성 실패", e); 
 				return null;
 			}
 		}
@@ -122,8 +122,8 @@ public class ChecksumAnalyser {
 			final byte[] byteType = digest.digest();
 			return this.convertDigestToString(byteType);
 		} catch (final NoSuchAlgorithmException | IOException e) {
-			LOGGER.error(MessageFormat.format("체크섬 알고리즘{0} 분석 중 오류 발생", algoritm.getName()), e); //$NON-NLS-1$
-			return "FAIL : " + e.getMessage(); //$NON-NLS-1$
+			LOGGER.error(MessageFormat.format("체크섬 알고리즘{0} 분석 중 오류 발생", algoritm.getName()), e); 
+			return "FAIL : " + e.getMessage(); 
 		}
 	}
 	

@@ -32,7 +32,7 @@ public class ResourceMapper extends GoldyTag {
 	
 	private MapperMode mode = MapperMode.AUTO;
 	
-	private String pattern = "*"; //$NON-NLS-1$
+	private String pattern = "*"; 
 	
 	/**
 	 * {@link ResourceMapper} 클래스의 새 인스턴스를 초기화 합니다.
@@ -118,7 +118,7 @@ public class ResourceMapper extends GoldyTag {
 	
 	public void setPattern(final String pattern) {
 		
-		this.pattern = pattern.replace(".", "\\.").replace("*", ".*"); //$NON-NLS-1$//$NON-NLS-2$//$NON-NLS-3$//$NON-NLS-4$
+		this.pattern = pattern.replace(".", "\\.").replace("*", ".*"); 
 	}
 	
 	private void writeResourceAutoMap() throws IOException {
@@ -129,9 +129,9 @@ public class ResourceMapper extends GoldyTag {
 		for (final File file : matchedResource) {
 			final String name = FilenameUtils.getName(file.getPath());
 			
-			final boolean matched = name.matches("^" + this.pattern + "$"); //$NON-NLS-1$//$NON-NLS-2$
+			final boolean matched = name.matches("^" + this.pattern + "$"); 
 			
-			LOGGER.trace(MessageFormat.format("정의된 패턴 [{0}]을 [{1}]과 비교 : {2}", this.pattern, name, matched)); //$NON-NLS-1$
+			LOGGER.trace(MessageFormat.format("정의된 패턴 [{0}]을 [{1}]과 비교 : {2}", this.pattern, name, matched)); 
 			
 			if (matched) {
 				final String tagString = resourceChannel.getTagString(file);

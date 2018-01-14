@@ -27,7 +27,7 @@ public enum EmailFormDesignType {
 	 * @author jeonghyun.kum
 	 * @since 2016. 4. 26. 오전 10:14:56
 	 */
-	INFOMATION("information.html"), //$NON-NLS-1$
+	INFOMATION("information.html"), 
 	/**
 	 * 경고 이메일 디자인 타입 (미구현)
 	 *
@@ -35,12 +35,12 @@ public enum EmailFormDesignType {
 	 * @since 2016. 4. 26. 오전 10:14:41
 	 */
 	@Deprecated()
-	WARNNING("warnning.html"); //$NON-NLS-1$
+	WARNNING("warnning.html"); 
 	
 	/**
 	 * 기본 위치
 	 */
-	private static final String BASE_LOCATION = "src/main/resources/email/"; //$NON-NLS-1$
+	private static final String BASE_LOCATION = "src/main/resources/email/"; 
 	
 	/**
 	 * 파일 이름

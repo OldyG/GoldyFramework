@@ -37,7 +37,7 @@ public final class ObjectInspection {
 	public static void checkNull(final Object obj) {
 		
 		if (obj == null) {
-			throw new InspectionException("변수에 Null이 할당되었습니다."); //$NON-NLS-1$
+			throw new InspectionException("변수에 Null이 할당되었습니다."); 
 		}
 	}
 	
@@ -102,11 +102,11 @@ public final class ObjectInspection {
 		ObjectInspection.checkNull(validClass);
 		
 		if ((validClass == Integer.class) || (validClass == Boolean.class)) {
-			throw new InspectionException(validClass.getSimpleName() + "는 cast가 불가능합니다."); //$NON-NLS-1$
+			throw new InspectionException(validClass.getSimpleName() + "는 cast가 불가능합니다."); 
 		}
 		
 		if (validClass.isInstance(obj) == false) {
-			throw new InspectionException(validClass.getSimpleName() + " 형식이 아닙니다."); //$NON-NLS-1$
+			throw new InspectionException(validClass.getSimpleName() + " 형식이 아닙니다."); 
 		}
 		
 		return validClass.cast(obj);
@@ -120,6 +120,6 @@ public final class ObjectInspection {
 	 */
 	private ObjectInspection() {
 		
-		throw new IllegalStateException("Utility class"); //$NON-NLS-1$
+		throw new IllegalStateException("Utility class"); 
 	}
 }

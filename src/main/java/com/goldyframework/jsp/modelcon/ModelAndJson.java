@@ -21,7 +21,7 @@ import com.goldyframework.utils.json.JsonGtils;
  */
 public class ModelAndJson {
 	
-	private final String JSON_KEY = "JSON_MODEL"; //$NON-NLS-1$
+	private final String JSON_KEY = "JSON_MODEL"; 
 	
 	private final Map<String, Object> map = new ConcurrentHashMap<>();
 	

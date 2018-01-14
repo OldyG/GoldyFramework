@@ -67,7 +67,7 @@ public abstract class GoldyTag implements Tag {
 			
 			AccessExpression accessExpression;
 			if ((this.access == null) || (this.access.length() == 0)) {
-				accessExpression = new AccessExpression("permitAll", this.pageContext); //$NON-NLS-1$
+				accessExpression = new AccessExpression("permitAll", this.pageContext); 
 			} else {
 				accessExpression = new AccessExpression(this.access, this.pageContext);
 			}
@@ -89,7 +89,7 @@ public abstract class GoldyTag implements Tag {
 	protected String getCurrentPath() {
 		
 		final PageContextImpl attribute = (PageContextImpl) this.pageContext
-			.getAttribute("javax.servlet.jsp.jspPageContext"); //$NON-NLS-1$
+			.getAttribute("javax.servlet.jsp.jspPageContext"); 
 		final ServletRequest request = attribute.getRequest();
 		
 		if (request instanceof SecurityContextHolderAwareRequestWrapper) {

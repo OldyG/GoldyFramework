@@ -157,10 +157,10 @@ public abstract class AbstractRepositoryBody implements RepositoryBody {
 			
 			final String absolutePath = defaultDirectory.getAbsolutePath();
 			if (defaultDirectory.mkdirs()) {
-				final String message = MessageFormat.format("디렉토리 생성 성공{0}", absolutePath); //$NON-NLS-1$
+				final String message = MessageFormat.format("디렉토리 생성 성공{0}", absolutePath); 
 				LOGGER.trace(message);
 			} else {
-				final String message = MessageFormat.format("디렉토리 생성에 실패하였습니다.{0}", absolutePath); //$NON-NLS-1$
+				final String message = MessageFormat.format("디렉토리 생성에 실패하였습니다.{0}", absolutePath); 
 				LOGGER.error(message);
 			}
 			

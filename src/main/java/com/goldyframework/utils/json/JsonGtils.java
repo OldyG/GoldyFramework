@@ -88,7 +88,7 @@ public final class JsonGtils {
 		try {
 			return DEFAULT_GSON.fromJson(json, clazzOfT);
 		} catch (final RuntimeException e) {
-			LOGGER.error("fromGson을 수행중 오류 발생", e); //$NON-NLS-1$
+			LOGGER.error("fromGson을 수행중 오류 발생", e); 
 			return null;
 		}
 	}
@@ -118,7 +118,7 @@ public final class JsonGtils {
 		try {
 			return OBJECT_MAPPER.readValue(json, clazzOfT);
 		} catch (final IOException e) {
-			LOGGER.error("fromJackson을 수행중 오류 발생", e); //$NON-NLS-1$
+			LOGGER.error("fromJackson을 수행중 오류 발생", e); 
 			return null;
 		}
 	}
@@ -138,14 +138,14 @@ public final class JsonGtils {
 		try {
 			final String json = DEFAULT_GSON.toJson(object);
 			
-			if ((json == null) || (json.equals("null"))) { //$NON-NLS-1$
-				return "{}"; //$NON-NLS-1$
+			if ((json == null) || (json.equals("null"))) { 
+				return "{}"; 
 			}
 			return json;
 			
 		} catch (final RuntimeException e) {
-			LOGGER.error("toGson을 수행중 오류 발생", e); //$NON-NLS-1$
-			return "[ERROR] JsonGtils.toGoson"; //$NON-NLS-1$
+			LOGGER.error("toGson을 수행중 오류 발생", e); 
+			return "[ERROR] JsonGtils.toGoson"; 
 		}
 	}
 	
@@ -162,8 +162,8 @@ public final class JsonGtils {
 		try {
 			return NON_ESCAPE_GSON.toJson(object);
 		} catch (final RuntimeException e) {
-			LOGGER.error("toGsonPretty을 수행중 오류 발생", e); //$NON-NLS-1$
-			return "[ERROR] JsonGtils.toGsonNonHtmlEscaping"; //$NON-NLS-1$
+			LOGGER.error("toGsonPretty을 수행중 오류 발생", e); 
+			return "[ERROR] JsonGtils.toGsonNonHtmlEscaping"; 
 		}
 	}
 	
@@ -180,8 +180,8 @@ public final class JsonGtils {
 		try {
 			return PRETTY_GSON.toJson(object);
 		} catch (final RuntimeException e) {
-			LOGGER.error("toGsonPretty을 수행중 오류 발생", e); //$NON-NLS-1$
-			return "[ERROR] JsonGtils.toGsonPretty"; //$NON-NLS-1$
+			LOGGER.error("toGsonPretty을 수행중 오류 발생", e); 
+			return "[ERROR] JsonGtils.toGsonPretty"; 
 		}
 	}
 	
@@ -200,8 +200,8 @@ public final class JsonGtils {
 		try {
 			return OBJECT_MAPPER.writeValueAsString(object);
 		} catch (final JsonProcessingException e) {
-			LOGGER.error("toJackson을 수행중 오류 발생", e); //$NON-NLS-1$
-			return "[ERROR] JsonGtils.toJackson"; //$NON-NLS-1$
+			LOGGER.error("toJackson을 수행중 오류 발생", e); 
+			return "[ERROR] JsonGtils.toJackson"; 
 		}
 	}
 	
@@ -213,6 +213,6 @@ public final class JsonGtils {
 	 */
 	private JsonGtils() {
 		
-		throw new IllegalStateException("Utility class"); //$NON-NLS-1$
+		throw new IllegalStateException("Utility class"); 
 	}
 }

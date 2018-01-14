@@ -34,14 +34,14 @@ public class EmailInspection implements Inspection<String> {
 	@SuppressWarnings("unused")
 	private static final Logger LOGGER = LoggerFactory.getLogger(EmailInspection.class);
 	
-	private static final String EMAIL_REGEX_STRING = "[\\w\\~\\-\\.]+@[\\w\\~\\-]+(\\.[\\w\\~\\-]+)+"; //$NON-NLS-1$
+	private static final String EMAIL_REGEX_STRING = "[\\w\\~\\-\\.]+@[\\w\\~\\-]+(\\.[\\w\\~\\-]+)+"; 
 	
 	public static final Collection<String> UNSUPPORTED_EMAIL_LIST = new ArrayList<>();
 	
 	private static void checkEmailRegex(final String target) {
 		
 		if (Pattern.matches(EmailInspection.EMAIL_REGEX_STRING, target) == false) {
-			throw new InspectionException("이메일 형식에 충족하지 않습니다."); //$NON-NLS-1$
+			throw new InspectionException("이메일 형식에 충족하지 않습니다."); 
 		}
 	}
 	
@@ -49,7 +49,7 @@ public class EmailInspection implements Inspection<String> {
 		
 		for (final String emailList : UNSUPPORTED_EMAIL_LIST) {
 			if (target.contains(emailList)) {
-				throw new InspectionException("죄송합니다. 현재 입력하신 이메일은 지원하지 않습니다."); //$NON-NLS-1$
+				throw new InspectionException("죄송합니다. 현재 입력하신 이메일은 지원하지 않습니다."); 
 			}
 		}
 		

@@ -128,8 +128,8 @@ public class AccessExpression {
 		}
 		
 		throw new IOException(
-			"No visible WebSecurityExpressionHandler instance could be found in the application " //$NON-NLS-1$
-				+ "context. There must be at least one in order to support expressions in JSP 'authorize' tags."); //$NON-NLS-1$
+			"No visible WebSecurityExpressionHandler instance could be found in the application " 
+				+ "context. There must be at least one in order to support expressions in JSP 'authorize' tags."); 
 	}
 	
 }

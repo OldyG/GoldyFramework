@@ -226,7 +226,7 @@ public class PasswordPolicyInspection implements Inspection<String> {
 
 			}
 			if ((riseUpCount >= limit) || (riseDownCount >= limit)) {
-				throw new InspectionException("키보드상 연속적인 키가 " + limit + "회 이상 입력될 수 없습니다."); //$NON-NLS-1$//$NON-NLS-2$
+				throw new InspectionException("키보드상 연속적인 키가 " + limit + "회 이상 입력될 수 없습니다."); 
 			}
 		}
 	}
@@ -270,10 +270,10 @@ public class PasswordPolicyInspection implements Inspection<String> {
 			}
 
 			if (sameCount >= limit) {
-				throw new InspectionException("동일한 문자가 " + limit + "회 이상 입력될 수 없습니다."); //$NON-NLS-1$//$NON-NLS-2$
+				throw new InspectionException("동일한 문자가 " + limit + "회 이상 입력될 수 없습니다."); 
 			}
 			if ((riseUpCount >= limit) || (riseDownCount >= limit)) {
-				throw new InspectionException("연속적인 문자가 " + limit + "회 이상 입력될 수 없습니다."); //$NON-NLS-1$//$NON-NLS-2$
+				throw new InspectionException("연속적인 문자가 " + limit + "회 이상 입력될 수 없습니다."); 
 			}
 		}
 
@@ -296,6 +296,6 @@ public class PasswordPolicyInspection implements Inspection<String> {
 				return;
 			}
 		}
-		throw new InspectionException("키보드에 존재하는 특수문자를 1개 이상 입력해야합니다."); //$NON-NLS-1$
+		throw new InspectionException("키보드에 존재하는 특수문자를 1개 이상 입력해야합니다."); 
 	}
 }

@@ -80,8 +80,8 @@ public class EnumPropertyRunner {
 		
 		ObjectInspection.checkNull(propertiesPath);
 		ObjectInspection.checkNull(mainClass);
-		final String propertieName = propertiesPath + ".properties"; //$NON-NLS-1$
-		this.realProperties = new File("src/main/resources/", propertieName); //$NON-NLS-1$
+		final String propertieName = propertiesPath + ".properties"; 
+		this.realProperties = new File("src/main/resources/", propertieName); 
 		final InputStream inputStream = EnumPropertyRunner.class.getClassLoader().getResourceAsStream(propertieName);
 		this.classProperties.load(inputStream);
 		
@@ -114,7 +114,7 @@ public class EnumPropertyRunner {
 		for (final Class<?> enumPropertyClasse : enumPropertyClasses) {
 			
 			if (enumPropertyClasse.isEnum() == false) {
-				final String message = MessageFormat.format("{0}은 Enum 클래스가 아니므로 제외합니다.", //$NON-NLS-1$
+				final String message = MessageFormat.format("{0}은 Enum 클래스가 아니므로 제외합니다.", 
 					enumPropertyClasse.getName());
 				LOGGER.debug(message);
 				continue;
@@ -152,7 +152,7 @@ public class EnumPropertyRunner {
 		final StringBuilder builder = new StringBuilder();
 		for (final Entry<String, String> entry : entrySet) {
 			this.classProperties.setProperty(entry.getKey(), entry.getValue());
-			builder.append(MessageFormat.format("{0} = {1}\n", entry.getKey(), entry.getValue())); //$NON-NLS-1$
+			builder.append(MessageFormat.format("{0} = {1}\n", entry.getKey(), entry.getValue())); 
 		}
 		final String message = builder.toString();
 		LOGGER.info(message);

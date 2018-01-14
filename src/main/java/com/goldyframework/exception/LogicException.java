@@ -21,12 +21,12 @@ public class LogicException extends RuntimeException {
 	
 	public LogicException() {
 		
-		super("이 메세지가 보일경우 미구현 코드이거나 코드로직의 문제입니다."); //$NON-NLS-1$
+		super("이 메세지가 보일경우 미구현 코드이거나 코드로직의 문제입니다."); 
 	}
 	
 	public LogicException(final Throwable cause) {
 		
-		super("이 메세지가 보일경우 미구현 코드이거나 코드로직의 문제입니다.", cause); //$NON-NLS-1$
+		super("이 메세지가 보일경우 미구현 코드이거나 코드로직의 문제입니다.", cause); 
 	}
 	
 }

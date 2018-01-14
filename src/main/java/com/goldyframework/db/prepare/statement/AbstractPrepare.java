@@ -50,10 +50,10 @@ public abstract class AbstractPrepare implements Prepare {
 		IntegerInspection.checkBelowZero(size);
 		final Collection<String> marks = new ArrayList<>();
 		for (int i = 0; i < size; i++) {
-			marks.add("?"); //$NON-NLS-1$
+			marks.add("?"); 
 		}
 		
-		return StringCollectionGtils.join(marks, ", "); //$NON-NLS-1$
+		return StringCollectionGtils.join(marks, ", "); 
 	}
 	
 	/**
@@ -64,6 +64,6 @@ public abstract class AbstractPrepare implements Prepare {
 	@Override
 	public String toString() {
 		
-		return MessageFormat.format("SQL [{0}], OBJ[{1}]", this.toPrepareSql(), this.getArgs()); //$NON-NLS-1$
+		return MessageFormat.format("SQL [{0}], OBJ[{1}]", this.toPrepareSql(), this.getArgs()); 
 	}
 }

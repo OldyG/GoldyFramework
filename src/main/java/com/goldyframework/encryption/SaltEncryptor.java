@@ -29,7 +29,7 @@ import com.goldyframework.inspection.ObjectInspection;
  *
  * @author 2017. 6. 18. 오후 12:52:59 jeong
  */
-public final class PasswordEncryptor {
+public final class SaltEncryptor {
 	
 	/**
 	 * Encode Salt Byte Length
@@ -55,7 +55,7 @@ public final class PasswordEncryptor {
 	 * @author jeong
 	 * @since 2017. 5. 22. 오후 9:20:02
 	 */
-	private static final Logger LOGGER = LoggerFactory.getLogger(PasswordEncryptor.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(SaltEncryptor.class);
 	
 	/**
 	 * 패스워드를 암호화 합니다.
@@ -143,7 +143,7 @@ public final class PasswordEncryptor {
 	 * @author jeong
 	 * @since 2017. 5. 22. 오후 9:42:39
 	 */
-	private PasswordEncryptor() {
+	private SaltEncryptor() {
 		
 		throw new IllegalStateException("Utility class"); 
 	}

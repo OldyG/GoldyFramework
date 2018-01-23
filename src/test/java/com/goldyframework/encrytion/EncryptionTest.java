@@ -41,8 +41,8 @@ public class EncryptionTest {
 	@Test
 	public void testDiff() throws EncryptionException {
 		
-		final byte[] encrypt = this.targetSpy.encrypt("abc");
-		final String decrypt = this.targetSpy.decrypt(new String(encrypt));
+		final String encrypt = this.targetSpy.encrypt("abc");
+		final String decrypt = this.targetSpy.decrypt(encrypt);
 		Assert.assertEquals("암호화 후 복호화 시험", "abc", decrypt);
 	}
 	
@@ -55,9 +55,9 @@ public class EncryptionTest {
 	@Test
 	public void testEncrypt() throws EncryptionException {
 		
-		final byte[] encrypt = this.targetSpy.encrypt("금정현");
+		final String encrypt = this.targetSpy.encrypt("금정현");
 		
-		Assert.assertEquals("암호화 시험", "gLXeSjXtIsbFwIq1Z/Am3g==", new String(encrypt));
+		Assert.assertEquals("암호화 시험", "gLXeSjXtIsbFwIq1Z/Am3g==", encrypt);
 	}
 	
 }

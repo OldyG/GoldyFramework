@@ -43,7 +43,7 @@ public class SpringPasswordEncryptor implements PasswordEncoder {
 	public String encode(final CharSequence rawPassword) {
 		
 		ObjectInspection.checkNull(rawPassword);
-		return PasswordEncryptor.encode(rawPassword);
+		return SaltEncryptor.encode(rawPassword);
 	}
 	
 	/**
@@ -57,7 +57,7 @@ public class SpringPasswordEncryptor implements PasswordEncoder {
 		
 		ObjectInspection.checkNull(rawPassword);
 		ObjectInspection.checkNull(encodedPassword);
-		return PasswordEncryptor.matches(rawPassword, encodedPassword);
+		return SaltEncryptor.matches(rawPassword, encodedPassword);
 	}
 	
 }

@@ -22,8 +22,6 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<java.version>1.8</java.version>
-		<sonar.login>admin</sonar.login>
-		<sonar.password>admin</sonar.password>
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
 	</properties>
@@ -222,14 +220,32 @@
 					<excludedGroups>com.goldyframework.annotaion.MavenIgnoreTest</excludedGroups>
 				</configuration>
 			</plugin>
-			<!-- <plugin> <groupId>org.codehaus.sonar-plugins</groupId> <artifactId>maven-report</artifactId> 
-				<version>0.1</version> </plugin> -->
-			<!-- <plugin> <groupId>org.sonarsource.scanner.maven</groupId> <artifactId>sonar-maven-plugin</artifactId> 
-				<version>3.0.1</version> </plugin> <plugin> <groupId>org.codehaus.mojo</groupId> 
-				<artifactId>sonar-maven-plugin</artifactId> <version>5.1</version> </plugin> -->
+			<plugin>
+				<artifactId>maven-assembly-plugin</artifactId>
+				<configuration>
+					<shadedArtifactAttached>true</shadedArtifactAttached>
+					<archive>
+						<manifest>
+							<mainClass>com.formalworks.vcdm.external.ExternalLauncher</mainClass>
+						</manifest>
+					</archive>
+					<descriptorRefs>
+						<descriptorRef>jar-with-dependencies</descriptorRef>
+					</descriptorRefs>
+				</configuration>
+				<executions>
+					<execution>
+						<id>make-assembly</id> <!-- this is used for inheritance merges -->
+						<phase>package</phase> <!-- bind to the packaging phase -->
+						<goals>
+							<goal>single</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
 		</plugins>
 	</build>
 
 	<url>http://maven.apache.org</url>
-	<artifactId>core</artifactId>
+	<artifactId>goldyframework-core</artifactId>
 </project>

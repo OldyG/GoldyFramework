@@ -9,6 +9,8 @@
  */
 package com.goldyframework.db.inf;
 
+import java.util.Date;
+
 /**
  * Value Object 인터페이스
  *
@@ -26,6 +28,8 @@ public interface Dto extends PrimaryDto {
 	 */
 	@Override
 	boolean equals(Object obj);
+	
+	Date getCreatedTime();
 	
 	Integer getKey();
 	

@@ -17,36 +17,52 @@ import java.util.List;
 import org.apache.commons.collections4.MapUtils;
 
 import com.goldyframework.db.prepare.statement.AbstractPrepare;
-import com.goldyframework.db.prepare.statement.OrderByBuilder;
-import com.goldyframework.db.prepare.statement.WhereBuilder;
+import com.goldyframework.db.prepare.statement.guide.LimitGuide;
+import com.goldyframework.db.prepare.statement.guide.OrderByGuide;
+import com.goldyframework.db.prepare.statement.guide.WhereGuide;
+import com.goldyframework.exception.LogicException;
 import com.goldyframework.utils.NullGtils;
 import com.goldyframework.utils.StringCollectionGtils;
 import com.google.common.annotations.VisibleForTesting;
 
 public class SelectPrepare extends AbstractPrepare {
 	
+	enum GuideState {
+		NONE,
+		EXIST;
+	}
+	
 	private final List<String> columns;
 	
-	private final WhereBuilder where;
+	private final WhereGuide where;
 	
-	private final OrderByBuilder orderBy;
+	private final OrderByGuide orderBy;
+	
+	private final LimitGuide limit;
+	
+	private final GuideState whereState;
+	
+	private final GuideState orderByState;
+	
+	private final GuideState limitState;
 	
 	/**
 	 * {@link SelectPrepare} 클래스의 새 인스턴스를 초기화 합니다.
-	 *
-	 * @author 2017. 7. 2. 오후 5:33:38 jeong
-	 * @param tableName
-	 * @param columns
-	 * @param where
 	 */
 	@VisibleForTesting
-	SelectPrepare(final String tableName, final List<String> columns, final WhereBuilder where,
-		final OrderByBuilder orderByBuilder) {
+	SelectPrepare(final String tableName, final List<String> columns, final WhereGuide where,
+		final OrderByGuide orderByBuilder, final LimitGuide limit) {
 		
 		super(NullGtils.throwIfNull(tableName));
 		this.columns = new ArrayList<>(columns);
 		this.where = where;
 		this.orderBy = orderByBuilder;
+		this.limit = limit;
+		
+		this.whereState = this.toGudeState(this.where.isEmpty() == false);
+		this.orderByState = this.toGudeState(MapUtils.isEmpty(this.orderBy) == false);
+		this.limitState = this.toGudeState(limit != null);
+		
 	}
 	
 	/**
@@ -67,11 +83,20 @@ public class SelectPrepare extends AbstractPrepare {
 	private String getColumnArea() {
 		
 		if (this.columns.isEmpty()) {
-			return "*"; 
+			return "*";
 		}
 		final List<String> eachPrepend = StringCollectionGtils.eachPrepend(super.getTableName() + '.', this.columns);
 		
-		return StringCollectionGtils.join(eachPrepend, ", "); 
+		return StringCollectionGtils.join(eachPrepend, ", ");
+	}
+	
+	private GuideState toGudeState(final boolean hasValue) {
+		
+		if (hasValue) {
+			return GuideState.EXIST;
+		} else {
+			return GuideState.NONE;
+		}
 	}
 	
 	/**
@@ -85,21 +110,33 @@ public class SelectPrepare extends AbstractPrepare {
 		final String columnArea = this.getColumnArea();
 		final String tableName = super.getTableName();
 		
+		final StringBuilder sqlBuilder = new StringBuilder();
+		
 		final String firstStep;
 		
-		if (this.where.isEmpty()) {
-			firstStep = MessageFormat.format("SELECT {0} FROM {1}", columnArea, tableName); 
-		} else {
-			firstStep = MessageFormat.format("SELECT {0} FROM {1} WHERE {2}", 
-				columnArea, tableName, this.where.build());
+		switch (this.whereState) {
+			case EXIST:
+				firstStep = MessageFormat.format("SELECT {0} FROM {1} WHERE {2}",
+					columnArea, tableName, this.where.toSql());
+				break;
+			case NONE:
+				firstStep = MessageFormat.format("SELECT {0} FROM {1}", columnArea, tableName);
+				break;
+			default:
+				throw new LogicException();
+				
+		}
+		sqlBuilder.append(firstStep);
+		
+		if (this.orderByState == GuideState.EXIST) {
+			sqlBuilder.append(' ').append(this.orderBy.toSql());
 		}
 		
-		if (MapUtils.isEmpty(this.orderBy)) {
-			return firstStep;
+		if (this.limitState == GuideState.EXIST) {
+			sqlBuilder.append(' ').append(this.limit.toSql());
 		}
 		
-		return MessageFormat.format("{0} {1}", firstStep, this.orderBy.toSql()); 
-		
+		return sqlBuilder.toString();
 	}
 	
 }

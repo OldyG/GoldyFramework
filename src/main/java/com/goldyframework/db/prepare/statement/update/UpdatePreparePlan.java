@@ -9,10 +9,10 @@
  */
 package com.goldyframework.db.prepare.statement.update;
 
-import com.goldyframework.db.prepare.statement.AssignBuilder;
-import com.goldyframework.db.prepare.statement.Comparison;
 import com.goldyframework.db.prepare.statement.PreparePlan;
-import com.goldyframework.db.prepare.statement.WhereBuilder;
+import com.goldyframework.db.prepare.statement.guide.AssignGuide;
+import com.goldyframework.db.prepare.statement.guide.Comparison;
+import com.goldyframework.db.prepare.statement.guide.WhereGuide;
 
 /**
  * @author 2017. 7. 8. 오후 1:41:16 jeong
@@ -21,9 +21,9 @@ public class UpdatePreparePlan implements PreparePlan<UpdatePrepare> {
 	
 	private final String tableName;
 	
-	private final AssignBuilder assign;
+	private final AssignGuide assign;
 	
-	private final WhereBuilder where;
+	private final WhereGuide where;
 	
 	/**
 	 * {@link UpdatePreparePlan} 클래스의 새 인스턴스를 초기화 합니다.
@@ -34,8 +34,8 @@ public class UpdatePreparePlan implements PreparePlan<UpdatePrepare> {
 	public UpdatePreparePlan(final String tableName) {
 		
 		this.tableName = tableName;
-		this.assign = new AssignBuilder(tableName);
-		this.where = new WhereBuilder(tableName);
+		this.assign = new AssignGuide(tableName);
+		this.where = new WhereGuide(tableName);
 	}
 	
 	/**

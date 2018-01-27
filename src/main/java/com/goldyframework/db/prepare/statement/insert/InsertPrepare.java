@@ -14,7 +14,7 @@ import java.util.Collection;
 import java.util.List;
 
 import com.goldyframework.db.prepare.statement.AbstractPrepare;
-import com.goldyframework.db.prepare.statement.AssignBuilder;
+import com.goldyframework.db.prepare.statement.guide.AssignGuide;
 import com.goldyframework.inspection.ObjectInspection;
 import com.goldyframework.utils.NullGtils;
 import com.goldyframework.utils.StringCollectionGtils;
@@ -22,7 +22,7 @@ import com.google.common.annotations.VisibleForTesting;
 
 public class InsertPrepare extends AbstractPrepare {
 	
-	private final AssignBuilder assign;
+	private final AssignGuide assign;
 	
 	/**
 	 * {@link InsertPrepare} 클래스의 새 인스턴스를 초기화 합니다.
@@ -32,7 +32,7 @@ public class InsertPrepare extends AbstractPrepare {
 	 * @param assign
 	 */
 	@VisibleForTesting
-	InsertPrepare(final String tableName, final AssignBuilder assign) {
+	InsertPrepare(final String tableName, final AssignGuide assign) {
 		
 		super(NullGtils.throwIfNull(tableName));
 		ObjectInspection.checkNull(assign);

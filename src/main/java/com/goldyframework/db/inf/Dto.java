@@ -17,10 +17,9 @@ import java.util.Date;
  * @author 2017. 6. 30. 오후 8:52:03 jeong
  */
 public interface Dto extends PrimaryDto {
-	
+
 	/**
-	 * 두 객체가 동일한지 검사합니다.
-	 * 필드가 동일할경우 동일한 객체로 판별합니다.
+	 * 두 객체가 동일한지 검사합니다. 필드가 동일할경우 동일한 객체로 판별합니다.
 	 * 
 	 * @author 2017. 8. 19. 오후 5:41:47 jeong
 	 * @param obj
@@ -28,9 +27,7 @@ public interface Dto extends PrimaryDto {
 	 */
 	@Override
 	boolean equals(Object obj);
-	
-	Date getCreatedTime();
-	
+
 	Integer getKey();
-	
+
 }

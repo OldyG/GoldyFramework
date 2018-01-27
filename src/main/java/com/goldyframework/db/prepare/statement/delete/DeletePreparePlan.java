@@ -9,9 +9,9 @@
  */
 package com.goldyframework.db.prepare.statement.delete;
 
-import com.goldyframework.db.prepare.statement.Comparison;
 import com.goldyframework.db.prepare.statement.PreparePlan;
-import com.goldyframework.db.prepare.statement.WhereBuilder;
+import com.goldyframework.db.prepare.statement.guide.Comparison;
+import com.goldyframework.db.prepare.statement.guide.WhereGuide;
 
 /**
  * @author 2017. 7. 8. 오후 2:00:40 jeong
@@ -20,7 +20,7 @@ public class DeletePreparePlan implements PreparePlan<DeletePrepare> {
 	
 	private final String tableName;
 	
-	private final WhereBuilder where;
+	private final WhereGuide where;
 	
 	/**
 	 * {@link DeletePreparePlan} 클래스의 새 인스턴스를 초기화 합니다.
@@ -32,7 +32,7 @@ public class DeletePreparePlan implements PreparePlan<DeletePrepare> {
 		
 		super();
 		this.tableName = tableName;
-		this.where = new WhereBuilder(tableName);
+		this.where = new WhereGuide(tableName);
 	}
 	
 	/**

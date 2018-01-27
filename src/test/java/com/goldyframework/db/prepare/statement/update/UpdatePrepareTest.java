@@ -15,9 +15,9 @@ import java.util.List;
 import org.junit.Assert;
 import org.junit.Test;
 
-import com.goldyframework.db.prepare.statement.AssignBuilder;
-import com.goldyframework.db.prepare.statement.Comparison;
-import com.goldyframework.db.prepare.statement.WhereBuilder;
+import com.goldyframework.db.prepare.statement.guide.AssignGuide;
+import com.goldyframework.db.prepare.statement.guide.Comparison;
+import com.goldyframework.db.prepare.statement.guide.WhereGuide;
 
 /**
  * @author 2017. 7. 7. 오후 7:08:57 jeong
@@ -28,11 +28,11 @@ public class UpdatePrepareTest {
 	@Test
 	public void test() {
 		
-		final AssignBuilder assign = new AssignBuilder("TEST");
+		final AssignGuide assign = new AssignGuide("TEST");
 		assign.appendIfNotNull("name", "test");
 		assign.appendIfNotNull("name2", "test2");
 		
-		final WhereBuilder where = new WhereBuilder("TEST");
+		final WhereGuide where = new WhereGuide("TEST");
 		where.append("column1", Comparison.GREATER_EQUAL, 1);
 		where.append("column2", Comparison.EQUAL, "true");
 		

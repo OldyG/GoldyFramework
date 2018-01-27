@@ -15,8 +15,9 @@ import java.util.List;
 import org.junit.Assert;
 import org.junit.Test;
 
-import com.goldyframework.db.prepare.statement.Comparison;
 import com.goldyframework.db.prepare.statement.delete.DeletePrepare;
+import com.goldyframework.db.prepare.statement.guide.Comparison;
+import com.goldyframework.db.prepare.statement.guide.OrderType;
 import com.goldyframework.db.prepare.statement.select.SelectPrepare;
 import com.goldyframework.db.prepare.statement.update.UpdatePrepare;
 
@@ -55,14 +56,18 @@ public class PrepareBuilderTest {
 			.column("C")
 			.where("F", Comparison.EQUAL, "QQ")
 			.where("G", Comparison.GREATER, 3)
+			.orderby("A", OrderType.DESC)
+			.limit(1)
 			.build();
+		
+		System.out.println(select.toPrepareSql());
+		
 		Assert.assertEquals("",
 			"SELECT TEST_SELECT.A, TEST_SELECT.B, TEST_SELECT.C "
 				+ "FROM TEST_SELECT "
-				+ "WHERE TEST_SELECT.F = ? AND TEST_SELECT.G > ?",
+				+ "WHERE TEST_SELECT.F = ? AND TEST_SELECT.G > ? ORDER BY A DESC LIMIT 1",
 			select.toPrepareSql());
 		
-		System.out.println(select.toPrepareSql());
 		System.out.println(select.getArgs());
 		
 		final List<Object> args = new ArrayList<>(select.getArgs());

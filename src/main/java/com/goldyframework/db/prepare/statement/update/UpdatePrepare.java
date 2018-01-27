@@ -17,8 +17,8 @@ import java.util.stream.Stream;
 import org.apache.commons.lang3.StringUtils;
 
 import com.goldyframework.db.prepare.statement.AbstractPrepare;
-import com.goldyframework.db.prepare.statement.AssignBuilder;
-import com.goldyframework.db.prepare.statement.WhereBuilder;
+import com.goldyframework.db.prepare.statement.guide.AssignGuide;
+import com.goldyframework.db.prepare.statement.guide.WhereGuide;
 import com.goldyframework.inspection.StringInspection;
 import com.goldyframework.utils.NullGtils;
 import com.google.common.annotations.VisibleForTesting;
@@ -28,9 +28,9 @@ import com.google.common.annotations.VisibleForTesting;
  */
 public class UpdatePrepare extends AbstractPrepare {
 	
-	private final AssignBuilder assign;
+	private final AssignGuide assign;
 	
-	private final WhereBuilder where;
+	private final WhereGuide where;
 	
 	/**
 	 * {@link UpdatePrepare} 클래스의 새 인스턴스를 초기화 합니다.
@@ -42,7 +42,7 @@ public class UpdatePrepare extends AbstractPrepare {
 	 * @param where
 	 */
 	@VisibleForTesting
-	UpdatePrepare(final String tableName, final AssignBuilder assign, final WhereBuilder where) {
+	UpdatePrepare(final String tableName, final AssignGuide assign, final WhereGuide where) {
 		
 		super(NullGtils.throwIfNull(tableName));
 		this.assign = NullGtils.throwIfNull(assign);
@@ -66,7 +66,7 @@ public class UpdatePrepare extends AbstractPrepare {
 	
 	public boolean isValid() {
 		
-		return StringUtils.isNotBlank(this.assign.build());
+		return StringUtils.isNotBlank(this.assign.toSql());
 	}
 	
 	/**
@@ -78,8 +78,8 @@ public class UpdatePrepare extends AbstractPrepare {
 	public String toPrepareSql() {
 		
 		final String tableName = super.getTableName();
-		final String buildedUpdate = this.assign.build();
-		final String buildedWhere = this.where.build();
+		final String buildedUpdate = this.assign.toSql();
+		final String buildedWhere = this.where.toSql();
 		StringInspection.checkBlank(tableName);
 		StringInspection.checkBlank(buildedUpdate);
 		StringInspection.checkBlank(buildedWhere);

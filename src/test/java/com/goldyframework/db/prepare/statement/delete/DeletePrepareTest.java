@@ -14,8 +14,8 @@ import org.junit.Test;
 import org.mockito.Mockito;
 
 import com.goldyframework.annotaion.UnitTest;
-import com.goldyframework.db.prepare.statement.Comparison;
-import com.goldyframework.db.prepare.statement.WhereBuilder;
+import com.goldyframework.db.prepare.statement.guide.Comparison;
+import com.goldyframework.db.prepare.statement.guide.WhereGuide;
 
 @SuppressWarnings("nls")
 public class DeletePrepareTest extends Mockito {
@@ -23,7 +23,7 @@ public class DeletePrepareTest extends Mockito {
 	@Test
 	public void testToPrepareSql() {
 		
-		final WhereBuilder whereBuilder = new WhereBuilder("TEST");
+		final WhereGuide whereBuilder = new WhereGuide("TEST");
 		whereBuilder.append("user_key", Comparison.EQUAL, "1");
 		whereBuilder.append("enable_login", Comparison.EQUAL, true);
 		
@@ -42,11 +42,11 @@ public class DeletePrepareTest extends Mockito {
 	@UnitTest
 	public void testUnitToPrepareSql() {
 		
-		final WhereBuilder whereBuilder = mock(WhereBuilder.class, RETURNS_DEFAULTS);
+		final WhereGuide whereBuilder = mock(WhereGuide.class, RETURNS_DEFAULTS);
 		final DeletePrepare target = new DeletePrepare("TEST", whereBuilder);
 		
 		// 액션
-		doReturn("abc").when(whereBuilder).build();
+		doReturn("abc").when(whereBuilder).toSql();
 		
 		final String actual = target.toPrepareSql();
 		

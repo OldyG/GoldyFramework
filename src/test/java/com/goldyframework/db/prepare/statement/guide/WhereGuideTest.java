@@ -1,5 +1,5 @@
 /**
- * FileName : {@link WhereBuilderTest}.java
+ * FileName : {@link WhereGuideTest}.java
  * Created : 2017. 7. 2. 오후 6:07:02
  * Author : jeong
  * Summary :
@@ -7,7 +7,7 @@
  * 이 문서의 모든 저작권 및 지적 재산권은 (주)포멀웍스에게 있습니다.
  * 이 문서의 어떠한 부분도 허가 없이 복제 또는 수정 하거나, 전송할 수 없습니다.
  */
-package com.goldyframework.db.prepare.statement;
+package com.goldyframework.db.prepare.statement.guide;
 
 import java.util.Collection;
 import java.util.List;
@@ -19,18 +19,18 @@ import org.junit.Test;
 import org.mockito.Mockito;
 
 import com.goldyframework.annotaion.UnitTest;
-import com.goldyframework.db.prepare.statement.WhereBuilder.ComparisonValue;
+import com.goldyframework.db.prepare.statement.guide.WhereGuide.ComparisonValue;
 
 @SuppressWarnings("nls")
-public class WhereBuilderTest extends Mockito {
+public class WhereGuideTest extends Mockito {
 	
 	/**
-	 * Test method for {@link com.goldyframework.db.prepare.statement.WhereBuilder#append(java.lang.String, int)}.
+	 * Test method for {@link com.goldyframework.db.prepare.statement.guide.WhereGuide#append(java.lang.String, int)}.
 	 */
 	@Test
 	public void testAppend() {
 		
-		final WhereBuilder target = new WhereBuilder("TEST");
+		final WhereGuide target = new WhereGuide("TEST");
 		target.append("ColumnName1", Comparison.EQUAL, "123");
 		target.append("ColumnName2", Comparison.EQUAL, 11_455);
 		
@@ -42,20 +42,20 @@ public class WhereBuilderTest extends Mockito {
 	}
 	
 	/**
-	 * Test method for {@link com.goldyframework.db.prepare.statement.WhereBuilder#build()}.
+	 * Test method for {@link com.goldyframework.db.prepare.statement.guide.WhereGuide#toSql()}.
 	 */
 	@Test
 	public void testBuild() {
 		
-		final WhereBuilder target = new WhereBuilder("TEST");
+		final WhereGuide target = new WhereGuide("TEST");
 		
-		final String actualEmpty = target.build();
+		final String actualEmpty = target.toSql();
 		Assert.assertTrue("", actualEmpty.isEmpty());
 		
 		target.append("ColumnName2", Comparison.EQUAL, 11_455);
 		target.append("ColumnName1", Comparison.EQUAL, "123");
 		
-		final String actual2 = target.build();
+		final String actual2 = target.toSql();
 		Assert.assertFalse("", actual2.isEmpty());
 		
 		final Object next = target.getArgs().iterator().next();
@@ -70,13 +70,13 @@ public class WhereBuilderTest extends Mockito {
 	}
 	
 	/**
-	 * Test method for {@link com.goldyframework.db.prepare.statement.WhereBuilder#eachAppendComparisonValue()}.
+	 * Test method for {@link com.goldyframework.db.prepare.statement.guide.WhereGuide#eachAppendComparisonValue()}.
 	 */
 	@Test
 	@UnitTest
 	public void testEachAppendComparisonValue() {
 		
-		final WhereBuilder target = spy(new WhereBuilder("TEST"));
+		final WhereGuide target = spy(new WhereGuide("TEST"));
 		
 		// 내부 변수
 		final Map<String, ComparisonValue> copiedWhereMap = spy(new ConcurrentHashMap<>());
@@ -97,12 +97,12 @@ public class WhereBuilderTest extends Mockito {
 	}
 	
 	/**
-	 * Test method for {@link com.goldyframework.db.prepare.statement.WhereBuilder#getArgs()}.
+	 * Test method for {@link com.goldyframework.db.prepare.statement.guide.WhereGuide#getArgs()}.
 	 */
 	@Test
 	public void testGetArgs() {
 		
-		final WhereBuilder target = new WhereBuilder("TEST");
+		final WhereGuide target = new WhereGuide("TEST");
 		
 		target.append("ColumnName2", Comparison.EQUAL, 11_455);
 		target.append("ColumnName1", Comparison.EQUAL, "123");

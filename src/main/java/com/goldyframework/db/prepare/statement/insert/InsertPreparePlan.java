@@ -9,8 +9,8 @@
  */
 package com.goldyframework.db.prepare.statement.insert;
 
-import com.goldyframework.db.prepare.statement.AssignBuilder;
 import com.goldyframework.db.prepare.statement.PreparePlan;
+import com.goldyframework.db.prepare.statement.guide.AssignGuide;
 
 /**
  * @author 2017. 7. 8. 오후 2:11:21 jeong
@@ -19,7 +19,7 @@ public class InsertPreparePlan implements PreparePlan<InsertPrepare> {
 	
 	private final String tableName;
 	
-	private final AssignBuilder assign;
+	private final AssignGuide assign;
 	
 	/**
 	 * {@link InsertPreparePlan} 클래스의 새 인스턴스를 초기화 합니다.
@@ -31,7 +31,7 @@ public class InsertPreparePlan implements PreparePlan<InsertPrepare> {
 		
 		super();
 		this.tableName = tableName;
-		this.assign = new AssignBuilder(tableName);
+		this.assign = new AssignGuide(tableName);
 	}
 	
 	/**

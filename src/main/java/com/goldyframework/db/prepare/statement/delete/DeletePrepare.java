@@ -13,14 +13,14 @@ import java.text.MessageFormat;
 import java.util.Collection;
 
 import com.goldyframework.db.prepare.statement.AbstractPrepare;
-import com.goldyframework.db.prepare.statement.WhereBuilder;
+import com.goldyframework.db.prepare.statement.guide.WhereGuide;
 import com.goldyframework.inspection.StringInspection;
 import com.goldyframework.utils.NullGtils;
 import com.google.common.annotations.VisibleForTesting;
 
 public class DeletePrepare extends AbstractPrepare {
 	
-	private final WhereBuilder where;
+	private final WhereGuide where;
 	
 	/**
 	 * {@link DeletePrepare} 클래스의 새 인스턴스를 초기화 합니다.
@@ -30,7 +30,7 @@ public class DeletePrepare extends AbstractPrepare {
 	 * @param whereBuilder
 	 */
 	@VisibleForTesting
-	DeletePrepare(final String tableName, final WhereBuilder whereBuilder) {
+	DeletePrepare(final String tableName, final WhereGuide whereBuilder) {
 		
 		super(NullGtils.throwIfNull(tableName));
 		this.where = whereBuilder;
@@ -56,7 +56,7 @@ public class DeletePrepare extends AbstractPrepare {
 	public String toPrepareSql() {
 		
 		final String tableName = super.getTableName();
-		final String buildedWhere = this.where.build();
+		final String buildedWhere = this.where.toSql();
 		StringInspection.checkBlank(tableName);
 		StringInspection.checkBlank(buildedWhere);
 		

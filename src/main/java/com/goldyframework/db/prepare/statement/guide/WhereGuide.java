@@ -1,5 +1,5 @@
 /**
- * FileName : {@link WhereBuilder}.java
+ * FileName : {@link WhereGuide}.java
  * Created : 2017. 7. 2. 오후 5:29:03
  * Author : jeong
  * Summary :
@@ -7,7 +7,7 @@
  * 이 문서의 모든 저작권 및 지적 재산권은 (주)포멀웍스에게 있습니다.
  * 이 문서의 어떠한 부분도 허가 없이 복제 또는 수정 하거나, 전송할 수 없습니다.
  */
-package com.goldyframework.db.prepare.statement;
+package com.goldyframework.db.prepare.statement.guide;
 
 import java.text.MessageFormat;
 import java.util.Collection;
@@ -24,7 +24,7 @@ import com.google.common.annotations.VisibleForTesting;
 /**
  * @author 2017. 7. 2. 오후 5:29:03 jeong
  */
-public class WhereBuilder {
+public class WhereGuide implements Guide {
 	
 	@VisibleForTesting
 	class ComparisonValue {
@@ -79,13 +79,13 @@ public class WhereBuilder {
 	private final String tableName;
 	
 	/**
-	 * {@link WhereBuilder} 클래스의 새 인스턴스를 초기화 합니다.
+	 * {@link WhereGuide} 클래스의 새 인스턴스를 초기화 합니다.
 	 *
 	 * @author 2017. 7. 2. 오후 6:03:36 jeong
 	 * @param tableName
 	 *            테이블 이름
 	 */
-	public WhereBuilder(final String tableName) {
+	public WhereGuide(final String tableName) {
 		
 		super();
 		this.tableName = NullGtils.throwIfNull(tableName);
@@ -105,13 +105,6 @@ public class WhereBuilder {
 			}
 		}
 		
-	}
-	
-	public String build() {
-		
-		final List<String> tableColumnList = this.createTableColumnList();
-		
-		return StringCollectionGtils.join(tableColumnList, " AND "); 
 	}
 	
 	/**
@@ -138,7 +131,7 @@ public class WhereBuilder {
 				final ComparisonValue comparisonValue = copiedWhereMap.get(key);
 				final String comparison = comparisonValue.getComparison().getComparison();
 				
-				return MessageFormat.format("{0} {1} {2}", key, comparison, '?'); 
+				return MessageFormat.format("{0} {1} {2}", key, comparison, '?');
 			})
 			.collect(Collectors.toList());
 	}
@@ -178,6 +171,14 @@ public class WhereBuilder {
 	public boolean isEmpty() {
 		
 		return this.whereMap.isEmpty();
+	}
+	
+	@Override
+	public String toSql() {
+		
+		final List<String> tableColumnList = this.createTableColumnList();
+		
+		return StringCollectionGtils.join(tableColumnList, " AND ");
 	}
 	
 }

@@ -14,7 +14,7 @@ import java.util.Collection;
 import org.junit.Assert;
 import org.junit.Test;
 
-import com.goldyframework.db.prepare.statement.AssignBuilder;
+import com.goldyframework.db.prepare.statement.guide.AssignGuide;
 
 @SuppressWarnings("nls")
 public class InsertPrepareTest {
@@ -25,7 +25,7 @@ public class InsertPrepareTest {
 	@Test
 	public void testGetArgs() {
 		
-		final AssignBuilder assign = new AssignBuilder("TEST");
+		final AssignGuide assign = new AssignGuide("TEST");
 		assign.appendIfNotNull("any1", 3);
 		assign.appendIfNotNull("any2", "1");
 		assign.appendIfNotNull("any3", 1.4F);
@@ -45,7 +45,7 @@ public class InsertPrepareTest {
 	@Test
 	public void testToPrepareSql() {
 		
-		final AssignBuilder assign = new AssignBuilder("TEST");
+		final AssignGuide assign = new AssignGuide("TEST");
 		assign.appendIfNotNull("A", 1);
 		assign.appendIfNotNull("B", "2");
 		assign.appendIfNotNull("C", 3);

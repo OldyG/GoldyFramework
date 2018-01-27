@@ -1,5 +1,5 @@
 /**
- * FileName : {@link AssignBuilder}.java
+ * FileName : {@link AssignGuide}.java
  * Created : 2017. 7. 3. 오후 11:11:22
  * Author : jeong
  * Summary :
@@ -7,7 +7,7 @@
  * 이 문서의 모든 저작권 및 지적 재산권은 (주)포멀웍스에게 있습니다.
  * 이 문서의 어떠한 부분도 허가 없이 복제 또는 수정 하거나, 전송할 수 없습니다.
  */
-package com.goldyframework.db.prepare.statement;
+package com.goldyframework.db.prepare.statement.guide;
 
 import java.util.Collection;
 import java.util.List;
@@ -18,19 +18,19 @@ import com.goldyframework.utils.StringCollectionGtils;
 /**
  * @author 2017. 7. 3. 오후 11:11:22 jeong
  */
-public class AssignBuilder {
+public class AssignGuide implements Guide {
 	
-	private final WhereBuilder where;
+	private final WhereGuide where;
 	
 	/**
-	 * {@link AssignBuilder} 클래스의 새 인스턴스를 초기화 합니다.
+	 * {@link AssignGuide} 클래스의 새 인스턴스를 초기화 합니다.
 	 *
 	 * @author 2017. 7. 7. 오후 6:54:29 jeong
 	 * @param tableName
 	 */
-	public AssignBuilder(final String tableName) {
+	public AssignGuide(final String tableName) {
 		
-		this.where = new WhereBuilder(tableName);
+		this.where = new WhereGuide(tableName);
 	}
 	
 	public void appendIfNotNull(final String column, final Object value) {
@@ -39,17 +39,6 @@ public class AssignBuilder {
 		if (value != null) {
 			this.where.append(column, Comparison.EQUAL, value);
 		}
-	}
-	
-	/**
-	 * @author 2017. 7. 7. 오후 6:52:34 jeong
-	 * @return
-	 */
-	public String build() {
-		
-		final List<String> tableColumnList = this.where.createTableColumnList();
-		
-		return StringCollectionGtils.join(tableColumnList, ", "); 
 	}
 	
 	/**
@@ -68,6 +57,14 @@ public class AssignBuilder {
 	public Collection<String> getColumns() {
 		
 		return this.where.getColumns();
+	}
+	
+	@Override
+	public String toSql() {
+		
+		final List<String> tableColumnList = this.where.createTableColumnList();
+		
+		return StringCollectionGtils.join(tableColumnList, ", ");
 	}
 	
 }

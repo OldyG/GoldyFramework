@@ -12,11 +12,12 @@ package com.goldyframework.db.prepare.statement.select;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.goldyframework.db.prepare.statement.Comparison;
-import com.goldyframework.db.prepare.statement.OrderByBuilder;
-import com.goldyframework.db.prepare.statement.OrderType;
 import com.goldyframework.db.prepare.statement.PreparePlan;
-import com.goldyframework.db.prepare.statement.WhereBuilder;
+import com.goldyframework.db.prepare.statement.guide.Comparison;
+import com.goldyframework.db.prepare.statement.guide.LimitGuide;
+import com.goldyframework.db.prepare.statement.guide.OrderByGuide;
+import com.goldyframework.db.prepare.statement.guide.OrderType;
+import com.goldyframework.db.prepare.statement.guide.WhereGuide;
 
 /**
  * @author 2017. 7. 8. 오후 11:37:46 jeong
@@ -25,9 +26,11 @@ public class SelectPreparePlan implements PreparePlan<SelectPrepare> {
 	
 	private final String tableName;
 	
-	private final WhereBuilder where;
+	private final WhereGuide where;
 	
-	private final OrderByBuilder orderBy;
+	private final OrderByGuide orderBy;
+	
+	private LimitGuide limit;
 	
 	private final List<String> columns = new ArrayList<>();
 	
@@ -35,14 +38,13 @@ public class SelectPreparePlan implements PreparePlan<SelectPrepare> {
 	 * {@link SelectPreparePlan} 클래스의 새 인스턴스를 초기화 합니다.
 	 *
 	 * @author 2017. 7. 8. 오후 11:37:50 jeong
-	 * @param tableName
 	 */
 	public SelectPreparePlan(final String tableName) {
 		
 		super();
 		this.tableName = tableName;
-		this.where = new WhereBuilder(tableName);
-		this.orderBy = new OrderByBuilder();
+		this.where = new WhereGuide(tableName);
+		this.orderBy = new OrderByGuide();
 	}
 	
 	/**
@@ -52,7 +54,7 @@ public class SelectPreparePlan implements PreparePlan<SelectPrepare> {
 	@Override
 	public SelectPrepare build() {
 		
-		return new SelectPrepare(this.tableName, this.columns, this.where, this.orderBy);
+		return new SelectPrepare(this.tableName, this.columns, this.where, this.orderBy, this.limit);
 	}
 	
 	public SelectPreparePlan column(final String columnName) {
@@ -61,11 +63,18 @@ public class SelectPreparePlan implements PreparePlan<SelectPrepare> {
 		return this;
 	}
 	
-	/**
-	 * @author 2017. 8. 6. 오후 1:53:03 jeong
-	 * @param createdTime
-	 * @return
-	 */
+	public SelectPreparePlan limit(final int count) {
+		
+		this.limit = new LimitGuide(count);
+		return this;
+	}
+	
+	public SelectPreparePlan limit(final int startIndex, final int count) {
+		
+		this.limit = new LimitGuide(startIndex, count);
+		return this;
+	}
+	
 	public SelectPreparePlan orderby(final String columnName, final OrderType orderType) {
 		
 		this.orderBy.put(columnName, orderType);

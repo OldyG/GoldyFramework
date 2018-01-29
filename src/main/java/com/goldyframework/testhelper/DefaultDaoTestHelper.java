@@ -104,7 +104,7 @@ public class DefaultDaoTestHelper<DTO extends Dto> {
 		
 		final DTO actual = this.defaultDao.insert(allSetDto);
 		
-		final List<Object> values = this.template.getNotNullableFieldValuesInTable(actual);
+		final List<Object> values = this.template.getNotNullableField(actual);
 		
 		for (final Object value : values) {
 			Assert.assertNotNull(value);
@@ -158,7 +158,7 @@ public class DefaultDaoTestHelper<DTO extends Dto> {
 		final DTO allSetDto = this.template.createRandomDtoForInsert();
 		this.defaultDao.updateAll(anyDto.getKey(), allSetDto);
 		final DTO result = this.defaultDao.select(anyDto.getKey());
-		final List<Object> values = this.template.getNotNullableFieldValuesInTable(result);
+		final List<Object> values = this.template.getNotNullableField(result);
 		for (final Object value : values) {
 			Assert.assertNotNull(value);
 		}

@@ -1,5 +1,5 @@
 /**
- * FileName : {@link Does}.java
+ * FileName : {@link SonarHelper}.java
  * Created : 2017. 6. 19. 오후 9:04:49
  * Author : jeong
  * Summary :
@@ -21,10 +21,10 @@ import com.google.common.annotations.VisibleForTesting;
  *
  * @author 2017. 6. 19. 오후 9:04:49 jeong
  */
-public final class Does {
+public final class SonarHelper {
 	
 	@VisibleForTesting
-	static class TestSet implements ITestSet<Does> {
+	static class TestSet implements ITestSet<SonarHelper> {
 		
 		/**
 		 * {@inheritDoc}
@@ -32,9 +32,9 @@ public final class Does {
 		 * @author 2017. 6. 19. 오후 11:01:42 jeong
 		 */
 		@Override
-		public Does createNewInstance() {
+		public SonarHelper createNewInstance() {
 			
-			return new Does();
+			return new SonarHelper();
 		}
 		
 	}
@@ -42,32 +42,29 @@ public final class Does {
 	/**
 	 * slf4j Logger
 	 */
-	private static final Logger LOGGER = LoggerFactory.getLogger(Does.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(SonarHelper.class);
 	
 	/**
 	 * 이 함수에 this를 설정하세요
-	 * ex) {@link Does#notUse}(this, Because)
+	 * ex) {@link SonarHelper#notUse}(this, Because)
 	 *
 	 * @author 2017. 6. 19. 오후 9:07:54 jeong
-	 * @param obj
-	 * @param because
 	 * @param inputYourObjectAtHere
 	 *            this를 집어넣으세요
 	 */
-	public static void notUse(final Object obj, final Because because) {
+	public static void noStatic(final Object obj) {
 		
 		ObjectInspection.checkNull(obj);
-		ObjectInspection.checkNull(because);
 	}
 	
 	/**
-	 * {@link Does} 클래스의 새 인스턴스를 초기화 합니다.
+	 * {@link SonarHelper} 클래스의 새 인스턴스를 초기화 합니다.
 	 *
 	 * @author 2017. 6. 19. 오후 9:04:49 jeong
 	 */
-	private Does() {
+	private SonarHelper() {
 		
-		throw new IllegalStateException("Utility class"); 
+		throw new IllegalStateException("Utility class");
 	}
 	
 }

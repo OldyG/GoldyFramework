@@ -24,8 +24,7 @@ import org.apache.commons.io.FilenameUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.goldyframework.does.Because;
-import com.goldyframework.does.Does;
+import com.goldyframework.does.SonarHelper;
 import com.goldyframework.inspection.ObjectInspection;
 import com.goldyframework.repository.RepositoryException;
 import com.goldyframework.sweeper.exception.SweeperException;
@@ -130,7 +129,7 @@ public class ReservationSweeper implements ISweeper {
 		
 		final File movingTarget = getChildDirectory(garbageFile, "Done"); 
 		final boolean success = garbageFile.renameTo(movingTarget);
-		Does.notUse(success, Because.DO_NOTHING);
+		SonarHelper.noStatic(success);
 	}
 	
 	/**
@@ -144,7 +143,7 @@ public class ReservationSweeper implements ISweeper {
 		
 		final File movingTarget = getChildDirectory(garbageFile, "Failure"); 
 		final boolean success = garbageFile.renameTo(movingTarget);
-		Does.notUse(success, Because.DO_NOTHING);
+		SonarHelper.noStatic(success);
 	}
 	
 	private final File garbageDirectory;
@@ -173,7 +172,7 @@ public class ReservationSweeper implements ISweeper {
 	 */
 	private void doClean(final File garbageFile, final AbstractReservationGarbage garbage) {
 		
-		Does.notUse(this, Because.WANT_NOT_STATIC_FUNCTION);
+		SonarHelper.noStatic(this);
 		try {
 			garbage.clean();
 		} catch (final SweeperException e) {

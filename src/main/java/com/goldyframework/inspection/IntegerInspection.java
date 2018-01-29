@@ -14,8 +14,7 @@ import java.text.MessageFormat;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.goldyframework.does.Because;
-import com.goldyframework.does.Does;
+import com.goldyframework.does.SonarHelper;
 import com.goldyframework.inspection.exception.InspectionException;
 
 /**
@@ -81,7 +80,7 @@ public final class IntegerInspection {
 		
 		try {
 			final int parseInt = Integer.parseInt(character.toString());
-			Does.notUse(parseInt, Because.DO_NOTHING);
+			SonarHelper.noStatic(parseInt);
 			return true;
 		} catch (final NumberFormatException e) {
 			final String message = MessageFormat.format("Character [{0}]은 Int형으로 변환할 수 없습니다.", character);
@@ -106,7 +105,7 @@ public final class IntegerInspection {
 		
 		try {
 			final int parseInt = Integer.parseInt(string);
-			Does.notUse(parseInt, Because.DO_NOTHING);
+			SonarHelper.noStatic(parseInt);
 			return true;
 		} catch (final NumberFormatException e) {
 			return false;

@@ -17,6 +17,6 @@ public interface DaoTestTemplate<DTO extends Dto> {
 	
 	DTO createRandomDtoForInsert();
 	
-	List<Object> getNotNullableFieldValuesInTable(DTO actual);
+	List<Object> getNotNullableField(DTO actual);
 	
 }

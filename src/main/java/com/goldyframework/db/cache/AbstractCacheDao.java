@@ -20,8 +20,7 @@ import com.goldyframework.db.prepare.statement.guide.Comparison;
 import com.goldyframework.db.prepare.statement.insert.InsertPrepare;
 import com.goldyframework.db.prepare.statement.select.SelectPrepare;
 import com.goldyframework.db.prepare.statement.update.UpdatePrepare;
-import com.goldyframework.does.Because;
-import com.goldyframework.does.Does;
+import com.goldyframework.does.SonarHelper;
 import com.goldyframework.inspection.IntegerInspection;
 import com.goldyframework.inspection.ObjectInspection;
 import com.goldyframework.inspection.StringInspection;
@@ -208,7 +207,7 @@ public abstract class AbstractCacheDao implements StandardDao<CacheDto, CachePri
 		IntegerInspection.checkBelowZero(targetCacheKey);
 		StringInspection.checkBlank(column);
 		ObjectInspection.checkNull(value);
-		Does.notUse(this.select(targetCacheKey), Because.DO_NOTHING);
+		SonarHelper.noStatic(this.select(targetCacheKey));
 		final UpdatePrepare update = PrepareBuilder
 			.update(this.tableName)
 			.assign(column, value)
@@ -229,7 +228,7 @@ public abstract class AbstractCacheDao implements StandardDao<CacheDto, CachePri
 		IntegerInspection.checkBelowZero(targetCacheKey);
 		ObjectInspection.checkNull(dto);
 		
-		Does.notUse(this.select(targetCacheKey), Because.DO_NOTHING);
+		SonarHelper.noStatic(this.select(targetCacheKey));
 		final UpdatePrepare update = PrepareBuilder
 			.update(this.tableName)
 			.assign(CacheProp.FOREIGN_KEY, dto.getForeignKey())

@@ -26,8 +26,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.security.crypto.codec.Base64;
 
 import com.goldyframework.Prop;
-import com.goldyframework.does.Because;
-import com.goldyframework.does.Does;
+import com.goldyframework.does.SonarHelper;
 import com.goldyframework.encryption.exception.EncryptionException;
 import com.goldyframework.inspection.ObjectInspection;
 import com.goldyframework.utils.NullGtils;
@@ -87,7 +86,7 @@ public class Encryption {
 
 	private byte[] createIv() {
 
-		Does.notUse(this, Because.WANT_NOT_STATIC_FUNCTION);
+		SonarHelper.noStatic(this);
 
 		final int arrayLength = 16;
 		final byte[] resultIv = new byte[arrayLength];
@@ -101,7 +100,7 @@ public class Encryption {
 
 	private byte[] createKey() {
 
-		Does.notUse(this, Because.WANT_NOT_STATIC_FUNCTION);
+		SonarHelper.noStatic(this);
 
 		final int arrayLength = 16;
 		final byte[] resultKey = new byte[arrayLength];

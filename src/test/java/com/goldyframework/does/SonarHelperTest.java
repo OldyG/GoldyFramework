@@ -17,7 +17,7 @@ import org.junit.Test;
  *
  * @author 2017. 6. 19. 오후 10:59:54 jeong
  */
-public class DoesTest {
+public class SonarHelperTest {
 	
 	/**
 	 * Test for Constructor
@@ -27,7 +27,7 @@ public class DoesTest {
 	@Test(expected = IllegalStateException.class)
 	public void testConstructor() {
 		
-		new Does.TestSet().createNewInstance();
+		new SonarHelper.TestSet().createNewInstance();
 	}
 	
 	/**
@@ -36,7 +36,7 @@ public class DoesTest {
 	@Test
 	public void testInputObject() {
 		
-		Does.notUse(this, Because.WANT_NOT_STATIC_FUNCTION);
+		SonarHelper.noStatic(this);
 		Assert.assertTrue("", Boolean.TRUE); 
 	}
 	

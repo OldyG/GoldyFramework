@@ -24,8 +24,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.goldyframework.Prop;
-import com.goldyframework.does.Because;
-import com.goldyframework.does.Does;
+import com.goldyframework.does.SonarHelper;
 import com.goldyframework.inspection.ObjectInspection;
 import com.goldyframework.repository.exception.NotRegisteredFileException;
 import com.goldyframework.response.Response;
@@ -88,7 +87,7 @@ public class RepositoryServiceImpl implements RepositoryService {
 		try {
 			final File file = this.getFile();
 			final boolean success = file.delete();
-			Does.notUse(success, Because.DO_NOTHING);
+			SonarHelper.noStatic(success);
 		} catch (final NotRegisteredFileException e) {
 			LOGGER.trace("제거할 파일이 없어 진행하지 않음", e); 
 			return;
@@ -181,7 +180,7 @@ public class RepositoryServiceImpl implements RepositoryService {
 		
 		final File file = new File(savePath);
 		final boolean success = file.createNewFile();
-		Does.notUse(success, Because.DO_NOTHING);
+		SonarHelper.noStatic(success);
 		multipartFile.transferTo(file);
 		return file;
 	}
@@ -204,7 +203,7 @@ public class RepositoryServiceImpl implements RepositoryService {
 			file = new File(savePath);
 		}
 		final boolean success = file.createNewFile();
-		Does.notUse(success, Because.DO_NOTHING);
+		SonarHelper.noStatic(success);
 		FileUtils.writeStringToFile(file, content, Prop.DEFAULT_CHARSET.name());
 		return file;
 	}

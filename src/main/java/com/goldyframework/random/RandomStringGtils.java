@@ -64,7 +64,7 @@ public final class RandomStringGtils {
 		int passwordLength;
 		if (range <= 0) {
 			passwordLength = minLength;
-			LOGGER.error("range는 0또는 음수가 될수 없습니다."); 
+			LOGGER.error("range는 0또는 음수가 될수 없습니다.");
 		} else {
 			passwordLength = random.nextInt(range) + minLength;
 		}
@@ -87,7 +87,7 @@ public final class RandomStringGtils {
 	 */
 	private RandomStringGtils() {
 		
-		throw new IllegalStateException("Utility class"); 
+		throw new IllegalStateException("Utility class");
 	}
 	
 }

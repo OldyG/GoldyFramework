@@ -9,7 +9,8 @@
  */
 package com.goldyframework.random;
 
-import java.security.SecureRandom;
+import java.util.Arrays;
+import java.util.Collection;
 
 import com.goldyframework.inspection.ObjectInspection;
 
@@ -23,14 +24,14 @@ public class RandomEnumGtils {
 		ObjectInspection.checkNull(enumClass);
 		
 		if (enumClass.isEnum() == false) {
-			throw new IllegalArgumentException(enumClass.getName() + "클래스는 Enum클래스가 아닙니다."); 
+			throw new IllegalArgumentException(enumClass.getName() + "클래스는 Enum클래스가 아닙니다.");
 		}
 		
 		final T[] enumConstants = enumClass.getEnumConstants();
 		
-		final int randomInt = new SecureRandom().nextInt(enumConstants.length);
+		final Collection<T> collection = Arrays.asList(enumConstants);
 		
-		return enumConstants[randomInt];
+		return RandomSelectGtils.selectRandomObject(collection);
 		
 	}
 }

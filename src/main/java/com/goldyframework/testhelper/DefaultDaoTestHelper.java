@@ -41,6 +41,13 @@ public class DefaultDaoTestHelper<DTO extends Dto> {
 		this.template = template;
 	}
 	
+	public void abstractTest() throws DuplicateRecordException {
+		
+		this.testDelete();
+		this.testSelect();
+		this.testSelectAll();
+	}
+	
 	public DTO createDto(final DTO dto) throws DuplicateRecordException {
 		
 		return this.defaultDao.insert(dto);
@@ -66,7 +73,7 @@ public class DefaultDaoTestHelper<DTO extends Dto> {
 			return this.defaultDao.insert(createAllSetDto);
 		} catch (final DuplicateRecordException e) {
 			if (stackCount > 10) {
-				throw new StackOverflowError("createRandomDtoForInsert 함수가 랜덤으로 생성되지 않는것같습니다."); 
+				throw new StackOverflowError("createRandomDtoForInsert 함수가 랜덤으로 생성되지 않는것같습니다.");
 			}
 			return this.insertAndGetDto(stackCount);
 		}

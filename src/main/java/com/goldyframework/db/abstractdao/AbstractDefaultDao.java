@@ -9,7 +9,13 @@
  */
 package com.goldyframework.db.abstractdao;
 
+import java.text.MessageFormat;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -27,6 +33,7 @@ import com.goldyframework.does.SonarHelper;
 import com.goldyframework.inspection.IntegerInspection;
 import com.goldyframework.inspection.ObjectInspection;
 import com.goldyframework.inspection.StringInspection;
+import com.goldyframework.utils.StringCollectionGtils;
 
 public abstract class AbstractDefaultDao<DTO extends Dto> implements DefaultDao<DTO> {
 	
@@ -111,6 +118,41 @@ public abstract class AbstractDefaultDao<DTO extends Dto> implements DefaultDao<
 			.build();
 		
 		return this.template.selectAll(select, this.mapping.rowMapper());
+	}
+	
+	protected <T> Collection<DTO> selectsOf(final String columnName, final T value) {
+		
+		final SelectPrepare select = PrepareBuilder
+			.select(this.tableName)
+			.where(columnName, Comparison.EQUAL, value)
+			.build();
+		
+		return this.template.selectPart(select, this.mapping.rowMapper());
+	}
+	
+	protected <T> Collection<DTO> selectsOfs(final String columnName,
+		final Collection<T> tableKeyCollection) {
+		
+		ObjectInspection.checkNull(tableKeyCollection);
+		
+		if (tableKeyCollection.size() == 0) {
+			return Collections.emptyList();
+		}
+		
+		final Set<Object> tableKeySet = new HashSet<>(tableKeyCollection);
+		
+		final List<String> collect = tableKeySet.stream().map(themeKey -> "?").collect(Collectors.toList());
+		
+		final String quesions = StringCollectionGtils.join(collect, ", ");
+		final String sql = MessageFormat.format("SELECT * FROM {0} WHERE {0}.{1} in ({2})",
+			this.tableName, columnName, quesions);
+		final Object[] args = tableKeySet.toArray(new Object[tableKeySet.size()]);
+		return this.template.query(sql, args, this.mapping.rowMapper());
+	}
+	
+	public Collection<DTO> selects(final Collection<Integer> tableKeyCollection) {
+		
+		return this.selectsOfs(this.tableKey, tableKeyCollection);
 	}
 	
 	/**

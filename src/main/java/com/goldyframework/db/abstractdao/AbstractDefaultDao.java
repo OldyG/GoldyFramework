@@ -17,6 +17,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.goldyframework.db.JdbcPrepareTemplate;
@@ -120,6 +121,11 @@ public abstract class AbstractDefaultDao<DTO extends Dto> implements DefaultDao<
 		return this.template.selectAll(select, this.mapping.rowMapper());
 	}
 	
+	public Collection<DTO> selects(final Collection<Integer> tableKeyCollection) {
+		
+		return this.selectsOfs(this.tableKey, tableKeyCollection);
+	}
+	
 	protected <T> Collection<DTO> selectsOf(final String columnName, final T value) {
 		
 		final SelectPrepare select = PrepareBuilder
@@ -131,28 +137,25 @@ public abstract class AbstractDefaultDao<DTO extends Dto> implements DefaultDao<
 	}
 	
 	protected <T> Collection<DTO> selectsOfs(final String columnName,
-		final Collection<T> tableKeyCollection) {
+		final Collection<T> valueCollection) {
 		
-		ObjectInspection.checkNull(tableKeyCollection);
+		ObjectInspection.checkNull(valueCollection);
 		
-		if (tableKeyCollection.size() == 0) {
+		if (CollectionUtils.isEmpty(valueCollection)) {
 			return Collections.emptyList();
 		}
 		
-		final Set<Object> tableKeySet = new HashSet<>(tableKeyCollection);
+		final Set<Object> tableKeySet = new HashSet<>(valueCollection);
 		
-		final List<String> collect = tableKeySet.stream().map(themeKey -> "?").collect(Collectors.toList());
+		final List<String> collect = tableKeySet.stream()
+			.map(themeKey -> "?")
+			.collect(Collectors.toList());
 		
 		final String quesions = StringCollectionGtils.join(collect, ", ");
 		final String sql = MessageFormat.format("SELECT * FROM {0} WHERE {0}.{1} in ({2})",
 			this.tableName, columnName, quesions);
 		final Object[] args = tableKeySet.toArray(new Object[tableKeySet.size()]);
 		return this.template.query(sql, args, this.mapping.rowMapper());
-	}
-	
-	public Collection<DTO> selects(final Collection<Integer> tableKeyCollection) {
-		
-		return this.selectsOfs(this.tableKey, tableKeyCollection);
 	}
 	
 	/**

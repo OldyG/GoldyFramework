@@ -47,7 +47,7 @@ public class ReservationGarbageRepositoryBody extends AbstractRepositoryBody {
 	@Override
 	protected String getBaseName() {
 		
-		return "Garbage"; 
+		return "Garbage";
 	}
 	
 	/**
@@ -87,7 +87,7 @@ public class ReservationGarbageRepositoryBody extends AbstractRepositoryBody {
 	@Override
 	protected String initialDefaultExtension() {
 		
-		return "json"; 
+		return "json";
 	}
 	
 	/**
@@ -95,9 +95,9 @@ public class ReservationGarbageRepositoryBody extends AbstractRepositoryBody {
 	 * @return 디렉토리
 	 */
 	@Override
-	protected String initialDirectory() {
+	protected File getDirectory() {
 		
-		return this.garbageDirectory.getAbsolutePath();
+		return this.garbageDirectory;
 	}
 	
 	/**

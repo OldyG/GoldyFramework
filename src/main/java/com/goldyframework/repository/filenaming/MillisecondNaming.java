@@ -38,7 +38,7 @@ class MillisecondNaming implements FileNaming {
 	 * @author 2017. 6. 18. 오후 1:36:08 jeong
 	 */
 	@Override
-	public String generageSavePath(final String directory, final String baseName, final String extension) {
+	public String generageSavePath(final File directory, final String baseName, final String extension) {
 		
 		ObjectInspection.checkNull(directory);
 		ObjectInspection.checkNull(baseName);
@@ -46,7 +46,7 @@ class MillisecondNaming implements FileNaming {
 		while (true) {
 			final String millisecond = Long.toString(new Date().getTime());
 			
-			final String fileName = MessageFormat.format("{0}-{1}.{2}", baseName, millisecond, extension); 
+			final String fileName = MessageFormat.format("{0}-{1}.{2}", baseName, millisecond, extension);
 			final File tempFile = new File(directory, fileName);
 			
 			if (tempFile.exists() == false) {

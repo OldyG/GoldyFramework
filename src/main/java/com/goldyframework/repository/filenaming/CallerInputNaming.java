@@ -9,6 +9,7 @@
  */
 package com.goldyframework.repository.filenaming;
 
+import java.io.File;
 import java.text.MessageFormat;
 
 import com.goldyframework.inspection.ObjectInspection;
@@ -36,12 +37,12 @@ class CallerInputNaming implements FileNaming {
 	 * @author 2017. 6. 18. 오후 1:36:03 jeong
 	 */
 	@Override
-	public String generageSavePath(final String directory, final String baseName, final String extension) {
+	public String generageSavePath(final File directory, final String baseName, final String extension) {
 		
 		ObjectInspection.checkNull(directory);
 		ObjectInspection.checkNull(baseName);
 		ObjectInspection.checkNull(extension);
-		return MessageFormat.format("{0}{1}.{2}", directory, baseName, extension); 
+		return MessageFormat.format("{0}{1}.{2}", directory.getAbsolutePath(), baseName, extension);
 	}
 	
 }

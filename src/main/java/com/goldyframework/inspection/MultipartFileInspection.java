@@ -9,6 +9,8 @@
  */
 package com.goldyframework.inspection;
 
+import java.text.MessageFormat;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 
@@ -24,22 +26,13 @@ import com.goldyframework.inspection.exception.InspectionException;
  */
 public final class MultipartFileInspection {
 	
-	/**
-	 * 빈 파일이 검사합니다.
-	 *
-	 * @author 2017. 6. 14. 오후 10:00:47 jeong
-	 * @param mpFile
-	 *            검사대상 파일
-	 * @throws ValidateException
-	 *             빈 파일일 경우 발생합니다.
-	 */
-	public static void checkEmptyFile(final MultipartFile mpFile) {
+	public static void checkAboveSize(final MultipartFile target, final long maxSizebyte) {
 		
-		ObjectInspection.checkNull(mpFile);
-		
-		if (mpFile.isEmpty()) {
-			throw new InspectionException("빈 파일입니다."); 
+		if (target.getSize() > maxSizebyte) {
+			final String messsage = MessageFormat.format("파일 사이즈는 {0}를 넘길 수 없습니다.", maxSizebyte);
+			throw new InspectionException(messsage);
 		}
+		
 	}
 	
 	/**
@@ -66,7 +59,12 @@ public final class MultipartFileInspection {
 				return;
 			}
 		}
-		throw new InspectionException(validExtentions + "가 아닙니다."); 
+		throw new InspectionException(validExtentions + "가 아닙니다.");
+	}
+	
+	public static void checkNotImage(final MultipartFile target) {
+		
+		checkExtentionIs(target, Arrays.asList("jpg", "jpeg", "png", "gif", "jfif", "tiff", "bmp", "svg"));
 	}
 	
 	/**
@@ -77,33 +75,33 @@ public final class MultipartFileInspection {
 	 * - 확장자를 제외한 파일이름이 없는 경우
 	 *
 	 * @author 2017. 6. 14. 오후 10:03:56 jeong
-	 * @param multipartFile
+	 * @param target
 	 *            검사대상 파일
 	 * @throws ValidateException
 	 *             파일 사이즈가 0이거나 이름이 없는 경우 발생합니다.
 	 */
-	public static void checkNullOrEmptyMultipartFile(final MultipartFile multipartFile) {
+	public static void checkNullOrEmpty(final MultipartFile target) {
 		
-		ObjectInspection.checkNull(multipartFile);
-		StringInspection.checkBlank(multipartFile.getName());
+		ObjectInspection.checkNull(target);
+		StringInspection.checkBlank(target.getName());
 		
 		try {
-			IntegerInspection.checkBelowZero((int) multipartFile.getSize());
+			IntegerInspection.checkBelowZero((int) target.getSize());
 		} catch (final InspectionException e) {
-			throw new InspectionException("파일 사이즈가 0입니다.", e); 
+			throw new InspectionException("파일 사이즈가 0입니다.", e);
 		}
 		
 		try {
-			StringInspection.checkBlank(multipartFile.getOriginalFilename());
+			StringInspection.checkBlank(target.getOriginalFilename());
 		} catch (final InspectionException e) {
-			throw new InspectionException("파일 이름이 없습니다.", e); 
+			throw new InspectionException("파일 이름이 없습니다.", e);
 		}
 		
 		try {
-			final String originalFilename = multipartFile.getOriginalFilename();
+			final String originalFilename = target.getOriginalFilename();
 			StringInspection.checkBlank(FilenameUtils.getBaseName(originalFilename));
 		} catch (final InspectionException e) {
-			throw new InspectionException("확장자를 제외한 파일이름이 비어있습니다.", e); 
+			throw new InspectionException("확장자를 제외한 파일이름이 비어있습니다.", e);
 		}
 	}
 	
@@ -117,7 +115,7 @@ public final class MultipartFileInspection {
 	 * @throws ValidateException
 	 *             null일 경우 발생합니다.
 	 */
-	public static String extractExtention(final String fileName) {
+	private static String extractExtention(final String fileName) {
 		
 		ObjectInspection.checkNull(fileName);
 		
@@ -133,7 +131,7 @@ public final class MultipartFileInspection {
 	 */
 	private MultipartFileInspection() {
 		
-		throw new IllegalStateException("Utility class"); 
+		throw new IllegalStateException("Utility class");
 	}
 	
 }

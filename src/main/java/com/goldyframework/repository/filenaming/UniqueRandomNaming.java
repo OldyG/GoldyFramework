@@ -48,7 +48,7 @@ class UniqueRandomNaming implements FileNaming {
 	 * @author 2017. 6. 18. 오후 1:36:20 jeong
 	 */
 	@Override
-	public String generageSavePath(final String directory, final String baseName, final String extension) {
+	public String generageSavePath(final File directory, final String baseName, final String extension) {
 		
 		ObjectInspection.checkNull(directory);
 		ObjectInspection.checkNull(baseName);
@@ -56,7 +56,7 @@ class UniqueRandomNaming implements FileNaming {
 		while (true) {
 			final String randomName = RandomStringGtils.createRandomString(MIN_LENGTH, MAX_LENGTH - MIN_LENGTH);
 			
-			final String fileName = MessageFormat.format("{0}.{1}", randomName, extension); 
+			final String fileName = MessageFormat.format("{0}.{1}", randomName, extension);
 			final File tempFile = new File(directory, fileName);
 			
 			if (tempFile.exists() == false) {

@@ -34,11 +34,6 @@ public abstract class AbstractRepositoryBody implements RepositoryBody {
 	private static final Logger LOGGER = LoggerFactory.getLogger(AbstractRepositoryBody.class);
 	
 	/**
-	 * 디렉토리
-	 */
-	private String directory;
-	
-	/**
 	 * 파일 이름 정의 방법
 	 */
 	private FileNamingType namingType;
@@ -79,13 +74,13 @@ public abstract class AbstractRepositoryBody implements RepositoryBody {
 	public String generateSavePath(final String extension) {
 		
 		ObjectInspection.checkNull(extension);
-		return this.namingType.getFileNaming().generageSavePath(this.directory, this.getBaseName(), extension);
+		return this.namingType.getFileNaming().generageSavePath(this.getDirectory(), this.getBaseName(), extension);
 	}
 	
 	/**
-	 * 파일의 이름을 작성합니다.
-	 * 이 함수가 호출되는 관리타입
-	 * - {@link FileNamingType#CALLER_INPUT}
+	 * 확장자를 제외한 파일의 이름을 작성합니다.
+	 * {@link FileNamingType#CALLER_INPUT}가 아닌 경우 null을 반환해도 무관합니다.
+	 * -
 	 *
 	 * @author jeong
 	 * @return 기본이름
@@ -97,15 +92,16 @@ public abstract class AbstractRepositoryBody implements RepositoryBody {
 	 * {@inheritDoc}
 	 *
 	 * @author 2017. 6. 18. 오후 1:44:44 jeong
+	 * @throws RepositoryException
 	 */
 	@Override
-	public File getRegisteredFile() throws NotRegisteredFileException, SQLException, RepositoryException {
+	public File getRegisteredFile() throws NotRegisteredFileException, RepositoryException {
 		
 		final String fileUrl = this.getRegisteredFileName();
 		if (Strings.isNullOrEmpty(fileUrl)) {
 			throw new NotRegisteredFileException();
 		}
-		return new File(this.directory, fileUrl);
+		return new File(this.getDirectory(), fileUrl);
 	}
 	
 	/**
@@ -121,7 +117,7 @@ public abstract class AbstractRepositoryBody implements RepositoryBody {
 	 *             이 외 발생하는 예외 사항
 	 */
 	protected abstract String getRegisteredFileName()
-		throws NotRegisteredFileException, SQLException, RepositoryException;
+		throws NotRegisteredFileException, RepositoryException;
 	
 	/**
 	 * 파일의 기본 확장자를 작성합니다.<br>
@@ -142,7 +138,7 @@ public abstract class AbstractRepositoryBody implements RepositoryBody {
 	 * @return 기본 디렉토리를 초기화한다.
 	 * @date 2016. 5. 18.
 	 */
-	protected abstract String initialDirectory();
+	protected abstract File getDirectory();
 	
 	/**
 	 * 초기화
@@ -151,16 +147,16 @@ public abstract class AbstractRepositoryBody implements RepositoryBody {
 	 */
 	protected void initialize() {
 		
-		this.directory = this.initialDirectory();
-		final File defaultDirectory = new File(this.directory);
-		if (defaultDirectory.exists() == false) {
+		final File directory = this.getDirectory();
+		
+		if (directory.exists() == false) {
 			
-			final String absolutePath = defaultDirectory.getAbsolutePath();
-			if (defaultDirectory.mkdirs()) {
-				final String message = MessageFormat.format("디렉토리 생성 성공{0}", absolutePath); 
+			final String absolutePath = directory.getAbsolutePath();
+			if (directory.mkdirs()) {
+				final String message = MessageFormat.format("디렉토리 생성 성공{0}", absolutePath);
 				LOGGER.trace(message);
 			} else {
-				final String message = MessageFormat.format("디렉토리 생성에 실패하였습니다.{0}", absolutePath); 
+				final String message = MessageFormat.format("디렉토리 생성에 실패하였습니다.{0}", absolutePath);
 				LOGGER.error(message);
 			}
 			

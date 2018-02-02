@@ -54,13 +54,13 @@ public class RepositoryServiceImpl implements RepositoryService {
 	 * {@link RepositoryServiceImpl} 클래스의 새 인스턴스를 초기화 합니다.
 	 *
 	 * @author 2017. 6. 18. 오후 1:53:45 jeong
-	 * @param repository
+	 * @param body
 	 *            저장소 바디
 	 */
 	@Autowired
-	public RepositoryServiceImpl(final RepositoryBody repository) {
+	public RepositoryServiceImpl(final RepositoryBody body) {
 		
-		this.repository = NullGtils.throwIfNull(repository);
+		this.repository = NullGtils.throwIfNull(body);
 	}
 	
 	/**
@@ -89,7 +89,7 @@ public class RepositoryServiceImpl implements RepositoryService {
 			final boolean success = file.delete();
 			SonarHelper.noStatic(success);
 		} catch (final NotRegisteredFileException e) {
-			LOGGER.trace("제거할 파일이 없어 진행하지 않음", e); 
+			LOGGER.trace("제거할 파일이 없어 진행하지 않음", e);
 			return;
 		}
 	}
@@ -117,17 +117,19 @@ public class RepositoryServiceImpl implements RepositoryService {
 		throws SQLException, RepositoryException, NotRegisteredFileException, IOException {
 		
 		final File file = this.getFile();
-		final String fileName = this.repository.getDownloadName();
-		final String docName = new String(fileName.getBytes(Prop.DEFAULT_CHARSET), "ISO-8859-1"); 
-		final String contentDispositionHeader = "attachment; filename=\"" + docName + "\""; 
+		final String extension = FilenameUtils.getExtension(file.getAbsolutePath());
+		
+		final String fileName = this.repository.getDownloadName() + "." + extension;
+		final String docName = new String(fileName.getBytes(Prop.DEFAULT_CHARSET), "ISO-8859-1");
+		final String contentDispositionHeader = "attachment; filename=\"" + docName + "\"";
 		final InputStreamResource body = new InputStreamResource(new FileInputStream(file));
 		
 		return ResponseEntity
 			.ok()
-			.header("Content-Disposition", contentDispositionHeader) 
-			.header("Content-Type", "application/octet-stream") 
-			.header("Pragma", "no-cache;") 
-			.header("Content-Transfer-Encoding", "binary;") 
+			.header("Content-Disposition", contentDispositionHeader)
+			.header("Content-Type", "application/octet-stream")
+			.header("Pragma", "no-cache;")
+			.header("Content-Transfer-Encoding", "binary;")
 			.body(body);
 	}
 	
@@ -179,6 +181,11 @@ public class RepositoryServiceImpl implements RepositoryService {
 		final String savePath = this.repository.generateSavePath(extension);
 		
 		final File file = new File(savePath);
+		final File directory = file.getParentFile();
+		if (directory.exists() == false) {
+			directory.mkdirs();
+		}
+		
 		final boolean success = file.createNewFile();
 		SonarHelper.noStatic(success);
 		multipartFile.transferTo(file);
@@ -198,7 +205,7 @@ public class RepositoryServiceImpl implements RepositoryService {
 		try {
 			file = this.getFile();
 		} catch (final NotRegisteredFileException e) {
-			LOGGER.trace("파일이 없어 신규 파일을 생성합니다.", e); 
+			LOGGER.trace("파일이 없어 신규 파일을 생성합니다.", e);
 			final String savePath = this.repository.generateSavePath();
 			file = new File(savePath);
 		}

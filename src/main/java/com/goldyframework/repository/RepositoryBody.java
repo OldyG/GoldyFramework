@@ -40,7 +40,7 @@ public interface RepositoryBody {
 	String generateSavePath(String extension);
 	
 	/**
-	 * 다운로드 이름을 반환합니다.
+	 * 사용자가 다운로드 할 때의 이름을 반환합니다. 확장자를 제외한 파일의 이름만 작성합니다.
 	 *
 	 * @author 2017. 6. 18. 오후 1:46:42 jeong
 	 * @return 다운로드 이름

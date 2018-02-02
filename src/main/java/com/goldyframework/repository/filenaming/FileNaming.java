@@ -9,6 +9,8 @@
  */
 package com.goldyframework.repository.filenaming;
 
+import java.io.File;
+
 /**
  * 파일 이름 생성 인터페이스
  *
@@ -29,6 +31,6 @@ public interface FileNaming {
 	 *            확장자
 	 * @return 생성된 저장 경로
 	 */
-	String generageSavePath(String directory, String baseName, String extension);
+	String generageSavePath(File directory, String baseName, String extension);
 	
 }

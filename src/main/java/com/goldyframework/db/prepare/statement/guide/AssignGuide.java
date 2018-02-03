@@ -30,30 +30,24 @@ public class AssignGuide implements Guide {
 	 */
 	public AssignGuide(final String tableName) {
 		
+		ObjectInspection.checkNull(tableName);
 		this.where = new WhereGuide(tableName);
 	}
 	
 	public void appendIfNotNull(final String column, final Object value) {
 		
 		ObjectInspection.checkNull(column);
+		final String wrapColumn = column;
 		if (value != null) {
-			this.where.append(column, Comparison.EQUAL, value);
+			this.where.append(wrapColumn, Comparison.EQUAL, value);
 		}
 	}
 	
-	/**
-	 * @author 2017. 7. 7. 오후 7:15:05 jeong
-	 * @return
-	 */
 	public Collection<Object> getArgs() {
 		
 		return this.where.getArgs();
 	}
 	
-	/**
-	 * @author 2017. 7. 8. 오후 2:20:46 jeong
-	 * @return
-	 */
 	public Collection<String> getColumns() {
 		
 		return this.where.getColumns();

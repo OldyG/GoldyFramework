@@ -17,6 +17,7 @@ import java.util.stream.Stream;
 import org.apache.commons.lang3.StringUtils;
 
 import com.goldyframework.db.prepare.statement.AbstractPrepare;
+import com.goldyframework.db.prepare.statement.FieldWrapper;
 import com.goldyframework.db.prepare.statement.guide.AssignGuide;
 import com.goldyframework.db.prepare.statement.guide.WhereGuide;
 import com.goldyframework.inspection.StringInspection;
@@ -77,14 +78,14 @@ public class UpdatePrepare extends AbstractPrepare {
 	@Override
 	public String toPrepareSql() {
 		
-		final String tableName = super.getTableName();
+		final String tableName = FieldWrapper.wrap(super.getTableName());
 		final String buildedUpdate = this.assign.toSql();
 		final String buildedWhere = this.where.toSql();
 		StringInspection.checkBlank(tableName);
 		StringInspection.checkBlank(buildedUpdate);
 		StringInspection.checkBlank(buildedWhere);
 		
-		return MessageFormat.format("UPDATE {0} SET {1} WHERE {2}", tableName, buildedUpdate, buildedWhere); 
+		return MessageFormat.format("UPDATE {0} SET {1} WHERE {2}", tableName, buildedUpdate, buildedWhere);
 	}
 	
 }

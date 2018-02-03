@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 
+import com.goldyframework.db.prepare.statement.FieldWrapper;
 import com.goldyframework.utils.StringCollectionGtils;
 
 /**
@@ -26,7 +27,7 @@ public class OrderByGuide extends ConcurrentHashMap<String, OrderType> implement
 		
 		final List<String> temp = new ArrayList<>();
 		for (final Entry<String, OrderType> entry : this.entrySet()) {
-			temp.add(MessageFormat.format("{0} {1}", entry.getKey(), entry.getValue().toString()));
+			temp.add(MessageFormat.format("{0} {1}", FieldWrapper.wrap(entry.getKey()), entry.getValue().toString()));
 		}
 		
 		return "ORDER BY " + StringCollectionGtils.join(temp, ", ");

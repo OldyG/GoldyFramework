@@ -12,6 +12,7 @@ package com.goldyframework.db.prepare.statement.delete;
 import com.goldyframework.db.prepare.statement.PreparePlan;
 import com.goldyframework.db.prepare.statement.guide.Comparison;
 import com.goldyframework.db.prepare.statement.guide.WhereGuide;
+import com.goldyframework.inspection.ObjectInspection;
 
 /**
  * @author 2017. 7. 8. 오후 2:00:40 jeong
@@ -31,8 +32,9 @@ public class DeletePreparePlan implements PreparePlan<DeletePrepare> {
 	public DeletePreparePlan(final String tableName) {
 		
 		super();
+		ObjectInspection.checkNull(tableName);
 		this.tableName = tableName;
-		this.where = new WhereGuide(tableName);
+		this.where = new WhereGuide(this.tableName);
 	}
 	
 	/**

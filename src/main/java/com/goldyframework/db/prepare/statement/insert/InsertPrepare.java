@@ -14,6 +14,7 @@ import java.util.Collection;
 import java.util.List;
 
 import com.goldyframework.db.prepare.statement.AbstractPrepare;
+import com.goldyframework.db.prepare.statement.FieldWrapper;
 import com.goldyframework.db.prepare.statement.guide.AssignGuide;
 import com.goldyframework.inspection.ObjectInspection;
 import com.goldyframework.utils.NullGtils;
@@ -57,12 +58,16 @@ public class InsertPrepare extends AbstractPrepare {
 	@Override
 	public String toPrepareSql() {
 		
-		final List<String> detailColumn = StringCollectionGtils.eachPrepend(this.getTableName() + '.',
-			this.assign.getColumns());
+		String tableName = this.getTableName();
+		tableName = FieldWrapper.wrap(tableName);
+		Collection<String> columns = this.assign.getColumns();
+		columns = FieldWrapper.wrap(columns);
+		final List<String> detailColumn = StringCollectionGtils.eachPrepend(tableName + '.',
+			columns);
 		
-		return MessageFormat.format("INSERT INTO {0} ({1}) VALUES ({2})",  
+		return MessageFormat.format("INSERT INTO {0} ({1}) VALUES ({2})",
 			super.getTableName(),
-			StringCollectionGtils.join(detailColumn, ", "), 
+			StringCollectionGtils.join(detailColumn, ", "),
 			super.joinMark(detailColumn.size()));
 	}
 	

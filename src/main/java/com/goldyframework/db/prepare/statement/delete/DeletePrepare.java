@@ -13,6 +13,7 @@ import java.text.MessageFormat;
 import java.util.Collection;
 
 import com.goldyframework.db.prepare.statement.AbstractPrepare;
+import com.goldyframework.db.prepare.statement.FieldWrapper;
 import com.goldyframework.db.prepare.statement.guide.WhereGuide;
 import com.goldyframework.inspection.StringInspection;
 import com.goldyframework.utils.NullGtils;
@@ -56,11 +57,11 @@ public class DeletePrepare extends AbstractPrepare {
 	public String toPrepareSql() {
 		
 		final String tableName = super.getTableName();
-		final String buildedWhere = this.where.toSql();
+		final String where = this.where.toSql();
 		StringInspection.checkBlank(tableName);
-		StringInspection.checkBlank(buildedWhere);
+		StringInspection.checkBlank(where);
 		
-		return MessageFormat.format("DELETE FROM {0} WHERE {1}", tableName, buildedWhere); 
+		return MessageFormat.format("DELETE FROM {0} WHERE {1}", FieldWrapper.wrap(tableName), where);
 	}
 	
 }

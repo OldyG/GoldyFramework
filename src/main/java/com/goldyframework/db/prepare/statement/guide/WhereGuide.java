@@ -16,6 +16,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import com.goldyframework.db.prepare.statement.FieldWrapper;
 import com.goldyframework.inspection.ObjectInspection;
 import com.goldyframework.utils.NullGtils;
 import com.goldyframework.utils.StringCollectionGtils;
@@ -88,7 +89,9 @@ public class WhereGuide implements Guide {
 	public WhereGuide(final String tableName) {
 		
 		super();
-		this.tableName = NullGtils.throwIfNull(tableName);
+		ObjectInspection.checkNull(tableName);
+		this.tableName = tableName;
+		
 	}
 	
 	public void append(final String columnName, final Comparison comparison, final Object value) {
@@ -96,7 +99,6 @@ public class WhereGuide implements Guide {
 		ObjectInspection.checkNull(columnName);
 		ObjectInspection.checkNull(comparison);
 		ObjectInspection.checkNull(value);
-		
 		if (value != null) {
 			if (value.getClass().isEnum()) {
 				this.whereMap.put(columnName, new ComparisonValue(comparison, value.toString()));
@@ -107,17 +109,12 @@ public class WhereGuide implements Guide {
 		
 	}
 	
-	/**
-	 * @author jeonghyun.kum
-	 * @since 2017. 7. 13. 오전 10:29:29
-	 * @return
-	 */
 	@VisibleForTesting
 	List<String> createTableColumnList() {
 		
 		final List<String> appended = this.eachAppendComparisonValue();
 		
-		return StringCollectionGtils.eachPrepend(this.tableName + '.', appended);
+		return StringCollectionGtils.eachPrepend(FieldWrapper.wrap(this.tableName) + '.', appended);
 	}
 	
 	@VisibleForTesting
@@ -131,7 +128,7 @@ public class WhereGuide implements Guide {
 				final ComparisonValue comparisonValue = copiedWhereMap.get(key);
 				final String comparison = comparisonValue.getComparison().getComparison();
 				
-				return MessageFormat.format("{0} {1} {2}", key, comparison, '?');
+				return MessageFormat.format("{0} {1} {2}", FieldWrapper.wrap(key), comparison, '?');
 			})
 			.collect(Collectors.toList());
 	}
@@ -176,7 +173,10 @@ public class WhereGuide implements Guide {
 	@Override
 	public String toSql() {
 		
-		final List<String> tableColumnList = this.createTableColumnList();
+		final List<String> appended = this.eachAppendComparisonValue();
+		
+		final List<String> tableColumnList = StringCollectionGtils.eachPrepend(FieldWrapper.wrap(this.tableName) + '.',
+			appended);
 		
 		return StringCollectionGtils.join(tableColumnList, " AND ");
 	}

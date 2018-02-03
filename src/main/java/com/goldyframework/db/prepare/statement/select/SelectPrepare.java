@@ -17,6 +17,7 @@ import java.util.List;
 import org.apache.commons.collections4.MapUtils;
 
 import com.goldyframework.db.prepare.statement.AbstractPrepare;
+import com.goldyframework.db.prepare.statement.FieldWrapper;
 import com.goldyframework.db.prepare.statement.guide.LimitGuide;
 import com.goldyframework.db.prepare.statement.guide.OrderByGuide;
 import com.goldyframework.db.prepare.statement.guide.WhereGuide;
@@ -85,7 +86,11 @@ public class SelectPrepare extends AbstractPrepare {
 		if (this.columns.isEmpty()) {
 			return "*";
 		}
-		final List<String> eachPrepend = StringCollectionGtils.eachPrepend(super.getTableName() + '.', this.columns);
+		final String tableName = FieldWrapper.wrap(super.getTableName());
+		
+		final List<String> wrapColumn = FieldWrapper.wrap(this.columns);
+		
+		final List<String> eachPrepend = StringCollectionGtils.eachPrepend(tableName + '.', wrapColumn);
 		
 		return StringCollectionGtils.join(eachPrepend, ", ");
 	}
@@ -108,7 +113,7 @@ public class SelectPrepare extends AbstractPrepare {
 	public String toPrepareSql() {
 		
 		final String columnArea = this.getColumnArea();
-		final String tableName = super.getTableName();
+		final String tableName = FieldWrapper.wrap(super.getTableName());
 		
 		final StringBuilder sqlBuilder = new StringBuilder();
 		

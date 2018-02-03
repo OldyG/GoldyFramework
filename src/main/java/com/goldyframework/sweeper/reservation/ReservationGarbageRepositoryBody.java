@@ -85,7 +85,7 @@ public class ReservationGarbageRepositoryBody extends AbstractRepositoryBody {
 	 * @return 기본 확장자
 	 */
 	@Override
-	protected String initialDefaultExtension() {
+	protected String getDefaultExtension() {
 		
 		return "json";
 	}
@@ -105,7 +105,7 @@ public class ReservationGarbageRepositoryBody extends AbstractRepositoryBody {
 	 * @return {@link FileNamingType#MILLISECOND}
 	 */
 	@Override
-	protected FileNamingType initialNamingType() {
+	protected FileNamingType getNamingType() {
 		
 		return FileNamingType.MILLISECOND;
 	}

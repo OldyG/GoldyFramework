@@ -41,28 +41,28 @@ public final class MultipartFileInspection {
 	 * @author 2017. 6. 14. 오후 10:01:38 jeong
 	 * @param target
 	 *            검사대상
-	 * @param validExtentions
+	 * @param validExtensions
 	 *            포함해야할 확장자
 	 * @throws ValidateException
 	 *             정의한 확장자가 포함하지 않으면 발생합니다.
 	 */
-	public static void checkExtentionIs(final MultipartFile target, final List<String> validExtentions) {
+	public static void checkExtentionIs(final MultipartFile target, final List<String> validExtensions) {
 		
 		ObjectInspection.checkNull(target);
-		ObjectInspection.checkNull(validExtentions);
+		ObjectInspection.checkNull(validExtensions);
 		
 		final String originalFilename = target.getOriginalFilename();
-		final String extention = extractExtention(originalFilename).toLowerCase(Locale.getDefault());
+		final String extension = extractExtention(originalFilename).toLowerCase(Locale.getDefault());
 		
-		for (final String String : validExtentions) {
-			if (String.equalsIgnoreCase(extention)) {
+		for (final String validExtension : validExtensions) {
+			if (validExtension.equalsIgnoreCase(extension)) {
 				return;
 			}
 		}
-		throw new InspectionException(validExtentions + "가 아닙니다.");
+		throw new InspectionException(extension + "는 허용하는 확장자가 아닙니다.");
 	}
 	
-	public static void checkNotImage(final MultipartFile target) {
+	public static void checkImageFile(final MultipartFile target) {
 		
 		checkExtentionIs(target, Arrays.asList("jpg", "jpeg", "png", "gif", "jfif", "tiff", "bmp", "svg"));
 	}

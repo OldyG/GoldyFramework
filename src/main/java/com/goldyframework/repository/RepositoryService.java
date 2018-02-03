@@ -40,8 +40,10 @@ public interface RepositoryService {
 	 * @throws IOException
 	 *             Signals that an I/O exception of some sort has occurred. This class is the general class of
 	 *             exceptions produced by failed or interrupted I/O operations.
+	 * @throws NotRegisteredFileException
 	 */
-	File change(MultipartFile multipartFile) throws SQLException, RepositoryException, IOException;
+	File change(MultipartFile multipartFile)
+		throws SQLException, RepositoryException, IOException, NotRegisteredFileException;
 	
 	/**
 	 * 파일을 제거합니다.
@@ -152,6 +154,9 @@ public interface RepositoryService {
 	 * @throws IOException
 	 *             Signals that an I/O exception of some sort has occurred. This class is the general class of
 	 *             exceptions produced by failed or interrupted I/O operations.
+	 * @throws NotRegisteredFileException
+	 * @throws RepositoryException
+	 * @throws SQLException
 	 */
 	File save(MultipartFile multipartFile) throws IOException;
 	

@@ -37,12 +37,14 @@ class CallerInputNaming implements FileNaming {
 	 * @author 2017. 6. 18. 오후 1:36:03 jeong
 	 */
 	@Override
-	public String generageSavePath(final File directory, final String baseName, final String extension) {
+	public File generageSavePath(final File directory, final String baseName, final String extension) {
 		
 		ObjectInspection.checkNull(directory);
 		ObjectInspection.checkNull(baseName);
 		ObjectInspection.checkNull(extension);
-		return MessageFormat.format("{0}{1}.{2}", directory.getAbsolutePath(), baseName, extension);
+		
+		final String fullFileName = MessageFormat.format("{0}.{1}", baseName, extension);
+		return new File(directory, fullFileName);
 	}
 	
 }

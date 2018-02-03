@@ -27,7 +27,7 @@ public class CheckSumFileValidator implements Inspection<File> {
 	public void check(final File target) {
 		
 		ObjectInspection.checkNull(target);
-		FileInspection.checkIllegalFile(target);
+		FileInspection.checkExistsFile(target);
 	}
 	
 }

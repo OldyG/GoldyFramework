@@ -67,9 +67,11 @@ public class RepositoryServiceImpl implements RepositoryService {
 	 * {@inheritDoc}
 	 *
 	 * @author 2017. 6. 18. 오후 1:55:26 jeong
+	 * @throws NotRegisteredFileException
 	 */
 	@Override
-	public File change(final MultipartFile multipartFile) throws SQLException, RepositoryException, IOException {
+	public File change(final MultipartFile multipartFile)
+		throws SQLException, RepositoryException, IOException {
 		
 		ObjectInspection.checkNull(multipartFile);
 		this.delete();
@@ -86,10 +88,14 @@ public class RepositoryServiceImpl implements RepositoryService {
 		
 		try {
 			final File file = this.getFile();
-			final boolean success = file.delete();
-			SonarHelper.noStatic(success);
+			
+			while (file.exists()) {
+				
+				if (file.delete()) {
+					break;
+				}
+			}
 		} catch (final NotRegisteredFileException e) {
-			LOGGER.trace("제거할 파일이 없어 진행하지 않음", e);
 			return;
 		}
 	}
@@ -172,15 +178,25 @@ public class RepositoryServiceImpl implements RepositoryService {
 	 * {@inheritDoc}
 	 *
 	 * @author 2017. 6. 18. 오후 1:56:08 jeong
+	 * @throws NotRegisteredFileException
+	 * @throws RepositoryException
+	 * @throws SQLException
 	 */
 	@Override
-	public File save(final MultipartFile multipartFile) throws IOException {
+	public File save(final MultipartFile multipartFile)
+		throws IOException {
 		
 		ObjectInspection.checkNull(multipartFile);
-		final String extension = FilenameUtils.getExtension(multipartFile.getOriginalFilename());
-		final String savePath = this.repository.generateSavePath(extension);
 		
-		final File file = new File(savePath);
+		try {
+			this.delete();
+		} catch (SQLException | RepositoryException e) {
+			// do nothig;
+		}
+		
+		final String extension = FilenameUtils.getExtension(multipartFile.getOriginalFilename());
+		final File file = this.repository.generateSavePath(extension);
+		
 		final File directory = file.getParentFile();
 		if (directory.exists() == false) {
 			directory.mkdirs();
@@ -206,8 +222,7 @@ public class RepositoryServiceImpl implements RepositoryService {
 			file = this.getFile();
 		} catch (final NotRegisteredFileException e) {
 			LOGGER.trace("파일이 없어 신규 파일을 생성합니다.", e);
-			final String savePath = this.repository.generateSavePath();
-			file = new File(savePath);
+			file = this.repository.generateSavePath();
 		}
 		final boolean success = file.createNewFile();
 		SonarHelper.noStatic(success);

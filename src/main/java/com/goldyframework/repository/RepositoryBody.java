@@ -27,7 +27,7 @@ public interface RepositoryBody {
 	 * @author 2017. 6. 18. 오후 1:46:15 jeong
 	 * @return 저장 경로
 	 */
-	String generateSavePath();
+	File generateSavePath();
 	
 	/**
 	 * 주어진 확장자를 사용한 저장 경로를 생성합니다.
@@ -37,7 +37,7 @@ public interface RepositoryBody {
 	 *            확장자
 	 * @return 저장 경로
 	 */
-	String generateSavePath(String extension);
+	File generateSavePath(String extension);
 	
 	/**
 	 * 사용자가 다운로드 할 때의 이름을 반환합니다. 확장자를 제외한 파일의 이름만 작성합니다.

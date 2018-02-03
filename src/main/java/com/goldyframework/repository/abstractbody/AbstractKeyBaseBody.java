@@ -73,7 +73,7 @@ public abstract class AbstractKeyBaseBody extends AbstractRepositoryBody {
 	 * @author 2018. 2. 2. 오후 10:39:35 jeong
 	 */
 	@Override
-	protected String initialDefaultExtension() {
+	protected String getDefaultExtension() {
 		
 		// TODO Auto-generated method stub
 		return null;
@@ -85,7 +85,7 @@ public abstract class AbstractKeyBaseBody extends AbstractRepositoryBody {
 	 * @author 2018. 2. 2. 오후 10:00:20 jeong
 	 */
 	@Override
-	protected FileNamingType initialNamingType() {
+	protected FileNamingType getNamingType() {
 		
 		return FileNamingType.CALLER_INPUT;
 	}

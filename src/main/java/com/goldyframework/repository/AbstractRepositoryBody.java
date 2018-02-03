@@ -34,16 +34,6 @@ public abstract class AbstractRepositoryBody implements RepositoryBody {
 	private static final Logger LOGGER = LoggerFactory.getLogger(AbstractRepositoryBody.class);
 	
 	/**
-	 * 파일 이름 정의 방법
-	 */
-	private FileNamingType namingType;
-	
-	/**
-	 * 기본 확장자
-	 */
-	private String defaultExtension;
-	
-	/**
 	 * {@link AbstractRepositoryBody} 클래스의 새 인스턴스를 초기화 합니다.
 	 *
 	 * @author jeong
@@ -60,9 +50,9 @@ public abstract class AbstractRepositoryBody implements RepositoryBody {
 	 * @author 2017. 6. 18. 오후 1:44:20 jeong
 	 */
 	@Override
-	public String generateSavePath() {
+	public File generateSavePath() {
 		
-		return this.generateSavePath(this.defaultExtension);
+		return this.generateSavePath(this.getDefaultExtension());
 	}
 	
 	/**
@@ -71,10 +61,12 @@ public abstract class AbstractRepositoryBody implements RepositoryBody {
 	 * @author 2017. 6. 18. 오후 1:44:21 jeong
 	 */
 	@Override
-	public String generateSavePath(final String extension) {
+	public File generateSavePath(final String extension) {
 		
 		ObjectInspection.checkNull(extension);
-		return this.namingType.getFileNaming().generageSavePath(this.getDirectory(), this.getBaseName(), extension);
+		
+		return this.getNamingType().getFileNaming().generageSavePath(this.getDirectory(), this.getBaseName(),
+			extension);
 	}
 	
 	/**
@@ -87,6 +79,33 @@ public abstract class AbstractRepositoryBody implements RepositoryBody {
 	 * @date 2016. 5. 18.
 	 */
 	protected abstract String getBaseName();
+	
+	/**
+	 * 파일의 기본 확장자를 작성합니다.<br>
+	 * 문자열에서 점(.)을 표시하지 않습니다.<br>
+	 * (올바른 예 : "txt", "html")<br>
+	 *
+	 * @author jeong
+	 * @date 2016. 5. 19.
+	 * @return 기본 확장자를 초기화한다.
+	 */
+	protected abstract String getDefaultExtension();
+	
+	/**
+	 * 파일이 저장되어있는 디렉토리를 지정합니다.<br>
+	 * 디렉토리는 절대경로이며 마지막 폴더구분자는 (\\ 또는 /) 를 작성하지 않습니다.<br>
+	 *
+	 * @author jeong
+	 * @return 기본 디렉토리를 초기화한다.
+	 * @date 2016. 5. 18.
+	 */
+	protected abstract File getDirectory();
+	
+	/**
+	 * @author 2017. 6. 18. 오후 1:45:50 jeong
+	 * @return 이름 관리 방법을 초기화한다.
+	 */
+	protected abstract FileNamingType getNamingType();
 	
 	/**
 	 * {@inheritDoc}
@@ -120,27 +139,6 @@ public abstract class AbstractRepositoryBody implements RepositoryBody {
 		throws NotRegisteredFileException, RepositoryException;
 	
 	/**
-	 * 파일의 기본 확장자를 작성합니다.<br>
-	 * 문자열에서 점(.)을 표시하지 않습니다.<br>
-	 * (올바른 예 : "txt", "html")<br>
-	 *
-	 * @author jeong
-	 * @date 2016. 5. 19.
-	 * @return 기본 확장자를 초기화한다.
-	 */
-	protected abstract String initialDefaultExtension();
-	
-	/**
-	 * 파일이 저장되어있는 디렉토리를 지정합니다.<br>
-	 * 디렉토리는 절대경로이며 마지막 폴더구분자는 (\\ 또는 /) 를 작성하지 않습니다.<br>
-	 *
-	 * @author jeong
-	 * @return 기본 디렉토리를 초기화한다.
-	 * @date 2016. 5. 18.
-	 */
-	protected abstract File getDirectory();
-	
-	/**
 	 * 초기화
 	 *
 	 * @author 2017. 6. 18. 오후 1:45:24 jeong
@@ -161,14 +159,6 @@ public abstract class AbstractRepositoryBody implements RepositoryBody {
 			}
 			
 		}
-		this.namingType = this.initialNamingType();
-		this.defaultExtension = this.initialDefaultExtension();
 		
 	}
-	
-	/**
-	 * @author 2017. 6. 18. 오후 1:45:50 jeong
-	 * @return 이름 관리 방법을 초기화한다.
-	 */
-	protected abstract FileNamingType initialNamingType();
 }

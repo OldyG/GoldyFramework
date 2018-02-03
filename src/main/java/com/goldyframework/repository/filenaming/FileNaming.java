@@ -31,6 +31,6 @@ public interface FileNaming {
 	 *            확장자
 	 * @return 생성된 저장 경로
 	 */
-	String generageSavePath(File directory, String baseName, String extension);
+	File generageSavePath(File directory, String baseName, String extension);
 	
 }

@@ -10,6 +10,11 @@
 package com.goldyframework.inspection;
 
 import java.io.File;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Locale;
+
+import org.apache.commons.io.FilenameUtils;
 
 import com.goldyframework.inspection.exception.InspectionException;
 
@@ -24,24 +29,87 @@ public final class FileInspection {
 	 * 파일이 잘못된 파일인지 검사합니다.
 	 *
 	 * @author 2017. 6. 14. 오후 9:40:56 jeong
+	 * @param directory
+	 *            검사 대상 파일
+	 * @throws ValidateException
+	 *             파일이 아닌 디렉토리이거나 존재하지 않은 경우 발생합니다.
+	 */
+	public static void checkExistsDirectory(final File directory) {
+		
+		ObjectInspection.checkNull(directory);
+		StringInspection.checkBlank(directory.getPath());
+		StringInspection.checkBlank(directory.getAbsolutePath());
+		
+		if (directory.exists() == false) {
+			throw new InspectionException("존재 하지 않은 파일입니다.");
+		}
+		
+		if (directory.isFile() || (directory.isDirectory() == false)) {
+			throw new InspectionException("디렉토리 형식이 아닙니다.");
+		}
+	}
+	
+	/**
+	 * 파일이 잘못된 파일인지 검사합니다.
+	 *
+	 * @author 2017. 6. 14. 오후 9:40:56 jeong
 	 * @param file
 	 *            검사 대상 파일
 	 * @throws ValidateException
 	 *             파일이 아닌 디렉토리이거나 존재하지 않은 경우 발생합니다.
 	 */
-	public static void checkIllegalFile(final File file) {
+	public static void checkExistsFile(final File file) {
 		
 		ObjectInspection.checkNull(file);
 		StringInspection.checkBlank(file.getPath());
 		StringInspection.checkBlank(file.getAbsolutePath());
 		
-		if (file.isDirectory()) {
-			throw new InspectionException("파일 형식의 주소가 아닙니다."); 
+		if (file.exists() == false) {
+			throw new InspectionException("존재 하지 않은 파일입니다.");
 		}
 		
-		if (file.exists() == false) {
-			throw new InspectionException("존재 하지 않은 파일입니다."); 
+		if (file.isDirectory() || (file.isFile() == false)) {
+			throw new InspectionException("파일 형식이 아닙니다.");
 		}
+	}
+	
+	public static void checkExtentionIs(final File file, final List<String> validExtensions) {
+		
+		ObjectInspection.checkNull(file);
+		ObjectInspection.checkNull(validExtensions);
+		final String extension = FilenameUtils.getExtension(file.getAbsolutePath()).toLowerCase(Locale.getDefault());
+		if (StringInspection.isBlank(extension)) {
+			throw new InspectionException("확장자가 없습니다.");
+		}
+		
+		for (final String validExtension : validExtensions) {
+			if (validExtension.equals(extension)) {
+				return;
+			}
+		}
+		throw new InspectionException(extension + "는 허용하는 확장자가 아닙니다.");
+	}
+	
+	public static void checkImageFile(final File file) {
+		
+		checkExtentionIs(file, Arrays.asList("jpg", "jpeg", "png", "gif", "jfif", "tiff", "bmp", "svg"));
+	}
+	
+	public static void checkMsExcelFile(final File file) {
+		
+		checkExtentionIs(file, Arrays.asList("xlsx", "xls", "csv", "xlt", "ods"));
+	}
+	
+	public static void checkMsWordFile(final File file) {
+		
+		checkExtentionIs(file, Arrays.asList("docx", "doc", "doctx", "xlt", "odt"));
+		
+	}
+	
+	public static void checkNullOrEmptyFile(final File file) {
+		
+		checkExistsFile(file);
+		IntegerInspection.checkBelowZero((int) file.length());
 	}
 	
 	/**
@@ -52,6 +120,6 @@ public final class FileInspection {
 	 */
 	private FileInspection() {
 		
-		throw new IllegalStateException("Utility class"); 
+		throw new IllegalStateException("Utility class");
 	}
 }

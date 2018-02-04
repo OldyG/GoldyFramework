@@ -20,15 +20,36 @@ import com.goldyframework.inspection.ObjectInspection;
  */
 class CallerInputNaming implements FileNaming {
 	
+	private final boolean removeIfDuplication;
+	
 	/**
 	 * {@link CallerInputNaming} 클래스의 새 인스턴스를 초기화 합니다.
-	 *
-	 * @author jeong
-	 * @since 2017. 4. 10. 오후 9:33:12
+	 * 
+	 * @author 2018. 2. 3. 오후 10:44:57 jeong
+	 * @param b
 	 */
-	public CallerInputNaming() {
+	public CallerInputNaming(final boolean removeIfDuplication) {
 		
 		super();
+		this.removeIfDuplication = removeIfDuplication;
+		
+	}
+	
+	/**
+	 * @author 2018. 2. 3. 오후 10:45:45 jeong
+	 * @param directory
+	 * @param baseName
+	 * @param extension
+	 * @return
+	 */
+	private File createDefaultFile(final File directory, final String baseName, final String extension) {
+		
+		ObjectInspection.checkNull(directory);
+		ObjectInspection.checkNull(baseName);
+		ObjectInspection.checkNull(extension);
+		
+		final String fullFileName = MessageFormat.format("{0}.{1}", baseName, extension);
+		return new File(directory, fullFileName);
 	}
 	
 	/**
@@ -39,12 +60,19 @@ class CallerInputNaming implements FileNaming {
 	@Override
 	public File generageSavePath(final File directory, final String baseName, final String extension) {
 		
-		ObjectInspection.checkNull(directory);
-		ObjectInspection.checkNull(baseName);
-		ObjectInspection.checkNull(extension);
+		File result = this.createDefaultFile(directory, baseName, extension);
+		if (this.removeIfDuplication) {
+			return result;
+		}
 		
-		final String fullFileName = MessageFormat.format("{0}.{1}", baseName, extension);
-		return new File(directory, fullFileName);
+		int index = 1;
+		while (result.exists()) {
+			final String indexedBaseName = baseName + " (" + index + ")";
+			result = this.createDefaultFile(directory, indexedBaseName, extension);
+			index++;
+		}
+		
+		return result;
 	}
 	
 }

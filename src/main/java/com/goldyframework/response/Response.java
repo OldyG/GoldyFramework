@@ -12,6 +12,7 @@ package com.goldyframework.response;
 import java.io.File;
 import java.io.IOException;
 import java.text.MessageFormat;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.stream.Collectors;
@@ -51,7 +52,7 @@ public final class Response {
 	/**
 	 * content type, charset 기본값
 	 */
-	private static final String CONTENT_TYPE = "{0};charset=UTF-8"; 
+	private static final String CONTENT_TYPE = "{0};charset=UTF-8";
 	
 	public static ResponseEntity<String> badRequest(final BindingResult bindingResult) {
 		
@@ -59,7 +60,7 @@ public final class Response {
 			.stream()
 			.map(ObjectError::getDefaultMessage)
 			.collect(Collectors.toList());
-		final String message = StringCollectionGtils.join(messages, "<br>"); 
+		final String message = StringCollectionGtils.join(messages, "<br>");
 		return Response.badRequest(message);
 	}
 	
@@ -125,7 +126,7 @@ public final class Response {
 	private static HttpHeaders getHeaders(final String mediaType) {
 		
 		final HttpHeaders headers = new HttpHeaders();
-		headers.add("Content-Type", MessageFormat.format(Response.CONTENT_TYPE, mediaType)); 
+		headers.add("Content-Type", MessageFormat.format(Response.CONTENT_TYPE, mediaType));
 		return headers;
 	}
 	
@@ -144,14 +145,26 @@ public final class Response {
 		final byte[] content = FileUtils.readFileToByteArray(file);
 		
 		String extension = FilenameUtils.getExtension(file.getAbsolutePath()).toLowerCase(Locale.getDefault());
-		if ("jpg".equals(extension)) { 
-			extension = "jpeg"; 
+		if ("jpg".equals(extension)) {
+			extension = "jpeg";
 		}
 		
-		final String mediaType = "image/" + extension;  
+		final String mediaType = "image/" + extension;
 		
 		return ok(content, mediaType);
 		
+	}
+	
+	public static ResponseEntity<List<byte[]>> images(final List<File> files) throws IOException {
+		
+		final List<byte[]> contents = new ArrayList<>();
+		
+		for (final File file : files) {
+			final byte[] content = FileUtils.readFileToByteArray(file);
+			contents.add(content);
+		}
+		
+		return Response.ok(contents, MediaType.ALL);
 	}
 	
 	/**
@@ -163,7 +176,7 @@ public final class Response {
 	 */
 	public static ResponseEntity<String> ok() {
 		
-		return Response.ok("success"); 
+		return Response.ok("success");
 	}
 	
 	/**
@@ -228,7 +241,7 @@ public final class Response {
 	public static ResponseEntity<String> redirect(final String url) {
 		
 		final HttpHeaders headers = new HttpHeaders();
-		headers.add("Location", url); 
+		headers.add("Location", url);
 		return new ResponseEntity<>(headers, HttpStatus.FOUND);
 	}
 	
@@ -259,7 +272,7 @@ public final class Response {
 		} else {
 			final String string;
 			if (body == null) {
-				string = "null"; 
+				string = "null";
 			} else {
 				string = body.toString();
 			}
@@ -334,6 +347,6 @@ public final class Response {
 	 */
 	private Response() {
 		
-		throw new IllegalStateException("Utility class"); 
+		throw new IllegalStateException("Utility class");
 	}
 }

@@ -13,6 +13,7 @@ import java.io.File;
 import java.sql.SQLException;
 
 import com.goldyframework.repository.exception.NotRegisteredFileException;
+import com.goldyframework.repository.filenaming.FileNamingType;
 
 /**
  * 저장소 바디
@@ -52,6 +53,12 @@ public interface RepositoryBody {
 	 *             이 외 발생하는 예외 사항
 	 */
 	String getDownloadName() throws NotRegisteredFileException, SQLException, RepositoryException;
+	
+	/**
+	 * @author 2017. 6. 18. 오후 1:45:50 jeong
+	 * @return 이름 관리 방법을 초기화한다.
+	 */
+	FileNamingType getNamingType();
 	
 	/**
 	 * 등록된 파일을 반환합니다.

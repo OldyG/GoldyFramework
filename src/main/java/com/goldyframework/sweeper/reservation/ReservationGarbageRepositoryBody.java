@@ -51,6 +51,26 @@ public class ReservationGarbageRepositoryBody extends AbstractRepositoryBody {
 	}
 	
 	/**
+	 * @author 2017. 6. 18. 오후 2:28:39 jeong
+	 * @return 기본 확장자
+	 */
+	@Override
+	protected String getDefaultExtension() {
+		
+		return "json";
+	}
+	
+	/**
+	 * @author 2017. 6. 18. 오후 2:28:48 jeong
+	 * @return 디렉토리
+	 */
+	@Override
+	protected File getRootDirectory() {
+		
+		return this.garbageDirectory;
+	}
+	
+	/**
 	 * {@inheritDoc}
 	 *
 	 * @author 2017. 6. 29. 오후 10:33:34 jeong
@@ -59,6 +79,16 @@ public class ReservationGarbageRepositoryBody extends AbstractRepositoryBody {
 	public String getDownloadName() {
 		
 		return FilenameUtils.getName(this.getRegisteredFileName());
+	}
+	
+	/**
+	 * @author 2017. 6. 18. 오후 2:28:58 jeong
+	 * @return {@link FileNamingType#MILLISECOND}
+	 */
+	@Override
+	public FileNamingType getNamingType() {
+		
+		return FileNamingType.MILLISECOND;
 	}
 	
 	/**
@@ -78,36 +108,6 @@ public class ReservationGarbageRepositoryBody extends AbstractRepositoryBody {
 	private void init() {
 		
 		super.initialize();
-	}
-	
-	/**
-	 * @author 2017. 6. 18. 오후 2:28:39 jeong
-	 * @return 기본 확장자
-	 */
-	@Override
-	protected String getDefaultExtension() {
-		
-		return "json";
-	}
-	
-	/**
-	 * @author 2017. 6. 18. 오후 2:28:48 jeong
-	 * @return 디렉토리
-	 */
-	@Override
-	protected File getDirectory() {
-		
-		return this.garbageDirectory;
-	}
-	
-	/**
-	 * @author 2017. 6. 18. 오후 2:28:58 jeong
-	 * @return {@link FileNamingType#MILLISECOND}
-	 */
-	@Override
-	protected FileNamingType getNamingType() {
-		
-		return FileNamingType.MILLISECOND;
 	}
 	
 }

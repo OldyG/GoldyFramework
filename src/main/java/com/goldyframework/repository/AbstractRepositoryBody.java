@@ -16,9 +16,9 @@ import java.text.MessageFormat;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.goldyframework.inspection.ObjectInspection;
 import com.goldyframework.repository.exception.NotRegisteredFileException;
 import com.goldyframework.repository.filenaming.FileNamingType;
+import com.goldyframework.utils.NullGtils;
 import com.google.common.base.Strings;
 
 /**
@@ -63,10 +63,10 @@ public abstract class AbstractRepositoryBody implements RepositoryBody {
 	@Override
 	public File generateSavePath(final String extension) {
 		
-		ObjectInspection.checkNull(extension);
+		final String ext = NullGtils.emptyIfNull(extension);
 		
-		return this.getNamingType().getFileNaming().generageSavePath(this.getDirectory(), this.getBaseName(),
-			extension);
+		return this.getNamingType().getFileNaming().generageSavePath(this.getRootDirectory(), this.getBaseName(),
+			ext);
 	}
 	
 	/**
@@ -92,22 +92,6 @@ public abstract class AbstractRepositoryBody implements RepositoryBody {
 	protected abstract String getDefaultExtension();
 	
 	/**
-	 * 파일이 저장되어있는 디렉토리를 지정합니다.<br>
-	 * 디렉토리는 절대경로이며 마지막 폴더구분자는 (\\ 또는 /) 를 작성하지 않습니다.<br>
-	 *
-	 * @author jeong
-	 * @return 기본 디렉토리를 초기화한다.
-	 * @date 2016. 5. 18.
-	 */
-	protected abstract File getDirectory();
-	
-	/**
-	 * @author 2017. 6. 18. 오후 1:45:50 jeong
-	 * @return 이름 관리 방법을 초기화한다.
-	 */
-	protected abstract FileNamingType getNamingType();
-	
-	/**
 	 * {@inheritDoc}
 	 *
 	 * @author 2017. 6. 18. 오후 1:44:44 jeong
@@ -120,7 +104,7 @@ public abstract class AbstractRepositoryBody implements RepositoryBody {
 		if (Strings.isNullOrEmpty(fileUrl)) {
 			throw new NotRegisteredFileException();
 		}
-		return new File(this.getDirectory(), fileUrl);
+		return new File(this.getRootDirectory(), fileUrl);
 	}
 	
 	/**
@@ -139,13 +123,23 @@ public abstract class AbstractRepositoryBody implements RepositoryBody {
 		throws NotRegisteredFileException, RepositoryException;
 	
 	/**
+	 * 파일이 저장되어있는 디렉토리를 지정합니다.<br>
+	 * 디렉토리는 절대경로이며 마지막 폴더구분자는 (\\ 또는 /) 를 작성하지 않습니다.<br>
+	 *
+	 * @author jeong
+	 * @return 기본 디렉토리를 초기화한다.
+	 * @date 2016. 5. 18.
+	 */
+	protected abstract File getRootDirectory();
+	
+	/**
 	 * 초기화
 	 *
 	 * @author 2017. 6. 18. 오후 1:45:24 jeong
 	 */
 	protected void initialize() {
 		
-		final File directory = this.getDirectory();
+		final File directory = this.getRootDirectory();
 		
 		if (directory.exists() == false) {
 			

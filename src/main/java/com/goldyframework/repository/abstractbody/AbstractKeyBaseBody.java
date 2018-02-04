@@ -43,12 +43,35 @@ public abstract class AbstractKeyBaseBody extends AbstractRepositoryBody {
 	/**
 	 * {@inheritDoc}
 	 * 
+	 * @author 2018. 2. 2. 오후 10:39:35 jeong
+	 */
+	@Override
+	protected String getDefaultExtension() {
+		
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 * 
+	 * @author 2018. 2. 2. 오후 10:00:20 jeong
+	 */
+	@Override
+	public FileNamingType getNamingType() {
+		
+		return FileNamingType.CALLER_INPUT;
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 * 
 	 * @author 2018. 2. 2. 오후 10:00:20 jeong
 	 */
 	@Override
 	protected String getRegisteredFileName() throws NotRegisteredFileException {
 		
-		final File baseDirectory = this.getDirectory();
+		final File baseDirectory = this.getRootDirectory();
 		
 		final File[] listFiles = baseDirectory.listFiles();
 		if (listFiles != null) {
@@ -66,28 +89,5 @@ public abstract class AbstractKeyBaseBody extends AbstractRepositoryBody {
 	}
 	
 	protected abstract String getUniqueKey();
-	
-	/**
-	 * {@inheritDoc}
-	 * 
-	 * @author 2018. 2. 2. 오후 10:39:35 jeong
-	 */
-	@Override
-	protected String getDefaultExtension() {
-		
-		// TODO Auto-generated method stub
-		return null;
-	}
-	
-	/**
-	 * {@inheritDoc}
-	 * 
-	 * @author 2018. 2. 2. 오후 10:00:20 jeong
-	 */
-	@Override
-	protected FileNamingType getNamingType() {
-		
-		return FileNamingType.CALLER_INPUT;
-	}
 	
 }

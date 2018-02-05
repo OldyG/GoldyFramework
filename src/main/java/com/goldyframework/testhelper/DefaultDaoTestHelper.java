@@ -43,8 +43,8 @@ public class DefaultDaoTestHelper<DTO extends Dto> {
 	
 	public void abstractTest() throws DuplicateRecordException {
 		
-		this.testDelete();
 		this.testSelect();
+		this.testDelete();
 		this.testSelectAll();
 	}
 	

@@ -32,6 +32,6 @@ public class RandomEnumGtils {
 		final Collection<T> collection = Arrays.asList(enumConstants);
 		
 		return RandomSelectGtils.selectRandomObject(collection);
-		
 	}
+	
 }

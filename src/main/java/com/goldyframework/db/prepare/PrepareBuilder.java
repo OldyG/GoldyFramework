@@ -11,6 +11,7 @@ package com.goldyframework.db.prepare;
 
 import com.goldyframework.db.prepare.statement.delete.DeletePreparePlan;
 import com.goldyframework.db.prepare.statement.insert.InsertPreparePlan;
+import com.goldyframework.db.prepare.statement.select.LastAutoIncrementPreparePlan;
 import com.goldyframework.db.prepare.statement.select.SelectPreparePlan;
 import com.goldyframework.db.prepare.statement.update.UpdatePreparePlan;
 
@@ -27,6 +28,11 @@ public class PrepareBuilder {
 	public static InsertPreparePlan insert(final String tableName) {
 		
 		return new InsertPreparePlan(tableName);
+	}
+	
+	public static LastAutoIncrementPreparePlan lastAutoIncrement(final String databaseName, final String tableName) {
+		
+		return new LastAutoIncrementPreparePlan(databaseName, tableName);
 	}
 	
 	public static SelectPreparePlan select(final String tableName) {

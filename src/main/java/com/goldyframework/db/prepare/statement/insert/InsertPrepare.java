@@ -66,7 +66,7 @@ public class InsertPrepare extends AbstractPrepare {
 			columns);
 		
 		return MessageFormat.format("INSERT INTO {0} ({1}) VALUES ({2})",
-			super.getTableName(),
+			tableName,
 			StringCollectionGtils.join(detailColumn, ", "),
 			super.joinMark(detailColumn.size()));
 	}

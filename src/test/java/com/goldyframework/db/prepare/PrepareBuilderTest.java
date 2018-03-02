@@ -24,7 +24,6 @@ import com.goldyframework.db.prepare.statement.update.UpdatePrepare;
 /**
  * @author 2017. 7. 8. 오후 1:42:00 jeong
  */
-@SuppressWarnings("nls")
 public class PrepareBuilderTest {
 	
 	@Test
@@ -36,10 +35,8 @@ public class PrepareBuilderTest {
 			.where("column2", Comparison.EQUAL, "true")
 			.build();
 		
-		Assert.assertEquals("", "DELETE FROM "
-			+ "TEST_DELETE "
-			+ "WHERE TEST_DELETE.column1 >= ? AND "
-			+ "TEST_DELETE.column2 = ?",
+		Assert.assertEquals("",
+			"DELETE FROM `TEST_DELETE` WHERE `TEST_DELETE`.`column1` >= ? AND `TEST_DELETE`.`column2` = ?",
 			delete.toPrepareSql());
 		final List<Object> args = new ArrayList<>(delete.getArgs());
 		Assert.assertEquals("", 1, args.get(0));
@@ -63,9 +60,7 @@ public class PrepareBuilderTest {
 		System.out.println(select.toPrepareSql());
 		
 		Assert.assertEquals("",
-			"SELECT TEST_SELECT.A, TEST_SELECT.B, TEST_SELECT.C "
-				+ "FROM TEST_SELECT "
-				+ "WHERE TEST_SELECT.F = ? AND TEST_SELECT.G > ? ORDER BY A DESC LIMIT 1",
+			"SELECT `TEST_SELECT`.`A`, `TEST_SELECT`.`B`, `TEST_SELECT`.`C` FROM `TEST_SELECT` WHERE `TEST_SELECT`.`F` = ? AND `TEST_SELECT`.`G` > ? ORDER BY `A` DESC LIMIT 1",
 			select.toPrepareSql());
 		
 		System.out.println(select.getArgs());
@@ -90,9 +85,7 @@ public class PrepareBuilderTest {
 			.build();
 		
 		Assert.assertEquals("",
-			"UPDATE TEST_UPDATE "
-				+ "SET TEST_UPDATE.name = ?, TEST_UPDATE.name2 = ? "
-				+ "WHERE TEST_UPDATE.column1 >= ? AND TEST_UPDATE.column2 = ?",
+			"UPDATE `TEST_UPDATE` SET `TEST_UPDATE`.`name` = ?, `TEST_UPDATE`.`name2` = ? WHERE `TEST_UPDATE`.`column1` >= ? AND `TEST_UPDATE`.`column2` = ?",
 			update.toPrepareSql());
 		final List<Object> args = new ArrayList<>(update.getArgs());
 		Assert.assertEquals("", "test", args.get(0));

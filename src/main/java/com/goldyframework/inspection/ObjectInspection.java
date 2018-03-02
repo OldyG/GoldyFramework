@@ -9,13 +9,9 @@
  */
 package com.goldyframework.inspection;
 
-import java.lang.reflect.Field;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
 import com.goldyframework.inspection.exception.InspectionException;
-import com.goldyframework.utils.ReflectionGtils;
 import com.goldyframework.utils.json.JsonGtils;
 
 /**
@@ -37,7 +33,7 @@ public final class ObjectInspection {
 	public static void checkNull(final Object obj) {
 		
 		if (obj == null) {
-			throw new InspectionException("변수에 Null이 할당되었습니다."); 
+			throw new InspectionException("변수에 Null이 할당되었습니다.");
 		}
 	}
 	
@@ -68,20 +64,6 @@ public final class ObjectInspection {
 		return Objects.hash(gson);
 	}
 	
-	@Deprecated
-	public static int hashCodeForFields2(final Object obj) {
-		
-		final List<Field> declaredFields = ReflectionGtils.getDeclaredFieldWithInherit(obj);
-		
-		final List<Object> fieldValues = new ArrayList<>();
-		for (final Field field : declaredFields) {
-			final Object fieldValue = ReflectionGtils.getFieldValue(obj, field);
-			fieldValues.add(fieldValue);
-		}
-		
-		return Objects.hash(CollectionInspection.toArray(fieldValues));
-	}
-	
 	/**
 	 * 해당 객체를 캐스팅합니다.
 	 *
@@ -102,11 +84,11 @@ public final class ObjectInspection {
 		ObjectInspection.checkNull(validClass);
 		
 		if ((validClass == Integer.class) || (validClass == Boolean.class)) {
-			throw new InspectionException(validClass.getSimpleName() + "는 cast가 불가능합니다."); 
+			throw new InspectionException(validClass.getSimpleName() + "는 cast가 불가능합니다.");
 		}
 		
 		if (validClass.isInstance(obj) == false) {
-			throw new InspectionException(validClass.getSimpleName() + " 형식이 아닙니다."); 
+			throw new InspectionException(validClass.getSimpleName() + " 형식이 아닙니다.");
 		}
 		
 		return validClass.cast(obj);
@@ -120,6 +102,6 @@ public final class ObjectInspection {
 	 */
 	private ObjectInspection() {
 		
-		throw new IllegalStateException("Utility class"); 
+		throw new IllegalStateException("Utility class");
 	}
 }

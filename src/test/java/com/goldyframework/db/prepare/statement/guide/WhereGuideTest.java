@@ -61,7 +61,7 @@ public class WhereGuideTest extends Mockito {
 		final Object next = target.getArgs().iterator().next();
 		// 순서대로 정의되는것이 아니기 때문에, 첫번째 엔트리가 무엇이냐에 따라 결과가 다름
 		if (next.equals(11_455)) {
-			Assert.assertEquals("", "TEST.ColumnName2 = ? AND TEST.ColumnName1 = ?", actual2);
+			Assert.assertEquals("", "`TEST`.`ColumnName2` = ? AND `TEST`.`ColumnName1` = ?", actual2);
 		} else if (next.equals("123")) {
 			Assert.assertEquals("", "TEST.ColumnName1 = ? AND TEST.ColumnName2 = ?", actual2);
 		} else {
@@ -91,9 +91,9 @@ public class WhereGuideTest extends Mockito {
 		final List<String> actual = target.eachAppendComparisonValue();
 		
 		// 검사
-		Assert.assertTrue("", actual.contains("column1 = ?"));
-		Assert.assertTrue("", actual.contains("column2 <= ?"));
-		Assert.assertTrue("", actual.contains("column3 != ?"));
+		Assert.assertTrue("", actual.contains("`column1` = ?"));
+		Assert.assertTrue("", actual.contains("`column2` <= ?"));
+		Assert.assertTrue("", actual.contains("`column3` != ?"));
 	}
 	
 	/**

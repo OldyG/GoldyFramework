@@ -17,7 +17,6 @@ import com.goldyframework.annotaion.UnitTest;
 import com.goldyframework.db.prepare.statement.guide.Comparison;
 import com.goldyframework.db.prepare.statement.guide.WhereGuide;
 
-@SuppressWarnings("nls")
 public class DeletePrepareTest extends Mockito {
 	
 	@Test
@@ -31,7 +30,7 @@ public class DeletePrepareTest extends Mockito {
 		
 		final String actual = target.toPrepareSql();
 		
-		final String expected = "DELETE FROM TEST WHERE TEST.user_key = ? AND TEST.enable_login = ?";
+		final String expected = "DELETE FROM `TEST` WHERE `TEST`.`user_key` = ? AND `TEST`.`enable_login` = ?";
 		Assert.assertEquals("", expected, actual);
 	}
 	
@@ -50,7 +49,7 @@ public class DeletePrepareTest extends Mockito {
 		
 		final String actual = target.toPrepareSql();
 		
-		Assert.assertEquals("", "DELETE FROM TEST WHERE abc", actual);
+		Assert.assertEquals("", "DELETE FROM `TEST` WHERE abc", actual);
 	}
 	
 }

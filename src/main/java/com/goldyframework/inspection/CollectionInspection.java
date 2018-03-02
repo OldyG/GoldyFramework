@@ -11,7 +11,6 @@ package com.goldyframework.inspection;
 
 import java.text.MessageFormat;
 import java.util.Collection;
-import java.util.List;
 
 import com.goldyframework.inspection.exception.InspectionException;
 
@@ -31,34 +30,23 @@ public class CollectionInspection {
 		ObjectInspection.checkNull(targetList);
 		
 		if (targetList.isEmpty()) {
-			throw new InspectionException("리스트 사이즈가 0이 될 수 없습니다."); 
+			throw new InspectionException("리스트 사이즈가 0이 될 수 없습니다.");
 		}
 		
 	}
 	
 	public static void checkSize(final Collection<?> collection, final int validSize) {
 		
-		if (isSize(collection, validSize) == false) {
-			throw new InspectionException(MessageFormat.format("컬렉션 사이즈는 반드시 [{0}]이어야합니다.", validSize)); 
+		if (isValidSize(collection, validSize) == false) {
+			throw new InspectionException(MessageFormat.format("컬렉션 사이즈는 반드시 [{0}]이어야합니다.", validSize));
 		}
 	}
 	
-	public static boolean isSize(final Collection<?> collection, final int validSize) {
+	public static boolean isValidSize(final Collection<?> collection, final int validSize) {
 		
 		ObjectInspection.checkNull(collection);
+		IntegerInspection.checkBelow(validSize, -1);
 		return collection.size() == validSize;
-	}
-	
-	/**
-	 * @author 2017. 8. 19. 오후 4:46:44 jeong
-	 * @param fieldValues
-	 * @return
-	 */
-	public static <T> T[] toArray(final List<T> fieldValues) {
-		
-		checkNullOrEmptyCollection(fieldValues);
-		
-		return (T[]) fieldValues.toArray(new Object[fieldValues.size()]);
 	}
 	
 }

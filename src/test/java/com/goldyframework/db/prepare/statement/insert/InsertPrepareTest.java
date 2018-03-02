@@ -16,7 +16,6 @@ import org.junit.Test;
 
 import com.goldyframework.db.prepare.statement.guide.AssignGuide;
 
-@SuppressWarnings("nls")
 public class InsertPrepareTest {
 	
 	/**

@@ -22,7 +22,6 @@ import com.goldyframework.db.prepare.statement.guide.WhereGuide;
 /**
  * @author 2017. 7. 7. 오후 7:08:57 jeong
  */
-@SuppressWarnings("nls")
 public class UpdatePrepareTest {
 	
 	@Test
@@ -39,7 +38,7 @@ public class UpdatePrepareTest {
 		final UpdatePrepare update = new UpdatePrepare("TEST", assign, where);
 		
 		Assert.assertEquals("UPDATE Sql 비교 시험",
-			"UPDATE TEST SET TEST.name = ?, TEST.name2 = ? WHERE TEST.column1 >= ? AND TEST.column2 = ?",
+			"UPDATE `TEST` SET `TEST`.`name` = ?, `TEST`.`name2` = ? WHERE `TEST`.`column1` >= ? AND `TEST`.`column2` = ?",
 			update.toPrepareSql());
 		
 		final List<Object> args = new ArrayList<>(update.getArgs());

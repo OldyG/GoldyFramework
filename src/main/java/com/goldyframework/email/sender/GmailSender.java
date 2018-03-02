@@ -18,7 +18,7 @@ public class GmailSender extends AbstractMailSender {
 	/**
 	 * 호스트
 	 */
-	private static final String GMAIL_HOST = "smtp.gmail.com"; 
+	private static final String GMAIL_HOST = "smtp.gmail.com";
 	
 	/**
 	 * 포트
@@ -44,29 +44,40 @@ public class GmailSender extends AbstractMailSender {
 	}
 	
 	/**
+	 * @author 2018. 2. 10. 오후 9:51:48 jeong
+	 * @return
+	 * @throws EmailException
+	 */
+	private String decryptPassword(final String encrytedPassword) throws EmailException {
+		
+		final String decryptdPassword;
+		try {
+			decryptdPassword = new Encryption().decrypt(encrytedPassword);
+		} catch (final EncryptionException e) {
+			LOGGER.error("Gmail을 초기화중 패스워드 암호화에 실패하였습니다.", e);
+			throw new EmailException(e);
+		}
+		return decryptdPassword;
+	}
+	
+	/**
 	 * @author 2017. 6. 18. 오전 1:08:12 jeong
 	 * @throws EmailException
 	 *             패스워드를 암호화 중
 	 */
 	private void initialize() throws EmailException {
 		
-		final String decryptdPassword;
-		try {
-			decryptdPassword = new Encryption().decrypt("Zsnv6SJj5ltiepBLrXHZkw=="); 
-		} catch (final EncryptionException e) {
-			LOGGER.error("Gmail을 초기화중 패스워드 암호화에 실패하였습니다.", e); 
-			throw new EmailException(e);
-		}
-		super.setUsername("jhkume90@gmail.com"); 
+		final String decryptdPassword = this.decryptPassword("Zsnv6SJj5ltiepBLrXHZkw==");
+		super.setUsername("jhkume90@gmail.com");
 		super.setPassword(decryptdPassword);
 		super.setHost(GMAIL_HOST);
 		super.setPort(GMAIL_PORT);
 		this.setDefaultEncoding(Prop.DATE_FORMAT);
 		
 		final Properties prop = new Properties();
-		prop.setProperty("mail.smtp.ssl.trust", GMAIL_HOST); 
-		prop.setProperty("mail.smtp.starttls.enable", "true"); 
-		prop.setProperty("mail.smtp.auth", "true"); 
+		prop.setProperty("mail.smtp.ssl.trust", GMAIL_HOST);
+		prop.setProperty("mail.smtp.starttls.enable", "true");
+		prop.setProperty("mail.smtp.auth", "true");
 		
 		super.setJavaMailProperties(prop);
 	}

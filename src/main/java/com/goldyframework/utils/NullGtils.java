@@ -49,6 +49,11 @@ public class NullGtils {
 		return string != null ? string : StringUtils.EMPTY;
 	}
 	
+	public static final <T> T emptyIfNull(final T object, final IEmptyData<T> f) {
+		
+		return object != null ? object : f.emptyData();
+	}
+	
 	/**
 	 * @author 2017. 7. 2. 오후 9:04:53 jeong
 	 * @param <T>

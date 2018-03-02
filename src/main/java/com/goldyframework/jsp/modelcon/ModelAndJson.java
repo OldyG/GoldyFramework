@@ -4,7 +4,7 @@
  * Author : jeong
  * Summary :
  * Copyright (C) 2018 Formal Works Inc. All rights reserved.
- * 이 문서의 모든 저작권 및 지적 재산권은 (주)포멀웍스에게 있습니다.
+ * 이 문서의 모든 저작권 및 지적 재산권은 Goldy Project에게 있습니다.
  * 이 문서의 어떠한 부분도 허가 없이 복제 또는 수정 하거나, 전송할 수 없습니다.
  */
 package com.goldyframework.jsp.modelcon;
@@ -21,7 +21,7 @@ import com.goldyframework.utils.json.JsonGtils;
  */
 public class ModelAndJson {
 	
-	private final String JSON_KEY = "JSON_MODEL"; 
+	private final String JSON_KEY = "JSON_MODEL";
 	
 	private final Map<String, Object> map = new ConcurrentHashMap<>();
 	
@@ -32,7 +32,7 @@ public class ModelAndJson {
 	 * 
 	 * @author 2017. 7. 31. 오후 7:32:47 jeong
 	 */
-	public ModelAndJson(final ModelMap modelMap) {
+	public ModelAndJson(ModelMap modelMap) {
 		
 		super();
 		this.modelMap = modelMap;
@@ -43,7 +43,7 @@ public class ModelAndJson {
 	 * @param string
 	 * @param default1
 	 */
-	public void addAttribute(final String attributeName, final Object attributeValue) {
+	public void addAttribute(String attributeName, Object attributeValue) {
 		
 		this.map.put(attributeName, attributeValue);
 		this.modelMap.addAttribute(attributeName, attributeValue);

@@ -4,7 +4,7 @@
  * Author : jeong
  * Summary :
  * Copyright (C) 2018 Formal Works Inc. All rights reserved.
- * 이 문서의 모든 저작권 및 지적 재산권은 (주)포멀웍스에게 있습니다.
+ * 이 문서의 모든 저작권 및 지적 재산권은 Goldy Project에게 있습니다.
  * 이 문서의 어떠한 부분도 허가 없이 복제 또는 수정 하거나, 전송할 수 없습니다.
  */
 package com.goldyframework.db.abstractdao;
@@ -24,7 +24,7 @@ public abstract class AbstractStandardDao<DTO extends Dto, PDTO extends PrimaryD
 	 * 
 	 * @author 2018. 1. 30. 오후 10:03:22 jeong
 	 */
-	public AbstractStandardDao(final String tableName, final String tableKey, final AbstractMapping<DTO> mapping) {
+	public AbstractStandardDao(String tableName, String tableKey, AbstractMapping<DTO> mapping) {
 		
 		super(tableName, tableKey, mapping);
 	}
@@ -35,7 +35,7 @@ public abstract class AbstractStandardDao<DTO extends Dto, PDTO extends PrimaryD
 	 * @author 2018. 1. 30. 오후 10:02:42 jeong
 	 */
 	@Override
-	public abstract void delete(final PDTO primary);
+	public abstract void delete(PDTO primary);
 	
 	/**
 	 * {@inheritDoc}
@@ -43,7 +43,7 @@ public abstract class AbstractStandardDao<DTO extends Dto, PDTO extends PrimaryD
 	 * @author 2018. 1. 30. 오후 10:02:42 jeong
 	 */
 	@Override
-	public abstract DTO insert(final DTO dto) throws DuplicateRecordException;
+	public abstract DTO insert(DTO dto) throws DuplicateRecordException;
 	
 	/**
 	 * {@inheritDoc}
@@ -51,7 +51,7 @@ public abstract class AbstractStandardDao<DTO extends Dto, PDTO extends PrimaryD
 	 * @author 2018. 1. 30. 오후 10:02:42 jeong
 	 */
 	@Override
-	public abstract DTO select(final PDTO primary);
+	public abstract DTO select(PDTO primary);
 	
 	/**
 	 * {@inheritDoc}
@@ -59,6 +59,6 @@ public abstract class AbstractStandardDao<DTO extends Dto, PDTO extends PrimaryD
 	 * @author 2018. 1. 30. 오후 10:02:42 jeong
 	 */
 	@Override
-	public abstract void updateAll(final int key, final DTO dto);
+	public abstract void updateAll(int key, DTO dto);
 	
 }

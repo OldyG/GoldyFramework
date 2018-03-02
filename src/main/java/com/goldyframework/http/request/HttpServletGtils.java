@@ -14,6 +14,7 @@ import java.net.URL;
 import java.text.MessageFormat;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import com.goldyframework.inspection.ObjectInspection;
 
@@ -22,7 +23,7 @@ import com.goldyframework.inspection.ObjectInspection;
  *
  * @author 2017. 6. 18. 오후 1:04:35 jeong
  */
-public final class HttpServletGtils {
+public class HttpServletGtils {
 	
 	/**
 	 * BaseURL을 추출한다.
@@ -35,18 +36,18 @@ public final class HttpServletGtils {
 	 *             Thrown to indicate that a malformed URL has occurred. Either no legal protocol could be found in a
 	 *             specification string or the string could not be parsed.
 	 */
-	public static String extractBaseUrl(final HttpServletRequest request) throws MalformedURLException {
+	public static String extractBaseUrl(HttpServletRequest request) throws MalformedURLException {
 		
 		ObjectInspection.checkNull(request);
-		final URL requestUrl = new URL(request.getRequestURL().toString());
-		final String portString;
+		URL requestUrl = new URL(request.getRequestURL().toString());
+		String portString;
 		if (requestUrl.getPort() == -1) {
-			portString = ""; 
+			portString = "";
 		} else {
-			portString = ":" + requestUrl.getPort(); 
+			portString = ":" + requestUrl.getPort();
 		}
 		
-		return MessageFormat.format("{0}://{1}{2}{3}/",  
+		return MessageFormat.format("{0}://{1}{2}{3}/",
 			requestUrl.getProtocol(),
 			requestUrl.getHost(),
 			portString, request.getContextPath());
@@ -61,9 +62,9 @@ public final class HttpServletGtils {
 	 *            {@link HttpServletRequest}
 	 * @return Request 사용자 정보
 	 */
-	public static RequestDetail extractRequest(final HttpServletRequest request) {
+	public static RequestDetail extractRequest(HttpServletRequest request) {
 		
-		final RequestDetail info = new RequestDetail();
+		RequestDetail info = new RequestDetail();
 		info.setRequestUrl(request.getRequestURI() + '?' + request.getQueryString());
 		info.setAuthType(request.getAuthType());
 		info.setContentType(request.getContentType());
@@ -85,6 +86,6 @@ public final class HttpServletGtils {
 	 */
 	private HttpServletGtils() {
 		
-		throw new IllegalStateException("Utility class"); 
+		throw new IllegalStateException("Utility class");
 	}
 }

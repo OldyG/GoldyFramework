@@ -47,7 +47,6 @@ public class EnumPropertyRunner {
 	/**
 	 * 실제 프로퍼티
 	 */
-	@SuppressWarnings("unused")
 	private final File realProperties;
 	
 	/**
@@ -76,17 +75,16 @@ public class EnumPropertyRunner {
 	 * @throws IOException
 	 *             File클래스를 통해 리소스를 읽어드리는 과정에 발생 할 수 있습니다.
 	 */
-	public EnumPropertyRunner(final String propertiesPath, final Class<?> mainClass) throws IOException {
+	public EnumPropertyRunner(String propertiesPath, Class<?> mainClass) throws IOException {
 		
 		ObjectInspection.checkNull(propertiesPath);
 		ObjectInspection.checkNull(mainClass);
-		final String propertieName = propertiesPath + ".properties"; 
-		this.realProperties = new File("src/main/resources/", propertieName); 
-		final InputStream inputStream = EnumPropertyRunner.class.getClassLoader().getResourceAsStream(propertieName);
-		this.classProperties.load(inputStream);
-		
-		inputStream.close();
-		this.reflections = new Reflections(mainClass.getPackage().getName());
+		String propertieName = propertiesPath + ".properties";
+		this.realProperties = new File("src/main/resources/", propertieName);
+		try (InputStream inputStream = EnumPropertyRunner.class.getClassLoader().getResourceAsStream(propertieName)) {
+			this.classProperties.load(inputStream);
+			this.reflections = new Reflections(mainClass.getPackage().getName());
+		}
 	}
 	
 	/**
@@ -98,7 +96,7 @@ public class EnumPropertyRunner {
 	 * @param simpleName
 	 *            간소화된 이름
 	 */
-	private void addMap(final String name, final String simpleName) {
+	private void addMap(String name, String simpleName) {
 		
 		this.contentMap.put(name, simpleName);
 	}
@@ -110,21 +108,21 @@ public class EnumPropertyRunner {
 	 */
 	private void analyse() {
 		
-		final Collection<Class<?>> enumPropertyClasses = this.reflections.getTypesAnnotatedWith(EnumProperty.class);
-		for (final Class<?> enumPropertyClasse : enumPropertyClasses) {
+		Collection<Class<?>> enumPropertyClasses = this.reflections.getTypesAnnotatedWith(EnumProperty.class);
+		for (Class<?> enumPropertyClasse : enumPropertyClasses) {
 			
 			if (enumPropertyClasse.isEnum() == false) {
-				final String message = MessageFormat.format("{0}은 Enum 클래스가 아니므로 제외합니다.", 
+				String message = MessageFormat.format("{0}은 Enum 클래스가 아니므로 제외합니다.",
 					enumPropertyClasse.getName());
 				LOGGER.debug(message);
 				continue;
 			}
 			
-			final String name = enumPropertyClasse.getName();
+			String name = enumPropertyClasse.getName();
 			this.addMap(name, enumPropertyClasse.getSimpleName());
 			
-			final Field[] fields = enumPropertyClasse.getFields();
-			for (final Field field : fields) {
+			Field[] fields = enumPropertyClasse.getFields();
+			for (Field field : fields) {
 				this.addMap(name + '.' + field.getName(), field.getName());
 			}
 		}
@@ -148,13 +146,13 @@ public class EnumPropertyRunner {
 	 */
 	private void write() {
 		
-		final Set<Entry<String, String>> entrySet = this.contentMap.entrySet();
-		final StringBuilder builder = new StringBuilder();
-		for (final Entry<String, String> entry : entrySet) {
+		Set<Entry<String, String>> entrySet = this.contentMap.entrySet();
+		StringBuilder builder = new StringBuilder();
+		for (Entry<String, String> entry : entrySet) {
 			this.classProperties.setProperty(entry.getKey(), entry.getValue());
-			builder.append(MessageFormat.format("{0} = {1}\n", entry.getKey(), entry.getValue())); 
+			builder.append(MessageFormat.format("{0} = {1}\n", entry.getKey(), entry.getValue()));
 		}
-		final String message = builder.toString();
+		String message = builder.toString();
 		LOGGER.info(message);
 	}
 }

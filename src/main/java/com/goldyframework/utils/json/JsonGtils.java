@@ -16,6 +16,7 @@ import org.slf4j.LoggerFactory;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import com.goldyframework.inspection.ObjectInspection;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -25,12 +26,17 @@ import com.google.gson.GsonBuilder;
  *
  * @author 2017. 6. 18. 오후 1:15:23 jeong
  */
-public final class JsonGtils {
+public class JsonGtils {
 	
 	/**
 	 * Jackson 객체
 	 */
 	private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
+	
+	/**
+	 * Jackson Pretty 객체
+	 */
+	private static final ObjectMapper OBJECT_MAPPER_PRETTY;
 	
 	/**
 	 * Google 일반 Gson 객체
@@ -64,6 +70,10 @@ public final class JsonGtils {
 			.disableHtmlEscaping()
 			.setPrettyPrinting()
 			.create();
+		
+		OBJECT_MAPPER_PRETTY = new ObjectMapper();
+		OBJECT_MAPPER_PRETTY.enable(SerializationFeature.INDENT_OUTPUT);
+		
 	}
 	
 	/**
@@ -80,15 +90,15 @@ public final class JsonGtils {
 	 * @return 적용된 클래스
 	 */
 	@SuppressWarnings("null")
-	public static <T> T fromGson(final String json, final Class<T> clazzOfT) {
+	public static <T> T fromGson(String json, Class<T> clazzOfT) {
 		
 		ObjectInspection.checkNull(json);
 		ObjectInspection.checkNull(clazzOfT);
 		
 		try {
 			return DEFAULT_GSON.fromJson(json, clazzOfT);
-		} catch (final RuntimeException e) {
-			LOGGER.error("fromGson을 수행중 오류 발생", e); 
+		} catch (RuntimeException e) {
+			LOGGER.error("fromGson을 수행중 오류 발생", e);
 			return null;
 		}
 	}
@@ -111,14 +121,15 @@ public final class JsonGtils {
 	 *            변환 대상 클래스 타입
 	 * @return 적용된 클래스
 	 */
-	public static <T> T fromJackson(final String json, final Class<T> clazzOfT) {
+	@SuppressWarnings("null")
+	public static <T> T fromJackson(String json, Class<T> clazzOfT) {
 		
 		ObjectInspection.checkNull(json);
 		ObjectInspection.checkNull(clazzOfT);
 		try {
 			return OBJECT_MAPPER.readValue(json, clazzOfT);
-		} catch (final IOException e) {
-			LOGGER.error("fromJackson을 수행중 오류 발생", e); 
+		} catch (IOException e) {
+			LOGGER.error("fromJackson을 수행중 오류 발생", e);
 			return null;
 		}
 	}
@@ -132,20 +143,20 @@ public final class JsonGtils {
 	 *            변경대상 객체
 	 * @return 변형된 객체
 	 */
-	public static String toGson(final Object object) {
+	public static String toGson(Object object) {
 		
 		ObjectInspection.checkNull(object);
 		try {
-			final String json = DEFAULT_GSON.toJson(object);
+			String json = DEFAULT_GSON.toJson(object);
 			
-			if ((json == null) || (json.equals("null"))) { 
-				return "{}"; 
+			if ((json == null) || (json.equals("null"))) {
+				return "{}";
 			}
 			return json;
 			
-		} catch (final RuntimeException e) {
-			LOGGER.error("toGson을 수행중 오류 발생", e); 
-			return "[ERROR] JsonGtils.toGoson"; 
+		} catch (RuntimeException e) {
+			LOGGER.error("toGson을 수행중 오류 발생", e);
+			return "[ERROR] JsonGtils.toGoson";
 		}
 	}
 	
@@ -155,15 +166,15 @@ public final class JsonGtils {
 	 *            변경대상 객체
 	 * @return 변형된 객체
 	 */
-	public static String toGsonNonHtmlEscaping(final Object object) {
+	public static String toGsonNonHtmlEscaping(Object object) {
 		
 		ObjectInspection.checkNull(object);
 		
 		try {
 			return NON_ESCAPE_GSON.toJson(object);
-		} catch (final RuntimeException e) {
-			LOGGER.error("toGsonPretty을 수행중 오류 발생", e); 
-			return "[ERROR] JsonGtils.toGsonNonHtmlEscaping"; 
+		} catch (RuntimeException e) {
+			LOGGER.error("toGsonPretty을 수행중 오류 발생", e);
+			return "[ERROR] JsonGtils.toGsonNonHtmlEscaping";
 		}
 	}
 	
@@ -173,15 +184,15 @@ public final class JsonGtils {
 	 *            변경대상 객체
 	 * @return 변형된 객체
 	 */
-	public static String toGsonPretty(final Object object) {
+	public static String toGsonPretty(Object object) {
 		
 		ObjectInspection.checkNull(object);
 		
 		try {
 			return PRETTY_GSON.toJson(object);
-		} catch (final RuntimeException e) {
-			LOGGER.error("toGsonPretty을 수행중 오류 발생", e); 
-			return "[ERROR] JsonGtils.toGsonPretty"; 
+		} catch (RuntimeException e) {
+			LOGGER.error("toGsonPretty을 수행중 오류 발생", e);
+			return "[ERROR] JsonGtils.toGsonPretty";
 		}
 	}
 	
@@ -193,15 +204,35 @@ public final class JsonGtils {
 	 *            변경대상 객체
 	 * @return 변형된 객체
 	 */
-	public static String toJackson(final Object object) {
+	public static String toJackson(Object object) {
 		
 		ObjectInspection.checkNull(object);
 		
 		try {
 			return OBJECT_MAPPER.writeValueAsString(object);
-		} catch (final JsonProcessingException e) {
-			LOGGER.error("toJackson을 수행중 오류 발생", e); 
-			return "[ERROR] JsonGtils.toJackson"; 
+		} catch (JsonProcessingException e) {
+			LOGGER.error("toJackson을 수행중 오류 발생", e);
+			return "[ERROR] JsonGtils.toJackson";
+		}
+	}
+	
+	/**
+	 * 객체를 값을 Getter, Setter를 통하여 읽습니다
+	 *
+	 * @author 2017. 6. 17. 오후 8:52:44 jeong
+	 * @param object
+	 *            변경대상 객체
+	 * @return 변형된 객체
+	 */
+	public static String toJacksonPretty(Object object) {
+		
+		ObjectInspection.checkNull(object);
+		
+		try {
+			return OBJECT_MAPPER_PRETTY.writeValueAsString(object);
+		} catch (JsonProcessingException e) {
+			LOGGER.error("toJackson을 수행중 오류 발생", e);
+			return "[ERROR] JsonGtils.toJackson";
 		}
 	}
 	
@@ -213,6 +244,6 @@ public final class JsonGtils {
 	 */
 	private JsonGtils() {
 		
-		throw new IllegalStateException("Utility class"); 
+		throw new IllegalStateException("Utility class");
 	}
 }

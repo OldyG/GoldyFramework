@@ -4,7 +4,7 @@
  * Author : jeong
  * Summary :
  * Copyright (C) 2018 Formal Works Inc. All rights reserved.
- * 이 문서의 모든 저작권 및 지적 재산권은 (주)포멀웍스에게 있습니다.
+ * 이 문서의 모든 저작권 및 지적 재산권은 Goldy Project에게 있습니다.
  * 이 문서의 어떠한 부분도 허가 없이 복제 또는 수정 하거나, 전송할 수 없습니다.
  */
 package com.goldyframework.db.prepare.statement.insert;
@@ -27,7 +27,7 @@ public class InsertPreparePlan implements PreparePlan<InsertPrepare> {
 	 * @author 2017. 7. 8. 오후 2:11:29 jeong
 	 * @param tableName
 	 */
-	public InsertPreparePlan(final String tableName) {
+	public InsertPreparePlan(String tableName) {
 		
 		super();
 		this.tableName = tableName;
@@ -40,7 +40,7 @@ public class InsertPreparePlan implements PreparePlan<InsertPrepare> {
 	 * @param value
 	 * @return
 	 */
-	public InsertPreparePlan assign(final String column, final Object value) {
+	public InsertPreparePlan assign(String column, Object value) {
 		
 		this.assign.appendIfNotNull(column, value);
 		return this;

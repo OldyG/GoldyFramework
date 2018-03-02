@@ -39,7 +39,7 @@ import com.goldyframework.utils.json.JsonGtils;
  * @author jeonghyun.kum
  * @since 2016. 4. 23. 오후 8:42:54
  */
-public final class Response {
+public class Response {
 	
 	/**
 	 * slf4j Logger
@@ -54,13 +54,13 @@ public final class Response {
 	 */
 	private static final String CONTENT_TYPE = "{0};charset=UTF-8";
 	
-	public static ResponseEntity<String> badRequest(final BindingResult bindingResult) {
+	public static ResponseEntity<String> badRequest(BindingResult bindingResult) {
 		
-		final List<String> messages = bindingResult.getAllErrors()
+		List<String> messages = bindingResult.getAllErrors()
 			.stream()
 			.map(ObjectError::getDefaultMessage)
 			.collect(Collectors.toList());
-		final String message = StringCollectionGtils.join(messages, "<br>");
+		String message = StringCollectionGtils.join(messages, "<br>");
 		return Response.badRequest(message);
 	}
 	
@@ -77,7 +77,7 @@ public final class Response {
 	 *            응답 메세지
 	 * @return {@link ResponseEntity}
 	 */
-	public static <T> ResponseEntity<T> badRequest(final T body) {
+	public static <T> ResponseEntity<T> badRequest(T body) {
 		
 		return Response.badRequest(body, MediaType.TEXT_PLAIN);
 	}
@@ -97,7 +97,7 @@ public final class Response {
 	 *            {@link MediaType}
 	 * @return {@link ResponseEntity}
 	 */
-	public static <T> ResponseEntity<T> badRequest(final T body, final MediaType mediaType) {
+	public static <T> ResponseEntity<T> badRequest(T body, MediaType mediaType) {
 		
 		return Response.send(body, HttpStatus.BAD_REQUEST, mediaType);
 	}
@@ -110,7 +110,7 @@ public final class Response {
 	 *            {@link MediaType}
 	 * @return {@link HttpHeaders}
 	 */
-	private static HttpHeaders getHeaders(final MediaType mediaType) {
+	private static HttpHeaders getHeaders(MediaType mediaType) {
 		
 		return getHeaders(mediaType.toString());
 	}
@@ -123,9 +123,9 @@ public final class Response {
 	 *            {@link MediaType} 타입
 	 * @return {@link HttpHeaders}
 	 */
-	private static HttpHeaders getHeaders(final String mediaType) {
+	private static HttpHeaders getHeaders(String mediaType) {
 		
-		final HttpHeaders headers = new HttpHeaders();
+		HttpHeaders headers = new HttpHeaders();
 		headers.add("Content-Type", MessageFormat.format(Response.CONTENT_TYPE, mediaType));
 		return headers;
 	}
@@ -140,31 +140,41 @@ public final class Response {
 	 * @throws IOException
 	 *             {@link FileUtils#readFileToByteArray(File)} 기능 수행중 예외 사항
 	 */
-	public static ResponseEntity<byte[]> image(final File file) throws IOException {
+	public static ResponseEntity<byte[]> image(File file) throws IOException {
 		
-		final byte[] content = FileUtils.readFileToByteArray(file);
+		byte[] content = FileUtils.readFileToByteArray(file);
 		
 		String extension = FilenameUtils.getExtension(file.getAbsolutePath()).toLowerCase(Locale.getDefault());
 		if ("jpg".equals(extension)) {
 			extension = "jpeg";
 		}
 		
-		final String mediaType = "image/" + extension;
+		String mediaType = "image/" + extension;
 		
 		return ok(content, mediaType);
 		
 	}
 	
-	public static ResponseEntity<List<byte[]>> images(final List<File> files) throws IOException {
+	public static ResponseEntity<List<byte[]>> images(List<File> files) throws IOException {
 		
-		final List<byte[]> contents = new ArrayList<>();
+		List<byte[]> contents = new ArrayList<>();
 		
-		for (final File file : files) {
-			final byte[] content = FileUtils.readFileToByteArray(file);
+		for (File file : files) {
+			byte[] content = FileUtils.readFileToByteArray(file);
 			contents.add(content);
 		}
 		
 		return Response.ok(contents, MediaType.ALL);
+	}
+	
+	public static ResponseEntity<String> notImplemented() {
+		
+		return notImplemented("Not Implemented");
+	}
+	
+	public static ResponseEntity<String> notImplemented(String message) {
+		
+		return send(message, HttpStatus.NOT_IMPLEMENTED, MediaType.TEXT_PLAIN);
 	}
 	
 	/**
@@ -176,23 +186,7 @@ public final class Response {
 	 */
 	public static ResponseEntity<String> ok() {
 		
-		return Response.ok("success");
-	}
-	
-	/**
-	 * 요청자에게 200 OK으로 응답합니다.
-	 *
-	 * @author jeonghyun.kum
-	 * @param <T>
-	 *            클레스 타입
-	 * @since 2016. 4. 24. 오후 5:39:47
-	 * @param body
-	 *            응답 메세지
-	 * @return 응답 데이터
-	 */
-	public static <T> ResponseEntity<T> ok(final T body) {
-		
-		return Response.ok(body, MediaType.TEXT_PLAIN);
+		return Response.okText("success");
 	}
 	
 	/**
@@ -208,7 +202,7 @@ public final class Response {
 	 *            {@link MediaType}
 	 * @return {@link ResponseEntity}
 	 */
-	public static <T> ResponseEntity<T> ok(final T body, final MediaType mediaType) {
+	public static <T> ResponseEntity<T> ok(T body, MediaType mediaType) {
 		
 		return Response.send(body, HttpStatus.OK, mediaType);
 	}
@@ -225,9 +219,41 @@ public final class Response {
 	 *            미디어 타입
 	 * @return 응답 데이터
 	 */
-	public static <T> ResponseEntity<T> ok(final T body, final String mediaType) {
+	public static <T> ResponseEntity<T> ok(T body, String mediaType) {
 		
 		return Response.send(body, HttpStatus.OK, mediaType);
+	}
+	
+	/**
+	 * 요청자에게 200 OK으로 응답합니다.
+	 *
+	 * @author jeonghyun.kum
+	 * @param <T>
+	 *            클레스 타입
+	 * @since 2016. 4. 24. 오후 5:39:47
+	 * @param body
+	 *            응답 메세지
+	 * @return 응답 데이터
+	 */
+	public static <T> ResponseEntity<T> okJson(T body) {
+		
+		return Response.ok(body, MediaType.APPLICATION_JSON);
+	}
+	
+	/**
+	 * 요청자에게 200 OK으로 응답합니다.
+	 *
+	 * @author jeonghyun.kum
+	 * @param <T>
+	 *            클레스 타입
+	 * @since 2016. 4. 24. 오후 5:39:47
+	 * @param body
+	 *            응답 메세지
+	 * @return 응답 데이터
+	 */
+	public static <T> ResponseEntity<T> okText(T body) {
+		
+		return Response.ok(body, MediaType.TEXT_PLAIN);
 	}
 	
 	/**
@@ -238,9 +264,9 @@ public final class Response {
 	 *            Redirect 경로
 	 * @return Redirect 경로
 	 */
-	public static ResponseEntity<String> redirect(final String url) {
+	public static ResponseEntity<String> redirect(String url) {
 		
-		final HttpHeaders headers = new HttpHeaders();
+		HttpHeaders headers = new HttpHeaders();
 		headers.add("Location", url);
 		return new ResponseEntity<>(headers, HttpStatus.FOUND);
 	}
@@ -259,18 +285,18 @@ public final class Response {
 	 *            미디어 타입
 	 * @return 응답 데이터
 	 */
-	private static <T> ResponseEntity<T> send(final T body, final HttpStatus status, final MediaType mediaType) {
+	private static <T> ResponseEntity<T> send(T body, HttpStatus status, MediaType mediaType) {
 		
 		ObjectInspection.checkNull(body);
 		ObjectInspection.checkNull(status);
 		ObjectInspection.checkNull(mediaType);
 		
-		final HttpHeaders headers = Response.getHeaders(mediaType);
+		HttpHeaders headers = Response.getHeaders(mediaType);
 		if (MediaType.APPLICATION_JSON.equals(mediaType)) {
-			final String bodyjson = JsonGtils.toGson(body);
+			String bodyjson = JsonGtils.toGson(body);
 			LOGGER.info(bodyjson);
 		} else {
-			final String string;
+			String string;
 			if (body == null) {
 				string = "null";
 			} else {
@@ -296,12 +322,12 @@ public final class Response {
 	 *            미디어 타입
 	 * @return 응답 데이터
 	 */
-	private static <T> ResponseEntity<T> send(final T body, final HttpStatus status, final String mediaType) {
+	private static <T> ResponseEntity<T> send(T body, HttpStatus status, String mediaType) {
 		
 		ObjectInspection.checkNull(body);
 		ObjectInspection.checkNull(status);
 		ObjectInspection.checkNull(mediaType);
-		final HttpHeaders headers = Response.getHeaders(mediaType);
+		HttpHeaders headers = Response.getHeaders(mediaType);
 		return ResponseEntity.status(status).headers(headers).body(body);
 	}
 	
@@ -316,7 +342,7 @@ public final class Response {
 	 *            T에 해당하는 객체
 	 * @return 응답 데이터
 	 */
-	public static <T> ResponseEntity<T> serverError(final T body) {
+	public static <T> ResponseEntity<T> serverError(T body) {
 		
 		return Response.serverError(body, MediaType.TEXT_PLAIN);
 	}
@@ -334,7 +360,7 @@ public final class Response {
 	 *            {@link MediaType}
 	 * @return {@link ResponseEntity}
 	 */
-	public static <T> ResponseEntity<T> serverError(final T body, final MediaType mediaType) {
+	public static <T> ResponseEntity<T> serverError(T body, MediaType mediaType) {
 		
 		return Response.send(body, HttpStatus.INTERNAL_SERVER_ERROR, mediaType);
 	}

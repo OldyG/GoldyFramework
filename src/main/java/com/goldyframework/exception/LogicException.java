@@ -11,22 +11,35 @@ package com.goldyframework.exception;
 
 public class LogicException extends RuntimeException {
 	
-	/**
-	 * Serializable UID
-	 *
-	 * @author jeong
-	 * @since 2017. 5. 22. 오후 9:20:10
-	 */
-	private static final long serialVersionUID = 8650355375231410298L;
 	
-	public LogicException() {
+	
+	
+	private static final long serialVersionUID = 3029504618525263582L;
+	private final LogicErrorType logicErrorType;
+	
+	public LogicException(LogicErrorType errorType) {
 		
-		super("이 메세지가 보일경우 미구현 코드이거나 코드로직의 문제입니다."); 
+		super("이 메세지가 보일경우 미구현 코드이거나 코드로직의 문제입니다.");
+		this.logicErrorType = errorType;
 	}
 	
-	public LogicException(final Throwable cause) {
+	public LogicException(LogicErrorType errorType, Throwable cause) {
 		
-		super("이 메세지가 보일경우 미구현 코드이거나 코드로직의 문제입니다.", cause); 
+		super("이 메세지가 보일경우 미구현 코드이거나 코드로직의 문제입니다.", cause);
+		this.logicErrorType = errorType;
+		
+	}
+	
+	/**
+	 * logicErrorType를 반환합니다.
+	 * 
+	 * @return logicErrorType
+	 * @author 2018. 2. 11. 오후 8:17:11 jeong
+	 * @see {@link #logicErrorType}
+	 */
+	public LogicErrorType getLogicErrorType() {
+		
+		return this.logicErrorType;
 	}
 	
 }

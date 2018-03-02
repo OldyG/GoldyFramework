@@ -11,14 +11,9 @@ package com.goldyframework.session;
 
 public class NoPrincipalException extends Exception {
 	
-	/**
-	 * Serializable UID
-	 *
-	 * @author jeong
-	 * @since 2017. 5. 22. 오후 9:20:10
-	 */
-	private static final long serialVersionUID = 4613377314762564030L;
 	
+	private static final long serialVersionUID = 2574527080942690499L;
+
 	/**
 	 * {@link NoPrincipalException} 클래스의 새 인스턴스를 초기화 합니다.
 	 *

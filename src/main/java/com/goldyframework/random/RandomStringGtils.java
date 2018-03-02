@@ -24,7 +24,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author 2017. 6. 18. 오후 1:31:56 jeong
  */
-public final class RandomStringGtils {
+public class RandomStringGtils {
 	
 	/**
 	 * slf4j Logger
@@ -40,8 +40,8 @@ public final class RandomStringGtils {
 	private static final Collection<Character> SYMBOLS;
 	
 	static {
-		final Collection<Character> tempSymbols = new LinkedList<>();
-		final IntConsumer consumer = index -> tempSymbols.add((char) index);
+		Collection<Character> tempSymbols = new LinkedList<>();
+		IntConsumer consumer = index -> tempSymbols.add((char) index);
 		IntStream.rangeClosed('0', '9').forEach(consumer);
 		IntStream.rangeClosed('a', 'z').forEach(consumer);
 		IntStream.rangeClosed('A', 'Z').forEach(consumer);
@@ -58,9 +58,9 @@ public final class RandomStringGtils {
 	 *            범위
 	 * @return 결과 무작위 문자열
 	 */
-	public static String createRandomString(final int minLength, final int range) {
+	public static String createRandomString(int minLength, int range) {
 		
-		final Random random = new SecureRandom();
+		Random random = new SecureRandom();
 		int passwordLength;
 		if (range <= 0) {
 			passwordLength = minLength;
@@ -69,11 +69,11 @@ public final class RandomStringGtils {
 			passwordLength = random.nextInt(range) + minLength;
 		}
 		
-		final StringBuilder builder = new StringBuilder();
+		StringBuilder builder = new StringBuilder();
 		
 		IntStream.range(0, passwordLength).forEach(index -> {
-			final int symbolSize = random.nextInt(RandomStringGtils.SYMBOLS.size());
-			final char c = ((LinkedList<Character>) RandomStringGtils.SYMBOLS).get(symbolSize);
+			int symbolSize = random.nextInt(RandomStringGtils.SYMBOLS.size());
+			char c = ((LinkedList<Character>) RandomStringGtils.SYMBOLS).get(symbolSize);
 			builder.append(c);
 		});
 		return builder.toString();

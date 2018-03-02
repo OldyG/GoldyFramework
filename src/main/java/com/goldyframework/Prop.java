@@ -9,17 +9,17 @@ import java.nio.charset.StandardCharsets;
 /**
  * @author 2017. 6. 16. 오후 6:30:05 jeong
  */
-public final class Prop {
+public class Prop {
 	
 	/**
 	 * 기본 인코딩
 	 */
-	public static final Charset DEFAULT_CHARSET = StandardCharsets.UTF_8;
+	public static Charset DEFAULT_CHARSET = StandardCharsets.UTF_8;
 	
 	/**
 	 * 기본 포맷
 	 */
-	public static final String DATE_FORMAT = "yyyy-MM-dd HH:mm:ss"; 
+	public static final String DATE_FORMAT = "yyyy-MM-dd HH:mm:ss";
 	
 	/**
 	 * {@link Prop} 클래스의 새 인스턴스를 초기화 합니다.
@@ -28,6 +28,6 @@ public final class Prop {
 	 */
 	private Prop() {
 		
-		throw new IllegalStateException("Utility class"); 
+		throw new IllegalStateException("Utility class");
 	}
 }

@@ -87,7 +87,7 @@ public class RequestDetail {
 	 * @author 2017. 6. 18. 오후 1:12:55 jeong
 	 * @see {@link #authType}
 	 */
-	public final String getAuthType() {
+	public String getAuthType() {
 		
 		return this.authType;
 	}
@@ -99,7 +99,7 @@ public class RequestDetail {
 	 * @author 2017. 6. 18. 오후 1:12:55 jeong
 	 * @see {@link #contentType}
 	 */
-	public final String getContentType() {
+	public String getContentType() {
 		
 		return this.contentType;
 	}
@@ -111,7 +111,7 @@ public class RequestDetail {
 	 * @author 2017. 6. 18. 오후 1:12:55 jeong
 	 * @see {@link #contextPath}
 	 */
-	public final String getContextPath() {
+	public String getContextPath() {
 		
 		return this.contextPath;
 	}
@@ -123,7 +123,7 @@ public class RequestDetail {
 	 * @author 2017. 6. 18. 오후 1:12:55 jeong
 	 * @see {@link #cookies}
 	 */
-	public final String getCookies() {
+	public String getCookies() {
 		
 		return this.cookies;
 	}
@@ -135,7 +135,7 @@ public class RequestDetail {
 	 * @author 2017. 6. 18. 오후 1:12:55 jeong
 	 * @see {@link #localAddr}
 	 */
-	public final String getLocalAddr() {
+	public String getLocalAddr() {
 		
 		return this.localAddr;
 	}
@@ -147,7 +147,7 @@ public class RequestDetail {
 	 * @author 2017. 6. 18. 오후 1:12:55 jeong
 	 * @see {@link #localName}
 	 */
-	public final String getLocalName() {
+	public String getLocalName() {
 		
 		return this.localName;
 	}
@@ -159,7 +159,7 @@ public class RequestDetail {
 	 * @author 2017. 6. 18. 오후 1:12:55 jeong
 	 * @see {@link #localPort}
 	 */
-	public final int getLocalPort() {
+	public int getLocalPort() {
 		
 		return this.localPort;
 	}
@@ -171,7 +171,7 @@ public class RequestDetail {
 	 * @author 2017. 6. 18. 오후 1:12:55 jeong
 	 * @see {@link #method}
 	 */
-	public final String getMethod() {
+	public String getMethod() {
 		
 		return this.method;
 	}
@@ -183,7 +183,7 @@ public class RequestDetail {
 	 * @author 2017. 6. 18. 오후 1:12:55 jeong
 	 * @see {@link #requestUrl}
 	 */
-	public final String getRequestUrl() {
+	public String getRequestUrl() {
 		
 		return this.requestUrl;
 	}
@@ -197,7 +197,7 @@ public class RequestDetail {
 	 * @see {@link #authType}
 	 */
 	
-	public final void setAuthType(final String authType) {
+	public void setAuthType(String authType) {
 		
 		this.authType = authType;
 	}
@@ -211,7 +211,7 @@ public class RequestDetail {
 	 * @see {@link #contentType}
 	 */
 	
-	public final void setContentType(final String contentType) {
+	public void setContentType(String contentType) {
 		
 		this.contentType = contentType;
 	}
@@ -225,7 +225,7 @@ public class RequestDetail {
 	 * @see {@link #contextPath}
 	 */
 	
-	public final void setContextPath(final String contextPath) {
+	public void setContextPath(String contextPath) {
 		
 		this.contextPath = contextPath;
 	}
@@ -239,10 +239,10 @@ public class RequestDetail {
 	 * @see {@link #cookies}
 	 */
 	
-	public final void setCookies(final Cookie[] cookies) {
+	public void setCookies(Cookie[] cookies) {
 		
-		final StringBuilder builder = new StringBuilder();
-		for (final Cookie cookie : cookies) {
+		StringBuilder builder = new StringBuilder();
+		for (Cookie cookie : cookies) {
 			builder.append(JsonGtils.toGson(cookie)).append('\n');
 		}
 		this.cookies = builder.toString();
@@ -257,7 +257,7 @@ public class RequestDetail {
 	 * @see {@link #localAddr}
 	 */
 	
-	public final void setLocalAddr(final String localAddr) {
+	public void setLocalAddr(String localAddr) {
 		
 		this.localAddr = localAddr;
 	}
@@ -271,7 +271,7 @@ public class RequestDetail {
 	 * @see {@link #localName}
 	 */
 	
-	public final void setLocalName(final String localName) {
+	public void setLocalName(String localName) {
 		
 		this.localName = localName;
 	}
@@ -285,7 +285,7 @@ public class RequestDetail {
 	 * @see {@link #localPort}
 	 */
 	
-	public final void setLocalPort(final int localPort) {
+	public void setLocalPort(int localPort) {
 		
 		this.localPort = localPort;
 	}
@@ -299,7 +299,7 @@ public class RequestDetail {
 	 * @see {@link #method}
 	 */
 	
-	public final void setMethod(final String method) {
+	public void setMethod(String method) {
 		
 		this.method = method;
 	}
@@ -313,7 +313,7 @@ public class RequestDetail {
 	 * @see {@link #requestUrl}
 	 */
 	
-	public final void setRequestUrl(final String requestUrl) {
+	public void setRequestUrl(String requestUrl) {
 		
 		this.requestUrl = requestUrl;
 	}
@@ -328,8 +328,8 @@ public class RequestDetail {
 		
 		try {
 			return new ObjectMapper().writerWithDefaultPrettyPrinter().writeValueAsString(this);
-		} catch (final JsonProcessingException e) {
-			LOGGER.trace("Jackson을 통한 출력에 실패하여 Gson을 통하여 캐스팅합니다.", e); 
+		} catch (JsonProcessingException e) {
+			LOGGER.trace("Jackson을 통한 출력에 실패하여 Gson을 통하여 캐스팅합니다.", e);
 			return JsonGtils.toGson(this);
 		}
 		

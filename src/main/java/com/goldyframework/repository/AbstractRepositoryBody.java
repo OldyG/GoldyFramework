@@ -61,9 +61,9 @@ public abstract class AbstractRepositoryBody implements RepositoryBody {
 	 * @author 2017. 6. 18. 오후 1:44:21 jeong
 	 */
 	@Override
-	public File generateSavePath(final String extension) {
+	public File generateSavePath(String extension) {
 		
-		final String ext = NullGtils.emptyIfNull(extension);
+		String ext = NullGtils.emptyIfNull(extension);
 		
 		return this.getNamingType().getFileNaming().generageSavePath(this.getRootDirectory(), this.getBaseName(),
 			ext);
@@ -100,7 +100,7 @@ public abstract class AbstractRepositoryBody implements RepositoryBody {
 	@Override
 	public File getRegisteredFile() throws NotRegisteredFileException, RepositoryException {
 		
-		final String fileUrl = this.getRegisteredFileName();
+		String fileUrl = this.getRegisteredFileName();
 		if (Strings.isNullOrEmpty(fileUrl)) {
 			throw new NotRegisteredFileException();
 		}
@@ -139,16 +139,16 @@ public abstract class AbstractRepositoryBody implements RepositoryBody {
 	 */
 	protected void initialize() {
 		
-		final File directory = this.getRootDirectory();
+		File directory = this.getRootDirectory();
 		
 		if (directory.exists() == false) {
 			
-			final String absolutePath = directory.getAbsolutePath();
+			String absolutePath = directory.getAbsolutePath();
 			if (directory.mkdirs()) {
-				final String message = MessageFormat.format("디렉토리 생성 성공{0}", absolutePath);
+				String message = MessageFormat.format("디렉토리 생성 성공{0}", absolutePath);
 				LOGGER.trace(message);
 			} else {
-				final String message = MessageFormat.format("디렉토리 생성에 실패하였습니다.{0}", absolutePath);
+				String message = MessageFormat.format("디렉토리 생성에 실패하였습니다.{0}", absolutePath);
 				LOGGER.error(message);
 			}
 			

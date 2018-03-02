@@ -39,7 +39,7 @@ public class EmailForm {
 	/**
 	 * 제목 구간 기본 이름
 	 */
-	private static final String DEFAULT_TITLE_NAME = "메일 서비스"; 
+	private static final String DEFAULT_TITLE_NAME = "메일 서비스";
 	
 	/**
 	 * 이메일 본문 구간 {@link Elements}를 반환한다.
@@ -49,9 +49,9 @@ public class EmailForm {
 	 *            대상 문서
 	 * @return 이메일 본문 구간 {@link Elements}
 	 */
-	private static Elements getBodyElements(final Document doc) {
+	private static Elements getBodyElements(Document doc) {
 		
-		final Elements body = doc.select(".email_box>.base>.body>.input_area "); 
+		Elements body = doc.select(".email_box>.base>.body>.input_area ");
 		body.empty();
 		return body;
 	}
@@ -64,9 +64,9 @@ public class EmailForm {
 	 *            대상 문서
 	 * @return 이메일 제목 구간 {@link Elements}
 	 */
-	private static Elements getTitleElements(final Document doc) {
+	private static Elements getTitleElements(Document doc) {
 		
-		final Elements title = doc.select(".email_box>.base>.header>.input_area"); 
+		Elements title = doc.select(".email_box>.base>.header>.input_area");
 		title.empty();
 		return title;
 	}
@@ -94,7 +94,7 @@ public class EmailForm {
 	 *            이메일 폼 디자인
 	 * @since 2016. 4. 26. 오전 10:06:35
 	 */
-	public EmailForm(final EmailFormDesignType type) {
+	public EmailForm(EmailFormDesignType type) {
 		
 		this.formType = NullGtils.throwIfNull(type);
 	}
@@ -107,7 +107,7 @@ public class EmailForm {
 	 * @param htmlCode
 	 *            내용에 작성할 html를 삽입합니다.
 	 */
-	public void inputBody(final String htmlCode) {
+	public void inputBody(String htmlCode) {
 		
 		this.inputBody = NullGtils.throwIfNull(htmlCode);
 	}
@@ -123,17 +123,17 @@ public class EmailForm {
 	 */
 	public String parse() {
 		
-		final File designFile = this.formType.getDesignFile();
+		File designFile = this.formType.getDesignFile();
 		
 		try {
-			final Document doc = Jsoup.parse(designFile, Prop.DEFAULT_CHARSET.name());
-			final Elements title = getTitleElements(doc);
+			Document doc = Jsoup.parse(designFile, Prop.DEFAULT_CHARSET.name());
+			Elements title = getTitleElements(doc);
 			title.append(this.titleName);
-			final Elements body = getBodyElements(doc);
+			Elements body = getBodyElements(doc);
 			body.append(this.inputBody);
 			
 			return doc.outerHtml();
-		} catch (final IOException e) {
+		} catch (IOException e) {
 			LOGGER.info(e.getMessage(), e);
 			return this.inputBody;
 		}
@@ -148,7 +148,7 @@ public class EmailForm {
 	 * @param titleName
 	 *            타이틀 이름
 	 */
-	public void setTitleName(final String titleName) {
+	public void setTitleName(String titleName) {
 		
 		this.titleName = NullGtils.throwIfNull(titleName);
 	}

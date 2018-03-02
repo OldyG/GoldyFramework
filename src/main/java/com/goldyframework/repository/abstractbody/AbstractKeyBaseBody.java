@@ -4,7 +4,7 @@
  * Author : jeong
  * Summary :
  * Copyright (C) 2018 Formal Works Inc. All rights reserved.
- * 이 문서의 모든 저작권 및 지적 재산권은 (주)포멀웍스에게 있습니다.
+ * 이 문서의 모든 저작권 및 지적 재산권은 Goldy Project에게 있습니다.
  * 이 문서의 어떠한 부분도 허가 없이 복제 또는 수정 하거나, 전송할 수 없습니다.
  */
 package com.goldyframework.repository.abstractbody;
@@ -71,14 +71,14 @@ public abstract class AbstractKeyBaseBody extends AbstractRepositoryBody {
 	@Override
 	protected String getRegisteredFileName() throws NotRegisteredFileException {
 		
-		final File baseDirectory = this.getRootDirectory();
+		File baseDirectory = this.getRootDirectory();
 		
-		final File[] listFiles = baseDirectory.listFiles();
+		File[] listFiles = baseDirectory.listFiles();
 		if (listFiles != null) {
-			for (final File file : listFiles) {
+			for (File file : listFiles) {
 				
-				final String expectedName = FilenameUtils.getBaseName(file.getName());
-				final String actualName = this.getUniqueKey();
+				String expectedName = FilenameUtils.getBaseName(file.getName());
+				String actualName = this.getUniqueKey();
 				
 				if (expectedName.equals(actualName)) {
 					return file.getName();

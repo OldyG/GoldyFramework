@@ -4,7 +4,7 @@
  * Author : jeong
  * Summary :
  * Copyright (C) 2018 Formal Works Inc. All rights reserved.
- * 이 문서의 모든 저작권 및 지적 재산권은 (주)포멀웍스에게 있습니다.
+ * 이 문서의 모든 저작권 및 지적 재산권은 Goldy Project에게 있습니다.
  * 이 문서의 어떠한 부분도 허가 없이 복제 또는 수정 하거나, 전송할 수 없습니다.
  */
 package com.goldyframework.random;
@@ -19,6 +19,8 @@ import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.goldyframework.random.RandomSelectGtils;
+
 public class RandomSelectGtilsTest {
 	
 	/**
@@ -27,14 +29,15 @@ public class RandomSelectGtilsTest {
 	private static final Logger LOGGER = LoggerFactory.getLogger(RandomSelectGtilsTest.class);
 	
 	/**
-	 * Test method for {@link com.goldyframework.random.RandomSelectGtils#selectRandomObject(java.util.Collection)}.
+	 * Test method for
+	 * {@link com.goldyframework.random.RandomSelectGtils#selectRandomObject(java.util.Collection)}.
 	 */
 	@Test
 	public void testSelectRandomObject() {
 		
-		final List<String> randomList = Arrays.asList("ROLE_USER", "ROLE_ADMIN", "ROLE_DBA");
+		List<String> randomList = Arrays.asList("ROLE_USER", "ROLE_ADMIN", "ROLE_DBA");
 		
-		final Set<String> actualList = new HashSet<>();
+		Set<String> actualList = new HashSet<>();
 		int count = 0;
 		while (actualList.size() < randomList.size()) {
 			
@@ -43,7 +46,7 @@ public class RandomSelectGtilsTest {
 			}
 			count++;
 			
-			final String actual = RandomSelectGtils.selectRandomObject(randomList);
+			String actual = RandomSelectGtils.selectRandomObject(randomList);
 			actualList.add(actual);
 		}
 		

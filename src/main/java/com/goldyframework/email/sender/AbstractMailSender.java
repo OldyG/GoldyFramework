@@ -40,13 +40,13 @@ public abstract class AbstractMailSender extends JavaMailSenderImpl {
 	 * @author 2017. 7. 8. 오후 3:38:28 jeong
 	 */
 	@Override
-	public synchronized void send(final MimeMessage mimeMessage) {
+	public synchronized void send(MimeMessage mimeMessage) {
 		
-		final String threadName = Thread.currentThread().getName();
-		final String readyMessage = MessageFormat.format("[{0}]이메일 전송 중", threadName); 
+		String threadName = Thread.currentThread().getName();
+		String readyMessage = MessageFormat.format("[{0}]이메일 전송 중", threadName);
 		LOGGER.trace(readyMessage);
 		super.send(mimeMessage);
-		final String finishMessage = MessageFormat.format("[{0}]이메일 전송 완료", threadName); 
+		String finishMessage = MessageFormat.format("[{0}]이메일 전송 완료", threadName);
 		LOGGER.trace(finishMessage);
 	}
 }

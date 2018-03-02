@@ -29,7 +29,7 @@ import com.goldyframework.repository.RepositoryServiceImpl;
  *
  * @author 2017. 6. 18. 오후 2:00:56 jeong
  */
-public final class ReservationGarbageBinder {
+public class ReservationGarbageBinder {
 	
 	/**
 	 * Jackson 객체
@@ -51,20 +51,20 @@ public final class ReservationGarbageBinder {
 	 *             Signals that an I/O exception of some sort has occurred. This class is the general class of
 	 *             exceptions produced by failed or interrupted I/O operations.
 	 */
-	public static AbstractReservationGarbage readGarbage(final File garbageFile) throws IOException {
+	public static AbstractReservationGarbage readGarbage(File garbageFile) throws IOException {
 		
 		ObjectInspection.checkNull(garbageFile);
 		// 파일을 읽어 옴 내용은 Json형태
-		final String json = FileUtils.readFileToString(garbageFile, Prop.DEFAULT_CHARSET.name());
+		String json = FileUtils.readFileToString(garbageFile, Prop.DEFAULT_CHARSET.name());
 		
 		// Json을 객체로 형변환
-		final ReservationGarbageBinderModel garbageModel = MAPPER.readValue(json, ReservationGarbageBinderModel.class);
+		ReservationGarbageBinderModel garbageModel = MAPPER.readValue(json, ReservationGarbageBinderModel.class);
 		
 		// 변환될 클래스를 읽어옴
-		final Class<AbstractReservationGarbage> garbageImpl = garbageModel.getTarget();
+		Class<AbstractReservationGarbage> garbageImpl = garbageModel.getTarget();
 		
 		// 변환될 클래스에 할당 될 필드값들을 읽어 Json으로 변환함
-		final String fieldValuesJson = MAPPER.writeValueAsString(garbageModel.getSet());
+		String fieldValuesJson = MAPPER.writeValueAsString(garbageModel.getSet());
 		
 		// Json을 변환될 클래스로 변형함
 		return MAPPER.readValue(fieldValuesJson, garbageImpl);
@@ -86,18 +86,18 @@ public final class ReservationGarbageBinder {
 	 * @throws RepositoryException
 	 *             저장소 관련 예외사항
 	 */
-	public static void saveGarbage(final File garbageDirectory, final AbstractReservationGarbage garbage)
+	public static void saveGarbage(File garbageDirectory, AbstractReservationGarbage garbage)
 		throws IOException, SQLException, RepositoryException {
 		
 		ObjectInspection.checkNull(garbageDirectory);
 		ObjectInspection.checkNull(garbage);
 		
-		final ReservationGarbageBinderModel model = new ReservationGarbageBinderModel();
+		ReservationGarbageBinderModel model = new ReservationGarbageBinderModel();
 		model.setTarget(garbage.getClass().getName());
 		model.setSet(garbage);
 		
-		final RepositoryBody repository = new ReservationGarbageRepositoryBody(garbageDirectory);
-		final RepositoryService service = new RepositoryServiceImpl(repository);
+		RepositoryBody repository = new ReservationGarbageRepositoryBody(garbageDirectory);
+		RepositoryService service = new RepositoryServiceImpl(repository);
 		
 		service.write(MAPPER.writeValueAsString(model));
 	}
@@ -110,7 +110,7 @@ public final class ReservationGarbageBinder {
 	 */
 	private ReservationGarbageBinder() {
 		
-		throw new IllegalStateException("Utility class"); 
+		throw new IllegalStateException("Utility class");
 	}
 	
 }

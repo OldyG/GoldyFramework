@@ -4,13 +4,14 @@
  * Author : jeong
  * Summary :
  * Copyright (C) 2018 Formal Works Inc. All rights reserved.
- * 이 문서의 모든 저작권 및 지적 재산권은 (주)포멀웍스에게 있습니다.
+ * 이 문서의 모든 저작권 및 지적 재산권은 Goldy Project에게 있습니다.
  * 이 문서의 어떠한 부분도 허가 없이 복제 또는 수정 하거나, 전송할 수 없습니다.
  */
 package com.goldyframework.inspection;
 
 import java.text.MessageFormat;
 import java.util.Collection;
+import java.util.List;
 
 import com.goldyframework.inspection.exception.InspectionException;
 
@@ -25,7 +26,7 @@ public class CollectionInspection {
 	 * @throws ValidateException
 	 *             null 또는 사이즈가 0일경우 발생합니다.
 	 */
-	public static void checkNullOrEmptyCollection(final Collection<?> targetList) {
+	public static void checkNullOrEmptyCollection(Collection<?> targetList) {
 		
 		ObjectInspection.checkNull(targetList);
 		
@@ -35,18 +36,29 @@ public class CollectionInspection {
 		
 	}
 	
-	public static void checkSize(final Collection<?> collection, final int validSize) {
+	public static void checkSize(Collection<?> collection, int validSize) {
 		
-		if (isValidSize(collection, validSize) == false) {
+		if (isSize(collection, validSize) == false) {
 			throw new InspectionException(MessageFormat.format("컬렉션 사이즈는 반드시 [{0}]이어야합니다.", validSize));
 		}
 	}
 	
-	public static boolean isValidSize(final Collection<?> collection, final int validSize) {
+	public static boolean isSize(Collection<?> collection, int validSize) {
 		
 		ObjectInspection.checkNull(collection);
-		IntegerInspection.checkBelow(validSize, -1);
 		return collection.size() == validSize;
+	}
+	
+	/**
+	 * @author 2017. 8. 19. 오후 4:46:44 jeong
+	 * @param fieldValues
+	 * @return
+	 */
+	public static <T> T[] toArray(List<T> fieldValues) {
+		
+		checkNullOrEmptyCollection(fieldValues);
+		
+		return (T[]) fieldValues.toArray(new Object[fieldValues.size()]);
 	}
 	
 }

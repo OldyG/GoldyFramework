@@ -4,7 +4,7 @@
  * Author : jeong
  * Summary :
  * Copyright (C) 2018 Formal Works Inc. All rights reserved.
- * 이 문서의 모든 저작권 및 지적 재산권은 (주)포멀웍스에게 있습니다.
+ * 이 문서의 모든 저작권 및 지적 재산권은 Goldy Project에게 있습니다.
  * 이 문서의 어떠한 부분도 허가 없이 복제 또는 수정 하거나, 전송할 수 없습니다.
  */
 package com.goldyframework.checksum;
@@ -22,6 +22,10 @@ import org.mockito.Mockito;
 import org.mockito.Spy;
 import org.mockito.runners.MockitoJUnitRunner;
 
+import com.goldyframework.checksum.Algorithm;
+import com.goldyframework.checksum.Checksum;
+import com.goldyframework.checksum.ChecksumAnalyser;
+import com.goldyframework.does.SonarHelper;
 import com.goldyframework.inspection.exception.InspectionException;
 import com.goldyframework.utils.ClassLoaderGtils;
 
@@ -32,9 +36,9 @@ import com.goldyframework.utils.ClassLoaderGtils;
 @RunWith(MockitoJUnitRunner.class)
 public class ChecksumAnalyserTest extends Mockito {
 	
-	private static final File TEST_FILE = ClassLoaderGtils.getFile("checksum/Test File.xml");
+	private static File TEST_FILE = ClassLoaderGtils.getFile("checksum/Test File.xml");
 	
-	private static final File NONEEXISTENT_TEST_FILE = new File("src/test/resources/none");
+	private static File NONEEXISTENT_TEST_FILE = new File("src/test/resources/none");
 	
 	@Spy
 	private final ChecksumAnalyser targetSpy = new ChecksumAnalyser.TestSet().createNewInstance();
@@ -45,8 +49,8 @@ public class ChecksumAnalyserTest extends Mockito {
 	@Test
 	public void testAnalye() {
 		
-		final ChecksumAnalyser analyser = new ChecksumAnalyser(TEST_FILE);
-		final Checksum actual = analyser.analyze();
+		ChecksumAnalyser analyser = new ChecksumAnalyser(TEST_FILE);
+		Checksum actual = analyser.analyze();
 		Assert.assertEquals("MD2 알고리즘 비교 시험", "0c195fd9a63d4e0d5b7c507450663a4a", actual.getMd2());
 		Assert.assertEquals("MD5 알고리즘 비교 시험", "e863cdd854d55b83545d8ad1a2b4225f", actual.getMd5());
 		Assert.assertEquals("SHA1 알고리즘 비교 시험", "f7d7ec1072b1487e6e45fb148190e4abb4393d21", actual.getSha1());
@@ -64,7 +68,10 @@ public class ChecksumAnalyserTest extends Mockito {
 	@Test(expected = InspectionException.class)
 	public void testConstructorEmptyFile() {
 		
-		new ChecksumAnalyser(new File(""));
+		SonarHelper.noStatic(this);
+		
+		ChecksumAnalyser target = new ChecksumAnalyser(new File(""));
+		SonarHelper.unuse(target);
 	}
 	
 	/**
@@ -73,7 +80,9 @@ public class ChecksumAnalyserTest extends Mockito {
 	@Test(expected = InspectionException.class)
 	public void testConstructorInputNullArgument() {
 		
-		new ChecksumAnalyser(null);
+		SonarHelper.noStatic(this);
+		ChecksumAnalyser target = new ChecksumAnalyser(null);
+		SonarHelper.unuse(target);
 	}
 	
 	@Test
@@ -82,7 +91,7 @@ public class ChecksumAnalyserTest extends Mockito {
 		doThrow(NoSuchAlgorithmException.class).when(this.targetSpy)
 			.convertDigestToString(Matchers.<byte[]> any());
 		
-		final String actual = this.targetSpy.analysisCheckSum(Algorithm.MD2);
+		String actual = this.targetSpy.analysisCheckSum(Algorithm.MD2);
 		Assert.assertEquals("", "FAIL : null", actual);
 		
 	}
@@ -97,6 +106,7 @@ public class ChecksumAnalyserTest extends Mockito {
 	@Test(expected = InspectionException.class)
 	public void testNonexistentFileInstance() {
 		
+		SonarHelper.noStatic(this);
 		new ChecksumAnalyser(NONEEXISTENT_TEST_FILE);
 	}
 	
@@ -110,6 +120,7 @@ public class ChecksumAnalyserTest extends Mockito {
 	@Test(expected = InspectionException.class)
 	public void testNullInstance() {
 		
+		SonarHelper.noStatic(this);
 		new ChecksumAnalyser(null);
 	}
 	
@@ -117,11 +128,12 @@ public class ChecksumAnalyserTest extends Mockito {
 	public void testResult()
 		throws IllegalAccessException, IllegalArgumentException, InvocationTargetException {
 		
-		final ChecksumAnalyser analyser = new ChecksumAnalyser(TEST_FILE);
-		final Checksum checksum = analyser.analyze();
-		final Method[] declaredMethods = checksum.getClass().getDeclaredMethods();
-		for (final Method method : declaredMethods) {
-			if (method.getName().startsWith("get")) { 
+		SonarHelper.noStatic(this);
+		ChecksumAnalyser analyser = new ChecksumAnalyser(TEST_FILE);
+		Checksum checksum = analyser.analyze();
+		Method[] declaredMethods = checksum.getClass().getDeclaredMethods();
+		for (Method method : declaredMethods) {
+			if (method.getName().startsWith("get")) {
 				Assert.assertNotNull("null 이 아닌지 검사", method.invoke(checksum));
 			}
 		}

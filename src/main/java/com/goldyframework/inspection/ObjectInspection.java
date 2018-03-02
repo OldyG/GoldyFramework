@@ -9,9 +9,13 @@
  */
 package com.goldyframework.inspection;
 
+import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 import com.goldyframework.inspection.exception.InspectionException;
+import com.goldyframework.utils.ReflectionGtils;
 import com.goldyframework.utils.json.JsonGtils;
 
 /**
@@ -19,7 +23,7 @@ import com.goldyframework.utils.json.JsonGtils;
  *
  * @author 2017. 6. 14. 오후 9:10:40 jeong
  */
-public final class ObjectInspection {
+public class ObjectInspection {
 	
 	/**
 	 * 다음 객체가 null인지 확인합니다.
@@ -30,14 +34,14 @@ public final class ObjectInspection {
 	 * @throws ValidateException
 	 *             null일 경우 발생합니다.
 	 */
-	public static void checkNull(final Object obj) {
+	public static void checkNull(Object obj) {
 		
 		if (obj == null) {
 			throw new InspectionException("변수에 Null이 할당되었습니다.");
 		}
 	}
 	
-	public static <T> boolean equalsForFields(final T thisObj, final T targetObj) {
+	public static <T> boolean equalsForFields(T thisObj, T targetObj) {
 		
 		if ((thisObj == null) || (targetObj == null)) {
 			return false;
@@ -46,22 +50,31 @@ public final class ObjectInspection {
 		if (thisObj.getClass().equals(targetObj.getClass()) == false) {
 			return false;
 		}
-		final String json1 = JsonGtils.toGson(thisObj);
-		final String json2 = JsonGtils.toGson(targetObj);
+		String json1 = JsonGtils.toGson(thisObj);
+		String json2 = JsonGtils.toGson(targetObj);
 		
 		return json1.equals(json2);
 	}
 	
-	/**
-	 * @author 2017. 8. 19. 오후 4:32:21 jeong
-	 * @param obj
-	 * @return
-	 */
-	public static int hashCodeForFields(final Object obj) {
+	public static int hashCodeForFields(Object obj) {
 		
-		final String gson = JsonGtils.toGson(obj);
+		String gson = JsonGtils.toGson(obj);
 		
 		return Objects.hash(gson);
+	}
+	
+	@Deprecated
+	public static int hashCodeForFields2(Object obj) {
+		
+		List<Field> declaredFields = ReflectionGtils.getDeclaredFieldWithInherit(obj);
+		
+		List<Object> fieldValues = new ArrayList<>();
+		for (Field field : declaredFields) {
+			Object fieldValue = ReflectionGtils.getFieldValue(obj, field);
+			fieldValues.add(fieldValue);
+		}
+		
+		return Objects.hash(CollectionInspection.toArray(fieldValues));
 	}
 	
 	/**
@@ -78,7 +91,7 @@ public final class ObjectInspection {
 	 * @throws ValidateException
 	 *             원시타입이거나 캐스팅에 실패한 경우 발생합니다.
 	 */
-	public static <T> T tryCast(final Object obj, final Class<T> validClass) {
+	public static <T> T tryCast(Object obj, Class<T> validClass) {
 		
 		ObjectInspection.checkNull(obj);
 		ObjectInspection.checkNull(validClass);

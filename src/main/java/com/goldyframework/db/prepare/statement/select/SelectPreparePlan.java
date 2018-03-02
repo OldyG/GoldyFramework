@@ -4,7 +4,7 @@
  * Author : jeong
  * Summary :
  * Copyright (C) 2018 Formal Works Inc. All rights reserved.
- * 이 문서의 모든 저작권 및 지적 재산권은 (주)포멀웍스에게 있습니다.
+ * 이 문서의 모든 저작권 및 지적 재산권은 Goldy Project에게 있습니다.
  * 이 문서의 어떠한 부분도 허가 없이 복제 또는 수정 하거나, 전송할 수 없습니다.
  */
 package com.goldyframework.db.prepare.statement.select;
@@ -39,7 +39,7 @@ public class SelectPreparePlan implements PreparePlan<SelectPrepare> {
 	 *
 	 * @author 2017. 7. 8. 오후 11:37:50 jeong
 	 */
-	public SelectPreparePlan(final String tableName) {
+	public SelectPreparePlan(String tableName) {
 		
 		super();
 		this.tableName = tableName;
@@ -57,34 +57,33 @@ public class SelectPreparePlan implements PreparePlan<SelectPrepare> {
 		return new SelectPrepare(this.tableName, this.columns, this.where, this.orderBy, this.limit);
 	}
 	
-	public SelectPreparePlan column(final String columnName) {
+	public SelectPreparePlan column(String columnName) {
 		
 		this.columns.add(columnName);
 		return this;
 	}
 	
-	public SelectPreparePlan limit(final int count) {
+	public SelectPreparePlan limit(int count) {
 		
 		this.limit = new LimitGuide(count);
 		return this;
 	}
 	
-	public SelectPreparePlan limit(final int startIndex, final int count) {
+	public SelectPreparePlan limit(int startIndex, int count) {
 		
 		this.limit = new LimitGuide(startIndex, count);
 		return this;
 	}
 	
-	public SelectPreparePlan orderby(final String columnName, final OrderType orderType) {
+	public SelectPreparePlan orderby(String columnName, OrderType orderType) {
 		
 		this.orderBy.put(columnName, orderType);
 		return this;
 	}
 	
-	public SelectPreparePlan where(final String columnName, final Comparison comparison, final Object value) {
+	public SelectPreparePlan where(String columnName, Comparison comparison, Object value) {
 		
 		this.where.append(columnName, comparison, value);
 		return this;
 	}
-	
 }

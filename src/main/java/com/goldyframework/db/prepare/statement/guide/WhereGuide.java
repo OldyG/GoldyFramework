@@ -4,13 +4,15 @@
  * Author : jeong
  * Summary :
  * Copyright (C) 2018 Formal Works Inc. All rights reserved.
- * 이 문서의 모든 저작권 및 지적 재산권은 (주)포멀웍스에게 있습니다.
+ * 이 문서의 모든 저작권 및 지적 재산권은 Goldy Project에게 있습니다.
  * 이 문서의 어떠한 부분도 허가 없이 복제 또는 수정 하거나, 전송할 수 없습니다.
  */
 package com.goldyframework.db.prepare.statement.guide;
 
+import java.sql.Timestamp;
 import java.text.MessageFormat;
 import java.util.Collection;
+import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -42,7 +44,7 @@ public class WhereGuide implements Guide {
 		 * @param value
 		 */
 		@VisibleForTesting
-		ComparisonValue(final Comparison comparison, final Object value) {
+		ComparisonValue(Comparison comparison, Object value) {
 			
 			this.comparison = NullGtils.throwIfNull(comparison);
 			this.value = NullGtils.throwIfNull(value);
@@ -86,7 +88,7 @@ public class WhereGuide implements Guide {
 	 * @param tableName
 	 *            테이블 이름
 	 */
-	public WhereGuide(final String tableName) {
+	public WhereGuide(String tableName) {
 		
 		super();
 		ObjectInspection.checkNull(tableName);
@@ -94,7 +96,7 @@ public class WhereGuide implements Guide {
 		
 	}
 	
-	public void append(final String columnName, final Comparison comparison, final Object value) {
+	public void append(String columnName, Comparison comparison, Object value) {
 		
 		ObjectInspection.checkNull(columnName);
 		ObjectInspection.checkNull(comparison);
@@ -102,6 +104,9 @@ public class WhereGuide implements Guide {
 		if (value != null) {
 			if (value.getClass().isEnum()) {
 				this.whereMap.put(columnName, new ComparisonValue(comparison, value.toString()));
+			} else if (value instanceof Date) {
+				Date utilDate = (Date) value;
+				this.whereMap.put(columnName, new ComparisonValue(comparison, new Timestamp(utilDate.getTime())));
 			} else {
 				this.whereMap.put(columnName, new ComparisonValue(comparison, value));
 			}
@@ -112,7 +117,7 @@ public class WhereGuide implements Guide {
 	@VisibleForTesting
 	List<String> createTableColumnList() {
 		
-		final List<String> appended = this.eachAppendComparisonValue();
+		List<String> appended = this.eachAppendComparisonValue();
 		
 		return StringCollectionGtils.eachPrepend(FieldWrapper.wrap(this.tableName) + '.', appended);
 	}
@@ -120,13 +125,13 @@ public class WhereGuide implements Guide {
 	@VisibleForTesting
 	List<String> eachAppendComparisonValue() {
 		
-		final Map<String, ComparisonValue> copiedWhereMap = this.getCopiedWhereMap();
+		Map<String, ComparisonValue> copiedWhereMap = this.getCopiedWhereMap();
 		
 		return copiedWhereMap.keySet()
 			.stream()
 			.map(key -> {
-				final ComparisonValue comparisonValue = copiedWhereMap.get(key);
-				final String comparison = comparisonValue.getComparison().getComparison();
+				ComparisonValue comparisonValue = copiedWhereMap.get(key);
+				String comparison = comparisonValue.getComparison().getComparison();
 				
 				return MessageFormat.format("{0} {1} {2}", FieldWrapper.wrap(key), comparison, '?');
 			})
@@ -173,9 +178,9 @@ public class WhereGuide implements Guide {
 	@Override
 	public String toSql() {
 		
-		final List<String> appended = this.eachAppendComparisonValue();
+		List<String> appended = this.eachAppendComparisonValue();
 		
-		final List<String> tableColumnList = StringCollectionGtils.eachPrepend(FieldWrapper.wrap(this.tableName) + '.',
+		List<String> tableColumnList = StringCollectionGtils.eachPrepend(FieldWrapper.wrap(this.tableName) + '.',
 			appended);
 		
 		return StringCollectionGtils.join(tableColumnList, " AND ");

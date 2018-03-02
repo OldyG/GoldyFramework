@@ -31,14 +31,14 @@ class ReservationGarbageBinderModel {
 	private static final Logger LOGGER = LoggerFactory.getLogger(ReservationGarbageBinderModel.class);
 	
 	@SuppressWarnings({ "unchecked", "squid:S2658", "squid:S1309" })
-	private static Class<AbstractReservationGarbage> castingClass(final String target) {
+	private static Class<AbstractReservationGarbage> castingClass(String target) {
 		
 		ObjectInspection.checkNull(target);
 		try {
-			final Class<?> reservation = Class.forName(target);
+			Class<?> reservation = Class.forName(target);
 			return (Class<AbstractReservationGarbage>) reservation;
-		} catch (final ClassNotFoundException | LinkageError e) {
-			LOGGER.error(MessageFormat.format("{0}캐스팅에 실패하였습니다.", e)); 
+		} catch (ClassNotFoundException | LinkageError e) {
+			LOGGER.error(MessageFormat.format("{0}캐스팅에 실패하였습니다.", e));
 			return null;
 		}
 	}
@@ -99,7 +99,7 @@ class ReservationGarbageBinderModel {
 	 * @param set
 	 *            초기화 값
 	 */
-	public void setSet(final Object set) {
+	public void setSet(Object set) {
 		
 		this.set = NullGtils.throwIfNull(set);
 	}
@@ -113,7 +113,7 @@ class ReservationGarbageBinderModel {
 	 * @param target
 	 *            초기화 값
 	 */
-	public void setTarget(final String target) {
+	public void setTarget(String target) {
 		
 		ObjectInspection.checkNull(target);
 		this.target = ReservationGarbageBinderModel.castingClass(target);

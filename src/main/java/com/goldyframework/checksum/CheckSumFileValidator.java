@@ -24,7 +24,7 @@ public class CheckSumFileValidator implements Inspection<File> {
 	 *            검사 대상 파일
 	 */
 	@Override
-	public void check(final File target) {
+	public void check(File target) {
 		
 		ObjectInspection.checkNull(target);
 		FileInspection.checkExistsFile(target);

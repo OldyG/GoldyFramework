@@ -38,16 +38,16 @@ class MillisecondNaming implements FileNaming {
 	 * @author 2017. 6. 18. 오후 1:36:08 jeong
 	 */
 	@Override
-	public File generageSavePath(final File directory, final String baseName, final String extension) {
+	public File generageSavePath(File directory, String baseName, String extension) {
 		
 		ObjectInspection.checkNull(directory);
 		ObjectInspection.checkNull(baseName);
 		ObjectInspection.checkNull(extension);
 		while (true) {
-			final String millisecond = Long.toString(new Date().getTime());
+			String millisecond = Long.toString(new Date().getTime());
 			
-			final String fileName = MessageFormat.format("{0}-{1}.{2}", baseName, millisecond, extension);
-			final File tempFile = new File(directory, fileName);
+			String fileName = MessageFormat.format("{0}-{1}.{2}", baseName, millisecond, extension);
+			File tempFile = new File(directory, fileName);
 			
 			if (tempFile.exists() == false) {
 				return tempFile;

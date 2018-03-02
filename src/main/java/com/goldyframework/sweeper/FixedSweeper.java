@@ -56,11 +56,11 @@ public class FixedSweeper implements ISweeper {
 	@Override
 	public void run() {
 		
-		for (final IGarbage garbage : FIXED_GARBAGE_LIST) {
+		for (IGarbage garbage : FIXED_GARBAGE_LIST) {
 			try {
 				garbage.clean();
-			} catch (final SweeperException e) {
-				LOGGER.error(garbage.getClass().getName() + "을 청소하는 중 알수없는 문제가 발생하였습니다. 해당 클래스를 점검하시길바랍니다.", e); 
+			} catch (SweeperException e) {
+				LOGGER.error(garbage.getClass().getName() + "을 청소하는 중 알수없는 문제가 발생하였습니다. 해당 클래스를 점검하시길바랍니다.", e);
 				continue;
 			}
 		}

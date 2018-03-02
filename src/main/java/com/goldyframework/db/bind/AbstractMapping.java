@@ -4,7 +4,7 @@
  * Author : jeong
  * Summary :
  * Copyright (C) 2018 Formal Works Inc. All rights reserved.
- * 이 문서의 모든 저작권 및 지적 재산권은 (주)포멀웍스에게 있습니다.
+ * 이 문서의 모든 저작권 및 지적 재산권은 Goldy Project에게 있습니다.
  * 이 문서의 어떠한 부분도 허가 없이 복제 또는 수정 하거나, 전송할 수 없습니다.
  */
 package com.goldyframework.db.bind;
@@ -21,16 +21,9 @@ import com.goldyframework.inspection.ObjectInspection;
 import com.goldyframework.utils.NullGtils;
 import com.goldyframework.utils.StringCollectionGtils;
 
-/**
- * @author 2017. 6. 30. 오후 8:57:06 jeong
- * @param <V>
- */
 public abstract class AbstractMapping<V> extends LinkedHashMap<String, ResultSetBinder<Object>> {
 	
-	/**
-	 * Serializable UID
-	 */
-	private static final long serialVersionUID = -2715338087992385635L;
+	private static final long serialVersionUID = -1646446201522115105L;
 	
 	private final String schemaName;
 	
@@ -43,7 +36,7 @@ public abstract class AbstractMapping<V> extends LinkedHashMap<String, ResultSet
 	 * @param schemaName
 	 * @param tableName
 	 */
-	public AbstractMapping(final String schemaName, final String tableName) {
+	public AbstractMapping(String schemaName, String tableName) {
 		
 		super();
 		this.schemaName = NullGtils.throwIfNull(schemaName);
@@ -53,7 +46,7 @@ public abstract class AbstractMapping<V> extends LinkedHashMap<String, ResultSet
 	}
 	
 	@SuppressWarnings("unchecked")
-	public <T> T bind(final ResultSet rs, final String column) throws SQLException {
+	public <T> T bind(ResultSet rs, String column) throws SQLException {
 		
 		ObjectInspection.checkNull(rs);
 		ObjectInspection.checkNull(column);
@@ -68,11 +61,11 @@ public abstract class AbstractMapping<V> extends LinkedHashMap<String, ResultSet
 	 *            가져오는 키
 	 * @return 결과 값
 	 */
-	public String getValidFullColumn(final String key) {
+	public String getValidFullColumn(String key) {
 		
 		ObjectInspection.checkNull(key);
 		if (this.containsKey(key) == false) {
-			throw new IllegalArgumentException(key + "가 존재하지 않습니다."); 
+			throw new IllegalArgumentException(key + "가 존재하지 않습니다.");
 		}
 		
 		return new StringBuilder()
@@ -89,9 +82,9 @@ public abstract class AbstractMapping<V> extends LinkedHashMap<String, ResultSet
 	
 	public String joinFullColumn() {
 		
-		final Set<String> keys = super.keySet();
-		final List<String> eachPrepend = StringCollectionGtils.eachPrepend(this.tableName + '.', keys);
-		return StringCollectionGtils.join(eachPrepend, ", "); 
+		Set<String> keys = super.keySet();
+		List<String> eachPrepend = StringCollectionGtils.eachPrepend(this.tableName + '.', keys);
+		return StringCollectionGtils.join(eachPrepend, ", ");
 		
 	}
 	
@@ -100,7 +93,7 @@ public abstract class AbstractMapping<V> extends LinkedHashMap<String, ResultSet
 	 * @param column
 	 * @param value
 	 */
-	public void put(final String column, final IBinder<?> value) {
+	public void put(String column, IBinder<?> value) {
 		
 		ObjectInspection.checkNull(column);
 		ObjectInspection.checkNull(value);

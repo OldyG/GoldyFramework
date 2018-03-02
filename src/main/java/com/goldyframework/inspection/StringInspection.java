@@ -4,7 +4,7 @@
  * Author : jeong
  * Summary :
  * Copyright (C) 2018 Formal Works Inc. All rights reserved.
- * 이 문서의 모든 저작권 및 지적 재산권은 (주)포멀웍스에게 있습니다.
+ * 이 문서의 모든 저작권 및 지적 재산권은 Goldy Project에게 있습니다.
  * 이 문서의 어떠한 부분도 허가 없이 복제 또는 수정 하거나, 전송할 수 없습니다.
  */
 package com.goldyframework.inspection;
@@ -23,7 +23,7 @@ import com.goldyframework.inspection.exception.InspectionException;
  *
  * @author 2017. 6. 14. 오후 9:10:59 jeong
  */
-public final class StringInspection {
+public class StringInspection {
 	
 	/**
 	 * slf4j Logger
@@ -33,42 +33,60 @@ public final class StringInspection {
 	/**
 	 * 숫자 포함 Regex
 	 */
-	private static final String NUMBER_REGEX = ".*[0-9].*"; 
+	private static final String NUMBER_REGEX = ".*[0-9].*";
 	
 	/**
 	 * 소문자 포함 Regex
 	 */
-	private static final String LOWER_CASE_REGEX = ".*[a-z].*"; 
+	private static final String LOWER_CASE_REGEX = ".*[a-z].*";
 	
 	/**
 	 * 대문자 포함 Regex
 	 */
-	private static final String UPPER_CASE_REGEX = ".*[A-Z].*"; 
+	private static final String UPPER_CASE_REGEX = ".*[A-Z].*";
 	
 	/**
 	 * 한글 포함 Regex
 	 */
-	private static final String HANGLE_REGEX = ".*[가-힣].*"; 
+	private static final String HANGLE_REGEX = ".*[가-힣].*";
 	
 	/**
 	 * 한글 포함 Regex2
 	 */
-	private static final String HANGLE_REGEX2 = ".*[ㄱ-ㅎ].*"; 
+	private static final String HANGLE_REGEX2 = ".*[ㄱ-ㅎ].*";
 	
 	/**
 	 * 영문 포함 Regex
 	 */
-	private static final String ENGLISH_REGEX = ".*[A-Za-z].*"; 
+	private static final String ENGLISH_REGEX = ".*[A-Za-z].*";
 	
 	/**
 	 * Multi 공백 포함 Regex
 	 */
-	private static final String MULTI_WHITE_SPACE_REGEX = ".*\\s{2}.*"; 
+	private static final String MULTI_WHITE_SPACE_REGEX = ".*\\s{2}.*";
 	
 	/**
 	 * 특수문자 포함 Regex(한글, 영문, 숫자, 공백을 제외한 모든 문자)
 	 */
-	private static final String SPCIAL_CHARACTER_REGEX = ".*[^0-9A-Za-z가-힇\\s].*"; 
+	private static final String SPCIAL_CHARACTER_REGEX = ".*[^0-9A-Za-z가-힇\\s].*";
+	
+	/**
+	 * 해당 문자열이 Null 또는 빈문자열인지 검사합니다.
+	 *
+	 * @author 2017. 6. 18. 오후 2:53:56 jeong
+	 * @param target
+	 *            검사대상 문자열
+	 * @throws ValidateException
+	 *             검사대상 문자열이 null 이거나 빈문자열인 경우 발생합니다.
+	 */
+	public static void checkBlank(CharSequence target) {
+		
+		ObjectInspection.checkNull(target);
+		
+		if (isBlank(target)) {
+			throw new InspectionException("빈값이 정의되어있습니다.");
+		}
+	}
 	
 	/**
 	 * 문자열에 영어가 포함되었는지 확인합니다.
@@ -79,12 +97,12 @@ public final class StringInspection {
 	 * @throws ValidateException
 	 *             영어가 포함되어있는 경우 발생합니다.
 	 */
-	public static void checkContainEnglish(final String target) {
+	public static void checkContainEnglish(String target) {
 		
 		ObjectInspection.checkNull(target);
 		
 		if (Pattern.matches(ENGLISH_REGEX, target) == true) {
-			throw new InspectionException("영문이 포함될 수 없습니다."); 
+			throw new InspectionException("영문이 포함될 수 없습니다.");
 		}
 	}
 	
@@ -98,12 +116,12 @@ public final class StringInspection {
 	 * @throws ValidateException
 	 *             한글이 포함되어있는 경우 발생합니다.
 	 */
-	public static void checkContainHangle(final String target) {
+	public static void checkContainHangle(String target) {
 		
 		ObjectInspection.checkNull(target);
 		
 		if (Pattern.matches(HANGLE_REGEX, target) || Pattern.matches(HANGLE_REGEX2, target)) {
-			throw new InspectionException("한글이 포함될 수 없습니다."); 
+			throw new InspectionException("한글이 포함될 수 없습니다.");
 		}
 	}
 	
@@ -117,12 +135,12 @@ public final class StringInspection {
 	 * @throws ValidateException
 	 *             숫자가 포함되어있는 경우 발생합니다.
 	 */
-	public static void checkContainNumber(final String target) {
+	public static void checkContainNumber(String target) {
 		
 		ObjectInspection.checkNull(target);
 		
 		if (Pattern.matches(NUMBER_REGEX, target) == true) {
-			throw new InspectionException("숫자가 포함될 수 없습니다."); 
+			throw new InspectionException("숫자가 포함될 수 없습니다.");
 		}
 	}
 	
@@ -137,12 +155,12 @@ public final class StringInspection {
 	 * @throws ValidateException
 	 *             특수문자가 포함되어있는 경우 발생합니다.
 	 */
-	public static void checkContainSpecialCharacter(final String target) {
+	public static void checkContainSpecialCharacter(String target) {
 		
 		ObjectInspection.checkNull(target);
 		
 		if (Pattern.matches(SPCIAL_CHARACTER_REGEX, target)) {
-			throw new InspectionException("특수문자는 포함될 수 없습니다."); 
+			throw new InspectionException("특수문자는 포함될 수 없습니다.");
 		}
 	}
 	
@@ -156,12 +174,12 @@ public final class StringInspection {
 	 * @throws ValidateException
 	 *             대문자가 포함되어있는 경우 발생합니다.
 	 */
-	public static void checkContainUpperString(final String target) {
+	public static void checkContainUpperString(String target) {
 		
 		ObjectInspection.checkNull(target);
 		
 		if (Pattern.matches(UPPER_CASE_REGEX, target)) {
-			throw new InspectionException("대문자가 포함될 수 없습니다."); 
+			throw new InspectionException("대문자가 포함될 수 없습니다.");
 		}
 	}
 	
@@ -174,12 +192,12 @@ public final class StringInspection {
 	 * @throws ValidateException
 	 *             공백이 포함되어있는 경우 발생합니다.
 	 */
-	public static void checkContainWhiteSpace(final String target) {
+	public static void checkContainWhiteSpace(String target) {
 		
 		ObjectInspection.checkNull(target);
 		
-		if (Pattern.matches(".*\\s.*", target)) { 
-			throw new InspectionException("공백을 포함될 수 없습니다."); 
+		if (Pattern.matches(".*\\s.*", target)) {
+			throw new InspectionException("공백을 포함될 수 없습니다.");
 		}
 		
 	}
@@ -193,12 +211,12 @@ public final class StringInspection {
 	 * @throws ValidateException
 	 *             세미콜론이 포함되어있는 경우 발생합니다.
 	 */
-	public static void checkContinasSemiclone(final String target) {
+	public static void checkContinasSemiclone(String target) {
 		
 		ObjectInspection.checkNull(target);
 		
-		if (target.contains(";")) { 
-			throw new InspectionException("세미클론이 포함될 수 없습니다."); 
+		if (target.contains(";")) {
+			throw new InspectionException("세미클론이 포함될 수 없습니다.");
 		}
 	}
 	
@@ -215,26 +233,26 @@ public final class StringInspection {
 	 * @throws ValidateException
 	 *             min보다 작거나 max보다 큰경우 발생합니다.
 	 */
-	public static void checkLimitLength(final String target, final int min, final int max) {
+	public static void checkLimitLength(String target, int min, int max) {
 		
 		ObjectInspection.checkNull(target);
 		
 		if ((min < 0) || (max <= 0)) {
-			LOGGER.error("min 또는 max의 수는 0 이하로 입력 할 수 없습니다."); 
+			LOGGER.error("min 또는 max의 수는 0 이하로 입력 할 수 없습니다.");
 		}
 		
 		if (min > max) {
-			LOGGER.error("min 값이 max보다 큰 수로 입력될 수 없습니다."); 
+			LOGGER.error("min 값이 max보다 큰 수로 입력될 수 없습니다.");
 		}
 		
-		final int length = target.length();
+		int length = target.length();
 		
 		if (length < min) {
-			throw new InspectionException(min + "글자 이상 작성해 주세요 현재길이:" + length); 
+			throw new InspectionException(min + "글자 이상 작성해 주세요 현재길이:" + length);
 		}
 		
 		if (length > max) {
-			throw new InspectionException(max + "글자 이하로 작성해 주세요 현재길이: " + length); 
+			throw new InspectionException(max + "글자 이하로 작성해 주세요 현재길이: " + length);
 		}
 	}
 	
@@ -249,14 +267,14 @@ public final class StringInspection {
 	 * @throws ValidateException
 	 *             2회 이상 사용된 경우 발생합니다.
 	 */
-	public static void checkMoreThanOneCharacter(final String target, final String sub) {
+	public static void checkMoreThanOneCharacter(String target, String sub) {
 		
 		checkBlank(target);
 		checkBlank(sub);
 		
-		final int count = StringUtils.countOccurrencesOf(target, sub);
+		int count = StringUtils.countOccurrencesOf(target, sub);
 		if (count > 1) {
-			throw new InspectionException(sub + "는 2회 이상 사용될수 없습니다."); 
+			throw new InspectionException(sub + "는 2회 이상 사용될수 없습니다.");
 		}
 	}
 	
@@ -270,28 +288,10 @@ public final class StringInspection {
 	 * @throws ValidateException
 	 *             2회연속된 공백이 포함되어있는 경우 발생합니다.
 	 */
-	public static void checkMultiWhiteSpace(final String target) {
+	public static void checkMultiWhiteSpace(String target) {
 		
 		if (Pattern.matches(MULTI_WHITE_SPACE_REGEX, target)) {
-			throw new InspectionException("공백이 2회 연속 들어갈 수 없습니다."); 
-		}
-	}
-	
-	/**
-	 * 해당 문자열이 Null 또는 빈문자열인지 검사합니다.
-	 *
-	 * @author 2017. 6. 18. 오후 2:53:56 jeong
-	 * @param target
-	 *            검사대상 문자열
-	 * @throws ValidateException
-	 *             검사대상 문자열이 null 이거나 빈문자열인 경우 발생합니다.
-	 */
-	public static void checkBlank(final CharSequence target) {
-		
-		ObjectInspection.checkNull(target);
-		
-		if (isBlank(target)) {
-			throw new InspectionException("빈값이 정의되어있습니다."); 
+			throw new InspectionException("공백이 2회 연속 들어갈 수 없습니다.");
 		}
 	}
 	
@@ -308,23 +308,23 @@ public final class StringInspection {
 	 * @throws ValidateException
 	 *             front 글자 뒤에 illegalBegind가 존재하면 발생합니다.
 	 */
-	public static void checkOrder(final String target, final String baseStr, final String illegalBehind) {
+	public static void checkOrder(String target, String baseStr, String illegalBehind) {
 		
 		checkBlank(target);
 		checkBlank(baseStr);
 		checkBlank(illegalBehind);
 		
-		final int frontIndex = target.indexOf(baseStr);
+		int frontIndex = target.indexOf(baseStr);
 		
 		// front가 존재하지 않으면 검사를 진행하지 않는다.
 		if (frontIndex == -1) {
 			return;
 		}
 		
-		final int behindIndex = target.substring(frontIndex + baseStr.length()).indexOf(illegalBehind);
+		int behindIndex = target.substring(frontIndex + baseStr.length()).indexOf(illegalBehind);
 		if (behindIndex != -1) {
 			throw new InspectionException(
-				MessageFormat.format("\"{0}\"뒤엔 \"{1}\"가 포함될 수 없습니다.", baseStr, illegalBehind)); 
+				MessageFormat.format("\"{0}\"뒤엔 \"{1}\"가 포함될 수 없습니다.", baseStr, illegalBehind));
 		}
 	}
 	
@@ -338,15 +338,15 @@ public final class StringInspection {
 	 * @throws ValidateException
 	 *             좌우 공백이 존재하는 경우 발생합니다.
 	 */
-	public static void checkPossibleTrim(final String target) {
+	public static void checkPossibleTrim(String target) {
 		
 		if (target.equals(target.trim()) == false) {
-			throw new InspectionException("좌우에 공백이 포함될 수 없습니다"); 
+			throw new InspectionException("좌우에 공백이 포함될 수 없습니다");
 		}
 		
 	}
 	
-	public static boolean isBlank(final CharSequence target) {
+	public static boolean isBlank(CharSequence target) {
 		
 		return org.apache.commons.lang3.StringUtils.isBlank(target);
 	}
@@ -361,10 +361,10 @@ public final class StringInspection {
 	 * @throws ValidateException
 	 *             한글이 포함되어있지 않은 경우 발생합니다.
 	 */
-	public static void needHangle(final String target) {
+	public static void needHangle(String target) {
 		
 		if (Pattern.matches(HANGLE_REGEX, target) == false) {
-			throw new InspectionException("한글이 1글자 이상 포함되어야 합니다."); 
+			throw new InspectionException("한글이 1글자 이상 포함되어야 합니다.");
 		}
 	}
 	
@@ -378,10 +378,10 @@ public final class StringInspection {
 	 * @throws ValidateException
 	 *             소문자가 되어있지 않은 경우 발생합니다.
 	 */
-	public static void needLowerString(final String target) {
+	public static void needLowerString(String target) {
 		
 		if (Pattern.matches(LOWER_CASE_REGEX, target) == false) {
-			throw new InspectionException("소문자가 1글자 이상 포함되어야 합니다."); 
+			throw new InspectionException("소문자가 1글자 이상 포함되어야 합니다.");
 		}
 	}
 	
@@ -395,10 +395,10 @@ public final class StringInspection {
 	 * @throws ValidateException
 	 *             숫자가 포함되어있지 않은 경우 발생합니다.
 	 */
-	public static void needNumber(final String target) {
+	public static void needNumber(String target) {
 		
 		if (Pattern.matches(NUMBER_REGEX, target) == false) {
-			throw new InspectionException("숫자가 1글자 이상 포함되어야 합니다."); 
+			throw new InspectionException("숫자가 1글자 이상 포함되어야 합니다.");
 		}
 	}
 	
@@ -413,21 +413,21 @@ public final class StringInspection {
 	 * @throws ValidateException
 	 *             baseStr 뒤에 숫자가 포함되어있지 않은 경우 발생합니다.
 	 */
-	public static void needNumberAtBehindCharacter(final String target, final String baseStr) {
+	public static void needNumberAtBehindCharacter(String target, String baseStr) {
 		
-		final String[] split = target.split(Pattern.quote(baseStr));
+		String[] split = target.split(Pattern.quote(baseStr));
 		
-		for (final String splitString : split) {
-			final char[] charArray = splitString.toCharArray();
+		for (String splitString : split) {
+			char[] charArray = splitString.toCharArray();
 			
 			if (charArray.length == 0) {
 				continue;
 			}
 			
-			final char firstChar = charArray[0];
+			char firstChar = charArray[0];
 			
 			if (IntegerInspection.isNumberCharacter(firstChar) == false) {
-				throw new InspectionException(baseStr + "뒤에는 숫자가 포함되어야 합니다."); 
+				throw new InspectionException(baseStr + "뒤에는 숫자가 포함되어야 합니다.");
 			}
 		}
 	}
@@ -443,15 +443,15 @@ public final class StringInspection {
 	 * @throws ValidateException
 	 *             baseStr 뒤에 숫자가 포함되어있지 않은 경우 발생합니다.
 	 */
-	public static void needNumberAtFrontCharacter(final String target, final String baseStr) {
+	public static void needNumberAtFrontCharacter(String target, String baseStr) {
 		
-		final String[] split = target.split(Pattern.quote(baseStr));
+		String[] split = target.split(Pattern.quote(baseStr));
 		
-		for (final String splitString : split) {
-			final char[] charArray = splitString.toCharArray();
-			final char lastChar = charArray[charArray.length - 1];
+		for (String splitString : split) {
+			char[] charArray = splitString.toCharArray();
+			char lastChar = charArray[charArray.length - 1];
 			if (IntegerInspection.isNumberCharacter(lastChar) == false) {
-				throw new InspectionException(baseStr + "앞에는 숫자가 포함되어야 합니다."); 
+				throw new InspectionException(baseStr + "앞에는 숫자가 포함되어야 합니다.");
 			}
 		}
 	}
@@ -469,23 +469,23 @@ public final class StringInspection {
 	 * @throws ValidateException
 	 *             front 글자 뒤에 needBehind가 존재하지 않으면 발생합니다.
 	 */
-	public static void needOrder(final String target, final String baseStr, final String needBehind) {
+	public static void needOrder(String target, String baseStr, String needBehind) {
 		
 		checkBlank(target);
 		checkBlank(baseStr);
 		checkBlank(needBehind);
 		
-		final int frontIndex = target.indexOf(baseStr);
+		int frontIndex = target.indexOf(baseStr);
 		
 		// front가 존재하지 않으면 검사를 진행하지 않는다.
 		if (frontIndex == -1) {
 			return;
 		}
 		
-		final int behindIndex = target.substring(frontIndex + baseStr.length()).indexOf(needBehind);
+		int behindIndex = target.substring(frontIndex + baseStr.length()).indexOf(needBehind);
 		if (behindIndex == -1) {
 			throw new InspectionException(MessageFormat
-				.format("\"{0}\"뒤엔 반드시 \"{1}\"가 존재해야합니다.",  
+				.format("\"{0}\"뒤엔 반드시 \"{1}\"가 존재해야합니다.",
 					baseStr, needBehind));
 		}
 	}
@@ -501,10 +501,10 @@ public final class StringInspection {
 	 * @throws ValidateException
 	 *             특수문자가 포함되어있지 않을 경우 예외가 발생합니다.
 	 */
-	public static void needSpecialCharacter(final String target) {
+	public static void needSpecialCharacter(String target) {
 		
 		if (Pattern.matches(SPCIAL_CHARACTER_REGEX, target) == false) {
-			throw new InspectionException("특수문자가 1글자 이상 포함되어야 합니다."); 
+			throw new InspectionException("특수문자가 1글자 이상 포함되어야 합니다.");
 		}
 	}
 	
@@ -518,10 +518,10 @@ public final class StringInspection {
 	 * @throws ValidateException
 	 *             대문자가 포함되어있지 않을 경우 예외가 발생합니다.
 	 */
-	public static void needUpperString(final String target) {
+	public static void needUpperString(String target) {
 		
 		if (Pattern.matches(UPPER_CASE_REGEX, target) == false) {
-			throw new InspectionException("대문자가 1글자 이상 포함되어야 합니다."); 
+			throw new InspectionException("대문자가 1글자 이상 포함되어야 합니다.");
 		}
 	}
 	
@@ -533,6 +533,6 @@ public final class StringInspection {
 	 */
 	private StringInspection() {
 		
-		throw new IllegalStateException("Utility class"); 
+		throw new IllegalStateException("Utility class");
 	}
 }

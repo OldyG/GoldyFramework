@@ -27,7 +27,7 @@ public enum EmailFormDesignType {
 	 * @author jeonghyun.kum
 	 * @since 2016. 4. 26. 오전 10:14:56
 	 */
-	INFOMATION("information.html"), 
+	INFOMATION("information.html"),
 	/**
 	 * 경고 이메일 디자인 타입 (미구현)
 	 *
@@ -35,17 +35,17 @@ public enum EmailFormDesignType {
 	 * @since 2016. 4. 26. 오전 10:14:41
 	 */
 	@Deprecated()
-	WARNNING("warnning.html"); 
+	WARNNING("warnning.html");
 	
 	/**
 	 * 기본 위치
 	 */
-	private static final String BASE_LOCATION = "src/main/resources/email/"; 
+	private static final String BASE_LOCATION = "src/main/resources/email/";
 	
 	/**
 	 * 파일 이름
 	 */
-	private final File designFile;
+	private File designFile;
 	
 	/**
 	 * {@link EmailFormDesignType} 클래스의 새 인스턴스를 초기화 합니다.
@@ -55,7 +55,7 @@ public enum EmailFormDesignType {
 	 *            파일 이름
 	 * @since 2016. 4. 26. 오전 10:14:13
 	 */
-	EmailFormDesignType(final String fileName) {
+	EmailFormDesignType(String fileName) {
 		
 		this.designFile = new File(EmailFormDesignType.BASE_LOCATION + NullGtils.throwIfNull(fileName));
 	}

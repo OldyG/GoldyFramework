@@ -16,14 +16,9 @@ package com.goldyframework.db.exception;
  */
 public class NoSingleDataException extends RuntimeException {
 	
-	/**
-	 * Serializable UID
-	 *
-	 * @author jeong
-	 * @since 2017. 5. 22. 오후 9:20:10
-	 */
-	private static final long serialVersionUID = -7155344775578898405L;
 	
+	private static final long serialVersionUID = -9077261260738795417L;
+
 	/**
 	 * {@link NoSingleDataException} 클래스의 새 인스턴스를 초기화 합니다.
 	 *
@@ -44,7 +39,7 @@ public class NoSingleDataException extends RuntimeException {
 	 * @param cause
 	 *            the cause
 	 */
-	public NoSingleDataException(final String message, final Throwable cause) {
+	public NoSingleDataException(String message, Throwable cause) {
 		
 		super(message, cause);
 	}

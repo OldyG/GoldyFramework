@@ -4,7 +4,7 @@
  * Author : jeong
  * Summary :
  * Copyright (C) 2018 Formal Works Inc. All rights reserved.
- * 이 문서의 모든 저작권 및 지적 재산권은 (주)포멀웍스에게 있습니다.
+ * 이 문서의 모든 저작권 및 지적 재산권은 Goldy Project에게 있습니다.
  * 이 문서의 어떠한 부분도 허가 없이 복제 또는 수정 하거나, 전송할 수 없습니다.
  */
 package com.goldyframework.inspection;
@@ -23,7 +23,7 @@ import com.goldyframework.inspection.exception.InspectionException;
  *
  * @author 2017. 6. 14. 오후 9:08:59 jeong
  */
-public final class FileInspection {
+public class FileInspection {
 	
 	/**
 	 * 파일이 잘못된 파일인지 검사합니다.
@@ -34,7 +34,7 @@ public final class FileInspection {
 	 * @throws ValidateException
 	 *             파일이 아닌 디렉토리이거나 존재하지 않은 경우 발생합니다.
 	 */
-	public static void checkExistsDirectory(final File directory) {
+	public static void checkExistsDirectory(File directory) {
 		
 		ObjectInspection.checkNull(directory);
 		StringInspection.checkBlank(directory.getPath());
@@ -58,7 +58,7 @@ public final class FileInspection {
 	 * @throws ValidateException
 	 *             파일이 아닌 디렉토리이거나 존재하지 않은 경우 발생합니다.
 	 */
-	public static void checkExistsFile(final File file) {
+	public static void checkExistsFile(File file) {
 		
 		ObjectInspection.checkNull(file);
 		StringInspection.checkBlank(file.getPath());
@@ -73,16 +73,16 @@ public final class FileInspection {
 		}
 	}
 	
-	public static void checkExtentionIs(final File file, final List<String> validExtensions) {
+	public static void checkExtentionIs(File file, List<String> validExtensions) {
 		
 		ObjectInspection.checkNull(file);
 		ObjectInspection.checkNull(validExtensions);
-		final String extension = FilenameUtils.getExtension(file.getAbsolutePath()).toLowerCase(Locale.getDefault());
+		String extension = FilenameUtils.getExtension(file.getAbsolutePath()).toLowerCase(Locale.getDefault());
 		if (StringInspection.isBlank(extension)) {
 			throw new InspectionException("확장자가 없습니다.");
 		}
 		
-		for (final String validExtension : validExtensions) {
+		for (String validExtension : validExtensions) {
 			if (validExtension.equals(extension)) {
 				return;
 			}
@@ -90,23 +90,23 @@ public final class FileInspection {
 		throw new InspectionException(extension + "는 허용하는 확장자가 아닙니다.");
 	}
 	
-	public static void checkImageFile(final File file) {
+	public static void checkImageFile(File file) {
 		
 		checkExtentionIs(file, Arrays.asList("jpg", "jpeg", "png", "gif", "jfif", "tiff", "bmp", "svg"));
 	}
 	
-	public static void checkMsExcelFile(final File file) {
+	public static void checkMsExcelFile(File file) {
 		
 		checkExtentionIs(file, Arrays.asList("xlsx", "xls", "csv", "xlt", "ods"));
 	}
 	
-	public static void checkMsWordFile(final File file) {
+	public static void checkMsWordFile(File file) {
 		
 		checkExtentionIs(file, Arrays.asList("docx", "doc", "doctx", "xlt", "odt"));
 		
 	}
 	
-	public static void checkNullOrEmptyFile(final File file) {
+	public static void checkNullOrEmptyFile(File file) {
 		
 		checkExistsFile(file);
 		IntegerInspection.checkBelowZero((int) file.length());

@@ -147,7 +147,7 @@ public class Checksum {
 	 *            초기화 값
 	 */
 	
-	public void setMd2(final String md2) {
+	public void setMd2(String md2) {
 		
 		this.md2 = NullGtils.throwIfNull(md2);
 	}
@@ -162,7 +162,7 @@ public class Checksum {
 	 *            초기화 값
 	 */
 	
-	public void setMd5(final String md5) {
+	public void setMd5(String md5) {
 		
 		this.md5 = NullGtils.throwIfNull(md5);
 	}
@@ -177,7 +177,7 @@ public class Checksum {
 	 *            초기화 값
 	 */
 	
-	public void setSha1(final String sha1) {
+	public void setSha1(String sha1) {
 		
 		this.sha1 = NullGtils.throwIfNull(sha1);
 	}
@@ -192,7 +192,7 @@ public class Checksum {
 	 *            초기화 값
 	 */
 	
-	public void setSha256(final String sha256) {
+	public void setSha256(String sha256) {
 		
 		this.sha256 = NullGtils.throwIfNull(sha256);
 	}
@@ -207,7 +207,7 @@ public class Checksum {
 	 *            초기화 값
 	 */
 	
-	public void setSha384(final String sha384) {
+	public void setSha384(String sha384) {
 		
 		this.sha384 = NullGtils.throwIfNull(sha384);
 	}
@@ -222,7 +222,7 @@ public class Checksum {
 	 *            초기화 값
 	 */
 	
-	public void setSha512(final String sha512) {
+	public void setSha512(String sha512) {
 		
 		this.sha512 = NullGtils.throwIfNull(sha512);
 	}

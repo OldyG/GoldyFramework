@@ -4,7 +4,7 @@
  * Author : jeong
  * Summary :
  * Copyright (C) 2018 Formal Works Inc. All rights reserved.
- * 이 문서의 모든 저작권 및 지적 재산권은 (주)포멀웍스에게 있습니다.
+ * 이 문서의 모든 저작권 및 지적 재산권은 Goldy Project에게 있습니다.
  * 이 문서의 어떠한 부분도 허가 없이 복제 또는 수정 하거나, 전송할 수 없습니다.
  */
 package com.goldyframework.inspection;
@@ -20,7 +20,7 @@ import com.goldyframework.inspection.exception.InspectionException;
  *
  * @author 2017. 6. 14. 오후 9:07:37 jeong
  */
-public final class BooleanInspection {
+public class BooleanInspection {
 	
 	/**
 	 * {@link String} 형태의 {@link Boolean}타입으로 캐스팅합니다.
@@ -33,7 +33,7 @@ public final class BooleanInspection {
 	 * @throws ValidateException
 	 *             설명에 작성된 true, 1, t 등에 포함되지 않는 문자열일 경우 예외가 발생합니다.
 	 */
-	public static boolean tryHardCast(final String stringBoolean) {
+	public static boolean tryHardCast(String stringBoolean) {
 		
 		StringInspection.checkBlank(stringBoolean);
 		
@@ -43,7 +43,7 @@ public final class BooleanInspection {
 			return false;
 		}
 		
-		throw new InspectionException("Boolean타입 CAST는 문자열 \"true\", \"false\"을 대소문자 구분없이 처리합니다.");
+		throw new InspectionException("Boolean타입은 CAST는 문자열 true 또는 false만 처리합니다.");
 	}
 	
 	/**
@@ -58,14 +58,14 @@ public final class BooleanInspection {
 	 * @throws ValidateException
 	 *             설명에 작성된 true, 1, t 등에 포함되지 않는 문자열일 경우 예외가 발생합니다.
 	 */
-	public static boolean trySoftCast(final String stringBoolean) {
+	public static boolean trySoftCast(String stringBoolean) {
 		
 		StringInspection.checkBlank(stringBoolean);
 		
-		final Collection<String> trueList = Arrays.asList("true", "1", "t");
-		final Collection<String> falseList = Arrays.asList("false", "0", "f");
+		Collection<String> trueList = Arrays.asList("true", "1", "t");
+		Collection<String> falseList = Arrays.asList("false", "0", "f");
 		
-		final String lowerCase = stringBoolean.toLowerCase(Locale.getDefault());
+		String lowerCase = stringBoolean.toLowerCase(Locale.getDefault());
 		
 		if (trueList.contains(lowerCase)) {
 			return true;
@@ -73,7 +73,7 @@ public final class BooleanInspection {
 			return false;
 		}
 		
-		throw new InspectionException("Boolean타입 CAST는 문자열 \"true\", \"false\", \"1\", \"0\", \"t\", \"f\"만 처리합니다.");
+		throw new InspectionException("Boolean타입은 CAST는 문자열 true 또는 false만 처리합니다.");
 	}
 	
 	/**

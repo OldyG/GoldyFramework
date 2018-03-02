@@ -56,7 +56,7 @@ public class RepositoryServiceImpl implements RepositoryService {
 	 * @param body
 	 *            저장소 바디
 	 */
-	public RepositoryServiceImpl(final RepositoryBody body) {
+	public RepositoryServiceImpl(RepositoryBody body) {
 		
 		this.body = NullGtils.throwIfNull(body);
 	}
@@ -68,7 +68,7 @@ public class RepositoryServiceImpl implements RepositoryService {
 	 * @throws NotRegisteredFileException
 	 */
 	@Override
-	public File change(final MultipartFile multipartFile)
+	public File change(MultipartFile multipartFile)
 		throws SQLException, RepositoryException, IOException {
 		
 		ObjectInspection.checkNull(multipartFile);
@@ -85,7 +85,7 @@ public class RepositoryServiceImpl implements RepositoryService {
 	public void delete() throws SQLException, RepositoryException {
 		
 		try {
-			final File file = this.getFile();
+			File file = this.getFile();
 			
 			while (file.exists()) {
 				
@@ -93,7 +93,7 @@ public class RepositoryServiceImpl implements RepositoryService {
 					break;
 				}
 			}
-		} catch (final NotRegisteredFileException e) {
+		} catch (NotRegisteredFileException e) {
 			return;
 		}
 	}
@@ -120,13 +120,13 @@ public class RepositoryServiceImpl implements RepositoryService {
 	public ResponseEntity<InputStreamResource> download()
 		throws SQLException, RepositoryException, NotRegisteredFileException, IOException {
 		
-		final File file = this.getFile();
-		final String extension = FilenameUtils.getExtension(file.getAbsolutePath());
+		File file = this.getFile();
+		String extension = FilenameUtils.getExtension(file.getAbsolutePath());
 		
-		final String fileName = this.body.getDownloadName() + "." + extension;
-		final String docName = new String(fileName.getBytes(Prop.DEFAULT_CHARSET), "ISO-8859-1");
-		final String contentDispositionHeader = "attachment; filename=\"" + docName + "\"";
-		final InputStreamResource body = new InputStreamResource(new FileInputStream(file));
+		String fileName = this.body.getDownloadName() + "." + extension;
+		String docName = new String(fileName.getBytes(Prop.DEFAULT_CHARSET), "ISO-8859-1");
+		String contentDispositionHeader = "attachment; filename=\"" + docName + "\"";
+		InputStreamResource body = new InputStreamResource(new FileInputStream(file));
 		
 		return ResponseEntity
 			.ok()
@@ -156,7 +156,7 @@ public class RepositoryServiceImpl implements RepositoryService {
 	@Override
 	public byte[] readToByteArray() throws SQLException, RepositoryException, NotRegisteredFileException, IOException {
 		
-		final File file = this.getFile();
+		File file = this.getFile();
 		return FileUtils.readFileToByteArray(file);
 	}
 	
@@ -168,7 +168,7 @@ public class RepositoryServiceImpl implements RepositoryService {
 	@Override
 	public String readToString() throws SQLException, RepositoryException, NotRegisteredFileException, IOException {
 		
-		final File file = this.getFile();
+		File file = this.getFile();
 		return FileUtils.readFileToString(file, Prop.DEFAULT_CHARSET.name());
 	}
 	
@@ -178,7 +178,7 @@ public class RepositoryServiceImpl implements RepositoryService {
 	 * @author 2017. 6. 18. 오후 1:56:08 jeong
 	 */
 	@Override
-	public File save(final MultipartFile multipartFile) throws IOException {
+	public File save(MultipartFile multipartFile) throws IOException {
 		
 		ObjectInspection.checkNull(multipartFile);
 		
@@ -190,16 +190,16 @@ public class RepositoryServiceImpl implements RepositoryService {
 			}
 		}
 		
-		final String extension = FilenameUtils.getExtension(multipartFile.getOriginalFilename());
-		final File file = this.body.generateSavePath(extension);
+		String extension = FilenameUtils.getExtension(multipartFile.getOriginalFilename());
+		File file = this.body.generateSavePath(extension);
 		
-		final File directory = file.getParentFile();
+		File directory = file.getParentFile();
 		if (directory.exists() == false) {
 			directory.mkdirs();
 		}
 		
-		final boolean success = file.createNewFile();
-		SonarHelper.noStatic(success);
+		boolean success = file.createNewFile();
+		SonarHelper.unuse(success);
 		multipartFile.transferTo(file);
 		return file;
 	}
@@ -210,18 +210,18 @@ public class RepositoryServiceImpl implements RepositoryService {
 	 * @author 2017. 6. 18. 오후 1:56:09 jeong
 	 */
 	@Override
-	public File write(final String content) throws SQLException, RepositoryException, IOException {
+	public File write(String content) throws SQLException, RepositoryException, IOException {
 		
 		ObjectInspection.checkNull(content);
 		File file = null;
 		try {
 			file = this.getFile();
-		} catch (final NotRegisteredFileException e) {
+		} catch (NotRegisteredFileException e) {
 			LOGGER.trace("파일이 없어 신규 파일을 생성합니다.", e);
 			file = this.body.generateSavePath();
 		}
-		final boolean success = file.createNewFile();
-		SonarHelper.noStatic(success);
+		boolean success = file.createNewFile();
+		SonarHelper.unuse(success);
 		FileUtils.writeStringToFile(file, content, Prop.DEFAULT_CHARSET.name());
 		return file;
 	}

@@ -4,7 +4,7 @@
  * Author : jeong
  * Summary :
  * Copyright (C) 2018 Formal Works Inc. All rights reserved.
- * 이 문서의 모든 저작권 및 지적 재산권은 (주)포멀웍스에게 있습니다.
+ * 이 문서의 모든 저작권 및 지적 재산권은 Goldy Project에게 있습니다.
  * 이 문서의 어떠한 부분도 허가 없이 복제 또는 수정 하거나, 전송할 수 없습니다.
  */
 package com.goldyframework.db.prepare.statement.update;
@@ -31,7 +31,7 @@ public class UpdatePreparePlan implements PreparePlan<UpdatePrepare> {
 	 * @author 2017. 7. 8. 오후 1:41:31 jeong
 	 * @param tableName
 	 */
-	public UpdatePreparePlan(final String tableName) {
+	public UpdatePreparePlan(String tableName) {
 		
 		this.tableName = tableName;
 		this.assign = new AssignGuide(tableName);
@@ -44,7 +44,7 @@ public class UpdatePreparePlan implements PreparePlan<UpdatePrepare> {
 	 * @param value
 	 * @return
 	 */
-	public UpdatePreparePlan assign(final String column, final Object value) {
+	public UpdatePreparePlan assign(String column, Object value) {
 		
 		this.assign.appendIfNotNull(column, value);
 		return this;
@@ -61,7 +61,7 @@ public class UpdatePreparePlan implements PreparePlan<UpdatePrepare> {
 		return new UpdatePrepare(this.tableName, this.assign, this.where);
 	}
 	
-	public UpdatePreparePlan where(final String columnName, final Comparison comparison, final Object value) {
+	public UpdatePreparePlan where(String columnName, Comparison comparison, Object value) {
 		
 		this.where.append(columnName, comparison, value);
 		return this;

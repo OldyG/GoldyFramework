@@ -4,7 +4,7 @@
  * Author : jeong
  * Summary :
  * Copyright (C) 2018 Formal Works Inc. All rights reserved.
- * 이 문서의 모든 저작권 및 지적 재산권은 (주)포멀웍스에게 있습니다.
+ * 이 문서의 모든 저작권 및 지적 재산권은 Goldy Project에게 있습니다.
  * 이 문서의 어떠한 부분도 허가 없이 복제 또는 수정 하거나, 전송할 수 없습니다.
  */
 package com.goldyframework.db.prepare.statement.update;
@@ -18,30 +18,32 @@ import org.junit.Test;
 import com.goldyframework.db.prepare.statement.guide.AssignGuide;
 import com.goldyframework.db.prepare.statement.guide.Comparison;
 import com.goldyframework.db.prepare.statement.guide.WhereGuide;
+import com.goldyframework.db.prepare.statement.update.UpdatePrepare;
 
 /**
  * @author 2017. 7. 7. 오후 7:08:57 jeong
  */
+@SuppressWarnings("nls")
 public class UpdatePrepareTest {
 	
 	@Test
 	public void test() {
 		
-		final AssignGuide assign = new AssignGuide("TEST");
+		AssignGuide assign = new AssignGuide("TEST");
 		assign.appendIfNotNull("name", "test");
 		assign.appendIfNotNull("name2", "test2");
 		
-		final WhereGuide where = new WhereGuide("TEST");
+		WhereGuide where = new WhereGuide("TEST");
 		where.append("column1", Comparison.GREATER_EQUAL, 1);
 		where.append("column2", Comparison.EQUAL, "true");
 		
-		final UpdatePrepare update = new UpdatePrepare("TEST", assign, where);
+		UpdatePrepare update = new UpdatePrepare("TEST", assign, where);
 		
 		Assert.assertEquals("UPDATE Sql 비교 시험",
 			"UPDATE `TEST` SET `TEST`.`name` = ?, `TEST`.`name2` = ? WHERE `TEST`.`column1` >= ? AND `TEST`.`column2` = ?",
 			update.toPrepareSql());
 		
-		final List<Object> args = new ArrayList<>(update.getArgs());
+		List<Object> args = new ArrayList<>(update.getArgs());
 		Assert.assertEquals("", 4, args.size());
 		Assert.assertEquals("", "test", args.get(0));
 		Assert.assertEquals("", "test2", args.get(1));

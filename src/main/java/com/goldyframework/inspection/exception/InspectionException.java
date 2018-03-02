@@ -21,6 +21,10 @@ import com.goldyframework.utils.NullGtils;
  */
 public class InspectionException extends RuntimeException {
 	
+	
+	
+	
+	private static final long serialVersionUID = 8244055792943111769L;
 	/**
 	 * slf4j Logger
 	 *
@@ -30,14 +34,6 @@ public class InspectionException extends RuntimeException {
 	private static final Logger LOGGER = LoggerFactory.getLogger(InspectionException.class);
 	
 	/**
-	 * Serializable UID
-	 *
-	 * @author jeong
-	 * @since 2017. 5. 22. 오후 9:20:10
-	 */
-	private static final long serialVersionUID = 2075811842785280153L;
-	
-	/**
 	 * {@link InspectionException} 클래스의 새 인스턴스를 초기화 합니다.
 	 *
 	 * @author jeong
@@ -45,7 +41,7 @@ public class InspectionException extends RuntimeException {
 	 * @param message
 	 *            오류 메세지
 	 */
-	public InspectionException(final String message) {
+	public InspectionException(String message) {
 		
 		super(NullGtils.throwIfNull(message));
 		LOGGER.debug(message);
@@ -61,7 +57,7 @@ public class InspectionException extends RuntimeException {
 	 * @param cause
 	 *            cause
 	 */
-	public InspectionException(final String message, final Throwable cause) {
+	public InspectionException(String message, Throwable cause) {
 		
 		super(NullGtils.throwIfNull(message), NullGtils.throwIfNull(cause));
 		LOGGER.debug(message, cause);

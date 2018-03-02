@@ -45,9 +45,9 @@ public enum FileNamingType {
 	/**
 	 * 파일 이름 생성 방법
 	 */
-	private final FileNaming fileNaming;
+	private FileNaming fileNaming;
 	
-	private final boolean removeIfDuplication;
+	private boolean removeIfDuplication;
 	
 	/**
 	 * {@link FileNamingType} 클래스의 새 인스턴스를 초기화 합니다.
@@ -57,7 +57,7 @@ public enum FileNamingType {
 	 *            파일 이름 생성 방법
 	 * @date 2016. 5. 18.
 	 */
-	FileNamingType(final FileNaming fileNaming, final boolean removeIfDuplication) {
+	FileNamingType(FileNaming fileNaming, boolean removeIfDuplication) {
 		
 		this.removeIfDuplication = removeIfDuplication;
 		this.fileNaming = NullGtils.throwIfNull(fileNaming);

@@ -4,7 +4,7 @@
  * Author : jeong
  * Summary :
  * Copyright (C) 2018 Formal Works Inc. All rights reserved.
- * 이 문서의 모든 저작권 및 지적 재산권은 (주)포멀웍스에게 있습니다.
+ * 이 문서의 모든 저작권 및 지적 재산권은 Goldy Project에게 있습니다.
  * 이 문서의 어떠한 부분도 허가 없이 복제 또는 수정 하거나, 전송할 수 없습니다.
  */
 package com.goldyframework.db.prepare.statement;
@@ -13,6 +13,7 @@ import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import com.goldyframework.does.SonarHelper;
 import com.goldyframework.inspection.IntegerInspection;
 import com.goldyframework.utils.NullGtils;
 import com.goldyframework.utils.StringCollectionGtils;
@@ -27,7 +28,7 @@ public abstract class AbstractPrepare implements Prepare {
 	 * @author 2017. 7. 2. 오후 5:30:23 jeong
 	 * @param tableName
 	 */
-	public AbstractPrepare(final String tableName) {
+	public AbstractPrepare(String tableName) {
 		
 		super();
 		this.tableName = NullGtils.throwIfNull(tableName);
@@ -45,15 +46,16 @@ public abstract class AbstractPrepare implements Prepare {
 		return this.tableName;
 	}
 	
-	protected String joinMark(final int size) {
+	protected String joinMark(int size) {
 		
+		SonarHelper.noStatic(this);
 		IntegerInspection.checkBelowZero(size);
-		final Collection<String> marks = new ArrayList<>();
+		Collection<String> marks = new ArrayList<>();
 		for (int i = 0; i < size; i++) {
-			marks.add("?"); 
+			marks.add("?");
 		}
 		
-		return StringCollectionGtils.join(marks, ", "); 
+		return StringCollectionGtils.join(marks, ", ");
 	}
 	
 	/**
@@ -64,6 +66,6 @@ public abstract class AbstractPrepare implements Prepare {
 	@Override
 	public String toString() {
 		
-		return MessageFormat.format("SQL [{0}], OBJ[{1}]", this.toPrepareSql(), this.getArgs()); 
+		return MessageFormat.format("SQL [{0}], OBJ[{1}]", this.toPrepareSql(), this.getArgs());
 	}
 }

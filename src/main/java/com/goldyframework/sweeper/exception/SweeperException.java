@@ -18,14 +18,9 @@ import com.goldyframework.utils.NullGtils;
  */
 public class SweeperException extends Exception {
 	
-	/**
-	 * Serializable UID
-	 *
-	 * @author jeong
-	 * @since 2017. 5. 22. 오후 9:20:10
-	 */
-	private static final long serialVersionUID = 8445273325098801274L;
 	
+	private static final long serialVersionUID = 4537102602250815257L;
+
 	/**
 	 * {@link SweeperException} 클래스의 새 인스턴스를 초기화 합니다.
 	 *
@@ -34,7 +29,7 @@ public class SweeperException extends Exception {
 	 * @param cause
 	 *            the cause
 	 */
-	public SweeperException(final Exception cause) {
+	public SweeperException(Exception cause) {
 		
 		super(NullGtils.throwIfNull(cause));
 	}

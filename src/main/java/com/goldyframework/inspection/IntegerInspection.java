@@ -4,7 +4,7 @@
  * Author : jeong
  * Summary :
  * Copyright (C) 2018 Formal Works Inc. All rights reserved.
- * 이 문서의 모든 저작권 및 지적 재산권은 (주)포멀웍스에게 있습니다.
+ * 이 문서의 모든 저작권 및 지적 재산권은 Goldy Project에게 있습니다.
  * 이 문서의 어떠한 부분도 허가 없이 복제 또는 수정 하거나, 전송할 수 없습니다.
  */
 package com.goldyframework.inspection;
@@ -22,14 +22,14 @@ import com.goldyframework.inspection.exception.InspectionException;
  *
  * @author 2017. 6. 14. 오후 9:09:09 jeong
  */
-public final class IntegerInspection {
+public class IntegerInspection {
 	
 	/**
 	 * slf4j Logger
 	 */
 	private static final Logger LOGGER = LoggerFactory.getLogger(IntegerInspection.class);
 	
-	private static void checkAbove(final int target, final int maximumValue) {
+	private static void checkAbove(int target, int maximumValue) {
 		
 		if (target >= maximumValue) {
 			throw new InspectionException(maximumValue + "이상으로 초기화될수 없습니다. : " + target);
@@ -37,7 +37,7 @@ public final class IntegerInspection {
 		
 	}
 	
-	public static void checkBelow(final int target, final int minimumValue) {
+	public static void checkBelow(int target, int minimumValue) {
 		
 		if (target <= minimumValue) {
 			throw new InspectionException(minimumValue + "이하로 초기화될수 없습니다. : " + target);
@@ -54,12 +54,12 @@ public final class IntegerInspection {
 	 * @throws ValidateException
 	 *             0 이하일 경우 발생합니다.
 	 */
-	public static void checkBelowZero(final int target) {
+	public static void checkBelowZero(int target) {
 		
 		checkBelow(target, 0);
 	}
 	
-	public static void checkUnsigned(final int target) {
+	public static void checkUnsigned(int target) {
 		
 		checkBelow(target, -1);
 	}
@@ -74,16 +74,16 @@ public final class IntegerInspection {
 	 * @throws ValidateException
 	 *             매개변수가 null일 경우 발생합니다.
 	 */
-	public static boolean isNumberCharacter(final Character character) {
+	public static boolean isNumberCharacter(Character character) {
 		
 		ObjectInspection.checkNull(character);
 		
 		try {
-			final int parseInt = Integer.parseInt(character.toString());
-			SonarHelper.noStatic(parseInt);
+			int parseInt = Integer.parseInt(character.toString());
+			SonarHelper.unuse(parseInt);
 			return true;
-		} catch (final NumberFormatException e) {
-			final String message = MessageFormat.format("Character [{0}]은 Int형으로 변환할 수 없습니다.", character);
+		} catch (NumberFormatException e) {
+			String message = MessageFormat.format("Character [{0}]은 Int형으로 변환할 수 없습니다.", character);
 			LOGGER.trace(message, e);
 			return false;
 		}
@@ -99,15 +99,15 @@ public final class IntegerInspection {
 	 * @throws ValidateException
 	 *             매개변수가 null일 경우 발생합니다.
 	 */
-	public static boolean isNumberString(final String string) {
+	public static boolean isNumberString(String string) {
 		
 		StringInspection.checkBlank(string);
 		
 		try {
-			final int parseInt = Integer.parseInt(string);
-			SonarHelper.noStatic(parseInt);
+			int parseInt = Integer.parseInt(string);
+			SonarHelper.unuse(parseInt);
 			return true;
-		} catch (final NumberFormatException e) {
+		} catch (NumberFormatException e) {
 			return false;
 		}
 	}
@@ -122,7 +122,7 @@ public final class IntegerInspection {
 	 * @throws ValidateException
 	 *             문자열이 정수형이 아닌경우 발생합니다.
 	 */
-	public static int tryCast(final String stringNumber) {
+	public static int tryCast(String stringNumber) {
 		
 		if (isNumberString(stringNumber)) {
 			return Integer.parseInt(stringNumber);

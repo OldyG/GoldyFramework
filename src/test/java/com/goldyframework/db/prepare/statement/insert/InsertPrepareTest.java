@@ -4,7 +4,7 @@
  * Author : jeong
  * Summary :
  * Copyright (C) 2018 Formal Works Inc. All rights reserved.
- * 이 문서의 모든 저작권 및 지적 재산권은 (주)포멀웍스에게 있습니다.
+ * 이 문서의 모든 저작권 및 지적 재산권은 Goldy Project에게 있습니다.
  * 이 문서의 어떠한 부분도 허가 없이 복제 또는 수정 하거나, 전송할 수 없습니다.
  */
 package com.goldyframework.db.prepare.statement.insert;
@@ -15,7 +15,9 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import com.goldyframework.db.prepare.statement.guide.AssignGuide;
+import com.goldyframework.db.prepare.statement.insert.InsertPrepare;
 
+@SuppressWarnings("nls")
 public class InsertPrepareTest {
 	
 	/**
@@ -24,13 +26,13 @@ public class InsertPrepareTest {
 	@Test
 	public void testGetArgs() {
 		
-		final AssignGuide assign = new AssignGuide("TEST");
+		AssignGuide assign = new AssignGuide("TEST");
 		assign.appendIfNotNull("any1", 3);
 		assign.appendIfNotNull("any2", "1");
 		assign.appendIfNotNull("any3", 1.4F);
-		final InsertPrepare target = new InsertPrepare("TEST", assign);
+		InsertPrepare target = new InsertPrepare("TEST", assign);
 		
-		final Collection<Object> actual2 = target.getArgs();
+		Collection<Object> actual2 = target.getArgs();
 		
 		Assert.assertEquals("", 3, actual2.size());
 		Assert.assertTrue("", actual2.contains(3));
@@ -44,14 +46,14 @@ public class InsertPrepareTest {
 	@Test
 	public void testToPrepareSql() {
 		
-		final AssignGuide assign = new AssignGuide("TEST");
+		AssignGuide assign = new AssignGuide("TEST");
 		assign.appendIfNotNull("A", 1);
 		assign.appendIfNotNull("B", "2");
 		assign.appendIfNotNull("C", 3);
 		
-		final InsertPrepare target = new InsertPrepare("TEST", assign);
+		InsertPrepare target = new InsertPrepare("TEST", assign);
 		
-		final String prepareSql = target.toPrepareSql();
+		String prepareSql = target.toPrepareSql();
 		
 		System.out.println(prepareSql);
 		

@@ -17,14 +17,9 @@ package com.goldyframework.exception;
  */
 public class SuspicionException extends RuntimeException {
 	
-	/**
-	 * Serializable UID
-	 *
-	 * @author jeong
-	 * @since 2017. 5. 22. 오후 9:20:10
-	 */
-	private static final long serialVersionUID = -3303150031105266127L;
 	
+	private static final long serialVersionUID = -538387501259539764L;
+
 	/**
 	 * {@link SuspicionException} 클래스의 새 인스턴스를 초기화 합니다.
 	 *
@@ -41,7 +36,7 @@ public class SuspicionException extends RuntimeException {
 	 * @param message
 	 *            오류 메세지
 	 */
-	public SuspicionException(final String message) {
+	public SuspicionException(String message) {
 		
 		super(message);
 	}
@@ -55,7 +50,7 @@ public class SuspicionException extends RuntimeException {
 	 * @param cause
 	 *            cause
 	 */
-	public SuspicionException(final String message, final Throwable cause) {
+	public SuspicionException(String message, Throwable cause) {
 		super();
 		
 	}
@@ -68,7 +63,7 @@ public class SuspicionException extends RuntimeException {
 	 * @param cause
 	 *            cause
 	 */
-	public SuspicionException(final Throwable cause) {
+	public SuspicionException(Throwable cause) {
 		
 		super(cause);
 	}

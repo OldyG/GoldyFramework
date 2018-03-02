@@ -12,6 +12,7 @@ package com.goldyframework.repository.filenaming;
 import java.io.File;
 import java.text.MessageFormat;
 
+import com.goldyframework.does.SonarHelper;
 import com.goldyframework.inspection.ObjectInspection;
 
 /**
@@ -28,27 +29,21 @@ class CallerInputNaming implements FileNaming {
 	 * @author 2018. 2. 3. 오후 10:44:57 jeong
 	 * @param b
 	 */
-	public CallerInputNaming(final boolean removeIfDuplication) {
+	public CallerInputNaming(boolean removeIfDuplication) {
 		
 		super();
 		this.removeIfDuplication = removeIfDuplication;
 		
 	}
 	
-	/**
-	 * @author 2018. 2. 3. 오후 10:45:45 jeong
-	 * @param directory
-	 * @param baseName
-	 * @param extension
-	 * @return
-	 */
-	private File createDefaultFile(final File directory, final String baseName, final String extension) {
+	private File createDefaultFile(File directory, String baseName, String extension) {
 		
+		SonarHelper.noStatic(this);
 		ObjectInspection.checkNull(directory);
 		ObjectInspection.checkNull(baseName);
 		ObjectInspection.checkNull(extension);
 		
-		final String fullFileName = MessageFormat.format("{0}.{1}", baseName, extension);
+		String fullFileName = MessageFormat.format("{0}.{1}", baseName, extension);
 		return new File(directory, fullFileName);
 	}
 	
@@ -58,7 +53,7 @@ class CallerInputNaming implements FileNaming {
 	 * @author 2017. 6. 18. 오후 1:36:03 jeong
 	 */
 	@Override
-	public File generageSavePath(final File directory, final String baseName, final String extension) {
+	public File generageSavePath(File directory, String baseName, String extension) {
 		
 		File result = this.createDefaultFile(directory, baseName, extension);
 		if (this.removeIfDuplication) {
@@ -67,7 +62,7 @@ class CallerInputNaming implements FileNaming {
 		
 		int index = 1;
 		while (result.exists()) {
-			final String indexedBaseName = baseName + " (" + index + ")";
+			String indexedBaseName = baseName + " (" + index + ")";
 			result = this.createDefaultFile(directory, indexedBaseName, extension);
 			index++;
 		}

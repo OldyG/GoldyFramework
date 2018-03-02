@@ -29,7 +29,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Service;
 
-@PropertySource("classpath:goldyframework.properties")
+@PropertySource("classpath:resource.properties")
 @Service
 public class ResourceChannel {
 	
@@ -60,48 +60,49 @@ public class ResourceChannel {
 	 * @param viewPath
 	 */
 	@Autowired
-	public ResourceChannel(final ServletContext servletContet) {
+	public ResourceChannel(ServletContext servletContet) {
+		
 		this.servletContet = servletContet;
 		this.contextPath = this.servletContet.getContextPath();
-		LOGGER.trace("contextPath : " + this.contextPath); 
+		LOGGER.trace("contextPath : " + this.contextPath);
 		this.projectBasePath = this.extractProjectBasePath();
 	}
 	
 	private String extractProjectBasePath() {
 		
-		final String allPath = this.servletContet.getRealPath(""); 
+		String allPath = this.servletContet.getRealPath("");
 		
-		final String projectPath = new File("").getAbsolutePath(); 
-		final String relativePath = allPath.replace(projectPath, ""); 
-		final String javaPath = relativePath.replaceAll(Matcher.quoteReplacement("\\"), "/"); 
+		String projectPath = new File("").getAbsolutePath();
+		String relativePath = allPath.replace(projectPath, "");
+		String javaPath = relativePath.replaceAll(Matcher.quoteReplacement("\\"), "/");
 		return javaPath.substring(1, javaPath.length() - 1);
 	}
 	
-	public List<File> getMachedResources(final String viewPath) {
+	public List<File> getMachedResources(String viewPath) {
 		
-		LOGGER.trace("viewPath : " + viewPath); 
+		LOGGER.trace("viewPath : " + viewPath);
 		
-		final List<File> result = new LinkedList<>();
+		List<File> result = new LinkedList<>();
 		if (viewPath == null) {
 			return result;
 		}
-		final String viewDirectory = FilenameUtils.getFullPath(viewPath);
-		LOGGER.trace("viewDirectory : " + viewDirectory); 
-		final String resourceDirectory = viewDirectory.replace(this.viewsBasePath, this.resourceBasePath);
-		LOGGER.trace("resourceDirectory : " + resourceDirectory); 
+		String viewDirectory = FilenameUtils.getFullPath(viewPath);
+		LOGGER.trace("viewDirectory : " + viewDirectory);
+		String resourceDirectory = viewDirectory.replace(this.viewsBasePath, this.resourceBasePath);
+		LOGGER.trace("resourceDirectory : " + resourceDirectory);
 		
-		final File resourceDirectoryFile = new File(this.projectBasePath + resourceDirectory);
-		LOGGER.trace("resourceDirectoryFile : " + resourceDirectoryFile); 
+		File resourceDirectoryFile = new File(this.projectBasePath + resourceDirectory);
+		LOGGER.trace("resourceDirectoryFile : " + resourceDirectoryFile);
 		
 		if (resourceDirectoryFile.exists() == false) {
 			return result;
 		}
 		
-		final File[] innerFiles = resourceDirectoryFile.listFiles();
+		File[] innerFiles = resourceDirectoryFile.listFiles();
 		if (LOGGER.isTraceEnabled()) {
 			
-			for (final File innerFile : innerFiles) {
-				LOGGER.trace("innerFiles : " + innerFile); 
+			for (File innerFile : innerFiles) {
+				LOGGER.trace("innerFiles : " + innerFile);
 			}
 			
 		}
@@ -116,20 +117,20 @@ public class ResourceChannel {
 			.collect(Collectors.toList());
 	}
 	
-	public String getTagString(final File file) {
+	public String getTagString(File file) {
 		
-		final String extension = FilenameUtils.getExtension(file.getPath());
-		final String path = file.getPath().replaceAll(Matcher.quoteReplacement("\\"), "/") 
+		String extension = FilenameUtils.getExtension(file.getPath());
+		String path = file.getPath().replaceAll(Matcher.quoteReplacement("\\"), "/")
 			.replaceAll(this.projectBasePath, this.contextPath);
 		
 		switch (extension) {
-			case "css": 
-				return MessageFormat.format("<link rel=\"stylesheet\" type=\"text/css\" href=\"{0}\" />", path); 
-			case "js": 
-				return MessageFormat.format("<script type=\"text/javascript\" src=\"{0}\"></script>", path); 
-				
+			case "css":
+				return MessageFormat.format("<link rel=\"stylesheet\" type=\"text/css\" href=\"{0}\" />", path);
+			case "js":
+				return MessageFormat.format("<script type=\"text/javascript\" src=\"{0}\"></script>", path);
+			
 			default:
-				return ""; 
+				return "";
 		}
 	}
 	
@@ -141,7 +142,7 @@ public class ResourceChannel {
 	 * @author 2017. 8. 21. 오전 10:15:44 jeonghyun.kum
 	 * @see {@link #resourceBasePath}
 	 */
-	public void setResourceBasePath(final String resourceBasePath) {
+	public void setResourceBasePath(String resourceBasePath) {
 		
 		this.resourceBasePath = resourceBasePath;
 	}
@@ -154,7 +155,7 @@ public class ResourceChannel {
 	 * @author 2017. 8. 21. 오전 10:15:45 jeonghyun.kum
 	 * @see {@link #viewsBasePath}
 	 */
-	public void setViewsBasePath(final String viewsBasePath) {
+	public void setViewsBasePath(String viewsBasePath) {
 		
 		this.viewsBasePath = viewsBasePath;
 	}

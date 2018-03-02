@@ -13,12 +13,12 @@ public enum MapperMode {
 	AUTO,
 	RELATIVE;
 	
-	public static MapperMode lookUp(final String arg) {
+	public static MapperMode lookUp(String arg) {
 		
 		switch (arg.toUpperCase()) {
-			case "AUTO": 
+			case "AUTO":
 				return AUTO;
-			case "RELATIVE": 
+			case "RELATIVE":
 				return RELATIVE;
 			default:
 				return null;

@@ -32,7 +32,7 @@ import org.springframework.util.StringUtils;
 
 public class AccessExpression {
 	
-	protected final Authentication authentication;
+	protected Authentication authentication;
 	
 	private final String access;
 	
@@ -46,7 +46,7 @@ public class AccessExpression {
 	 * @param access
 	 * @param pageContext
 	 */
-	public AccessExpression(final String access, final PageContext pageContext) {
+	public AccessExpression(String access, PageContext pageContext) {
 		
 		this.access = access;
 		this.pageContext = pageContext;
@@ -74,14 +74,14 @@ public class AccessExpression {
 			return false;
 		}
 		
-		final SecurityExpressionHandler<FilterInvocation> handler = this.getExpressionHandler();
+		SecurityExpressionHandler<FilterInvocation> handler = this.getExpressionHandler();
 		
 		Expression accessExpression;
 		try {
 			accessExpression = handler.getExpressionParser().parseExpression(this.access);
 			
-		} catch (final ParseException e) {
-			final IOException ioException = new IOException();
+		} catch (ParseException e) {
+			IOException ioException = new IOException();
 			ioException.initCause(e);
 			throw ioException;
 		}
@@ -91,9 +91,9 @@ public class AccessExpression {
 	}
 	
 	protected EvaluationContext createExpressionEvaluationContext(
-		final SecurityExpressionHandler<FilterInvocation> handler) {
+		SecurityExpressionHandler<FilterInvocation> handler) {
 		
-		final FilterInvocation f = new FilterInvocation(this.pageContext.getRequest(), this.pageContext.getResponse(),
+		FilterInvocation f = new FilterInvocation(this.pageContext.getRequest(), this.pageContext.getResponse(),
 			new FilterChain() {
 				
 				/**
@@ -102,7 +102,7 @@ public class AccessExpression {
 				 * @author 2017. 6. 29. 오후 10:26:43 jeong
 				 */
 				@Override
-				public void doFilter(final ServletRequest request, final ServletResponse response) {
+				public void doFilter(ServletRequest request, ServletResponse response) {
 					
 					throw new UnsupportedOperationException();
 				}
@@ -115,12 +115,12 @@ public class AccessExpression {
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	private SecurityExpressionHandler<FilterInvocation> getExpressionHandler() throws IOException {
 		
-		final ApplicationContext appContext = SecurityWebApplicationContextUtils
+		ApplicationContext appContext = SecurityWebApplicationContextUtils
 			.findRequiredWebApplicationContext(this.pageContext.getServletContext());
-		final Map<String, SecurityExpressionHandler> handlers = appContext
+		Map<String, SecurityExpressionHandler> handlers = appContext
 			.getBeansOfType(SecurityExpressionHandler.class);
 		
-		for (final SecurityExpressionHandler h : handlers.values()) {
+		for (SecurityExpressionHandler h : handlers.values()) {
 			if (FilterInvocation.class.equals(GenericTypeResolver.resolveTypeArgument(
 				h.getClass(), SecurityExpressionHandler.class))) {
 				return h;
@@ -128,8 +128,8 @@ public class AccessExpression {
 		}
 		
 		throw new IOException(
-			"No visible WebSecurityExpressionHandler instance could be found in the application " 
-				+ "context. There must be at least one in order to support expressions in JSP 'authorize' tags."); 
+			"No visible WebSecurityExpressionHandler instance could be found in the application "
+				+ "context. There must be at least one in order to support expressions in JSP 'authorize' tags.");
 	}
 	
 }

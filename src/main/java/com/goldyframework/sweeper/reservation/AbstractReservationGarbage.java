@@ -36,7 +36,7 @@ public abstract class AbstractReservationGarbage implements IGarbage {
 	 * @param reservationTime
 	 *            예약시간
 	 */
-	protected AbstractReservationGarbage(final Date reservationTime) {
+	protected AbstractReservationGarbage(Date reservationTime) {
 		
 		ObjectInspection.checkNull(reservationTime);
 		this.reservationTime = new Date(reservationTime.getTime());
@@ -64,7 +64,7 @@ public abstract class AbstractReservationGarbage implements IGarbage {
 	 */
 	public boolean isCleaningTarget() {
 		
-		final long calculateRemaingTime = ShareFunction.calculateRemaingTime(this.reservationTime);
+		long calculateRemaingTime = ShareFunction.calculateRemaingTime(this.reservationTime);
 		return calculateRemaingTime < 0;
 	}
 	
@@ -85,7 +85,7 @@ public abstract class AbstractReservationGarbage implements IGarbage {
 	 * @throws ParseException
 	 *             unmarshal 예외사항
 	 */
-	public void setReservationTime(final String stringDate) throws ParseException {
+	public void setReservationTime(String stringDate) throws ParseException {
 		
 		ObjectInspection.checkNull(stringDate);
 		this.reservationTime = new DateAdapter().unmarshal(stringDate);

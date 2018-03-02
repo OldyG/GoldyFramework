@@ -4,7 +4,7 @@
  * Author : jeong
  * Summary :
  * Copyright (C) 2018 Formal Works Inc. All rights reserved.
- * 이 문서의 모든 저작권 및 지적 재산권은 (주)포멀웍스에게 있습니다.
+ * 이 문서의 모든 저작권 및 지적 재산권은 Goldy Project에게 있습니다.
  * 이 문서의 어떠한 부분도 허가 없이 복제 또는 수정 하거나, 전송할 수 없습니다.
  */
 package com.goldyframework.utils;
@@ -22,7 +22,7 @@ import com.google.common.annotations.VisibleForTesting;
 /**
  * @author 2017. 6. 18. 오후 5:16:50 jeong
  */
-public final class ClassLoaderGtils {
+public class ClassLoaderGtils {
 	
 	@VisibleForTesting
 	class TestSet implements ITestSet<ClassLoaderGtils> {
@@ -45,32 +45,20 @@ public final class ClassLoaderGtils {
 	 */
 	private static final Logger LOGGER = LoggerFactory.getLogger(ClassLoaderGtils.class);
 	
-	/**
-	 * @author 2017. 6. 19. 오후 11:12:31 jeong
-	 * @param url
-	 * @return
-	 * @throws URISyntaxException
-	 */
 	@VisibleForTesting
-	static File createNewFile(final URL url) throws URISyntaxException {
+	static File createNewFile(URL url) throws URISyntaxException {
 		
 		return new File(url.toURI());
 	}
 	
-	/**
-	 * @author 2017. 6. 18. 오후 5:18:02 jeong
-	 * @param path
-	 * @param string
-	 * @return
-	 */
-	public static File getFile(final String path) {
+	public static File getFile(String path) {
 		
 		ObjectInspection.checkNull(path);
-		final URL url = ClassLoader.getSystemResource(path);
+		URL url = ClassLoader.getSystemResource(path);
 		try {
 			return createNewFile(url);
-		} catch (final URISyntaxException e) {
-			LOGGER.error("발생 할 수 없는 오류 발생", e); 
+		} catch (URISyntaxException e) {
+			LOGGER.error("발생 할 수 없는 오류 발생", e);
 			return null;
 		}
 	}
@@ -82,7 +70,7 @@ public final class ClassLoaderGtils {
 	 * @param testSet
 	 */
 	@VisibleForTesting
-	ClassLoaderGtils(final TestSet testSet) {
+	ClassLoaderGtils(TestSet testSet) {
 		
 		super();
 	}

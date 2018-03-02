@@ -31,7 +31,7 @@ import com.goldyframework.inspection.ObjectInspection;
  *
  * @author 2017. 6. 18. 오후 2:41:41 jeong
  */
-public final class ShareFunction {
+public class ShareFunction {
 	
 	/**
 	 * slf4j Logger
@@ -49,11 +49,11 @@ public final class ShareFunction {
 	 *            확인 날짜
 	 * @return 남은 날
 	 */
-	public static int calculateRemaingDay(final Date date) {
+	public static int calculateRemaingDay(Date date) {
 		
 		ObjectInspection.checkNull(date);
-		final long diff = calculateRemaingTime(date);
-		final int day = (int) (diff / (1000 * 60 * 60 * 24));
+		long diff = calculateRemaingTime(date);
+		int day = (int) (diff / (1000 * 60 * 60 * 24));
 		return day;
 	}
 	
@@ -69,12 +69,12 @@ public final class ShareFunction {
 	 * @throws ParseException
 	 *             날짜가 포맷에 맞지 않는 경우 예외 발생
 	 */
-	public static int calculateRemaingDay(final String stringDate, final String format) throws ParseException {
+	public static int calculateRemaingDay(String stringDate, String format) throws ParseException {
 		
 		ObjectInspection.checkNull(stringDate);
 		ObjectInspection.checkNull(format);
 		
-		final SimpleDateFormat sdf = new SimpleDateFormat(format);
+		SimpleDateFormat sdf = new SimpleDateFormat(format);
 		return ShareFunction.calculateRemaingDay(sdf.parse(stringDate));
 	}
 	
@@ -86,11 +86,11 @@ public final class ShareFunction {
 	 *            확인 날짜
 	 * @return 밀리초
 	 */
-	public static long calculateRemaingTime(final Date date) {
+	public static long calculateRemaingTime(Date date) {
 		
 		ObjectInspection.checkNull(date);
-		final Date currentDate = new Date();
-		final long diff = date.getTime() - currentDate.getTime();
+		Date currentDate = new Date();
+		long diff = date.getTime() - currentDate.getTime();
 		return diff;
 	}
 	
@@ -103,10 +103,10 @@ public final class ShareFunction {
 	 *            변경 대상 문자열
 	 * @return 변경 된 문자열
 	 */
-	public static String convertNewLineToBrTag(final String data) {
+	public static String convertNewLineToBrTag(String data) {
 		
 		ObjectInspection.checkNull(data);
-		return data.replaceAll("(\r\n|\n)", "<br />"); 
+		return data.replaceAll("(\r\n|\n)", "<br />");
 	}
 	
 	/**
@@ -123,18 +123,18 @@ public final class ShareFunction {
 	 *             Date 작업을 수행 중 예외 발생
 	 */
 	@SuppressWarnings({ "unchecked", "rawtypes" })
-	public static Object mappingParamType(final Class<?> paramType, final String value) throws ParseException {
+	public static Object mappingParamType(Class<?> paramType, String value) throws ParseException {
 		
 		ObjectInspection.checkNull(paramType);
 		ObjectInspection.checkNull(value);
 		if (paramType.isEnum()) {
 			return Enum.valueOf((Class<Enum>) paramType, value);
 		} else if (paramType.equals(Date.class)) {
-			final SimpleDateFormat dateFormat = new SimpleDateFormat(Prop.DATE_FORMAT);
+			SimpleDateFormat dateFormat = new SimpleDateFormat(Prop.DATE_FORMAT);
 			return dateFormat.parse(value);
 		}
 		
-		final PropertyEditor editor = PropertyEditorManager.findEditor(paramType);
+		PropertyEditor editor = PropertyEditorManager.findEditor(paramType);
 		editor.setAsText(value);
 		return editor.getValue();
 	}
@@ -147,31 +147,31 @@ public final class ShareFunction {
 	 *            출력대상 {@link Annotation}
 	 * @return 결과 문자열
 	 */
-	public static String toString(final Annotation anno) {
+	public static String toString(Annotation anno) {
 		
 		ObjectInspection.checkNull(anno);
-		final StringBuilder builder = new StringBuilder();
+		StringBuilder builder = new StringBuilder();
 		
-		String deli = ""; 
+		String deli = "";
 		
-		for (final Method method : anno.annotationType().getDeclaredMethods()) {
+		for (Method method : anno.annotationType().getDeclaredMethods()) {
 			builder.append(deli);
 			try {
-				final String methodName = method.getName();
+				String methodName = method.getName();
 				builder.append(methodName).append('=');
 				
-				final Object value = method.invoke(anno);
+				Object value = method.invoke(anno);
 				if (value.getClass().isArray()) {
-					final Collection<Object> list = Arrays.asList((Object[]) value);
+					Collection<Object> list = Arrays.asList((Object[]) value);
 					builder.append(list);
 				} else {
 					builder.append(value);
 				}
-				if ("".equals(deli)) { 
-					deli = ", "; 
+				if ("".equals(deli)) {
+					deli = ", ";
 				}
 			} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
-				LOGGER.error("Annotation을 toString()하는 중 오류가 발생하였습니다", e); 
+				LOGGER.error("Annotation을 toString()하는 중 오류가 발생하였습니다", e);
 			}
 		}
 		return builder.toString();
@@ -185,6 +185,6 @@ public final class ShareFunction {
 	 */
 	private ShareFunction() {
 		
-		throw new IllegalStateException("Utility class"); 
+		throw new IllegalStateException("Utility class");
 	}
 }

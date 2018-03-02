@@ -4,7 +4,7 @@
  * Author : jeong
  * Summary :
  * Copyright (C) 2018 Formal Works Inc. All rights reserved.
- * 이 문서의 모든 저작권 및 지적 재산권은 (주)포멀웍스에게 있습니다.
+ * 이 문서의 모든 저작권 및 지적 재산권은 Goldy Project에게 있습니다.
  * 이 문서의 어떠한 부분도 허가 없이 복제 또는 수정 하거나, 전송할 수 없습니다.
  */
 package com.goldyframework.db.abstractdao;
@@ -17,8 +17,8 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.CollectionUtils;
 
 import com.goldyframework.db.JdbcPrepareTemplate;
 import com.goldyframework.db.bind.AbstractMapping;
@@ -55,7 +55,7 @@ public abstract class AbstractDefaultDao<DTO extends Dto> implements DefaultDao<
 	 * 
 	 * @author 2018. 1. 30. 오후 9:52:22 jeong
 	 */
-	public AbstractDefaultDao(final String tableName, final String tableKey, final AbstractMapping<DTO> mapping) {
+	public AbstractDefaultDao(String tableName, String tableKey, AbstractMapping<DTO> mapping) {
 		
 		super();
 		this.tableKey = tableKey;
@@ -70,10 +70,10 @@ public abstract class AbstractDefaultDao<DTO extends Dto> implements DefaultDao<
 	 * @author 2018. 1. 30. 오후 9:51:19 jeong
 	 */
 	@Override
-	public void delete(final int key) {
+	public void delete(int key) {
 		
 		IntegerInspection.checkBelowZero(key);
-		final DeletePrepare delete = PrepareBuilder
+		DeletePrepare delete = PrepareBuilder
 			.delete(this.tableName)
 			.where(this.tableKey, Comparison.EQUAL, key)
 			.build();
@@ -87,7 +87,7 @@ public abstract class AbstractDefaultDao<DTO extends Dto> implements DefaultDao<
 	 * @author 2018. 1. 30. 오후 9:51:19 jeong
 	 */
 	@Override
-	public abstract DTO insert(final DTO dto) throws DuplicateRecordException;
+	public abstract DTO insert(DTO dto) throws DuplicateRecordException;
 	
 	/**
 	 * {@inheritDoc}
@@ -95,10 +95,10 @@ public abstract class AbstractDefaultDao<DTO extends Dto> implements DefaultDao<
 	 * @author 2018. 1. 30. 오후 9:51:19 jeong
 	 */
 	@Override
-	public DTO select(final int key) {
+	public DTO select(int key) {
 		
 		IntegerInspection.checkBelowZero(key);
-		final SelectPrepare select = PrepareBuilder
+		SelectPrepare select = PrepareBuilder
 			.select(this.tableName)
 			.where(this.tableKey, Comparison.EQUAL, key)
 			.build();
@@ -112,23 +112,36 @@ public abstract class AbstractDefaultDao<DTO extends Dto> implements DefaultDao<
 	 * @author 2018. 1. 30. 오후 9:51:19 jeong
 	 */
 	@Override
-	public Collection<DTO> selectAll() {
+	public Set<DTO> selectAll() {
 		
-		final SelectPrepare select = PrepareBuilder
+		SelectPrepare select = PrepareBuilder
 			.select(this.tableName)
 			.build();
 		
 		return this.template.selectAll(select, this.mapping.rowMapper());
 	}
 	
-	public Collection<DTO> selects(final Collection<Integer> tableKeyCollection) {
+	public DTO selectOfUniqueKey(String uniqueColumnName, Object obj) {
+		
+		StringInspection.checkBlank(uniqueColumnName);
+		ObjectInspection.checkNull(obj);
+		
+		SelectPrepare select = PrepareBuilder
+			.select(this.tableName)
+			.where(uniqueColumnName, Comparison.EQUAL, obj)
+			.build();
+		
+		return this.template.select(select, this.mapping.rowMapper());
+	}
+	
+	public Collection<DTO> selects(Collection<Integer> tableKeyCollection) {
 		
 		return this.selectsOfs(this.tableKey, tableKeyCollection);
 	}
 	
-	protected <T> Collection<DTO> selectsOf(final String columnName, final T value) {
+	protected <T> Set<DTO> selectsOf(String columnName, T value) {
 		
-		final SelectPrepare select = PrepareBuilder
+		SelectPrepare select = PrepareBuilder
 			.select(this.tableName)
 			.where(columnName, Comparison.EQUAL, value)
 			.build();
@@ -136,26 +149,27 @@ public abstract class AbstractDefaultDao<DTO extends Dto> implements DefaultDao<
 		return this.template.selectPart(select, this.mapping.rowMapper());
 	}
 	
-	protected <T> Collection<DTO> selectsOfs(final String columnName,
-		final Collection<T> valueCollection) {
+	protected <T> Collection<DTO> selectsOfs(String columnName,
+		Collection<T> valueCollection) {
 		
 		ObjectInspection.checkNull(valueCollection);
 		
 		if (CollectionUtils.isEmpty(valueCollection)) {
-			return Collections.emptyList();
+			return Collections.emptySet();
 		}
 		
-		final Set<Object> tableKeySet = new HashSet<>(valueCollection);
+		Set<Object> tableKeySet = new HashSet<>(valueCollection);
 		
-		final List<String> collect = tableKeySet.stream()
+		List<String> collect = tableKeySet.stream()
 			.map(themeKey -> "?")
 			.collect(Collectors.toList());
 		
-		final String quesions = StringCollectionGtils.join(collect, ", ");
-		final String sql = MessageFormat.format("SELECT * FROM {0} WHERE {0}.{1} in ({2})",
+		String quesions = StringCollectionGtils.join(collect, ", ");
+		String sql = MessageFormat.format("SELECT * FROM `{0}` WHERE `{0}`.`{1}` in ({2})",
 			this.tableName, columnName, quesions);
-		final Object[] args = tableKeySet.toArray(new Object[tableKeySet.size()]);
-		return this.template.query(sql, args, this.mapping.rowMapper());
+		Object[] args = tableKeySet.toArray(new Object[tableKeySet.size()]);
+		return new HashSet<>(this.template.query(sql, args, this.mapping.rowMapper()));
+		
 	}
 	
 	/**
@@ -164,14 +178,14 @@ public abstract class AbstractDefaultDao<DTO extends Dto> implements DefaultDao<
 	 * @author 2018. 1. 30. 오후 9:51:19 jeong
 	 */
 	@Override
-	public void update(final int key, final String column, final Object value) {
+	public void update(int key, String column, Object value) {
 		
 		IntegerInspection.checkBelowZero(key);
 		StringInspection.checkBlank(column);
 		ObjectInspection.checkNull(value);
-		SonarHelper.noStatic(this.select(key));
+		SonarHelper.unuse(this.select(key));
 		
-		final UpdatePrepare update = PrepareBuilder
+		UpdatePrepare update = PrepareBuilder
 			.update(this.tableName)
 			.assign(column, value)
 			.where(this.tableKey, Comparison.EQUAL, key)
@@ -186,6 +200,6 @@ public abstract class AbstractDefaultDao<DTO extends Dto> implements DefaultDao<
 	 * @author 2018. 1. 30. 오후 9:51:19 jeong
 	 */
 	@Override
-	public abstract void updateAll(final int key, final DTO dto);
+	public abstract void updateAll(int key, DTO dto);
 	
 }

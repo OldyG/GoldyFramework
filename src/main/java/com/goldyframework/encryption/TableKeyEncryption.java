@@ -4,7 +4,7 @@
  * Author : jeong
  * Summary :
  * Copyright (C) 2018 Formal Works Inc. All rights reserved.
- * 이 문서의 모든 저작권 및 지적 재산권은 (주)포멀웍스에게 있습니다.
+ * 이 문서의 모든 저작권 및 지적 재산권은 Goldy Project에게 있습니다.
  * 이 문서의 어떠한 부분도 허가 없이 복제 또는 수정 하거나, 전송할 수 없습니다.
  */
 package com.goldyframework.encryption;
@@ -36,23 +36,23 @@ public class TableKeyEncryption {
 	
 	private final Encryption encryption = new Encryption();
 	
-	public int decrypt(final String encryptedString) throws EncryptionException {
+	public int decrypt(String encryptedString) throws EncryptionException {
 		
-		final String decrypt = this.encryption.decrypt(encryptedString);
-		final TempModel tempModel = new Gson().fromJson(decrypt, TempModel.class);
+		String decrypt = this.encryption.decrypt(encryptedString);
+		TempModel tempModel = new Gson().fromJson(decrypt, TempModel.class);
 		
 		return tempModel.key;
 	}
 	
-	public String encrypt(final int tableKey) throws EncryptionException {
+	public String encrypt(int tableKey) throws EncryptionException {
 		
-		final TempModel tempModel = new TempModel();
+		TempModel tempModel = new TempModel();
 		tempModel.key = tableKey;
 		
-		final String randomString = RandomStringGtils.createRandomString(3, 3);
+		String randomString = RandomStringGtils.createRandomString(3, 3);
 		tempModel.randomString = randomString;
 		
-		final String json = new Gson().toJson(tempModel);
+		String json = new Gson().toJson(tempModel);
 		
 		return this.encryption.encrypt(json);
 		

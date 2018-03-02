@@ -40,7 +40,7 @@ public class SpringPasswordEncryptor implements PasswordEncoder {
 	 * @author 2017. 6. 18. 오후 12:58:47 jeong
 	 */
 	@Override
-	public String encode(final CharSequence rawPassword) {
+	public String encode(CharSequence rawPassword) {
 		
 		ObjectInspection.checkNull(rawPassword);
 		return SaltEncryptor.encode(rawPassword);
@@ -53,7 +53,7 @@ public class SpringPasswordEncryptor implements PasswordEncoder {
 	 * @author 2017. 6. 18. 오후 12:58:54 jeong
 	 */
 	@Override
-	public boolean matches(final CharSequence rawPassword, final String encodedPassword) {
+	public boolean matches(CharSequence rawPassword, String encodedPassword) {
 		
 		ObjectInspection.checkNull(rawPassword);
 		ObjectInspection.checkNull(encodedPassword);

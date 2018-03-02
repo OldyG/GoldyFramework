@@ -4,7 +4,7 @@
  * Author : jeong
  * Summary :
  * Copyright (C) 2018 Formal Works Inc. All rights reserved.
- * 이 문서의 모든 저작권 및 지적 재산권은 (주)포멀웍스에게 있습니다.
+ * 이 문서의 모든 저작권 및 지적 재산권은 Goldy Project에게 있습니다.
  * 이 문서의 어떠한 부분도 허가 없이 복제 또는 수정 하거나, 전송할 수 없습니다.
  */
 package com.goldyframework.db.prepare.statement.guide;
@@ -28,17 +28,23 @@ public class AssignGuide implements Guide {
 	 * @author 2017. 7. 7. 오후 6:54:29 jeong
 	 * @param tableName
 	 */
-	public AssignGuide(final String tableName) {
+	public AssignGuide(String tableName) {
 		
 		ObjectInspection.checkNull(tableName);
 		this.where = new WhereGuide(tableName);
 	}
 	
-	public void appendIfNotNull(final String column, final Object value) {
+	public void appendIfNotNull(String column, Object value) {
 		
 		ObjectInspection.checkNull(column);
-		final String wrapColumn = column;
+		
+		String wrapColumn = column;
 		if (value != null) {
+			
+			if (column.endsWith("key") && (value instanceof Integer) && ((int) value == 0)) {
+				return;
+			}
+			
 			this.where.append(wrapColumn, Comparison.EQUAL, value);
 		}
 	}
@@ -56,7 +62,7 @@ public class AssignGuide implements Guide {
 	@Override
 	public String toSql() {
 		
-		final List<String> tableColumnList = this.where.createTableColumnList();
+		List<String> tableColumnList = this.where.createTableColumnList();
 		
 		return StringCollectionGtils.join(tableColumnList, ", ");
 	}

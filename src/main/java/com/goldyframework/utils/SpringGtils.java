@@ -9,6 +9,10 @@
  */
 package com.goldyframework.utils;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import org.springframework.context.ApplicationContext;
 
 import com.goldyframework.does.SonarHelper;
@@ -44,19 +48,39 @@ public class SpringGtils {
 	 *            빈 클래스
 	 * @return Bean
 	 */
-	public <T> T getBean(final Class<T> beanClass) {
+	public <T> T getBean(Class<T> beanClass) {
 		
 		ObjectInspection.checkNull(beanClass);
 		SonarHelper.noStatic(this);
-		final ApplicationContext context = ApplicationContextProvider.getApplicationContext();
+		ApplicationContext context = ApplicationContextProvider.getApplicationContext();
 		return context.getBean(beanClass);
 	}
 	
-	public <T> T getBean(final String name) {
+	public <T> T getBean(String name) {
 		
 		ObjectInspection.checkNull(name);
 		SonarHelper.noStatic(this);
-		final ApplicationContext context = ApplicationContextProvider.getApplicationContext();
+		ApplicationContext context = ApplicationContextProvider.getApplicationContext();
 		return (T) context.getBean(name);
+	}
+	
+	public <T> List<String> getBeanNames(Class<T> beanClass) {
+		
+		ObjectInspection.checkNull(beanClass);
+		SonarHelper.noStatic(this);
+		ApplicationContext context = ApplicationContextProvider.getApplicationContext();
+		return Arrays.asList(context.getBeanNamesForType(beanClass));
+	}
+	
+	public <T> List<T> getSubBeans(Class<T> interfaceClass) {
+		
+		List<String> beanNames = this.getBeanNames(interfaceClass);
+		
+		List<T> result = new ArrayList<>();
+		for (String beanName : beanNames) {
+			result.add(this.getBean(beanName));
+		}
+		
+		return result;
 	}
 }

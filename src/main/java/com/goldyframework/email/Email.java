@@ -35,6 +35,7 @@ import org.springframework.stereotype.Service;
 
 import com.goldyframework.Prop;
 import com.goldyframework.annotaion.Ref;
+import com.goldyframework.does.SonarHelper;
 import com.goldyframework.email.exception.EmailException;
 import com.goldyframework.email.model.AttachmentModel;
 import com.goldyframework.email.model.SendModel;
@@ -74,26 +75,27 @@ public class Email {
 		super();
 	}
 	
-	private void addBodyPart(@Ref final Multipart multiPart, final Collection<AttachmentModel> file)
+	private void addBodyPart(@Ref Multipart multiPart, Collection<AttachmentModel> file)
 		throws MessagingException, UnsupportedEncodingException {
 		
-		for (final AttachmentModel attachment : file) {
-			final MimeBodyPart filePart = this.createAttachmentMimeBodyPart(attachment);
+		for (AttachmentModel attachment : file) {
+			MimeBodyPart filePart = this.createAttachmentMimeBodyPart(attachment);
 			multiPart.addBodyPart(filePart);
 		}
 	}
 	
-	private String convertEncodedString(final String string) throws UnsupportedEncodingException {
+	private String convertEncodedString(String string) throws UnsupportedEncodingException {
 		
-		final byte[] fileNameBytes = string.getBytes(Prop.DEFAULT_CHARSET);
-		return new String(fileNameBytes, "ISO-8859-1"); 
+		SonarHelper.noStatic(this);
+		byte[] fileNameBytes = string.getBytes(Prop.DEFAULT_CHARSET);
+		return new String(fileNameBytes, "ISO-8859-1");
 	}
 	
-	private MimeBodyPart createAttachmentMimeBodyPart(final AttachmentModel attachment)
+	private MimeBodyPart createAttachmentMimeBodyPart(AttachmentModel attachment)
 		throws MessagingException, UnsupportedEncodingException {
 		
-		final MimeBodyPart filePart = new MimeBodyPart();
-		final DataSource data = new FileDataSource(attachment.getFile());
+		MimeBodyPart filePart = new MimeBodyPart();
+		DataSource data = new FileDataSource(attachment.getFile());
 		filePart.setDataHandler(new DataHandler(data));
 		filePart.setFileName(this.convertEncodedString(attachment.getFileName()));
 		return filePart;
@@ -113,15 +115,15 @@ public class Email {
 	 * @throws UnsupportedEncodingException
 	 *             The Character Encoding is not supported.
 	 */
-	private Multipart createContentMultipart(final String content, final Collection<AttachmentModel> file)
+	private Multipart createContentMultipart(String content, Collection<AttachmentModel> file)
 		throws MessagingException, UnsupportedEncodingException {
 		
-		final Multipart multiPart = new MimeMultipart();
+		Multipart multiPart = new MimeMultipart();
 		
 		this.addBodyPart(multiPart, file);
 		
-		final MimeBodyPart contentPart = new MimeBodyPart();
-		contentPart.setContent(content, "text/html; charset=utf-8"); 
+		MimeBodyPart contentPart = new MimeBodyPart();
+		contentPart.setContent(content, "text/html; charset=utf-8");
 		multiPart.addBodyPart(contentPart);
 		
 		return multiPart;
@@ -138,11 +140,11 @@ public class Email {
 	 *             MimeMessage 생성 중 오류 발생
 	 */
 	@VisibleForTesting
-	MimeMessage createMimeMessage(final SendModel model) throws EmailException {
+	MimeMessage createMimeMessage(SendModel model) throws EmailException {
 		
-		final MimeMessage msg = this.mailSender.createMimeMessage();
+		MimeMessage msg = this.mailSender.createMimeMessage();
 		try {
-			msg.setHeader("Content-Type", "text/html; charset=utf-8"); 
+			msg.setHeader("Content-Type", "text/html; charset=utf-8");
 			msg.setSentDate(new Date());
 			msg.setFrom(model.getFrom());
 			msg.setReplyTo(new Address[] {
@@ -151,16 +153,16 @@ public class Email {
 			
 			msg.setRecipients(RecipientType.TO,
 				model.getTo().toArray(new InternetAddress[model.getTo().size()]));
-			msg.setSubject(MimeUtility.encodeText(model.getSubject(), Prop.DEFAULT_CHARSET.name(), "B")); 
+			msg.setSubject(MimeUtility.encodeText(model.getSubject(), Prop.DEFAULT_CHARSET.name(), "B"));
 			
 			if ((model.getCc() != null) && (model.getCc().isEmpty())) {
 				msg.setRecipients(RecipientType.CC,
 					model.getCc().toArray(new InternetAddress[model.getCc().size()]));
 			}
-			msg.setContent(this.createContentMultipart(model.getText(), model.getAttachmentList()), "text/html"); 
+			msg.setContent(this.createContentMultipart(model.getText(), model.getAttachmentList()), "text/html");
 			return msg;
-		} catch (final MessagingException | UnsupportedEncodingException e) {
-			LOGGER.error("MimeMessage를 생성 중 오류 발생", e); 
+		} catch (MessagingException | UnsupportedEncodingException e) {
+			LOGGER.error("MimeMessage를 생성 중 오류 발생", e);
 			throw new EmailException(e);
 		}
 	}
@@ -175,27 +177,27 @@ public class Email {
 	 * @return
 	 */
 	@VisibleForTesting
-	Thread createSendTread(final MimeMessage msg) {
+	Thread createSendTread(MimeMessage msg) {
 		
 		return new Thread(() -> {
 			try {
 				this.mailSender.send(msg);
-			} catch (final MailException e) {
-				LOGGER.debug("이메일 전송 실패", e); 
+			} catch (MailException e) {
+				LOGGER.debug("이메일 전송 실패", e);
 			}
 		});
 	}
 	
-	public void send(final SendModel sendModel) throws EmailException {
+	public void send(SendModel sendModel) throws EmailException {
 		
 		if (sendModel == null) {
 			return;
 		}
 		
-		LOGGER.debug("이메일 전송 데이터 설정 중"); 
+		LOGGER.debug("이메일 전송 데이터 설정 중");
 		new SendModelValidator().check(sendModel);
-		final MimeMessage msg = this.createMimeMessage(sendModel);
-		final Thread sendAwait = this.createSendTread(msg);
+		MimeMessage msg = this.createMimeMessage(sendModel);
+		Thread sendAwait = this.createSendTread(msg);
 		sendAwait.start();
 	}
 	

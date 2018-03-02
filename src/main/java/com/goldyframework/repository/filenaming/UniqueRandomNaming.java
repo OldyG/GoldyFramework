@@ -24,12 +24,12 @@ class UniqueRandomNaming implements FileNaming {
 	/**
 	 * 파일 이름 최소 크기
 	 */
-	private static final int MIN_LENGTH = 10;
+	private static int MIN_LENGTH = 10;
 	
 	/**
 	 * 파일 이름 최대 크기
 	 */
-	private static final int MAX_LENGTH = 15;
+	private static int MAX_LENGTH = 15;
 	
 	/**
 	 * {@link UniqueRandomNaming} 클래스의 새 인스턴스를 초기화 합니다.
@@ -48,16 +48,16 @@ class UniqueRandomNaming implements FileNaming {
 	 * @author 2017. 6. 18. 오후 1:36:20 jeong
 	 */
 	@Override
-	public File generageSavePath(final File directory, final String baseName, final String extension) {
+	public File generageSavePath(File directory, String baseName, String extension) {
 		
 		ObjectInspection.checkNull(directory);
 		ObjectInspection.checkNull(baseName);
 		ObjectInspection.checkNull(extension);
 		while (true) {
-			final String randomName = RandomStringGtils.createRandomString(MIN_LENGTH, MAX_LENGTH - MIN_LENGTH);
+			String randomName = RandomStringGtils.createRandomString(MIN_LENGTH, MAX_LENGTH - MIN_LENGTH);
 			
-			final String fileName = MessageFormat.format("{0}.{1}", randomName, extension);
-			final File tempFile = new File(directory, fileName);
+			String fileName = MessageFormat.format("{0}.{1}", randomName, extension);
+			File tempFile = new File(directory, fileName);
 			
 			if (tempFile.exists() == false) {
 				return tempFile;

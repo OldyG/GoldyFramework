@@ -4,7 +4,7 @@
  * Author : jeong
  * Summary :
  * Copyright (C) 2018 Formal Works Inc. All rights reserved.
- * 이 문서의 모든 저작권 및 지적 재산권은 (주)포멀웍스에게 있습니다.
+ * 이 문서의 모든 저작권 및 지적 재산권은 Goldy Project에게 있습니다.
  * 이 문서의 어떠한 부분도 허가 없이 복제 또는 수정 하거나, 전송할 수 없습니다.
  */
 package com.goldyframework.db.cache;
@@ -14,6 +14,8 @@ import java.util.ArrayList;
 import org.junit.Assert;
 import org.junit.Test;
 
+import com.goldyframework.db.cache.IntegerSetCache;
+
 /**
  * @author 2018. 1. 13. 오후 8:19:06 jeong
  */
@@ -22,7 +24,7 @@ public class IntegerSetCacheTest {
 	@Test
 	public void testAdd() {
 		
-		final IntegerSetCache target = new IntegerSetCache("3;1;2;");
+		IntegerSetCache target = new IntegerSetCache("3;1;2;");
 		target.add(3);
 		
 		Assert.assertEquals(target.size(), 3);
@@ -34,8 +36,8 @@ public class IntegerSetCacheTest {
 	@Test
 	public void testAdd2() {
 		
-		final IntegerSetCache target = new IntegerSetCache("3;1;2;");
-		final ArrayList<Integer> arrayList = new ArrayList<>();
+		IntegerSetCache target = new IntegerSetCache("3;1;2;");
+		ArrayList<Integer> arrayList = new ArrayList<>();
 		arrayList.add(1);
 		arrayList.add(2);
 		arrayList.add(4);
@@ -56,9 +58,9 @@ public class IntegerSetCacheTest {
 	@Test
 	public void testToCacheString() {
 		
-		final IntegerSetCache target = new IntegerSetCache("3;1;2;");
+		IntegerSetCache target = new IntegerSetCache("3;1;2;");
 		
-		final String cacheString = target.toCacheString();
+		String cacheString = target.toCacheString();
 		Assert.assertEquals(cacheString, "1;2;3;");
 		
 	}
@@ -69,7 +71,7 @@ public class IntegerSetCacheTest {
 	@Test
 	public void testToList() {
 		
-		final IntegerSetCache target = new IntegerSetCache("3;1;2;");
+		IntegerSetCache target = new IntegerSetCache("3;1;2;");
 		
 		Assert.assertTrue(target.contains(1));
 		Assert.assertTrue(target.contains(2));

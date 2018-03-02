@@ -4,13 +4,10 @@
  * Author : jeong
  * Summary :
  * Copyright (C) 2018 Formal Works Inc. All rights reserved.
- * 이 문서의 모든 저작권 및 지적 재산권은 (주)포멀웍스에게 있습니다.
+ * 이 문서의 모든 저작권 및 지적 재산권은 Goldy Project에게 있습니다.
  * 이 문서의 어떠한 부분도 허가 없이 복제 또는 수정 하거나, 전송할 수 없습니다.
  */
 package com.goldyframework.does;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import com.goldyframework.inspection.ObjectInspection;
 import com.goldyframework.utils.ITestSet;
@@ -21,7 +18,7 @@ import com.google.common.annotations.VisibleForTesting;
  *
  * @author 2017. 6. 19. 오후 9:04:49 jeong
  */
-public final class SonarHelper {
+public class SonarHelper {
 	
 	@VisibleForTesting
 	static class TestSet implements ITestSet<SonarHelper> {
@@ -40,11 +37,6 @@ public final class SonarHelper {
 	}
 	
 	/**
-	 * slf4j Logger
-	 */
-	private static final Logger LOGGER = LoggerFactory.getLogger(SonarHelper.class);
-	
-	/**
 	 * 이 함수에 this를 설정하세요
 	 * ex) {@link SonarHelper#notUse}(this, Because)
 	 *
@@ -52,7 +44,17 @@ public final class SonarHelper {
 	 * @param inputYourObjectAtHere
 	 *            this를 집어넣으세요
 	 */
-	public static void noStatic(final Object obj) {
+	public static void noStatic(Object obj) {
+		
+		ObjectInspection.checkNull(obj);
+	}
+	
+	/**
+	 * 반환값을 사용하지 않는 경우 호출하세요 return 값을 obj에 설정하세요
+	 * 
+	 * @author 2018. 2. 11. 오후 4:43:45 jeong
+	 */
+	public static void unuse(Object obj) {
 		
 		ObjectInspection.checkNull(obj);
 	}
@@ -62,7 +64,7 @@ public final class SonarHelper {
 	 *
 	 * @author 2017. 6. 19. 오후 9:04:49 jeong
 	 */
-	private SonarHelper() {
+	SonarHelper() {
 		
 		throw new IllegalStateException("Utility class");
 	}

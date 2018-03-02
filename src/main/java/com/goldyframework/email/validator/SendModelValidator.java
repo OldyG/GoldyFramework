@@ -37,7 +37,7 @@ public class SendModelValidator implements Inspection<SendModel> {
 	 * @author 2017. 6. 18. 오전 11:40:58 jeong
 	 */
 	@Override
-	public void check(final SendModel obj) {
+	public void check(SendModel obj) {
 		
 		ObjectInspection.checkNull(obj);
 		

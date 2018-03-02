@@ -19,6 +19,7 @@ import java.text.MessageFormat;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.goldyframework.does.SonarHelper;
 import com.goldyframework.inspection.exception.InspectionException;
 import com.goldyframework.utils.ClassLoaderGtils;
 import com.goldyframework.utils.ITestSet;
@@ -34,7 +35,12 @@ public class ChecksumAnalyser {
 	@VisibleForTesting
 	static class TestSet implements ITestSet<ChecksumAnalyser> {
 		
-		private final File testFile = ClassLoaderGtils.getFile("checksum/Test File.xml"); 
+		/**
+		 * slf4j Logger
+		 */
+		private static final Logger LOGGER2 = LoggerFactory.getLogger(ChecksumAnalyser.TestSet.class);
+		
+		private final File testFile = ClassLoaderGtils.getFile("checksum/Test File.xml");
 		
 		/**
 		 * {@inheritDoc}
@@ -46,8 +52,8 @@ public class ChecksumAnalyser {
 			
 			try {
 				return new ChecksumAnalyser(this.testFile);
-			} catch (final InspectionException e) {
-				LOGGER.error("인스턴스 생성 실패", e); 
+			} catch (InspectionException e) {
+				LOGGER2.error("인스턴스 생성 실패", e);
 				return null;
 			}
 		}
@@ -86,7 +92,7 @@ public class ChecksumAnalyser {
 	 * @param file
 	 *            Checksum 생성 대상 파일입니다.
 	 */
-	public ChecksumAnalyser(final File file) {
+	public ChecksumAnalyser(File file) {
 		
 		super();
 		new CheckSumFileValidator().check(file);
@@ -103,14 +109,14 @@ public class ChecksumAnalyser {
 	 */
 	
 	@VisibleForTesting
-	String analysisCheckSum(final Algorithm algoritm) {
+	String analysisCheckSum(Algorithm algoritm) {
 		
 		// Get file input stream for reading the file content
-		try (final FileInputStream fis = new FileInputStream(this.file)) {
-			final MessageDigest digest = MessageDigest.getInstance(algoritm.getName());
+		try (FileInputStream fis = new FileInputStream(this.file)) {
+			MessageDigest digest = MessageDigest.getInstance(algoritm.getName());
 			
 			// Create byte array to read data in chunks
-			final byte[] byteArray = new byte[1024];
+			byte[] byteArray = new byte[1024];
 			int bytesCount = 0;
 			
 			// Read file data and update in message digest
@@ -119,11 +125,11 @@ public class ChecksumAnalyser {
 			}
 			
 			// Get the hash's bytes
-			final byte[] byteType = digest.digest();
+			byte[] byteType = digest.digest();
 			return this.convertDigestToString(byteType);
-		} catch (final NoSuchAlgorithmException | IOException e) {
-			LOGGER.error(MessageFormat.format("체크섬 알고리즘{0} 분석 중 오류 발생", algoritm.getName()), e); 
-			return "FAIL : " + e.getMessage(); 
+		} catch (NoSuchAlgorithmException | IOException e) {
+			LOGGER.error(MessageFormat.format("체크섬 알고리즘{0} 분석 중 오류 발생", algoritm.getName()), e);
+			return "FAIL : " + e.getMessage();
 		}
 	}
 	
@@ -135,7 +141,7 @@ public class ChecksumAnalyser {
 	 */
 	public Checksum analyze() {
 		
-		final Checksum result = new Checksum();
+		Checksum result = new Checksum();
 		result.setMd2(this.analysisCheckSum(Algorithm.MD2));
 		result.setMd5(this.analysisCheckSum(Algorithm.MD5));
 		result.setSha1(this.analysisCheckSum(Algorithm.SHA1));
@@ -154,10 +160,11 @@ public class ChecksumAnalyser {
 	 * @return 결과 문자열
 	 */
 	@VisibleForTesting
-	String convertDigestToString(final byte[] digest) {
+	String convertDigestToString(byte[] digest) {
 		
-		final StringBuilder sb = new StringBuilder();
-		for (final byte element : digest) {
+		SonarHelper.noStatic(this);
+		StringBuilder sb = new StringBuilder();
+		for (byte element : digest) {
 			sb.append(Integer.toString((element & 0xff) + 0x100, 16).substring(1));
 		}
 		return sb.toString();

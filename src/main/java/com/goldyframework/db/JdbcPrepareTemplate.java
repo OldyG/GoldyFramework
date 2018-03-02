@@ -4,13 +4,15 @@
  * Author : jeong
  * Summary :
  * Copyright (C) 2018 Formal Works Inc. All rights reserved.
- * 이 문서의 모든 저작권 및 지적 재산권은 (주)포멀웍스에게 있습니다.
+ * 이 문서의 모든 저작권 및 지적 재산권은 Goldy Project에게 있습니다.
  * 이 문서의 어떠한 부분도 허가 없이 복제 또는 수정 하거나, 전송할 수 없습니다.
  */
 package com.goldyframework.db;
 
 import java.text.MessageFormat;
 import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.sql.DataSource;
 
@@ -25,11 +27,12 @@ import org.springframework.stereotype.Service;
 
 import com.goldyframework.db.exception.DuplicateRecordException;
 import com.goldyframework.db.exception.NoSingleDataException;
-import com.goldyframework.db.prepare.statement.Prepare;
 import com.goldyframework.db.prepare.statement.delete.DeletePrepare;
 import com.goldyframework.db.prepare.statement.insert.InsertPrepare;
 import com.goldyframework.db.prepare.statement.select.SelectPrepare;
 import com.goldyframework.db.prepare.statement.update.UpdatePrepare;
+import com.goldyframework.does.SonarHelper;
+import com.goldyframework.utils.json.JsonGtils;
 
 /**
  * {@link JdbcTemplate} 클래스를 상속받은 클래스로 {@link Prepare} 클래스에 호환되는 클래스
@@ -52,7 +55,7 @@ public class JdbcPrepareTemplate extends JdbcTemplate {
 	 *            {@link DataSource}
 	 */
 	@Autowired
-	public JdbcPrepareTemplate(final DataSource dataSource) {
+	public JdbcPrepareTemplate(DataSource dataSource) {
 		
 		super(dataSource);
 	}
@@ -62,7 +65,7 @@ public class JdbcPrepareTemplate extends JdbcTemplate {
 	 */
 	public void begin() {
 		
-		super.update("begin work;"); 
+		super.update("begin work;");
 		
 	}
 	
@@ -71,31 +74,24 @@ public class JdbcPrepareTemplate extends JdbcTemplate {
 	 */
 	public void commit() {
 		
-		super.update("commit;"); 
+		super.update("commit;");
 	}
 	
-	/**
-	 * @author 2017. 7. 2. 오후 5:52:24 jeong
-	 * @param delete
-	 */
-	public void delete(final DeletePrepare delete) {
+	public void delete(DeletePrepare delete) {
 		
 		super.update(delete.toPrepareSql(), this.toArray(delete.getArgs()));
 	}
 	
-	/**
-	 * @author 2017. 7. 2. 오후 12:29:00 jeong
-	 * @param insert
-	 */
-	public void insert(final InsertPrepare insert) throws DuplicateRecordException {
+	public void insert(InsertPrepare insert) throws DuplicateRecordException {
 		
-		final String prepareSql = insert.toPrepareSql();
-		final Collection<Object> args = insert.getArgs();
+		String prepareSql = insert.toPrepareSql();
+		Collection<Object> args = insert.getArgs();
 		
 		try {
 			super.update(prepareSql, this.toArray(args));
-		} catch (final DuplicateKeyException e) {
-			final String message = MessageFormat.format("{0}테이블에 중복 데이터가 존재합니다.", insert.getTableName()); 
+			this.writeLogArgs(args);
+		} catch (DuplicateKeyException e) {
+			String message = MessageFormat.format("{0}테이블에 중복 데이터가 존재합니다.", insert.getTableName());
 			throw new DuplicateRecordException(message, e);
 		}
 	}
@@ -105,51 +101,30 @@ public class JdbcPrepareTemplate extends JdbcTemplate {
 	 */
 	public void rollback() {
 		
-		super.update("rollback work;"); 
+		super.update("rollback work;");
 	}
 	
-	/**
-	 * @author 2017. 7. 8. 오후 11:49:05 jeong
-	 * @param <T>
-	 * @param select
-	 * @param mapper
-	 * @return
-	 */
-	public <T> T select(final SelectPrepare select, final RowMapper<T> mapper) {
+	public <T> T select(SelectPrepare select, RowMapper<T> mapper) {
 		
 		LOGGER.trace(select.toPrepareSql());
 		try {
 			return super.queryForObject(select.toPrepareSql(), this.toArray(select.getArgs()), mapper);
-		} catch (final IncorrectResultSizeDataAccessException e) {
+		} catch (IncorrectResultSizeDataAccessException e) {
 			
-			final String message = MessageFormat.format("쿼리 [{0}]에 해당하는 값이 1개가 아닙니다. : {1}", 
+			String message = MessageFormat.format("쿼리 [{0}]에 해당하는 값이 1개가 아닙니다. : {1}",
 				select.toPrepareSql(), e.getMessage()); // $NON-NLS-1$
 			throw new NoSingleDataException(message, e);
 		}
 	}
 	
-	/**
-	 * @author 2017. 7. 8. 오후 11:38:59 jeong
-	 * @param <T>
-	 * @param select
-	 * @param mapper
-	 * @return
-	 */
-	public <T> Collection<T> selectAll(final SelectPrepare select, final RowMapper<T> mapper) {
+	public <T> Set<T> selectAll(SelectPrepare select, RowMapper<T> mapper) {
 		
-		return super.query(select.toPrepareSql(), mapper);
+		return new HashSet<>(super.query(select.toPrepareSql(), mapper));
 	}
 	
-	/**
-	 * @author 2017. 7. 10. 오후 10:50:58 jeong
-	 * @param <T>
-	 * @param select
-	 * @param createVoMapper
-	 * @return
-	 */
-	public <T> Collection<T> selectPart(final SelectPrepare select, final RowMapper<T> createVoMapper) {
+	public <T> Set<T> selectPart(SelectPrepare select, RowMapper<T> createVoMapper) {
 		
-		return super.query(select.toPrepareSql(), this.toArray(select.getArgs()), createVoMapper);
+		return new HashSet<>(super.query(select.toPrepareSql(), this.toArray(select.getArgs()), createVoMapper));
 	}
 	
 	/**
@@ -160,8 +135,9 @@ public class JdbcPrepareTemplate extends JdbcTemplate {
 	 *            치환 대상 {@link List}
 	 * @return
 	 */
-	private Object[] toArray(final Collection<Object> target) {
+	private Object[] toArray(Collection<Object> target) {
 		
+		SonarHelper.noStatic(this);
 		return target.toArray(new Object[target.size()]);
 	}
 	
@@ -170,13 +146,18 @@ public class JdbcPrepareTemplate extends JdbcTemplate {
 	 * @param update
 	 * @return
 	 */
-	public void update(final UpdatePrepare update) {
+	public void update(UpdatePrepare update) {
 		
 		if (update.isValid() == false) {
 			return;
 		}
 		
 		super.update(update.toPrepareSql(), this.toArray(update.getArgs()));
+	}
+	
+	private void writeLogArgs(Collection<Object> args) {
+		
+		LOGGER.trace(JsonGtils.toGsonPretty(args));
 	}
 	
 }

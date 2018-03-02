@@ -4,7 +4,7 @@
  * Author : jeong
  * Summary :
  * Copyright (C) 2018 Formal Works Inc. All rights reserved.
- * 이 문서의 모든 저작권 및 지적 재산권은 (주)포멀웍스에게 있습니다.
+ * 이 문서의 모든 저작권 및 지적 재산권은 Goldy Project에게 있습니다.
  * 이 문서의 어떠한 부분도 허가 없이 복제 또는 수정 하거나, 전송할 수 없습니다.
  */
 package com.goldyframework.utils;
@@ -15,9 +15,9 @@ import java.util.List;
 
 public class ReflectionGtils {
 	
-	public static List<Class<?>> getAllSuperClass(final Class<?> clazz) {
+	public static List<Class<?>> getAllSuperClass(Class<?> clazz) {
 		
-		final List<Class<?>> result = new ArrayList<>();
+		List<Class<?>> result = new ArrayList<>();
 		if ((clazz != null) && (!clazz.equals(Object.class))) {
 			result.add(clazz);
 			result.addAll(getAllSuperClass(clazz.getSuperclass()));
@@ -26,14 +26,14 @@ public class ReflectionGtils {
 		return result;
 	}
 	
-	public static List<Field> getDeclaredFieldWithInherit(final Object obj) {
+	public static List<Field> getDeclaredFieldWithInherit(Object obj) {
 		
-		final List<Class<?>> allSuperClass = getAllSuperClass(obj.getClass());
+		List<Class<?>> allSuperClass = getAllSuperClass(obj.getClass());
 		
-		final List<Field> fields = new ArrayList<>();
-		for (final Class<?> clazz : allSuperClass) {
-			final Field[] fieldArray = clazz.getDeclaredFields();
-			for (final Field field : fieldArray) {
+		List<Field> fields = new ArrayList<>();
+		for (Class<?> clazz : allSuperClass) {
+			Field[] fieldArray = clazz.getDeclaredFields();
+			for (Field field : fieldArray) {
 				fields.add(field);
 			}
 		}
@@ -41,7 +41,7 @@ public class ReflectionGtils {
 		return fields;
 	}
 	
-	public static Object getFieldValue(final Object obj, final Field field) {
+	public static Object getFieldValue(Object obj, Field field) {
 		
 		boolean changed = false;
 		try {

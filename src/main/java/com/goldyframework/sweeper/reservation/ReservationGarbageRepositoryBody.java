@@ -33,7 +33,7 @@ public class ReservationGarbageRepositoryBody extends AbstractRepositoryBody {
 	 * @param garbageDirectory
 	 * @since 2016. 6. 14. 오후 2:16:44
 	 */
-	public ReservationGarbageRepositoryBody(final File garbageDirectory) {
+	public ReservationGarbageRepositoryBody(File garbageDirectory) {
 		
 		this.garbageDirectory = NullGtils.throwIfNull(garbageDirectory);
 		this.init();

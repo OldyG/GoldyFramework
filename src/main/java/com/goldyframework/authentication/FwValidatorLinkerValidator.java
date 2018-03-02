@@ -46,7 +46,7 @@ public class FwValidatorLinkerValidator implements ConstraintValidator<FwValidat
 	 * @author 2017. 6. 29. 오후 10:27:26 jeong
 	 */
 	@Override
-	public void initialize(final FwValidatorLinker anno) {
+	public void initialize(FwValidatorLinker anno) {
 		
 		this.liniker = anno;
 	}
@@ -58,7 +58,7 @@ public class FwValidatorLinkerValidator implements ConstraintValidator<FwValidat
 	 */
 	@SuppressWarnings({ "unchecked", "null" })
 	@Override
-	public boolean isValid(final Object value, final ConstraintValidatorContext context) {
+	public boolean isValid(Object value, ConstraintValidatorContext context) {
 		
 		context.disableDefaultConstraintViolation();
 		
@@ -68,7 +68,7 @@ public class FwValidatorLinkerValidator implements ConstraintValidator<FwValidat
 		} catch (InstantiationException | IllegalAccessException e) {
 			LOGGER.error(e.getMessage(), e);
 			return false;
-		} catch (final InspectionException e) {
+		} catch (InspectionException e) {
 			context.buildConstraintViolationWithTemplate(e.getMessage()).addConstraintViolation();
 			return false;
 		}

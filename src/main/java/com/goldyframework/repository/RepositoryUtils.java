@@ -14,6 +14,7 @@ import java.sql.SQLException;
 
 import org.springframework.http.ResponseEntity;
 
+import com.goldyframework.does.SonarHelper;
 import com.goldyframework.inspection.ObjectInspection;
 import com.goldyframework.repository.exception.NotRegisteredFileException;
 
@@ -52,11 +53,12 @@ public class RepositoryUtils {
 	 *             Signals that an I/O exception of some sort has occurred. This class is the general class of
 	 *             exceptions produced by failed or interrupted I/O operations.
 	 */
-	public ResponseEntity<byte[]> getImage(final RepositoryBody repository)
+	public ResponseEntity<byte[]> getImage(RepositoryBody repository)
 		throws IOException, SQLException, RepositoryException, NotRegisteredFileException {
 		
+		SonarHelper.noStatic(this);
 		ObjectInspection.checkNull(repository);
-		final RepositoryService service = new RepositoryServiceImpl(repository);
+		RepositoryService service = new RepositoryServiceImpl(repository);
 		
 		return service.displayImage();
 		

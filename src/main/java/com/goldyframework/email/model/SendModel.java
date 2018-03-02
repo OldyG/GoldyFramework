@@ -63,7 +63,7 @@ public class SendModel {
 	 * @param subject
 	 *            제목
 	 */
-	public SendModel(final InternetAddress sender, final String subject) {
+	public SendModel(InternetAddress sender, String subject) {
 		
 		this.from = NullGtils.throwIfNull(sender);
 		this.subject = NullGtils.throwIfNull(subject);
@@ -156,7 +156,7 @@ public class SendModel {
 	 *            attachmentList
 	 * @since 2016. 4. 23. 오후 6:27:53
 	 */
-	public void setAttachmentList(final Collection<AttachmentModel> fileList) {
+	public void setAttachmentList(Collection<AttachmentModel> fileList) {
 		
 		ObjectInspection.checkNull(fileList);
 		this.attachmentList.clear();
@@ -172,7 +172,7 @@ public class SendModel {
 	 *            cc
 	 * @since 2016. 4. 23. 오후 6:27:53
 	 */
-	public void setCc(final Collection<InternetAddress> ccList) {
+	public void setCc(Collection<InternetAddress> ccList) {
 		
 		ObjectInspection.checkNull(ccList);
 		this.cc.clear();
@@ -188,7 +188,7 @@ public class SendModel {
 	 *            cc
 	 * @since 2016. 4. 23. 오후 6:27:53
 	 */
-	public void setCc(final InternetAddress cc) {
+	public void setCc(InternetAddress cc) {
 		
 		ObjectInspection.checkNull(cc);
 		this.cc.clear();
@@ -205,7 +205,7 @@ public class SendModel {
 	 *            attachmentList
 	 * @since 2016. 4. 23. 오후 6:27:53
 	 */
-	public void setFile(final AttachmentModel file) {
+	public void setFile(AttachmentModel file) {
 		
 		ObjectInspection.checkNull(file);
 		this.attachmentList.clear();
@@ -221,7 +221,7 @@ public class SendModel {
 	 *            text
 	 * @since 2016. 4. 23. 오후 6:27:53
 	 */
-	public void setText(final String text) {
+	public void setText(String text) {
 		
 		this.text = NullGtils.throwIfNull(text);
 	}
@@ -235,7 +235,7 @@ public class SendModel {
 	 *            to
 	 * @since 2016. 4. 23. 오후 6:27:53
 	 */
-	public void setTo(final Collection<InternetAddress> toList) {
+	public void setTo(Collection<InternetAddress> toList) {
 		
 		ObjectInspection.checkNull(toList);
 		this.to.clear();
@@ -251,7 +251,7 @@ public class SendModel {
 	 *            to
 	 * @since 2016. 4. 23. 오후 6:27:53
 	 */
-	public void setTo(final InternetAddress to) {
+	public void setTo(InternetAddress to) {
 		
 		ObjectInspection.checkNull(to);
 		this.to.clear();

@@ -4,7 +4,7 @@
  * Author : jeong
  * Summary :
  * Copyright (C) 2018 Formal Works Inc. All rights reserved.
- * 이 문서의 모든 저작권 및 지적 재산권은 (주)포멀웍스에게 있습니다.
+ * 이 문서의 모든 저작권 및 지적 재산권은 Goldy Project에게 있습니다.
  * 이 문서의 어떠한 부분도 허가 없이 복제 또는 수정 하거나, 전송할 수 없습니다.
  */
 package com.goldyframework.db.prepare.statement.select;
@@ -14,13 +14,15 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import org.apache.commons.collections4.MapUtils;
+import org.springframework.util.CollectionUtils;
 
 import com.goldyframework.db.prepare.statement.AbstractPrepare;
 import com.goldyframework.db.prepare.statement.FieldWrapper;
 import com.goldyframework.db.prepare.statement.guide.LimitGuide;
 import com.goldyframework.db.prepare.statement.guide.OrderByGuide;
 import com.goldyframework.db.prepare.statement.guide.WhereGuide;
+import com.goldyframework.does.SonarHelper;
+import com.goldyframework.exception.LogicErrorType;
 import com.goldyframework.exception.LogicException;
 import com.goldyframework.utils.NullGtils;
 import com.goldyframework.utils.StringCollectionGtils;
@@ -51,8 +53,8 @@ public class SelectPrepare extends AbstractPrepare {
 	 * {@link SelectPrepare} 클래스의 새 인스턴스를 초기화 합니다.
 	 */
 	@VisibleForTesting
-	SelectPrepare(final String tableName, final List<String> columns, final WhereGuide where,
-		final OrderByGuide orderByBuilder, final LimitGuide limit) {
+	SelectPrepare(String tableName, List<String> columns, WhereGuide where,
+		OrderByGuide orderByBuilder, LimitGuide limit) {
 		
 		super(NullGtils.throwIfNull(tableName));
 		this.columns = new ArrayList<>(columns);
@@ -61,7 +63,7 @@ public class SelectPrepare extends AbstractPrepare {
 		this.limit = limit;
 		
 		this.whereState = this.toGudeState(this.where.isEmpty() == false);
-		this.orderByState = this.toGudeState(MapUtils.isEmpty(this.orderBy) == false);
+		this.orderByState = this.toGudeState(CollectionUtils.isEmpty(this.orderBy) == false);
 		this.limitState = this.toGudeState(limit != null);
 		
 	}
@@ -86,22 +88,22 @@ public class SelectPrepare extends AbstractPrepare {
 		if (this.columns.isEmpty()) {
 			return "*";
 		}
-		final String tableName = FieldWrapper.wrap(super.getTableName());
+		String tableName = FieldWrapper.wrap(super.getTableName());
 		
-		final List<String> wrapColumn = FieldWrapper.wrap(this.columns);
+		List<String> wrapColumn = FieldWrapper.wrap(this.columns);
 		
-		final List<String> eachPrepend = StringCollectionGtils.eachPrepend(tableName + '.', wrapColumn);
+		List<String> eachPrepend = StringCollectionGtils.eachPrepend(tableName + '.', wrapColumn);
 		
 		return StringCollectionGtils.join(eachPrepend, ", ");
 	}
 	
-	private GuideState toGudeState(final boolean hasValue) {
+	private GuideState toGudeState(boolean hasValue) {
 		
+		SonarHelper.noStatic(this);
 		if (hasValue) {
 			return GuideState.EXIST;
-		} else {
-			return GuideState.NONE;
 		}
+		return GuideState.NONE;
 	}
 	
 	/**
@@ -112,12 +114,12 @@ public class SelectPrepare extends AbstractPrepare {
 	@Override
 	public String toPrepareSql() {
 		
-		final String columnArea = this.getColumnArea();
-		final String tableName = FieldWrapper.wrap(super.getTableName());
+		String columnArea = this.getColumnArea();
+		String tableName = FieldWrapper.wrap(super.getTableName());
 		
-		final StringBuilder sqlBuilder = new StringBuilder();
+		StringBuilder sqlBuilder = new StringBuilder();
 		
-		final String firstStep;
+		String firstStep;
 		
 		switch (this.whereState) {
 			case EXIST:
@@ -128,7 +130,7 @@ public class SelectPrepare extends AbstractPrepare {
 				firstStep = MessageFormat.format("SELECT {0} FROM {1}", columnArea, tableName);
 				break;
 			default:
-				throw new LogicException();
+				throw new LogicException(LogicErrorType.ENUM_CASE);
 				
 		}
 		sqlBuilder.append(firstStep);

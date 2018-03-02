@@ -29,7 +29,7 @@ import com.goldyframework.inspection.ObjectInspection;
  *
  * @author 2017. 6. 18. 오후 12:52:59 jeong
  */
-public final class SaltEncryptor {
+public class SaltEncryptor {
 	
 	/**
 	 * Encode Salt Byte Length
@@ -65,16 +65,16 @@ public final class SaltEncryptor {
 	 *            기존 패스워드
 	 * @return 암호화된 문자열
 	 */
-	public static String encode(final CharSequence rawPassword) {
+	public static String encode(CharSequence rawPassword) {
 		
 		ObjectInspection.checkNull(rawPassword);
 		try {
-			final Random random = new SecureRandom();
-			final byte[] saltbytes = new byte[SALT_BYTE_LENGH];
+			Random random = new SecureRandom();
+			byte[] saltbytes = new byte[SALT_BYTE_LENGH];
 			random.nextBytes(saltbytes);
-			final String salt = ENCODER.encodeToString(saltbytes);
+			String salt = ENCODER.encodeToString(saltbytes);
 			
-			final String hash = hashWithSalt(rawPassword, saltbytes);
+			String hash = hashWithSalt(rawPassword, saltbytes);
 			
 			return salt + '$' + hash;
 			
@@ -99,12 +99,12 @@ public final class SaltEncryptor {
 	 * @throws InvalidKeySpecException
 	 *             This is the exception for invalid key specifications.
 	 */
-	private static String hashWithSalt(final CharSequence password, final byte[] saltbytes)
+	private static String hashWithSalt(CharSequence password, byte[] saltbytes)
 		throws NoSuchAlgorithmException, InvalidKeySpecException {
 		
-		final KeySpec spec = new PBEKeySpec(password.toString().toCharArray(), saltbytes, 65_536, 128);
-		final SecretKeyFactory f = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1"); 
-		final byte[] hashbytes = f.generateSecret(spec).getEncoded();
+		KeySpec spec = new PBEKeySpec(password.toString().toCharArray(), saltbytes, 65_536, 128);
+		SecretKeyFactory f = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");
+		byte[] hashbytes = f.generateSecret(spec).getEncoded();
 		
 		return ENCODER.encodeToString(hashbytes);
 	}
@@ -119,16 +119,16 @@ public final class SaltEncryptor {
 	 *            암호화된 비밀번호
 	 * @return 일치하는 경우 true, 아닌경우 false
 	 */
-	public static boolean matches(final CharSequence rawPassword, final String encodedPassword) {
+	public static boolean matches(CharSequence rawPassword, String encodedPassword) {
 		
 		ObjectInspection.checkNull(rawPassword);
 		ObjectInspection.checkNull(encodedPassword);
 		
-		final String[] saltAndPass = encodedPassword.split("\\$"); 
-		final byte[] saltBytes = DECODER.decode(saltAndPass[0]);
+		String[] saltAndPass = encodedPassword.split("\\$");
+		byte[] saltBytes = DECODER.decode(saltAndPass[0]);
 		
 		try {
-			final String hashOfInput = hashWithSalt(rawPassword, saltBytes);
+			String hashOfInput = hashWithSalt(rawPassword, saltBytes);
 			return hashOfInput.equals(saltAndPass[1]);
 			
 		} catch (NoSuchAlgorithmException | InvalidKeySpecException e) {
@@ -145,7 +145,7 @@ public final class SaltEncryptor {
 	 */
 	private SaltEncryptor() {
 		
-		throw new IllegalStateException("Utility class"); 
+		throw new IllegalStateException("Utility class");
 	}
 	
 }

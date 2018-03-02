@@ -4,7 +4,7 @@
  * Author : jeong
  * Summary :
  * Copyright (C) 2018 Formal Works Inc. All rights reserved.
- * 이 문서의 모든 저작권 및 지적 재산권은 (주)포멀웍스에게 있습니다.
+ * 이 문서의 모든 저작권 및 지적 재산권은 Goldy Project에게 있습니다.
  * 이 문서의 어떠한 부분도 허가 없이 복제 또는 수정 하거나, 전송할 수 없습니다.
  */
 package com.goldyframework.gtils;
@@ -30,7 +30,7 @@ public class StringCollectionGtilsTest {
 	@Test
 	public void testEachAppend() {
 		
-		final List<String> actual = StringCollectionGtils.eachAppend(this.appendTarget, ".abc");
+		List<String> actual = StringCollectionGtils.eachAppend(this.appendTarget, ".abc");
 		
 		Assert.assertEquals("", 3, actual.size());
 		Assert.assertEquals("", "Test1.abc", actual.get(0));
@@ -45,7 +45,7 @@ public class StringCollectionGtilsTest {
 	@Test
 	public void testEachPrepend() {
 		
-		final List<String> actual = StringCollectionGtils.eachPrepend("abc.", this.appendTarget);
+		List<String> actual = StringCollectionGtils.eachPrepend("abc.", this.appendTarget);
 		
 		Assert.assertEquals("", 3, actual.size());
 		Assert.assertEquals("", "abc.Test1", actual.get(0));
@@ -60,7 +60,7 @@ public class StringCollectionGtilsTest {
 	@Test
 	public void testJoin() {
 		
-		final String actual = StringCollectionGtils.join(this.appendTarget, ", ");
+		String actual = StringCollectionGtils.join(this.appendTarget, ", ");
 		Assert.assertEquals("", "Test1, Test2, Test3", actual);
 	}
 	

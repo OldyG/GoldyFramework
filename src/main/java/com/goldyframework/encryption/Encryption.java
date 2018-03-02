@@ -29,7 +29,7 @@ import com.goldyframework.Prop;
 import com.goldyframework.does.SonarHelper;
 import com.goldyframework.encryption.exception.EncryptionException;
 import com.goldyframework.inspection.ObjectInspection;
-import com.goldyframework.utils.NullGtils;
+import com.goldyframework.inspection.StringInspection;
 
 /**
  * 암호화 도구
@@ -37,34 +37,47 @@ import com.goldyframework.utils.NullGtils;
  * @author 2017. 6. 14. 오후 8:38:03 jeong
  */
 public class Encryption {
-
+	
 	private enum Transformation {
 		AES_CBC_PKCS5PADDING("AES/CBC/PKCS5PADDING"),
-
+		
 		DESEDE_ECB_PKCS5PADDING("DESede/ECB/PKCS5Padding"),
-
+		
 		AES_GCM_NOPADDING("AES/GCM/NoPadding");
-
+		
 		private final String value;
-
+		
 		/**
 		 * {@link Transformation} 클래스의 새 인스턴스를 초기화 합니다.
 		 *
 		 * @author 2017. 6. 20. 오후 8:32:14 jeong
 		 * @param value
 		 */
-		Transformation(final String value) {
-
-			this.value = NullGtils.throwIfNull(value);
+		Transformation(String value) {
+			
+			StringInspection.checkBlank(value);
+			this.value = value;
+		}
+		
+		/**
+		 * value를 반환합니다.
+		 * 
+		 * @return value
+		 * @author 2018. 2. 25. 오후 5:09:00 jeong
+		 * @see {@link #value}
+		 */
+		public String getValue() {
+			
+			return this.value;
 		}
 	}
-
+	
 	private static final Transformation TRANSFORMATION = Transformation.AES_CBC_PKCS5PADDING;
-
+	
 	private static final byte[] HASHCODE = new BigInteger(
 		"76410acb8e8fba45348fb639b6f4f0524acc4e83a463d0a11316a18d71064791b8776a193720668a7e6227f2fb229d55", 16)
 			.toByteArray();
-
+	
 	/**
 	 * slf4j Logger
 	 *
@@ -72,7 +85,7 @@ public class Encryption {
 	 * @since 2017. 5. 22. 오후 9:20:02
 	 */
 	private static final Logger LOGGER = LoggerFactory.getLogger(Encryption.class);
-
+	
 	/**
 	 * {@link Encryption} 클래스의 새 인스턴스를 초기화 합니다.
 	 *
@@ -80,37 +93,37 @@ public class Encryption {
 	 * @since 2017. 5. 22. 오후 9:43:46
 	 */
 	public Encryption() {
-
+		
 		super();
 	}
-
+	
 	private byte[] createIv() {
-
+		
 		SonarHelper.noStatic(this);
-
-		final int arrayLength = 16;
-		final byte[] resultIv = new byte[arrayLength];
-
+		
+		int arrayLength = 16;
+		byte[] resultIv = new byte[arrayLength];
+		
 		for (int loop = arrayLength; loop < (arrayLength * 2); loop++) {
 			resultIv[loop - arrayLength] = HASHCODE[loop];
 		}
-
+		
 		return resultIv;
 	}
-
+	
 	private byte[] createKey() {
-
+		
 		SonarHelper.noStatic(this);
-
-		final int arrayLength = 16;
-		final byte[] resultKey = new byte[arrayLength];
-
+		
+		int arrayLength = 16;
+		byte[] resultKey = new byte[arrayLength];
+		
 		for (int loop = 0; loop < arrayLength; loop++) {
 			resultKey[loop] = HASHCODE[loop];
 		}
 		return resultKey;
 	}
-
+	
 	/**
 	 * 암호화된 문자열을 복호화합니다.
 	 *
@@ -120,27 +133,27 @@ public class Encryption {
 	 * @return 복호화된 문자열
 	 * @throws EncryptionException
 	 */
-	public String decrypt(final String data) throws EncryptionException {
-
+	public String decrypt(String data) throws EncryptionException {
+		
 		ObjectInspection.checkNull(data);
 		try {
-			final IvParameterSpec iv = new IvParameterSpec(this.createIv());
-			final SecretKeySpec skeySpec = new SecretKeySpec(this.createKey(), "AES");
-
-			final Cipher cipher = Cipher.getInstance(TRANSFORMATION.value);
+			IvParameterSpec iv = new IvParameterSpec(this.createIv());
+			SecretKeySpec skeySpec = new SecretKeySpec(this.createKey(), "AES");
+			
+			Cipher cipher = Cipher.getInstance(TRANSFORMATION.getValue());
 			cipher.init(Cipher.DECRYPT_MODE, skeySpec, iv);
-
-			final byte[] original = cipher.doFinal(Base64.decode(data.getBytes(Prop.DEFAULT_CHARSET)));
-
+			
+			byte[] original = cipher.doFinal(Base64.decode(data.getBytes(Prop.DEFAULT_CHARSET)));
+			
 			return new String(original, Prop.DEFAULT_CHARSET);
 		} catch (IllegalBlockSizeException | BadPaddingException | InvalidKeyException
 			| InvalidAlgorithmParameterException | NoSuchAlgorithmException | NoSuchPaddingException e) {
 			LOGGER.error("암호화된 문자열을 복호화하는 중 오류 발생", e);
 			throw new EncryptionException(e);
 		}
-
+		
 	}
-
+	
 	/**
 	 * 문자열을 암호화합니다.
 	 *
@@ -150,27 +163,27 @@ public class Encryption {
 	 * @return 복호화된 문자열
 	 * @throws EncryptionException
 	 */
-	public String encrypt(final String data) throws EncryptionException {
-
+	public String encrypt(String data) throws EncryptionException {
+		
 		ObjectInspection.checkNull(data);
-
+		
 		try {
-			final IvParameterSpec iv = new IvParameterSpec(this.createIv());
-			final SecretKeySpec skeySpec = new SecretKeySpec(this.createKey(), "AES");
-
-			final Cipher cipher = Cipher.getInstance(TRANSFORMATION.value);
+			IvParameterSpec iv = new IvParameterSpec(this.createIv());
+			SecretKeySpec skeySpec = new SecretKeySpec(this.createKey(), "AES");
+			
+			Cipher cipher = Cipher.getInstance(TRANSFORMATION.getValue());
 			cipher.init(Cipher.ENCRYPT_MODE, skeySpec, iv);
-
-			final byte[] encrypted = cipher.doFinal(data.getBytes(Prop.DEFAULT_CHARSET));
-
-			final byte[] encode = Base64.encode(encrypted);
-
+			
+			byte[] encrypted = cipher.doFinal(data.getBytes(Prop.DEFAULT_CHARSET));
+			
+			byte[] encode = Base64.encode(encrypted);
+			
 			return new String(encode);
 		} catch (IllegalBlockSizeException | BadPaddingException | InvalidKeyException
 			| InvalidAlgorithmParameterException | NoSuchAlgorithmException | NoSuchPaddingException e) {
 			LOGGER.error("데이터를 암호화하는 중 오류 발생", e);
 			throw new EncryptionException(e);
 		}
-
+		
 	}
 }

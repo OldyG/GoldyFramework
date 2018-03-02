@@ -4,23 +4,20 @@
  * Author : jeong
  * Summary :
  * Copyright (C) 2018 Formal Works Inc. All rights reserved.
- * 이 문서의 모든 저작권 및 지적 재산권은 (주)포멀웍스에게 있습니다.
+ * 이 문서의 모든 저작권 및 지적 재산권은 Goldy Project에게 있습니다.
  * 이 문서의 어떠한 부분도 허가 없이 복제 또는 수정 하거나, 전송할 수 없습니다.
  */
 package com.goldyframework.db.exception;
 
 import com.goldyframework.utils.NullGtils;
 
-/**
- * @author 2017. 7. 1. 오전 12:00:58 jeong
- */
 public class DaoException extends Exception {
 	
-	/**
-	 * Serializable UID
-	 */
-	private static final long serialVersionUID = 2135496068594915680L;
 	
+	
+	
+	private static final long serialVersionUID = 761520325312366137L;
+
 	/**
 	 * Constructs a new exception with {@code null} as its detail message.
 	 * The cause is not initialized, and may subsequently be initialized by a
@@ -40,7 +37,7 @@ public class DaoException extends Exception {
 	 *            the detail message. The detail message is saved for
 	 *            later retrieval by the {@link #getMessage()} method.
 	 */
-	public DaoException(final String message) {
+	public DaoException(String message) {
 		
 		super(NullGtils.throwIfNull(message));
 	}
@@ -63,7 +60,7 @@ public class DaoException extends Exception {
 	 *            unknown.)
 	 * @since 1.4
 	 */
-	public DaoException(final String message, final Throwable cause) {
+	public DaoException(String message, Throwable cause) {
 		
 		super(NullGtils.throwIfNull(message), NullGtils.throwIfNull(cause));
 	}
@@ -83,7 +80,7 @@ public class DaoException extends Exception {
 	 *            unknown.)
 	 * @since 1.4
 	 */
-	public DaoException(final Throwable cause) {
+	public DaoException(Throwable cause) {
 		
 		super(NullGtils.throwIfNull(cause));
 	}

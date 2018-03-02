@@ -4,7 +4,7 @@
  * Author : jeong
  * Summary :
  * Copyright (C) 2018 Formal Works Inc. All rights reserved.
- * 이 문서의 모든 저작권 및 지적 재산권은 (주)포멀웍스에게 있습니다.
+ * 이 문서의 모든 저작권 및 지적 재산권은 Goldy Project에게 있습니다.
  * 이 문서의 어떠한 부분도 허가 없이 복제 또는 수정 하거나, 전송할 수 없습니다.
  */
 package com.goldyframework.bank;
@@ -84,17 +84,14 @@ public enum Bank {
 	BANK_294("294", "펀드온라인코리아", ""),
 	BANK_295("295", "우리종합금융", "");
 	
-	private final String code;
+	private String code;
 	
-	private final String bankName;
+	private String bankName;
 	
-	private final String swiftCode;
-	
-	Bank(final String code, final String bankName, final String swiftCode) {
+	Bank(String code, String bankName, String swiftCode) {
 		
 		this.code = code;
 		this.bankName = bankName;
-		this.swiftCode = swiftCode;
 		
 	}
 	

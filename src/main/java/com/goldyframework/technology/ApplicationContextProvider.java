@@ -56,7 +56,7 @@ public class ApplicationContextProvider implements ApplicationContextAware {
 	 * @author 2017. 6. 18. 오후 2:41:01 jeong
 	 */
 	@Override
-	public synchronized void setApplicationContext(final ApplicationContext ac) {
+	public synchronized void setApplicationContext(ApplicationContext ac) {
 		
 		context = NullGtils.throwIfNull(ac);
 	}

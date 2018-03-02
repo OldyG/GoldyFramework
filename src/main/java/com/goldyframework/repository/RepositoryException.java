@@ -12,6 +12,9 @@ import com.goldyframework.utils.NullGtils;
  */
 public class RepositoryException extends Exception {
 	
+	
+	private static final long serialVersionUID = 105797788851906749L;
+
 	/**
 	 * 오류 타입
 	 *
@@ -25,18 +28,13 @@ public class RepositoryException extends Exception {
 	}
 	
 	/**
-	 *
-	 */
-	private static final long serialVersionUID = 5008339989164173078L;
-	
-	/**
 	 * {@link RepositoryException} 클래스의 새 인스턴스를 초기화 합니다.
 	 *
 	 * @author 2017. 6. 15. 오후 10:04:33 jeong
 	 * @param cause
 	 *            the cause
 	 */
-	public RepositoryException(final Exception cause) {
+	public RepositoryException(Exception cause) {
 		
 		super(NullGtils.throwIfNull(cause));
 	}
@@ -48,7 +46,7 @@ public class RepositoryException extends Exception {
 	 * @param message
 	 *            오류 메세지
 	 */
-	public RepositoryException(final String message) {
+	public RepositoryException(String message) {
 		
 		super(NullGtils.throwIfNull(message));
 	}

@@ -4,7 +4,7 @@
  * Author : jeong
  * Summary :
  * Copyright (C) 2018 Formal Works Inc. All rights reserved.
- * 이 문서의 모든 저작권 및 지적 재산권은 (주)포멀웍스에게 있습니다.
+ * 이 문서의 모든 저작권 및 지적 재산권은 Goldy Project에게 있습니다.
  * 이 문서의 어떠한 부분도 허가 없이 복제 또는 수정 하거나, 전송할 수 없습니다.
  */
 package com.goldyframework.db.exception;
@@ -13,6 +13,8 @@ package com.goldyframework.db.exception;
  * @author 2017. 8. 14. 오후 5:58:40 jeong
  */
 public class DuplicateRecordException extends Exception {
+	
+	private static final long serialVersionUID = 3748064329695100234L;
 	
 	/**
 	 * Constructs a new exception with the specified detail message and
@@ -32,7 +34,7 @@ public class DuplicateRecordException extends Exception {
 	 *            unknown.)
 	 * @since 1.4
 	 */
-	public DuplicateRecordException(final String message, final Throwable cause) {
+	public DuplicateRecordException(String message, Throwable cause) {
 		
 		super(message, cause);
 	}

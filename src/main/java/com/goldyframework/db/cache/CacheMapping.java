@@ -4,7 +4,7 @@
  * Author : jeong
  * Summary :
  * Copyright (C) 2017 Formal Works Inc. All rights reserved.
- * 이 문서의 모든 저작권 및 지적 재산권은 (주)포멀웍스에게 있습니다.
+ * 이 문서의 모든 저작권 및 지적 재산권은 Goldy Project에게 있습니다.
  * 이 문서의 어떠한 부분도 허가 없이 복제 또는 수정 하거나, 전송할 수 없습니다.
  */
 package com.goldyframework.db.cache;
@@ -21,11 +21,11 @@ import com.goldyframework.db.bind.TimeStampBinder;
  */
 public class CacheMapping extends AbstractMapping<CacheDto> {
 	
-	/**
-	 * Serializable UID
-	 */
-	private static final long serialVersionUID = 2830145397895780219L;
 	
+	
+	
+	private static final long serialVersionUID = 5911451358398481423L;
+
 	/**
 	 * {@link CacheMapping} 클래스의 새 인스턴스를 초기화 합니다.
 	 *
@@ -33,7 +33,7 @@ public class CacheMapping extends AbstractMapping<CacheDto> {
 	 * @param tableName
 	 *            테이블 이름
 	 */
-	public CacheMapping(final String schema, final String tableName) {
+	public CacheMapping(String schema, String tableName) {
 		
 		super(schema, tableName);
 	}

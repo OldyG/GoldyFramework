@@ -20,7 +20,7 @@ import org.slf4j.LoggerFactory;
 
 import com.goldyframework.utils.SpringGtils;
 
-public class ResourceMapper extends GoldyTag {
+public class ResourceMapper extends GTag {
 	
 	/**
 	 * slf4j Logger
@@ -32,7 +32,7 @@ public class ResourceMapper extends GoldyTag {
 	
 	private MapperMode mode = MapperMode.AUTO;
 	
-	private String pattern = "*"; 
+	private String pattern = "*";
 	
 	/**
 	 * {@link ResourceMapper} 클래스의 새 인스턴스를 초기화 합니다.
@@ -101,7 +101,7 @@ public class ResourceMapper extends GoldyTag {
 	 *            초기화 값
 	 */
 	
-	public void setMode(final String mode) {
+	public void setMode(String mode) {
 		
 		this.mode = MapperMode.lookUp(mode);
 	}
@@ -116,25 +116,25 @@ public class ResourceMapper extends GoldyTag {
 	 *            초기화 값
 	 */
 	
-	public void setPattern(final String pattern) {
+	public void setPattern(String pattern) {
 		
-		this.pattern = pattern.replace(".", "\\.").replace("*", ".*"); 
+		this.pattern = pattern.replace(".", "\\.").replace("*", ".*");
 	}
 	
 	private void writeResourceAutoMap() throws IOException {
 		
-		final ResourceChannel resourceChannel = new SpringGtils().getBean(ResourceChannel.class);
-		final List<File> matchedResource = resourceChannel.getMachedResources(this.getCurrentPath());
+		ResourceChannel resourceChannel = new SpringGtils().getBean(ResourceChannel.class);
+		List<File> matchedResource = resourceChannel.getMachedResources(this.getCurrentPath());
 		
-		for (final File file : matchedResource) {
-			final String name = FilenameUtils.getName(file.getPath());
+		for (File file : matchedResource) {
+			String name = FilenameUtils.getName(file.getPath());
 			
-			final boolean matched = name.matches("^" + this.pattern + "$"); 
+			boolean matched = name.matches("^" + this.pattern + "$");
 			
-			LOGGER.trace(MessageFormat.format("정의된 패턴 [{0}]을 [{1}]과 비교 : {2}", this.pattern, name, matched)); 
+			LOGGER.trace(MessageFormat.format("정의된 패턴 [{0}]을 [{1}]과 비교 : {2}", this.pattern, name, matched));
 			
 			if (matched) {
-				final String tagString = resourceChannel.getTagString(file);
+				String tagString = resourceChannel.getTagString(file);
 				this.pageContext.getOut().write(tagString);
 			}
 		}

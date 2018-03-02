@@ -39,7 +39,7 @@ public class AttachmentModel {
 	 * @param file
 	 *            파일 데이터
 	 */
-	public AttachmentModel(final String fileName, final File file) {
+	public AttachmentModel(String fileName, File file) {
 		
 		this.fileName = NullGtils.throwIfNull(fileName);
 		this.file = NullGtils.throwIfNull(file);
@@ -52,7 +52,7 @@ public class AttachmentModel {
 	 * @author 2017. 6. 18. 오전 11:37:22 jeong
 	 * @see {@link #file}
 	 */
-	public final File getFile() {
+	public File getFile() {
 		
 		return this.file;
 	}
@@ -64,7 +64,7 @@ public class AttachmentModel {
 	 * @author 2017. 6. 18. 오전 11:37:22 jeong
 	 * @see {@link #fileName}
 	 */
-	public final String getFileName() {
+	public String getFileName() {
 		
 		return this.fileName;
 	}

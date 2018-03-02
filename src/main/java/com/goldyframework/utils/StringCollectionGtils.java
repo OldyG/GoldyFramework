@@ -4,7 +4,7 @@
  * Author : jeong
  * Summary :
  * Copyright (C) 2018 Formal Works Inc. All rights reserved.
- * 이 문서의 모든 저작권 및 지적 재산권은 (주)포멀웍스에게 있습니다.
+ * 이 문서의 모든 저작권 및 지적 재산권은 Goldy Project에게 있습니다.
  * 이 문서의 어떠한 부분도 허가 없이 복제 또는 수정 하거나, 전송할 수 없습니다.
  */
 package com.goldyframework.utils;
@@ -34,16 +34,16 @@ public class StringCollectionGtils {
 	 *            패턴 (Regex) 리스트
 	 * @return 결과
 	 */
-	public static List<String> collectMatching(final Collection<String> stringList, final List<String> patternList) {
+	public static List<String> collectMatching(Collection<String> stringList, List<String> patternList) {
 		
 		ObjectInspection.checkNull(stringList);
 		ObjectInspection.checkNull(patternList);
-		final List<String> result = new ArrayList<>(stringList);
+		List<String> result = new ArrayList<>(stringList);
 		
-		final List<String> matchList = new ArrayList<>();
+		List<String> matchList = new ArrayList<>();
 		
 		patternList.stream().forEach(pattern -> {
-			final Collection<String> match = collectMatching(stringList, pattern);
+			Collection<String> match = collectMatching(stringList, pattern);
 			matchList.addAll(match);
 		});
 		
@@ -61,11 +61,11 @@ public class StringCollectionGtils {
 	 *            패턴 (Regex)
 	 * @return 결과
 	 */
-	public static List<String> collectMatching(final Collection<String> stringList, final String patternString) {
+	public static List<String> collectMatching(Collection<String> stringList, String patternString) {
 		
 		ObjectInspection.checkNull(stringList);
 		ObjectInspection.checkNull(patternString);
-		final Pattern pattern = Pattern.compile(patternString);
+		Pattern pattern = Pattern.compile(patternString);
 		
 		return stringList.stream()
 			.filter(string -> pattern.matcher(string).matches())
@@ -83,7 +83,7 @@ public class StringCollectionGtils {
 	 *            뒤에 덧붙는 값
 	 * @return 결과
 	 */
-	public static List<String> eachAppend(final Collection<String> stringList, final String append) {
+	public static List<String> eachAppend(Collection<String> stringList, String append) {
 		
 		ObjectInspection.checkNull(stringList);
 		ObjectInspection.checkNull(append);
@@ -103,7 +103,7 @@ public class StringCollectionGtils {
 	 *            문자열 리스트
 	 * @return 결과
 	 */
-	public static List<String> eachPrepend(final String prepend, final Collection<String> stringList) {
+	public static List<String> eachPrepend(String prepend, Collection<String> stringList) {
 		
 		ObjectInspection.checkNull(prepend);
 		ObjectInspection.checkNull(stringList);
@@ -123,7 +123,7 @@ public class StringCollectionGtils {
 	 *            구분자
 	 * @return 결과
 	 */
-	public static String join(final Collection<String> stringList, final String delimiter) {
+	public static String join(Collection<String> stringList, String delimiter) {
 		
 		ObjectInspection.checkNull(stringList);
 		ObjectInspection.checkNull(delimiter);
@@ -141,13 +141,13 @@ public class StringCollectionGtils {
 	 *            패턴 (Regex)
 	 * @return 결과
 	 */
-	public static List<String> removeMatching(final Collection<String> stringList, final List<String> patternList) {
+	public static List<String> removeMatching(Collection<String> stringList, List<String> patternList) {
 		
 		ObjectInspection.checkNull(stringList);
 		ObjectInspection.checkNull(patternList);
 		
 		List<String> temp = new ArrayList<>(stringList);
-		for (final String pattern : patternList) {
+		for (String pattern : patternList) {
 			temp = removeMatching(temp, pattern);
 		}
 		return temp;
@@ -163,11 +163,11 @@ public class StringCollectionGtils {
 	 *            패턴 (Regex)
 	 * @return 결과
 	 */
-	public static List<String> removeMatching(final Collection<String> stringList, final String patternString) {
+	public static List<String> removeMatching(Collection<String> stringList, String patternString) {
 		
 		ObjectInspection.checkNull(stringList);
 		ObjectInspection.checkNull(patternString);
-		final Pattern pattern = Pattern.compile(patternString);
+		Pattern pattern = Pattern.compile(patternString);
 		
 		return stringList.stream()
 			.filter(string -> pattern.matcher(string).matches() == false)
@@ -176,7 +176,7 @@ public class StringCollectionGtils {
 	
 	private StringCollectionGtils() {
 		
-		throw new IllegalStateException("Utility class"); 
+		throw new IllegalStateException("Utility class");
 	}
 	
 }

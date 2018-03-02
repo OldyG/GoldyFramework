@@ -4,7 +4,7 @@
  * Author : jeong
  * Summary :
  * Copyright (C) 2018 Formal Works Inc. All rights reserved.
- * 이 문서의 모든 저작권 및 지적 재산권은 (주)포멀웍스에게 있습니다.
+ * 이 문서의 모든 저작권 및 지적 재산권은 Goldy Project에게 있습니다.
  * 이 문서의 어떠한 부분도 허가 없이 복제 또는 수정 하거나, 전송할 수 없습니다.
  */
 package com.goldyframework.inspection;
@@ -24,12 +24,12 @@ import com.goldyframework.inspection.exception.InspectionException;
  *
  * @author 2017. 6. 14. 오후 9:09:52 jeong
  */
-public final class MultipartFileInspection {
+public class MultipartFileInspection {
 	
-	public static void checkAboveSize(final MultipartFile target, final long maxSizebyte) {
+	public static void checkAboveSize(MultipartFile target, long maxSizebyte) {
 		
 		if (target.getSize() > maxSizebyte) {
-			final String messsage = MessageFormat.format("파일 사이즈는 {0}를 넘길 수 없습니다.", maxSizebyte);
+			String messsage = MessageFormat.format("파일 사이즈는 {0}를 넘길 수 없습니다.", maxSizebyte);
 			throw new InspectionException(messsage);
 		}
 		
@@ -46,15 +46,15 @@ public final class MultipartFileInspection {
 	 * @throws ValidateException
 	 *             정의한 확장자가 포함하지 않으면 발생합니다.
 	 */
-	public static void checkExtentionIs(final MultipartFile target, final List<String> validExtensions) {
+	public static void checkExtentionIs(MultipartFile target, List<String> validExtensions) {
 		
 		ObjectInspection.checkNull(target);
 		ObjectInspection.checkNull(validExtensions);
 		
-		final String originalFilename = target.getOriginalFilename();
-		final String extension = extractExtention(originalFilename).toLowerCase(Locale.getDefault());
+		String originalFilename = target.getOriginalFilename();
+		String extension = extractExtention(originalFilename).toLowerCase(Locale.getDefault());
 		
-		for (final String validExtension : validExtensions) {
+		for (String validExtension : validExtensions) {
 			if (validExtension.equalsIgnoreCase(extension)) {
 				return;
 			}
@@ -62,7 +62,7 @@ public final class MultipartFileInspection {
 		throw new InspectionException(extension + "는 허용하는 확장자가 아닙니다.");
 	}
 	
-	public static void checkImageFile(final MultipartFile target) {
+	public static void checkImageFile(MultipartFile target) {
 		
 		checkExtentionIs(target, Arrays.asList("jpg", "jpeg", "png", "gif", "jfif", "tiff", "bmp", "svg"));
 	}
@@ -80,27 +80,27 @@ public final class MultipartFileInspection {
 	 * @throws ValidateException
 	 *             파일 사이즈가 0이거나 이름이 없는 경우 발생합니다.
 	 */
-	public static void checkNullOrEmpty(final MultipartFile target) {
+	public static void checkNullOrEmpty(MultipartFile target) {
 		
 		ObjectInspection.checkNull(target);
 		StringInspection.checkBlank(target.getName());
 		
 		try {
 			IntegerInspection.checkBelowZero((int) target.getSize());
-		} catch (final InspectionException e) {
+		} catch (InspectionException e) {
 			throw new InspectionException("파일 사이즈가 0입니다.", e);
 		}
 		
 		try {
 			StringInspection.checkBlank(target.getOriginalFilename());
-		} catch (final InspectionException e) {
+		} catch (InspectionException e) {
 			throw new InspectionException("파일 이름이 없습니다.", e);
 		}
 		
 		try {
-			final String originalFilename = target.getOriginalFilename();
+			String originalFilename = target.getOriginalFilename();
 			StringInspection.checkBlank(FilenameUtils.getBaseName(originalFilename));
-		} catch (final InspectionException e) {
+		} catch (InspectionException e) {
 			throw new InspectionException("확장자를 제외한 파일이름이 비어있습니다.", e);
 		}
 	}
@@ -115,11 +115,11 @@ public final class MultipartFileInspection {
 	 * @throws ValidateException
 	 *             null일 경우 발생합니다.
 	 */
-	private static String extractExtention(final String fileName) {
+	private static String extractExtention(String fileName) {
 		
 		ObjectInspection.checkNull(fileName);
 		
-		final int dotIndex = fileName.lastIndexOf('.');
+		int dotIndex = fileName.lastIndexOf('.');
 		return fileName.substring(dotIndex + 1);
 	}
 	

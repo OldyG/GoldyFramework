@@ -23,14 +23,14 @@ import com.goldyframework.inspection.ObjectInspection;
  * @author 2017. 6. 18. 오후 3:02:52 jeong
  */
 public class DateAdapter extends XmlAdapter<String, Date> {
-
+	
 	private static final Object LOCK_OBJECT = new Object();
-
+	
 	/**
 	 * 날자 포맷
 	 */
-	private final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); 
-
+	private final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+	
 	/**
 	 * {@link DateAdapter} 클래스의 새 인스턴스를 초기화 합니다.
 	 *
@@ -38,36 +38,36 @@ public class DateAdapter extends XmlAdapter<String, Date> {
 	 * @since 2017. 4. 10. 오후 9:37:34
 	 */
 	public DateAdapter() {
-
+		
 		super();
 	}
-
+	
 	/**
 	 * {@inheritDoc}
 	 *
 	 * @author 2017. 6. 18. 오후 2:00:07 jeong
 	 */
 	@Override
-	public String marshal(final Date date) {
-
+	public String marshal(Date date) {
+		
 		ObjectInspection.checkNull(date);
 		synchronized (LOCK_OBJECT) {
 			return this.dateFormat.format(date);
 		}
 	}
-
+	
 	/**
 	 * {@inheritDoc}
 	 *
 	 * @author 2017. 6. 18. 오후 2:00:06 jeong
 	 */
 	@Override
-	public Date unmarshal(final String date) throws ParseException {
-
+	public Date unmarshal(String date) throws ParseException {
+		
 		ObjectInspection.checkNull(date);
 		synchronized (LOCK_OBJECT) {
 			return this.dateFormat.parse(date);
 		}
 	}
-
+	
 }
